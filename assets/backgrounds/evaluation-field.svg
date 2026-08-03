@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4096 2304" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="title desc">
+  <title id="title">Hara evaluation field</title>
+  <desc id="desc">A precise computational grid, evaluation traces, state nodes, and a large Hara mark form a restrained high-resolution background.</desc>
+  <defs>
+    <linearGradient id="spectrum" x1="420" y1="280" x2="3650" y2="2070" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#27B8B0"/><stop offset=".52" stop-color="#2F7CFF"/><stop offset="1" stop-color="#7957D5"/>
+    </linearGradient>
+    <radialGradient id="halo" cx=".72" cy=".48" r=".48">
+      <stop stop-color="#2F7CFF" stop-opacity=".24"/><stop offset=".55" stop-color="#27B8B0" stop-opacity=".08"/><stop offset="1" stop-color="#7957D5" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="128" height="128" patternUnits="userSpaceOnUse">
+      <path d="M128 0H0V128" fill="none" stroke="var(--grid)" stroke-width="2"/>
+      <circle cx="0" cy="0" r="4" fill="var(--grid-dot)"/>
+    </pattern>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="15" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>
+      :root{--ground:#f6f8fa;--ink:#11151a;--quiet:#626a73;--grid:rgba(24,31,38,.08);--grid-dot:rgba(47,124,255,.18);--cut:#f6f8fa}
+      @media(prefers-color-scheme:dark){:root{--ground:#050608;--ink:#f4f6f8;--quiet:#a0a8b1;--grid:rgba(222,231,240,.07);--grid-dot:rgba(68,215,200,.22);--cut:#050608}}
+    </style>
+  </defs>
+  <rect width="4096" height="2304" fill="var(--ground)"/>
+  <rect width="4096" height="2304" fill="url(#grid)"/>
+  <ellipse cx="3000" cy="1110" rx="1350" ry="980" fill="url(#halo)"/>
+  <g fill="none" stroke="url(#spectrum)" stroke-linecap="round">
+    <path d="M-120 1640C510 1210 980 1700 1500 1260S2450 510 3150 900s810 300 1110-80" stroke-width="18" opacity=".72"/>
+    <path d="M-90 1750C620 1390 1040 1840 1630 1410s990-640 1570-250 700 350 1030 80" stroke-width="4" opacity=".48"/>
+    <path d="M420 420C1040 840 1440 390 1980 760s960 650 1590 210" stroke-width="5" opacity=".28"/>
+  </g>
+  <g filter="url(#glow)">
+    <g fill="var(--ground)" stroke="#27B8B0" stroke-width="7"><circle cx="620" cy="1420" r="19"/><circle cx="1180" cy="1515" r="17"/><circle cx="1710" cy="1332" r="20"/></g>
+    <g fill="var(--ground)" stroke="#2F7CFF" stroke-width="7"><circle cx="2240" cy="842" r="22"/><circle cx="2790" cy="780" r="18"/><circle cx="3320" cy="1010" r="21"/></g>
+    <g fill="var(--ground)" stroke="#7957D5" stroke-width="7"><circle cx="3650" cy="930" r="17"/><circle cx="3100" cy="1260" r="14"/></g>
+  </g>
+  <g transform="translate(2780 520) scale(14)" opacity=".16">
+    <path fill="var(--ink)" d="M10 8h13v18h18V8h13v48H41V38H23v18H10z"/>
+    <path fill="#2F7CFF" d="M27 8h10v10H27z"/>
+  </g>
+  <g fill="var(--ink)" opacity=".18"><rect x="180" y="2080" width="920" height="8" rx="4"/><rect x="180" y="2122" width="560" height="8" rx="4"/><rect x="3310" y="172" width="610" height="8" rx="4"/></g>
+</svg>
