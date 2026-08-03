@@ -1,0 +1,207 @@
+:root {
+  --hara-spectrum-cyan: #27b8b0;
+  --hara-spectrum-blue: #2f7cff;
+  --hara-spectrum-violet: #7957d5;
+  --hara-spectrum: linear-gradient(118deg, var(--hara-spectrum-cyan), var(--hara-spectrum-blue) 52%, var(--hara-spectrum-violet));
+}
+
+:root[data-theme="dark"] {
+  --hara-spectrum-cyan: #44d7c8;
+  --hara-spectrum-blue: #4d8cff;
+  --hara-spectrum-violet: #9b7cff;
+}
+
+.hara-backdrop {
+  --hara-field-grid: 92px;
+  --hara-field-mark: min(36vw, 31rem);
+  --hara-field-opacity: .62;
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  contain: layout paint;
+  overflow: hidden;
+  color: var(--hara-spectrum-blue);
+  background: var(--hara-bg-clean);
+  pointer-events: none;
+}
+
+.hara-backdrop > * {
+  position: absolute;
+  inset: 0;
+}
+
+.hara-backdrop__field {
+  inset: -18%;
+  background:
+    radial-gradient(circle at 14% 72%, color-mix(in srgb, var(--hara-spectrum-cyan) 24%, transparent), transparent 37%),
+    radial-gradient(circle at 56% 35%, color-mix(in srgb, var(--hara-spectrum-blue) 23%, transparent), transparent 43%),
+    radial-gradient(circle at 88% 66%, color-mix(in srgb, var(--hara-spectrum-violet) 22%, transparent), transparent 39%);
+  filter: blur(48px) saturate(112%);
+  opacity: var(--hara-field-opacity);
+  transform: scale(1.08);
+}
+
+.hara-backdrop__grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--hara-text) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--hara-text) 8%, transparent) 1px, transparent 1px);
+  background-size: var(--hara-field-grid) var(--hara-field-grid);
+  mask-image: radial-gradient(ellipse 88% 82% at 54% 50%, #000 25%, transparent 84%);
+  opacity: .76;
+}
+
+.hara-backdrop__trace {
+  inset: -32%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 118deg,
+    transparent 0 13%,
+    color-mix(in srgb, var(--hara-spectrum-cyan) 72%, transparent) 17%,
+    transparent 22% 46%,
+    color-mix(in srgb, var(--hara-spectrum-blue) 68%, transparent) 51%,
+    transparent 57% 74%,
+    color-mix(in srgb, var(--hara-spectrum-violet) 68%, transparent) 81%,
+    transparent 87%
+  );
+  filter: blur(36px);
+  opacity: .34;
+}
+
+.hara-backdrop__nodes {
+  background-image:
+    radial-gradient(circle at 18% 25%, var(--hara-spectrum-cyan) 0 3px, transparent 4px),
+    radial-gradient(circle at 32% 68%, var(--hara-spectrum-blue) 0 4px, transparent 5px),
+    radial-gradient(circle at 58% 22%, var(--hara-spectrum-violet) 0 3px, transparent 4px),
+    radial-gradient(circle at 72% 72%, var(--hara-spectrum-cyan) 0 4px, transparent 5px),
+    radial-gradient(circle at 87% 41%, var(--hara-spectrum-blue) 0 3px, transparent 4px);
+  filter: drop-shadow(0 0 10px currentColor);
+  opacity: .55;
+}
+
+.hara-backdrop__mark {
+  inset: auto;
+  top: 50%;
+  left: 73%;
+  width: var(--hara-field-mark);
+  height: auto;
+  translate: -50% -50%;
+  color: color-mix(in srgb, var(--hara-text) 68%, transparent);
+  opacity: .12;
+  filter: drop-shadow(0 0 28px color-mix(in srgb, var(--hara-spectrum-blue) 34%, transparent));
+}
+
+.hara-backdrop[data-intensity="quiet"] {
+  --hara-field-grid: 124px;
+  --hara-field-mark: min(29vw, 25rem);
+  --hara-field-opacity: .36;
+}
+
+.hara-backdrop[data-intensity="quiet"] .hara-backdrop__nodes { opacity: .28; }
+
+.hara-backdrop[data-intensity="dense"] {
+  --hara-field-grid: 58px;
+  --hara-field-mark: min(46vw, 40rem);
+  --hara-field-opacity: .86;
+}
+
+.hara-backdrop[data-intensity="dense"] .hara-backdrop__nodes { opacity: .82; }
+
+.hara-backdrop[data-effect="syntax"] .hara-backdrop__field {
+  background:
+    radial-gradient(circle at 55% 50%, color-mix(in srgb, var(--hara-spectrum-blue) 22%, transparent), transparent 42%),
+    linear-gradient(28deg, transparent 47%, color-mix(in srgb, var(--hara-spectrum-cyan) 22%, transparent) 49% 51%, transparent 53%),
+    linear-gradient(-28deg, transparent 47%, color-mix(in srgb, var(--hara-spectrum-violet) 18%, transparent) 49% 51%, transparent 53%);
+  filter: none;
+}
+
+.hara-backdrop[data-effect="syntax"] .hara-backdrop__trace {
+  inset: 8%;
+  border: 1px solid color-mix(in srgb, var(--hara-spectrum-blue) 32%, transparent);
+  background: repeating-conic-gradient(
+    from 90deg,
+    color-mix(in srgb, var(--hara-spectrum-cyan) 40%, transparent) 0 1deg,
+    transparent 1deg 15deg
+  );
+  filter: none;
+  mask-image: radial-gradient(circle, transparent 0 24%, #000 25% 71%, transparent 72%);
+  opacity: .32;
+}
+
+.hara-backdrop[data-effect="lattice"] .hara-backdrop__field {
+  background:
+    linear-gradient(45deg, color-mix(in srgb, var(--hara-spectrum-cyan) 10%, transparent) 25%, transparent 25% 75%, color-mix(in srgb, var(--hara-spectrum-violet) 10%, transparent) 75%),
+    linear-gradient(-45deg, color-mix(in srgb, var(--hara-spectrum-blue) 10%, transparent) 25%, transparent 25% 75%, color-mix(in srgb, var(--hara-spectrum-cyan) 8%, transparent) 75%);
+  background-size: 190px 190px;
+  filter: none;
+  opacity: .7;
+}
+
+.hara-backdrop[data-effect="lattice"] .hara-backdrop__trace {
+  inset: -20%;
+  background: repeating-linear-gradient(118deg, transparent 0 12%, color-mix(in srgb, var(--hara-spectrum-blue) 27%, transparent) 12.2%, transparent 12.5% 25%);
+  filter: blur(14px);
+  opacity: .3;
+}
+
+.hara-backdrop[data-effect="flow"] .hara-backdrop__grid {
+  background-image:
+    repeating-radial-gradient(ellipse at 62% 50%, transparent 0 9%, color-mix(in srgb, var(--hara-text) 8%, transparent) 9.2%, transparent 9.5% 17%),
+    linear-gradient(color-mix(in srgb, var(--hara-text) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--hara-text) 7%, transparent) 1px, transparent 1px);
+  background-size: 100% 100%, var(--hara-field-grid) var(--hara-field-grid), var(--hara-field-grid) var(--hara-field-grid);
+}
+
+.hara-backdrop[data-effect="flow"] .hara-backdrop__trace {
+  inset: 10%;
+  background: conic-gradient(from 0deg, var(--hara-spectrum-cyan), transparent 16% 34%, var(--hara-spectrum-blue) 48%, transparent 62% 78%, var(--hara-spectrum-violet));
+  filter: blur(20px);
+  mask-image: radial-gradient(ellipse, transparent 0 56%, #000 58% 63%, transparent 65%);
+  opacity: .46;
+}
+
+.hara-backdrop[data-effect="kernel"] .hara-backdrop__field {
+  inset: 4%;
+  border: 1px solid color-mix(in srgb, var(--hara-spectrum-blue) 28%, transparent);
+  border-radius: 8%;
+  background: repeating-radial-gradient(ellipse at 62% 50%, transparent 0 8%, color-mix(in srgb, var(--hara-spectrum-blue) 16%, transparent) 8.3%, transparent 8.7% 15%);
+  filter: none;
+  opacity: .7;
+}
+
+.hara-backdrop[data-effect="kernel"] .hara-backdrop__trace {
+  inset: 10%;
+  border-radius: 8%;
+  background:
+    linear-gradient(90deg, transparent 0 48%, color-mix(in srgb, var(--hara-spectrum-cyan) 35%, transparent) 50%, transparent 52%),
+    linear-gradient(transparent 0 48%, color-mix(in srgb, var(--hara-spectrum-violet) 32%, transparent) 50%, transparent 52%);
+  filter: none;
+  opacity: .38;
+}
+
+.hara-backdrop[data-motion="on"] .hara-backdrop__field { animation: hara-field-drift 18s ease-in-out infinite alternate; }
+.hara-backdrop[data-motion="on"] .hara-backdrop__trace { animation: hara-field-orbit 30s linear infinite; }
+.hara-backdrop[data-motion="on"] .hara-backdrop__nodes { animation: hara-field-pulse 6s ease-in-out infinite alternate; }
+.hara-backdrop[data-motion="on"] .hara-backdrop__mark { animation: hara-field-breathe 8s ease-in-out infinite; }
+
+@keyframes hara-field-drift {
+  from { transform: translate3d(-2%, 1%, 0) scale(1.06) rotate(-1deg); }
+  to { transform: translate3d(3%, -2%, 0) scale(1.13) rotate(2deg); }
+}
+
+@keyframes hara-field-orbit { to { transform: rotate(1turn); } }
+@keyframes hara-field-pulse { from { opacity: .3; transform: scale(.985); } to { opacity: .76; transform: scale(1.015); } }
+@keyframes hara-field-breathe { 0%,100% { opacity: .09; transform: scale(.98); } 50% { opacity: .16; transform: scale(1.02); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hara-backdrop[data-motion="on"] > * { animation: none !important; }
+}
+
+@media (max-width: 680px) {
+  .hara-backdrop {
+    --hara-field-grid: 64px;
+    --hara-field-mark: min(72vw, 24rem);
+  }
+  .hara-backdrop__mark { left: 68%; }
+  .hara-backdrop[data-intensity="quiet"] { --hara-field-grid: 88px; --hara-field-mark: min(62vw, 21rem); }
+  .hara-backdrop[data-intensity="dense"] { --hara-field-grid: 42px; --hara-field-mark: min(88vw, 29rem); }
+}

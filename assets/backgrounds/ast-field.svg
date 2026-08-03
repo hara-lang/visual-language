@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4096 2304" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="title desc">
+  <title id="title">Hara syntax tree field</title>
+  <desc id="desc">An abstract syntax tree branches across a precision grid from a central evaluation node, with restrained cyan, blue, and violet signals.</desc>
+  <defs>
+    <linearGradient id="spectrum" x1="500" y1="240" x2="3590" y2="2050" gradientUnits="userSpaceOnUse"><stop stop-color="#27B8B0"/><stop offset=".5" stop-color="#2F7CFF"/><stop offset="1" stop-color="#7957D5"/></linearGradient>
+    <pattern id="grid" width="128" height="128" patternUnits="userSpaceOnUse"><path d="M128 0H0V128" fill="none" stroke="var(--grid)" stroke-width="2"/></pattern>
+    <radialGradient id="focus"><stop stop-color="#2F7CFF" stop-opacity=".22"/><stop offset=".45" stop-color="#27B8B0" stop-opacity=".06"/><stop offset="1" stop-color="#7957D5" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>:root{--ground:#f6f8fa;--ink:#11151a;--grid:rgba(24,31,38,.075)}@media(prefers-color-scheme:dark){:root{--ground:#050608;--ink:#f4f6f8;--grid:rgba(222,231,240,.065)}}</style>
+  </defs>
+  <rect width="4096" height="2304" fill="var(--ground)"/><rect width="4096" height="2304" fill="url(#grid)"/><circle cx="2048" cy="1120" r="960" fill="url(#focus)"/>
+  <g fill="none" stroke="url(#spectrum)" stroke-width="7" opacity=".46">
+    <path d="M2048 1110C2048 900 1420 900 1420 690M2048 1110C2048 900 2670 900 2670 690"/>
+    <path d="M1420 690C1420 510 930 510 930 330M1420 690C1420 500 1650 500 1650 310M2670 690C2670 500 2425 500 2425 310M2670 690C2670 510 3170 510 3170 330"/>
+    <path d="M2048 1110C2048 1320 1170 1320 1170 1530M2048 1110C2048 1390 1730 1390 1730 1670M2048 1110C2048 1390 2360 1390 2360 1670M2048 1110C2048 1320 2910 1320 2910 1530"/>
+    <path d="M1170 1530C1170 1730 830 1730 830 1930M1170 1530C1170 1760 1370 1760 1370 1990M1730 1670C1730 1850 1570 1850 1570 2030M1730 1670C1730 1840 1900 1840 1900 2010M2360 1670C2360 1840 2190 1840 2190 2010M2360 1670C2360 1850 2530 1850 2530 2030M2910 1530C2910 1760 2710 1760 2710 1990M2910 1530C2910 1730 3260 1730 3260 1930"/>
+  </g>
+  <g filter="url(#glow)">
+    <circle cx="2048" cy="1110" r="48" fill="var(--ground)" stroke="#2F7CFF" stroke-width="9"/><circle cx="2048" cy="1110" r="19" fill="#2F7CFF"/>
+    <g fill="var(--ground)" stroke="#27B8B0" stroke-width="7"><circle cx="1420" cy="690" r="32"/><circle cx="2670" cy="690" r="32"/></g>
+    <g fill="var(--ground)" stroke="#7957D5" stroke-width="7"><circle cx="1170" cy="1530" r="29"/><circle cx="1730" cy="1670" r="29"/><circle cx="2360" cy="1670" r="29"/><circle cx="2910" cy="1530" r="29"/></g>
+    <g fill="var(--ground)" stroke="url(#spectrum)" stroke-width="6"><circle cx="930" cy="330" r="23"/><circle cx="1650" cy="310" r="23"/><circle cx="2425" cy="310" r="23"/><circle cx="3170" cy="330" r="23"/><circle cx="830" cy="1930" r="23"/><circle cx="1370" cy="1990" r="23"/><circle cx="1570" cy="2030" r="23"/><circle cx="1900" cy="2010" r="23"/><circle cx="2190" cy="2010" r="23"/><circle cx="2530" cy="2030" r="23"/><circle cx="2710" cy="1990" r="23"/><circle cx="3260" cy="1930" r="23"/></g>
+  </g>
+  <g fill="none" stroke="var(--ink)" stroke-linecap="round" opacity=".16"><path d="M420 300C90 650 90 1650 420 2000" stroke-width="28"/><path d="M3676 300c330 350 330 1350 0 1700" stroke-width="28"/></g>
+</svg>

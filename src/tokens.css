@@ -8,6 +8,12 @@
   --hara-space-page: clamp(20px, 4vw, 64px);
   --hara-content: 1180px;
   --hara-signal: #2f7cff;
+  --hara-spectrum-cyan: #27b8b0;
+  --hara-spectrum-blue: #2f7cff;
+  --hara-spectrum-violet: #7957d5;
+  --hara-spectrum: linear-gradient(118deg, var(--hara-spectrum-cyan), var(--hara-spectrum-blue) 52%, var(--hara-spectrum-violet));
+  --hara-void: #050608;
+  --hara-frost: #f4f6f8;
   --hara-success: #238a5b;
   --hara-warning: #a66512;
   --hara-danger: #c63b4d;
@@ -44,6 +50,9 @@
   --hara-line-strong: rgba(222, 231, 240, .20);
   --hara-shadow: 0 20px 70px rgba(0, 0, 0, .42);
   --hara-metal: linear-gradient(135deg, #252a31, #0c0e12 52%, #20242a);
+  --hara-spectrum-cyan: #44d7c8;
+  --hara-spectrum-blue: #4d8cff;
+  --hara-spectrum-violet: #9b7cff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -59,5 +68,8 @@
     --hara-line: rgba(222, 231, 240, .10);
     --hara-line-strong: rgba(222, 231, 240, .20);
     --hara-shadow: 0 20px 70px rgba(0, 0, 0, .42);
+    --hara-spectrum-cyan: #44d7c8;
+    --hara-spectrum-blue: #4d8cff;
+    --hara-spectrum-violet: #9b7cff;
   }
 }

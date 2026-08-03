@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4096 2304" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="title desc">
+  <title id="title">Hara dataflow orbit</title>
+  <desc id="desc">Concentric execution paths, directional traces, and observable state nodes orbit a compact Hara core.</desc>
+  <defs>
+    <linearGradient id="spectrum" x1="500" y1="260" x2="3620" y2="2030" gradientUnits="userSpaceOnUse"><stop stop-color="#27B8B0"/><stop offset=".5" stop-color="#2F7CFF"/><stop offset="1" stop-color="#7957D5"/></linearGradient>
+    <pattern id="grid" width="128" height="128" patternUnits="userSpaceOnUse"><path d="M128 0H0V128" fill="none" stroke="var(--grid)" stroke-width="2"/></pattern>
+    <radialGradient id="core"><stop stop-color="#2F7CFF" stop-opacity=".23"/><stop offset=".5" stop-color="#27B8B0" stop-opacity=".06"/><stop offset="1" stop-color="#7957D5" stop-opacity="0"/></radialGradient>
+    <marker id="arrow" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1l12 6-12 6Z" fill="#2F7CFF"/></marker>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="13" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>:root{--ground:#f6f8fa;--ink:#11151a;--grid:rgba(24,31,38,.07)}@media(prefers-color-scheme:dark){:root{--ground:#050608;--ink:#f4f6f8;--grid:rgba(222,231,240,.06)}}</style>
+  </defs>
+  <rect width="4096" height="2304" fill="var(--ground)"/><rect width="4096" height="2304" fill="url(#grid)"/><ellipse cx="2350" cy="1152" rx="1450" ry="1020" fill="url(#core)"/>
+  <g transform="translate(250 0)" fill="none" stroke="url(#spectrum)"><ellipse cx="2100" cy="1152" rx="520" ry="330" stroke-width="14" opacity=".72"/><ellipse cx="2100" cy="1152" rx="860" ry="550" stroke-width="8" stroke-dasharray="28 36" opacity=".48"/><ellipse cx="2100" cy="1152" rx="1210" ry="775" stroke-width="4" stroke-dasharray="8 42" opacity=".3"/><ellipse cx="2100" cy="1152" rx="1510" ry="970" stroke-width="2" opacity=".16"/></g>
+  <g fill="none" stroke-linecap="round" marker-end="url(#arrow)"><path d="M180 1560C870 1760 1160 1120 1770 1260s1040 510 1560 30 690-480 910-350" stroke="#27B8B0" stroke-width="12" opacity=".66"/><path d="M260 720C920 420 1390 910 1880 690s900-260 1330 110 570 430 830 300" stroke="#7957D5" stroke-width="8" opacity=".5"/></g>
+  <g filter="url(#glow)" fill="var(--ground)" stroke-width="7"><circle cx="1830" cy="900" r="18" stroke="#27B8B0"/><circle cx="2260" cy="820" r="18" stroke="#2F7CFF"/><circle cx="2760" cy="930" r="18" stroke="#7957D5"/><circle cx="3020" cy="1230" r="18" stroke="#27B8B0"/><circle cx="2560" cy="1480" r="18" stroke="#2F7CFF"/><circle cx="1990" cy="1420" r="18" stroke="#7957D5"/></g>
+  <g transform="translate(2118 920) scale(6.5)" opacity=".62"><path fill="var(--ink)" d="M10 8h13v18h18V8h13v48H41V38H23v18H10z"/><path fill="#2F7CFF" d="M27 8h10v10H27z"/></g>
+</svg>
