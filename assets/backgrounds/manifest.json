@@ -1,0 +1,21 @@
+{
+  "name": "Hara field backgrounds",
+  "version": 1,
+  "canvas": "4096 x 2304",
+  "format": "adaptive SVG",
+  "resolutionIndependent": true,
+  "palette": {
+    "cyan": "#27B8B0",
+    "blue": "#2F7CFF",
+    "violet": "#7957D5",
+    "lightGround": "#F6F8FA",
+    "darkGround": "#050608"
+  },
+  "assets": [
+    { "id": "evaluation", "file": "evaluation-field.svg", "use": "hero and evaluation state" },
+    { "id": "syntax", "file": "ast-field.svg", "use": "compiler, AST, and macroexpansion" },
+    { "id": "lattice", "file": "symbol-lattice.svg", "use": "section texture and covers" },
+    { "id": "flow", "file": "dataflow-orbit.svg", "use": "dataflow, agents, and orchestration" },
+    { "id": "kernel", "file": "kernel-depth.svg", "use": "runtime, VM, WASM, and stack depth" }
+  ]
+}
