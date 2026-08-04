@@ -39,5 +39,9 @@ import "@hara-lang/visual-language/effects.css";
 See [`HARA-IMAGERY.md`](./HARA-IMAGERY.md) for the complete identity, asset,
 motion, accessibility, and composition rules.
 
+The shared Open Graph system adds six `3840 × 2016` material masters and twelve
+site-specific cards with deterministic typography. See
+[`OG-IMAGERY.md`](./OG-IMAGERY.md) and rebuild them with `npm run assets:og`.
+
 The theme script stores `system`, `light`, or `dark` in the `hara-theme` cookie
 on `hara-lang.org` and uses local storage on local hosts.

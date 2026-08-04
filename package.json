@@ -14,6 +14,7 @@
     "assets",
     "README.md",
     "HARA-IMAGERY.md",
+    "OG-IMAGERY.md",
     "LICENSE"
   ],
   "exports": {
@@ -31,6 +32,7 @@
   },
   "scripts": {
     "assets:build": "node scripts/build-motifs.mjs",
+    "assets:og": "node scripts/build-og.mjs",
     "test": "node --test test/*.test.mjs",
     "site:dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev --root site",
     "site:build": "ASTRO_TELEMETRY_DISABLED=1 astro build --root site"
