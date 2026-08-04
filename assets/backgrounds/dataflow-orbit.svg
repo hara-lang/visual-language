@@ -1,17 +1,107 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4096 2304" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="title desc">
-  <title id="title">Hara dataflow orbit</title>
-  <desc id="desc">Concentric execution paths, directional traces, and observable state nodes orbit a compact Hara core.</desc>
+<title id="title">Hara instrument aperture</title>
+<desc id="desc">Concentric instrument rings, calibration ticks, and linear data rails surround a precise blue state indicator.</desc>
+
   <defs>
-    <linearGradient id="spectrum" x1="500" y1="260" x2="3620" y2="2030" gradientUnits="userSpaceOnUse"><stop stop-color="#27B8B0"/><stop offset=".5" stop-color="#2F7CFF"/><stop offset="1" stop-color="#7957D5"/></linearGradient>
-    <pattern id="grid" width="128" height="128" patternUnits="userSpaceOnUse"><path d="M128 0H0V128" fill="none" stroke="var(--grid)" stroke-width="2"/></pattern>
-    <radialGradient id="core"><stop stop-color="#2F7CFF" stop-opacity=".23"/><stop offset=".5" stop-color="#27B8B0" stop-opacity=".06"/><stop offset="1" stop-color="#7957D5" stop-opacity="0"/></radialGradient>
-    <marker id="arrow" viewBox="0 0 14 14" refX="11" refY="7" markerWidth="10" markerHeight="10" orient="auto"><path d="M1 1l12 6-12 6Z" fill="#2F7CFF"/></marker>
-    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="13" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <style>:root{--ground:#f6f8fa;--ink:#11151a;--grid:rgba(24,31,38,.07)}@media(prefers-color-scheme:dark){:root{--ground:#050608;--ink:#f4f6f8;--grid:rgba(222,231,240,.06)}}</style>
+    <style>
+      :root{
+        --ground:#f6f8fa;
+        --ground2:#ffffff;
+        --plate:#e7ebef;
+        --plate2:#cfd5db;
+        --ink:#11151a;
+        --line:#5e6873;
+        --faint:#8b949e;
+        --recess:#b8c0c8;
+        --signal:#2f7cff;
+        --signalSoft:#8db2ff;
+      }
+      @media(prefers-color-scheme:dark){
+        :root{
+          --ground:#050608;
+          --ground2:#080a0d;
+          --plate:#11151a;
+          --plate2:#20262d;
+          --ink:#f4f6f8;
+          --line:#9aa4af;
+          --faint:#6f7882;
+          --recess:#0b0e12;
+          --signal:#4d8cff;
+          --signalSoft:#8db2ff;
+        }
+      }
+    </style>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="var(--ground2)"/>
+      <stop offset=".55" stop-color="var(--ground)"/>
+      <stop offset="1" stop-color="var(--plate)"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="var(--plate2)"/>
+      <stop offset=".34" stop-color="var(--ground2)"/>
+      <stop offset=".62" stop-color="var(--plate)"/>
+      <stop offset="1" stop-color="var(--plate2)"/>
+    </linearGradient>
+    <linearGradient id="darkMetal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="var(--recess)"/>
+      <stop offset=".5" stop-color="var(--plate)"/>
+      <stop offset="1" stop-color="var(--ground)"/>
+    </linearGradient>
+    <pattern id="microgrid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="var(--ink)" stroke-width="2" opacity=".045"/>
+      <circle cx="0" cy="0" r="2.5" fill="var(--ink)" opacity=".07"/>
+    </pattern>
+    <pattern id="brush" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M0 3H16M0 8H16M0 13H16" stroke="var(--ink)" stroke-width="1" opacity=".025"/>
+    </pattern>
+    <filter id="signalGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="28" stdDeviation="38" flood-color="#000" flood-opacity=".22"/>
+    </filter>
+    <clipPath id="frameClip"><rect x="128" y="128" width="3840" height="2048" rx="44"/></clipPath>
   </defs>
-  <rect width="4096" height="2304" fill="var(--ground)"/><rect width="4096" height="2304" fill="url(#grid)"/><ellipse cx="2350" cy="1152" rx="1450" ry="1020" fill="url(#core)"/>
-  <g transform="translate(250 0)" fill="none" stroke="url(#spectrum)"><ellipse cx="2100" cy="1152" rx="520" ry="330" stroke-width="14" opacity=".72"/><ellipse cx="2100" cy="1152" rx="860" ry="550" stroke-width="8" stroke-dasharray="28 36" opacity=".48"/><ellipse cx="2100" cy="1152" rx="1210" ry="775" stroke-width="4" stroke-dasharray="8 42" opacity=".3"/><ellipse cx="2100" cy="1152" rx="1510" ry="970" stroke-width="2" opacity=".16"/></g>
-  <g fill="none" stroke-linecap="round" marker-end="url(#arrow)"><path d="M180 1560C870 1760 1160 1120 1770 1260s1040 510 1560 30 690-480 910-350" stroke="#27B8B0" stroke-width="12" opacity=".66"/><path d="M260 720C920 420 1390 910 1880 690s900-260 1330 110 570 430 830 300" stroke="#7957D5" stroke-width="8" opacity=".5"/></g>
-  <g filter="url(#glow)" fill="var(--ground)" stroke-width="7"><circle cx="1830" cy="900" r="18" stroke="#27B8B0"/><circle cx="2260" cy="820" r="18" stroke="#2F7CFF"/><circle cx="2760" cy="930" r="18" stroke="#7957D5"/><circle cx="3020" cy="1230" r="18" stroke="#27B8B0"/><circle cx="2560" cy="1480" r="18" stroke="#2F7CFF"/><circle cx="1990" cy="1420" r="18" stroke="#7957D5"/></g>
-  <g transform="translate(2118 920) scale(6.5)" opacity=".62"><path fill="var(--ink)" d="M10 8h13v18h18V8h13v48H41V38H23v18H10z"/><path fill="#2F7CFF" d="M27 8h10v10H27z"/></g>
+
+<rect width="4096" height="2304" fill="url(#ground)"/>
+<rect width="4096" height="2304" fill="url(#microgrid)"/>
+<g transform="translate(2750 1152)">
+  <circle r="870" fill="var(--recess)" opacity=".5"/>
+  <circle r="790" fill="var(--ground2)" stroke="var(--ink)" stroke-width="5" opacity=".96"/>
+  <circle r="640" fill="none" stroke="var(--recess)" stroke-width="110"/>
+  <circle r="640" fill="none" stroke="var(--ink)" stroke-width="5" opacity=".45"/>
+  <circle r="430" fill="url(#darkMetal)" stroke="var(--ink)" stroke-width="6"/>
+  <circle r="235" fill="var(--ground)" stroke="var(--ink)" stroke-width="5"/>
+  <g fill="none" stroke="var(--ink)" opacity=".5">
+    <circle r="715" stroke-width="3" stroke-dasharray="6 24"/>
+    <circle r="530" stroke-width="3" stroke-dasharray="4 20"/>
+  </g>
+  <g stroke="var(--ink)" stroke-width="8" opacity=".45">
+    <path d="M0-835V-760M0 835V760M-835 0H-760M835 0H760"/>
+    <path d="M-590-590L-540-540M590-590L540-540M-590 590L-540 540M590 590L540 540"/>
+  </g>
+  <g filter="url(#signalGlow)">
+    <circle r="88" fill="var(--ground)" stroke="var(--signal)" stroke-width="10"/>
+    <circle r="24" fill="var(--signal)"/>
+  </g>
+</g>
+<g fill="none" stroke="var(--ink)" opacity=".42">
+  <path d="M180 620H1770L2170 900H2530" stroke-width="8"/>
+  <path d="M180 820H1480L1900 1110H2530" stroke-width="4"/>
+  <path d="M180 1030H1280L1780 1350H2530" stroke-width="6"/>
+  <path d="M180 1240H1500L1960 1540H2530" stroke-width="4"/>
+  <path d="M180 1450H1770L2170 1740H2530" stroke-width="8"/>
+</g>
+<g fill="var(--signal)" opacity=".78">
+  <circle cx="1770" cy="620" r="11"/><circle cx="1480" cy="820" r="8"/><circle cx="1280" cy="1030" r="10"/><circle cx="1500" cy="1240" r="8"/><circle cx="1770" cy="1450" r="11"/>
+</g>
+<g fill="var(--ink)" opacity=".25">
+  <rect x="180" y="260" width="880" height="12" rx="6"/>
+  <rect x="180" y="302" width="540" height="6" rx="3"/>
+  <rect x="180" y="1980" width="880" height="12" rx="6"/>
+  <rect x="180" y="1938" width="540" height="6" rx="3"/>
+</g>
+<rect x="128" y="128" width="3840" height="2048" rx="44" fill="none" stroke="var(--ink)" stroke-width="4" opacity=".18"/>
+<rect width="4096" height="2304" fill="url(#brush)"/>
 </svg>

@@ -11,14 +11,17 @@ const backgrounds = [
   "kernel-depth.svg",
 ];
 
-test("field system is exported from the package", async () => {
+test("material field system is exported from the package", async () => {
   const pkg = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
   assert.equal(pkg.homepage, "https://hara-lang.github.io/visual-language/");
   assert.equal(pkg.exports["./effects.css"], "./src/effects.css");
-  assert.equal(pkg.exports["./astro/Backdrop.astro"], "./src/astro/Backdrop.astro");
+  assert.equal(
+    pkg.exports["./astro/Backdrop.astro"],
+    "./src/astro/Backdrop.astro",
+  );
 });
 
-test("backgrounds are accessible maximum-resolution vector assets", async () => {
+test("backgrounds are adaptive maximum-resolution material assets", async () => {
   for (const name of backgrounds) {
     const source = await readFile(
       new URL(`assets/backgrounds/${name}`, root),
@@ -31,10 +34,11 @@ test("backgrounds are accessible maximum-resolution vector assets", async () => 
     assert.match(source, /<desc id="desc">/);
     assert.match(source, /prefers-color-scheme:\s*dark/);
     assert.match(source, /#2F7CFF/i);
+    assert.doesNotMatch(source, /#7957D5|#27B8B0/i);
   }
 });
 
-test("live effects expose variants and reduced-motion behavior", async () => {
+test("live effects are restrained and motion is opt-in", async () => {
   const effects = await readFile(new URL("src/effects.css", root), "utf8");
   const component = await readFile(
     new URL("src/astro/Backdrop.astro", root),
@@ -44,9 +48,26 @@ test("live effects expose variants and reduced-motion behavior", async () => {
   for (const effect of ["evaluation", "syntax", "lattice", "flow", "kernel"])
     assert.match(component, new RegExp(`\\"${effect}\\"`));
 
+  assert.match(component, /motion = false/);
   assert.match(effects, /prefers-reduced-motion:\s*reduce/);
   assert.match(effects, /data-intensity="dense"/);
   assert.match(effects, /data-motion="on"/);
+  assert.doesNotMatch(effects, /rotate\(1turn\)|field-breathe|radial-gradient\(circle at 14% 72%/);
+});
+
+test("material direction preserves the benchmark reference", async () => {
+  const readme = await readFile(new URL("README.md", root), "utf8");
+  const direction = await readFile(
+    new URL("HARA-IMAGERY.md", root),
+    "utf8",
+  );
+  const motifs = await readFile(new URL("src/motifs.css", root), "utf8");
+
+  assert.match(readme, /Hara benchmarks hero/);
+  assert.match(direction, /Rack.*benchmark page/s);
+  assert.match(direction, /Do not replace them with biological reinterpretations/);
+  assert.match(motifs, /rack-dark-2560\.avif/);
+  assert.doesNotMatch(direction, /cyan → blue → violet/);
 });
 
 test("README links to the published Pages site", async () => {

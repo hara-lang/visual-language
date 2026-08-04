@@ -1,6 +1,13 @@
-# Hara imagery and field system
+# Hara imagery and material system
 
-Hara imagery makes computation visible without turning the interface into generic cyberpunk decoration. The visual language stays precise, material, and quiet: structure first, signal second, atmosphere last.
+Hara imagery is engineered rather than illustrated. It should feel like a
+language kernel housed in an exact instrument: machined, inspectable, severe,
+and built to survive sustained use.
+
+The reference character is the **Rack** treatment used on the Hara benchmarks
+hero. Edge, Aperture, and Rack remain the three primary environments. New
+backgrounds and effects extend their material grammar; they do not replace or
+reinterpret them.
 
 ## Live laboratory
 
@@ -10,41 +17,73 @@ The published visual language is available at:
 
 The Pages site is rebuilt from `main` by `.github/workflows/pages.yml`.
 
-## Identity anchors
+## Direction
 
-The existing Hara mark remains the primary identity. The field system extends it with a restrained directional spectrum:
+Hara combines four qualities:
 
-- **Cyan** `#27B8B0` — live state and entry
-- **Blue** `#2F7CFF` — evaluation and movement
-- **Violet** `#7957D5` — expansion and emergence
-- **Void** `#050608` — dark computational ground
-- **Frost** `#F4F6F8` — light on the dark ground
+- **precision engineering** — calibrated spacing, exact seams, routed conduits,
+  instrument ticks, and visible construction;
+- **military-grade restraint** — graphite, frost, brushed metal, one functional
+  signal colour, and very little ornament;
+- **gothic structure** — pointed vaults, lancet frames, ribs, tracery, and
+  vertical tension;
+- **alien intelligence** — unfamiliar proportions and non-human geometry
+  without soft biological forms or fantasy decoration.
 
-Use cyan → blue → violet as a semantic progression, not as a decorative rainbow. Most interface chrome should remain neutral; the spectrum belongs in state, focus, paths, and large atmospheric fields.
+The identity is not whimsical, psychedelic, playful, organic, or cyberpunk.
+Avoid auroras, multi-colour gradients, decorative particle fields, soft glowing
+blobs, rotating orbits, breathing logos, and mascot-like motifs.
+
+## Core material palette
+
+- **Signal** `#2F7CFF` — state, focus, execution, and active instrumentation
+- **Signal soft** `#8DB2FF` — sparse secondary illumination
+- **Void** `#050608` — dark ground
+- **Frost** `#F4F6F8` — light ground and dark-mode text
+- **Graphite plate** `#11151A` — dark engineered surface
+- **Pale plate** `#E7EBEF` — light engineered surface
+
+Signal blue is singular and functional. It should occupy less than five percent
+of most compositions.
+
+## Primary motifs
+
+### Edge
+
+A machined boundary, plate seam, or exact transition between systems. Edge is
+directional and should imply tolerance, force, and controlled separation.
+
+### Aperture
+
+An instrument opening, inspection port, or calibrated lens. Aperture should feel
+mechanical and exact, never like an eye, flower, or organic iris.
+
+### Rack
+
+A receding structural frame, equipment bay, or vault. Rack is the main reference
+for large Hara heroes, including the benchmark page.
+
+The original 4096px masters and responsive AVIF/WebP assets for all three motifs
+are preserved. Do not replace them with biological reinterpretations.
 
 ## Static backgrounds
 
-Every background is an adaptive SVG on a `4096 × 2304` design canvas. SVG is resolution-independent, so the same source can be exported at 4K, 8K, print, or smaller responsive sizes without losing sharpness.
+Every background is an adaptive SVG on a `4096 × 2304` design canvas. SVG is
+resolution-independent, so the same source can be exported at 4K, 8K, print, or
+smaller responsive sizes without losing sharpness.
 
-| Asset | Purpose |
+| Asset | Material interpretation |
 | --- | --- |
-| `assets/backgrounds/evaluation-field.svg` | Hero, launch, and evaluation state |
-| `assets/backgrounds/ast-field.svg` | Compiler, AST, and macroexpansion material |
-| `assets/backgrounds/symbol-lattice.svg` | Section texture, covers, and repeated symbolic fields |
-| `assets/backgrounds/dataflow-orbit.svg` | State, agents, events, and orchestration |
-| `assets/backgrounds/kernel-depth.svg` | Runtime, VM, WASM, and execution-stack depth |
+| `assets/backgrounds/evaluation-field.svg` | Armoured evaluation seam and calibrated execution point |
+| `assets/backgrounds/ast-field.svg` | Routed syntax conduits inside a lancet frame |
+| `assets/backgrounds/symbol-lattice.svg` | Machined gothic tracery and H-bracing |
+| `assets/backgrounds/dataflow-orbit.svg` | Instrument aperture with linear data rails |
+| `assets/backgrounds/kernel-depth.svg` | Receding rack vault and execution core |
 
-The files use `prefers-color-scheme` internally, include accessible titles and descriptions, and contain no embedded text that would interfere with localisation or responsive cropping.
-
-## Motifs
-
-Edge, Aperture, and Rack are the recurring material motifs behind heroes and section surfaces. The artwork is biological gothic: brushed black/white metal whose forms curve organically rather than geometrically — Edge is a carapace seam, Aperture an organic iris, Rack a ribcage vault. Each carries exactly one restrained signal accent; the spectrum never spreads across the metal.
-
-The artwork is parametric. SVG sources in `assets/motifs/source/` are emitted by `scripts/generate-motif-sources.mjs`, rendered to 4096px masters with `scripts/render-masters.mjs`, and cut into responsive AVIF/WebP assets with `npm run assets:build`.
+The files use `prefers-color-scheme` internally, include accessible titles and
+descriptions, and contain no embedded display text.
 
 ## Live effects
-
-Import the effect layer and component:
 
 ```astro
 ---
@@ -54,42 +93,37 @@ import "@hara-lang/visual-language/effects.css";
 ---
 
 <section class="hero">
-  <Backdrop effect="syntax" intensity="balanced" />
+  <Backdrop effect="kernel" intensity="quiet" />
   <div class="hero__content">
-    <h1>Inspect the whole evaluation path.</h1>
+    <h1>Precision under load.</h1>
   </div>
 </section>
-
-<style>
-  .hero {
-    position: relative;
-    isolation: isolate;
-    min-height: 42rem;
-    overflow: hidden;
-  }
-
-  .hero__content {
-    position: relative;
-    z-index: 1;
-  }
-</style>
 ```
 
-Available effects are `evaluation`, `syntax`, `lattice`, `flow`, and `kernel`. Intensity may be `quiet`, `balanced`, or `dense`. Motion is enabled by default and stops under `prefers-reduced-motion`.
+Available effects are `evaluation`, `syntax`, `lattice`, `flow`, and `kernel`.
+Intensity may be `quiet`, `balanced`, or `dense`.
+
+Motion is **off by default**. Opt-in motion is limited to a small calibration
+scan and stepped indicator change. No effect rotates, breathes, floats, or
+scales. `prefers-reduced-motion` disables all opt-in animation.
 
 For a meaningful illustration rather than a decorative field, provide a label:
 
 ```astro
 <Backdrop
   effect="flow"
-  label="Live state moving through Hara evaluation paths"
+  label="Calibrated state passing through a Hara instrument aperture"
 />
 ```
 
 ## Composition rules
 
-Use one dominant field per viewport and no more than two supporting effects. Keep primary text above the effect layer. For dense backgrounds, place content on `var(--hara-surface)` or use the `quiet` intensity.
+Use one primary material environment per viewport. Leave broad areas of
+uninterrupted surface around headings and code. Align seams, rails, and vault
+axes to the content grid. Use the `quiet` intensity behind reading material.
 
-Do not recolour the spectrum into unrelated project palettes, add random particle noise, place text inside the SVG files, or use effects that compete with code, diagrams, and documentation.
+Rounded glass cards, bright gradient buttons, and decorative glows weaken the
+system. Prefer exact borders, small radii, inset highlights, hard alignment, and
+one active signal.
 
-The intended character is **inspectable computation with calm agency**.
+The intended character is **alien precision, grounded in material**.
