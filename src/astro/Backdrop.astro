@@ -12,7 +12,7 @@ type Props = {
 const {
   effect = "evaluation",
   intensity = "balanced",
-  motion = true,
+  motion = false,
   label,
   class: className = "",
 } = Astro.props;
@@ -34,6 +34,6 @@ const decorative = !label;
   <span class="hara-backdrop__nodes"></span>
   <svg class="hara-backdrop__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
     <path fill="currentColor" d="M10 8h13v18h18V8h13v48H41V38H23v18H10z" />
-    <path fill="var(--hara-spectrum-blue)" d="M27 8h10v10H27z" />
+    <path fill="var(--hara-signal)" d="M27 8h10v10H27z" />
   </svg>
 </div>
