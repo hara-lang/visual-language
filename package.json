@@ -31,6 +31,8 @@
     "./assets/*": "./assets/*"
   },
   "scripts": {
+    "assets:sources": "node scripts/generate-motif-sources.mjs",
+    "assets:masters": "node scripts/render-masters.mjs",
     "assets:build": "node scripts/build-motifs.mjs",
     "assets:og": "node scripts/build-og.mjs",
     "test": "node --test test/*.test.mjs",

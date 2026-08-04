@@ -36,6 +36,12 @@ Every background is an adaptive SVG on a `4096 × 2304` design canvas. SVG is re
 
 The files use `prefers-color-scheme` internally, include accessible titles and descriptions, and contain no embedded text that would interfere with localisation or responsive cropping.
 
+## Motifs
+
+Edge, Aperture, and Rack are the recurring material motifs behind heroes and section surfaces. The artwork is biological gothic: brushed black/white metal whose forms curve organically rather than geometrically — Edge is a carapace seam, Aperture an organic iris, Rack a ribcage vault. Each carries exactly one restrained signal accent; the spectrum never spreads across the metal.
+
+The artwork is parametric. SVG sources in `assets/motifs/source/` are emitted by `scripts/generate-motif-sources.mjs`, rendered to 4096px masters with `scripts/render-masters.mjs`, and cut into responsive AVIF/WebP assets with `npm run assets:build`.
+
 ## Live effects
 
 Import the effect layer and component:
