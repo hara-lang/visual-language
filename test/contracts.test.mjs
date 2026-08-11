@@ -12,9 +12,11 @@ test("exports the public theme and Astro contract", () => {
 
 test("theme contract supports cross-domain system, light, and dark preferences", async () => {
   const source = await readFile(new URL("../src/theme.js", import.meta.url), "utf8");
+  const toggle = await readFile(new URL("../src/astro/ThemeToggle.astro", import.meta.url), "utf8");
   assert.match(source, /hara-theme/);
   assert.match(source, /Domain=hara-lang\.org/);
   assert.match(source, /hara:theme-change/);
+  assert.match(toggle, /getThemePreference\(\) \|\| "system"/);
 });
 
 test("motifs use restored responsive artwork instead of the low-resolution sprite", async () => {

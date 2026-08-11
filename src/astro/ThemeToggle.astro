@@ -8,7 +8,8 @@ const { label = "Theme" } = Astro.props;
   import { cycleTheme, getThemePreference } from "../theme.js";
   const sync = () => document.querySelectorAll("[data-hara-theme-toggle]").forEach((button) => {
     const label = button.querySelector("[data-hara-theme-label]");
-    if (label) label.textContent = getThemePreference().replace(/^./, (value) => value.toUpperCase());
+    const preference = getThemePreference() || "system";
+    if (label) label.textContent = preference.replace(/^./, (value) => value.toUpperCase());
   });
   document.addEventListener("astro:page-load", sync);
   addEventListener("hara:theme-change", sync);
