@@ -1,0 +1,13 @@
+@import "./theme.css";
+@import "./v2/tokens.css";
+@import "./v2/shell.css";
+@import "./v2/components.css";
+@import "./v2/content.css";
+@import "./v2/responsive.css";
+
+/*
+ * Hara interface language, version 2.
+ *
+ * This entry point is deliberately opt-in. Existing version-1 motifs, fields,
+ * and tokens remain unchanged.
+ */

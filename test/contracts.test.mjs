@@ -5,7 +5,9 @@ import test from "node:test";
 const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url)));
 test("exports the public theme and Astro contract", () => {
   for (const path of ["./tokens.css", "./theme.css", "./motifs.css", "./theme.js",
-    "./astro/ThemeToggle.astro", "./astro/HaraMark.astro", "./astro/Motif.astro", "./astro/Surface.astro"])
+    "./astro/ThemeToggle.astro", "./astro/HaraMark.astro", "./astro/Motif.astro", "./astro/Surface.astro",
+    "./v2.css", "./astro/v2/Shell.astro", "./astro/v2/Header.astro", "./astro/v2/ContextNav.astro",
+    "./astro/v2/Sidebar.astro", "./astro/v2/PageHeader.astro", "./astro/v2/FleetField.astro"])
     assert.ok(pkg.exports[path], `missing ${path}`);
   assert.equal(pkg.license, "MIT");
 });

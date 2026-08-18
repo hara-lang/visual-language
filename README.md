@@ -39,6 +39,34 @@ import "@hara-lang/visual-language/effects.css";
 Motion is off by default. See [`HARA-IMAGERY.md`](./HARA-IMAGERY.md) for the
 complete material, motion, accessibility, and composition rules.
 
+## Experimental interface language v2
+
+The v2 layer is an opt-in interface system for Hara WWW, Docs, Specs,
+Benchmarks, and World. It keeps the current block-H mark, signal dot, theme
+storage, and header font while moving application structure toward flatter
+fleet-command surfaces: one-pixel hull seams, compact rails, clipped controls,
+monochrome technical illustration, and a restrained hand-drawn second line.
+
+```astro
+---
+import Shell from "@hara-lang/visual-language/astro/v2/Shell.astro";
+import Header from "@hara-lang/visual-language/astro/v2/Header.astro";
+import ContextNav from "@hara-lang/visual-language/astro/v2/ContextNav.astro";
+import "@hara-lang/visual-language/v2.css";
+---
+
+<Shell sidebar={false}>
+  <Header slot="header" section="Specs" nav={ecosystemNav} />
+  <ContextNav slot="context" items={workflowNav} />
+  <section class="hara-v2-panel">...</section>
+</Shell>
+```
+
+The contract is intentionally additive: v1 tokens and motifs are unchanged, so
+sites can migrate layout family by layout family. See
+[`V2-THEME.md`](./V2-THEME.md) for identity invariants, site anatomy, responsive
+behaviour, and the proposed adoption sequence.
+
 The shared Open Graph system adds six `3840 × 2016` material masters and twelve
 site-specific cards with deterministic typography. See
 [`OG-IMAGERY.md`](./OG-IMAGERY.md) and rebuild them with `npm run assets:og`.

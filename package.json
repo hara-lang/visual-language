@@ -15,6 +15,7 @@
     "README.md",
     "HARA-IMAGERY.md",
     "OG-IMAGERY.md",
+    "V2-THEME.md",
     "LICENSE"
   ],
   "exports": {
@@ -22,12 +23,19 @@
     "./theme.css": "./src/theme.css",
     "./motifs.css": "./src/motifs.css",
     "./effects.css": "./src/effects.css",
+    "./v2.css": "./src/v2.css",
     "./theme.js": "./src/theme.js",
     "./astro/ThemeToggle.astro": "./src/astro/ThemeToggle.astro",
     "./astro/HaraMark.astro": "./src/astro/HaraMark.astro",
     "./astro/Motif.astro": "./src/astro/Motif.astro",
     "./astro/Backdrop.astro": "./src/astro/Backdrop.astro",
     "./astro/Surface.astro": "./src/astro/Surface.astro",
+    "./astro/v2/Shell.astro": "./src/astro/v2/Shell.astro",
+    "./astro/v2/Header.astro": "./src/astro/v2/Header.astro",
+    "./astro/v2/ContextNav.astro": "./src/astro/v2/ContextNav.astro",
+    "./astro/v2/Sidebar.astro": "./src/astro/v2/Sidebar.astro",
+    "./astro/v2/PageHeader.astro": "./src/astro/v2/PageHeader.astro",
+    "./astro/v2/FleetField.astro": "./src/astro/v2/FleetField.astro",
     "./assets/*": "./assets/*"
   },
   "scripts": {
