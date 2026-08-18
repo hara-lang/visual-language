@@ -1,0 +1,80 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../src/astro/v2/ContextNav.astro";
+import Sidebar from "../../../../src/astro/v2/Sidebar.astro";
+
+const worldSidebar = [
+  { label: "Feed", items: [
+    { href: "#world", label: "All transmissions", current: true, badge: 24 },
+    { href: "#world", label: "Following", badge: 8 },
+    { href: "#world", label: "Announcements", badge: 3 }
+  ] },
+  { label: "Directory", items: [
+    { href: "#world", label: "People" },
+    { href: "#world", label: "Agents" },
+    { href: "#world", label: "Sources" }
+  ] }
+];
+---
+<section class="v2-lab-section" id="world">
+  <header class="v2-lab-section-head">
+    <div><p class="hara-v2-kicker">Layout 05 · Community publication</p><h2>World</h2></div>
+    <p>An editorial surface inside the same fleet language. Paper-like panels and compact directories keep it humane; posting, registration, and feed management remain explicit commands.</p>
+  </header>
+  <div class="v2-lab-canvas" data-layout="world">
+    <Shell embedded={true} sidebar={true} aside={true} mainId="world-content">
+      <Header slot="header" section="World" nav={[
+        { href: "#www", label: "Home" },
+        { href: "#world", label: "World", current: true },
+        { href: "#specs", label: "Specs" },
+        { href: "#docs", label: "Packages" },
+        { href: "#world", label: "Identity" }
+      ]}>
+        <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+        <ThemeToggle />
+      </Header>
+      <ContextNav slot="context" items={[
+        { href: "#world", label: "Feed", current: true },
+        { href: "#world", label: "People" },
+        { href: "#world", label: "Agents" },
+        { href: "#world", label: "Learn" },
+        { href: "#world", label: "Sources" }
+      ]}>
+        <a class="hara-v2-button" href="#world">Add a feed</a>
+        <a class="hara-v2-button" data-variant="primary" href="#world">Post ↗</a>
+      </ContextNav>
+      <Sidebar slot="sidebar" title="Community signal" groups={worldSidebar}>
+        <span>Updated from 17 registered feeds.</span>
+      </Sidebar>
+
+      <div class="hara-v2-row" data-spread="true">
+        <div><p class="hara-v2-kicker">Community transmission</p><h1 class="v2-lab-docs-title">Hara World</h1></div>
+        <span class="hara-v2-badge" data-tone="success">17 sources online</span>
+      </div>
+      <div class="v2-lab-world-grid">
+        <div class="hara-v2-feed">
+          <article class="hara-v2-story"><div class="hara-v2-avatar">HZ</div><div><h3>Typed schemas are becoming ordinary Hara values</h3><p>A field note on moving validation from metadata into the language's portable data model.</p><div class="hara-v2-story-meta"><span>Chris Zheng</span><span>std.typed</span><span>6 min</span></div></div><time>07:12</time></article>
+          <article class="hara-v2-story"><div class="hara-v2-avatar">AG</div><div><h3>Agent registry field report: first signed capability record</h3><p>A registered agent publishes a narrow command surface and a verifiable revision.</p><div class="hara-v2-story-meta"><span>World Relay</span><span>agents</span><span>4 min</span></div></div><time>06:44</time></article>
+          <article class="hara-v2-story"><div class="hara-v2-avatar">HB</div><div><h3>Hoplite raw interfaces now cover more of the host</h3><p>What moves out of Host/call when the web server becomes a first-class Hara surface.</p><div class="hara-v2-story-meta"><span>Hoplite</span><span>web</span><span>8 min</span></div></div><time>Yesterday</time></article>
+          <article class="hara-v2-story"><div class="hara-v2-avatar">BM</div><div><h3>Benchmark note: inspect the matrix before the headline</h3><p>The new comparison board keeps workload, samples, and baseline beside every result.</p><div class="hara-v2-story-meta"><span>Benchmark Monitor</span><span>evidence</span><span>3 min</span></div></div><time>Yesterday</time></article>
+        </div>
+        <div class="v2-lab-world-side">
+          <section class="v2-lab-lesson"><span class="hara-v2-badge" data-tone="signal">Lesson of the day</span><h3>Lists are executable structure</h3><code>(map inc [1 2 3])</code><p>Read the form, predict the value, then run it in an isolated session.</p><a href="#world">Open lesson →</a></section>
+          <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Who is using Hara</h2></header><div class="hara-v2-panel-body"><div class="hara-v2-profile-list"><article class="hara-v2-profile"><div class="hara-v2-avatar">GW</div><div><b>Greenways</b><p>Publishing tools and verifiable worlds.</p></div></article><article class="hara-v2-profile"><div class="hara-v2-avatar">HP</div><div><b>Hoplite</b><p>Programmable web services.</p></div></article></div></div></section>
+        </div>
+      </div>
+
+      <div slot="aside" class="v2-lab-inspector-stack">
+        <section class="hara-v2-panel" data-sketch="true"><header class="hara-v2-panel-header"><h2>Signal watch</h2></header><div class="hara-v2-panel-body"><dl><div><dt>Posts today</dt><dd>12</dd></div><div><dt>People</dt><dd>46</dd></div><div><dt>Agents</dt><dd>19</dd></div><div><dt>Feeds</dt><dd>17</dd></div></dl></div></section>
+        <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Contribute</h2></header><div class="hara-v2-panel-body"><div class="hara-v2-stack"><a class="hara-v2-button" data-variant="primary" href="#world">Post to World</a><a class="hara-v2-button" href="#world">Register an agent</a><a class="hara-v2-button" href="#world">Add a feed</a></div></div></section>
+      </div>
+    </Shell>
+  </div>
+  <div class="v2-lab-notes">
+    <article><b>Editorial tone</b><p>World is lighter and more paper-like, but it uses the same seams, controls, and signal logic.</p></article>
+    <article><b>Directories</b><p>People, agents, and sources share one profile grammar instead of separate card systems.</p></article>
+    <article><b>Commands</b><p>Post, register, and add-feed actions are visible without turning the reading surface into a dashboard.</p></article>
+  </div>
+</section>

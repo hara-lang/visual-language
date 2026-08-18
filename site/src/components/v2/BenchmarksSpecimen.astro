@@ -1,0 +1,73 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../src/astro/v2/ContextNav.astro";
+---
+<section class="v2-lab-section" id="benchmarks">
+  <header class="v2-lab-section-head">
+    <div><p class="hara-v2-kicker">Layout 04 · Evidence board</p><h2>Benchmarks</h2></div>
+    <p>A compact measurement surface. Tabs change evidence families, the matrix carries comparison, and the inspector explains the selected cell without hiding method or baseline.</p>
+  </header>
+  <div class="v2-lab-canvas" data-layout="benchmarks">
+    <Shell embedded={true} sidebar={false} aside={true} density="compact" mainId="benchmarks-content">
+      <Header slot="header" section="Benchmarks" nav={[
+        { href: "#www", label: "Home" },
+        { href: "#docs", label: "Docs" },
+        { href: "#specs", label: "Specs" },
+        { href: "#world", label: "World" }
+      ]}>
+        <span class="hara-v2-badge" data-tone="success">Evidence current</span>
+        <ThemeToggle />
+      </Header>
+      <ContextNav slot="context" items={[
+        { href: "#benchmarks", label: "Best in class", current: true },
+        { href: "#benchmarks", label: "Language shootout" },
+        { href: "#benchmarks", label: "HTTP" },
+        { href: "#benchmarks", label: "Hara runtimes" },
+        { href: "#benchmarks", label: "Methods" }
+      ]}>
+        <button class="hara-v2-button">Download evidence</button>
+      </ContextNav>
+
+      <div class="hara-v2-row" data-spread="true">
+        <div><p class="hara-v2-kicker">Published 19 August 2026 · 14 workloads</p><h1 class="v2-lab-docs-title">Best in class</h1></div>
+        <span class="hara-v2-badge" data-tone="signal">Rust full baseline</span>
+      </div>
+      <div class="hara-v2-stat-grid">
+        <div class="hara-v2-stat"><span>Median Hara ratio</span><strong>1.00×</strong><span>Baseline</span></div>
+        <div class="hara-v2-stat"><span>Dynamic-JIT wins</span><strong>11 / 14</strong><span>Measured workloads</span></div>
+        <div class="hara-v2-stat"><span>Fastest steady call</span><strong>18.4 ns</strong><span>Integer path</span></div>
+        <div class="hara-v2-stat"><span>Evidence digest</span><strong class="hara-v2-mono">b19e</strong><span>Raw data linked</span></div>
+      </div>
+      <div class="hara-v2-tabs" role="tablist" aria-label="Runtime class">
+        <button class="hara-v2-tab" role="tab" aria-selected="true">Dynamic JIT</button>
+        <button class="hara-v2-tab" role="tab" aria-selected="false">Lisp family</button>
+        <button class="hara-v2-tab" role="tab" aria-selected="false">Native</button>
+      </div>
+      <div class="hara-v2-matrix" aria-label="Benchmark comparison matrix">
+        <b>Workload</b><b>Hara</b><b>Julia</b><b>LuaJIT</b><b>Node</b><b>Python</b>
+        <b>integer-loop</b><span data-win="true">18.4</span><span>22.9</span><span>21.6</span><span>38.2</span><span data-warn="true">244</span>
+        <b>vector-map</b><span data-win="true">41.7</span><span>49.2</span><span>47.0</span><span>78.4</span><span data-warn="true">418</span>
+        <b>persistent-map</b><span>113</span><span data-win="true">108</span><span>141</span><span>172</span><span data-warn="true">892</span>
+        <b>parser-small</b><span data-win="true">6.2 μs</span><span>7.8 μs</span><span>8.1 μs</span><span>10.2 μs</span><span data-warn="true">61 μs</span>
+        <b>json-roundtrip</b><span data-win="true">12.8 μs</span><span>14.1 μs</span><span>13.6 μs</span><span>16.9 μs</span><span data-warn="true">74 μs</span>
+      </div>
+      <div class="hara-v2-callout"><div><b>Every cell is a doorway</b><p>Select a measurement to see exact runtime, samples, confidence, method, and raw-data location in the inspector.</p></div></div>
+
+      <div slot="aside" class="v2-lab-inspector-stack">
+        <section class="hara-v2-panel" data-sketch="true">
+          <header class="hara-v2-panel-header"><h2>Hara vs Julia</h2><span class="hara-v2-badge" data-tone="signal">vector-map</span></header>
+          <div class="hara-v2-panel-body"><dl><div><dt>Hara</dt><dd>41.7 ns</dd></div><div><dt>Julia</dt><dd>49.2 ns</dd></div><div><dt>Ratio</dt><dd>1.18×</dd></div><div><dt>Samples</dt><dd>30</dd></div><div><dt>RSD</dt><dd>1.7%</dd></div></dl></div>
+          <footer class="hara-v2-panel-footer"><a href="#benchmarks">Method and raw data →</a></footer>
+        </section>
+        <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Run contract</h2></header><div class="hara-v2-panel-body"><p class="hara-v2-muted">Warm process · pinned core · release build · exact source revision.</p><span class="hara-v2-badge" data-tone="success">Reproducible</span></div></section>
+      </div>
+    </Shell>
+  </div>
+  <div class="v2-lab-notes">
+    <article><b>Colour discipline</b><p>Blue means selected or measured advantage. It does not paint whole charts for atmosphere.</p></article>
+    <article><b>Evidence proximity</b><p>Method, sample count, revision, and raw-data links stay with the selected measurement.</p></article>
+    <article><b>Compact mode</b><p>The same shell reduces row and control height without inventing a separate benchmark theme.</p></article>
+  </div>
+</section>
