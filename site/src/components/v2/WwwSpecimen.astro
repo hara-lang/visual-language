@@ -1,0 +1,67 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../src/astro/v2/Header.astro";
+import PageHeader from "../../../../src/astro/v2/PageHeader.astro";
+import FleetField from "../../../../src/astro/v2/FleetField.astro";
+---
+<section class="v2-lab-section" id="www">
+  <header class="v2-lab-section-head">
+    <div><p class="hara-v2-kicker">Layout 01 · Public site</p><h2>WWW</h2></div>
+    <p>A broad narrative shell with no permanent rail. The command-deck illustration carries mood while the copy, proof strip, and executable surface carry the product argument.</p>
+  </header>
+  <div class="v2-lab-canvas" data-layout="www">
+    <Shell embedded={true} sidebar={false} aside={false} mainId="www-content">
+      <Header slot="header" nav={[
+        { href: "#benchmarks", label: "Benchmarks" },
+        { href: "#docs", label: "Docs" },
+        { href: "#specs", label: "Specs" },
+        { href: "#world", label: "World" }
+      ]}>
+        <button class="hara-v2-icon-button" aria-label="Search">⌕</button>
+        <ThemeToggle />
+      </Header>
+
+      <PageHeader
+        kicker="Small language · complete system"
+        title="Build from first principles."
+        description="A compact Lisp that can begin in a browser session and continue through native runtimes, libraries, specifications, and durable work."
+        meta={["Rust + JVM", "Wasm sessions", "Apache-2.0"]}
+      >
+        <a slot="actions" class="hara-v2-button" data-variant="primary" href="#docs">Start with Hara <span aria-hidden="true">→</span></a>
+        <a slot="actions" class="hara-v2-button" href="#benchmarks">Inspect benchmarks</a>
+        <FleetField slot="illustration" title="Hara runtime fleet illustration" />
+      </PageHeader>
+
+      <div class="hara-v2-stat-grid v2-lab-www-proof">
+        <div class="hara-v2-stat"><span>Runtime families</span><strong>03</strong><span>Interpreter · HBC · Native</span></div>
+        <div class="hara-v2-stat"><span>Browser session</span><strong>Live</strong><span>One contract across backends</span></div>
+        <div class="hara-v2-stat"><span>Library surface</span><strong>std.lib.*</strong><span>Inspectible and packageable</span></div>
+        <div class="hara-v2-stat"><span>Evidence state</span><strong>Open</strong><span>Methods beside results</span></div>
+      </div>
+
+      <div class="hara-v2-card-grid">
+        <article class="hara-v2-card"><span class="hara-v2-badge" data-tone="signal">Language</span><h3>Small core, open system</h3><p>Read the evaluator, inspect expansion, then move the same forms into larger programs.</p></article>
+        <article class="hara-v2-card"><span class="hara-v2-badge" data-tone="success">Runtime</span><h3>One session contract</h3><p>Interpreter, bytecode, browser, and native hosts share observable lifecycle boundaries.</p></article>
+        <article class="hara-v2-card"><span class="hara-v2-badge">Libraries</span><h3>Tools are language values</h3><p>Filesystem, work, compiler, deployment, and analysis surfaces remain composable.</p></article>
+      </div>
+
+      <div class="hara-v2-code" data-label="main.hal · browser session"><pre><code><span class="comment">;; a small program can still expose the whole system</span>
+(<span class="signal">defn</span> launch [session]
+  (<span class="signal">-&gt;</span> session
+(runtime/attach <span class="string">:browser</span>)
+(work/run {:op <span class="string">:pure</span>
+           :fn #(+ % 1)})))</code></pre></div>
+
+      <section class="v2-lab-www-closing">
+        <div><h2>Start simple. Build forever.</h2><p>The final command stays direct; the surrounding frame supplies the world.</p></div>
+        <a class="hara-v2-button" data-variant="primary" href="#docs">Open the guide</a>
+      </section>
+    </Shell>
+  </div>
+  <div class="v2-lab-notes">
+    <article><b>Navigation</b><p>One ecosystem row. Product pages do not add a second navigation bar unless a workflow needs it.</p></article>
+    <article><b>Illustration</b><p>Original fleet linework is theme-aware and secondary to the headline reading order.</p></article>
+    <article><b>Conversion</b><p>Primary and evidence actions remain adjacent. Pills are removed in favour of clipped command controls.</p></article>
+  </div>
+</section>

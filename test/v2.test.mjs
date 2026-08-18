@@ -47,3 +47,24 @@ test("the shell accounts for optional context and illustration slots", async () 
   assert.match(pageHeader, /Astro\.slots\.has\("illustration"\)/);
   assert.match(pageHeader, /data-illustrated=/);
 });
+
+test("the v2 laboratory covers WWW, Docs, Specs, Benchmarks, and World", async () => {
+  const page = await read("../site/src/pages/v2/index.astro");
+  const specimens = (await Promise.all([
+    "WwwSpecimen", "DocsSpecimen", "SpecsSpecimen", "BenchmarksSpecimen", "WorldSpecimen"
+  ].map((name) => read(`../site/src/components/v2/${name}.astro`)))).join("\n");
+
+  for (const [name, id] of [
+    ["WwwSpecimen", "www"],
+    ["DocsSpecimen", "docs"],
+    ["SpecsSpecimen", "specs"],
+    ["BenchmarksSpecimen", "benchmarks"],
+    ["WorldSpecimen", "world"]
+  ]) {
+    assert.match(page, new RegExp(`<${name}\\s*/>`), `missing ${name} composition`);
+    assert.match(specimens, new RegExp(`id="${id}"`), `missing ${id} layout`);
+  }
+  assert.match(page, /FleetField/);
+  assert.match(specimens, /data-layout="benchmarks"/);
+  assert.match(specimens, /data-layout="world"/);
+});

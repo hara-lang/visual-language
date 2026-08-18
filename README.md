@@ -47,6 +47,8 @@ storage, and header font while moving application structure toward flatter
 fleet-command surfaces: one-pixel hull seams, compact rails, clipped controls,
 monochrome technical illustration, and a restrained hand-drawn second line.
 
+**[Open the five-layout v2 laboratory](https://hara-lang.github.io/visual-language/v2/)**
+
 ```astro
 ---
 import Shell from "@hara-lang/visual-language/astro/v2/Shell.astro";

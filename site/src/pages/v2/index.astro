@@ -1,0 +1,94 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../src/astro/HaraMark.astro";
+import FleetField from "../../../../src/astro/v2/FleetField.astro";
+import WwwSpecimen from "../../components/v2/WwwSpecimen.astro";
+import DocsSpecimen from "../../components/v2/DocsSpecimen.astro";
+import SpecsSpecimen from "../../components/v2/SpecsSpecimen.astro";
+import BenchmarksSpecimen from "../../components/v2/BenchmarksSpecimen.astro";
+import WorldSpecimen from "../../components/v2/WorldSpecimen.astro";
+import "../../../../src/v2.css";
+import "../../../../src/theme.js";
+import "../../styles/v2-lab.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const ecosystem = [
+  { href: "#www", label: "WWW" },
+  { href: "#docs", label: "Docs" },
+  { href: "#specs", label: "Specs" },
+  { href: "#benchmarks", label: "Benchmarks" },
+  { href: "#world", label: "World" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Hara interface language v2: flat fleet-command layouts for WWW, Docs, Specs, Benchmarks, and World." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara interface language v2" />
+    <meta property="og:description" content="Five interface families built from flat hull panels, technical linework, and the existing Hara identity." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara interface language v2" />
+    <meta name="twitter:description" content="Flat fleet-command layouts for the Hara ecosystem." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara interface language v2</title>
+  </head>
+  <body class="hara-v2">
+    <header class="v2-lab-header">
+      <a class="v2-lab-brand" href={basePath}>
+        <HaraMark size={28} />
+        <b>Hara visual language</b>
+        <small>V2 field test</small>
+      </a>
+      <nav aria-label="Layout families">
+        {ecosystem.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+      <ThemeToggle />
+    </header>
+
+    <main class="v2-lab-main">
+      <section class="v2-lab-hero">
+        <div>
+          <p class="hara-v2-kicker">Experimental interface layer · Version 2</p>
+          <h1>Fleet interfaces, drawn flat.</h1>
+          <p>Hara's existing mark and type remain fixed. Around them, the interface becomes a quiet command deck: pale steel or graphite, one-pixel hull seams, sparse telemetry, and imperfect technical linework that feels illustrated rather than ornamental.</p>
+          <div class="v2-lab-principles">
+            <div><b>Flat structure</b><span>Matte panels, clipped corners, almost no simulated depth.</span></div>
+            <div><b>One signal</b><span>Blue marks action and selection. State colours stay functional.</span></div>
+            <div><b>Drawn precision</b><span>Construction grids and doubled lines add a novel-like hand.</span></div>
+            <div><b>Same identity</b><span>The block H, signal dot, and current header family do not move.</span></div>
+          </div>
+        </div>
+        <div class="v2-lab-hero-art"><FleetField title="Hara fleet-command visual field" /></div>
+      </section>
+
+      <nav class="v2-lab-index" aria-label="V2 layout catalogue">
+        <a href="#www"><strong>WWW</strong><span>Public narrative, proof bands, capability decks, and executable demos.</span><code>single-column / illustrated</code></a>
+        <a href="#docs"><strong>Docs</strong><span>Persistent rail, prose column, outline, search, and live code surfaces.</span><code>rail / prose / inspector</code></a>
+        <a href="#specs"><strong>Specs</strong><span>Registry, checker, publishing workflow, status, and digest inspection.</span><code>workflow / table / inspector</code></a>
+        <a href="#benchmarks"><strong>Benchmarks</strong><span>Evidence tabs, metric strips, dense matrices, and selected-result detail.</span><code>data board / compact</code></a>
+        <a href="#world"><strong>World</strong><span>Editorial feed, people and agent directories, lessons, and posting commands.</span><code>feed / directory / action</code></a>
+      </nav>
+
+      <WwwSpecimen />
+      <DocsSpecimen />
+      <SpecsSpecimen />
+      <BenchmarksSpecimen />
+      <WorldSpecimen />
+      <footer class="v2-lab-footer">
+        <span>Experimental v2 interface contract · Hara visual language</span>
+        <span><a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+  </body>
+</html>

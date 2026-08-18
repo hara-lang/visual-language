@@ -1,0 +1,75 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../src/astro/v2/ContextNav.astro";
+---
+<section class="v2-lab-section" id="specs">
+  <header class="v2-lab-section-head">
+    <div><p class="hara-v2-kicker">Layout 03 · Executable registry</p><h2>Specs</h2></div>
+    <p>A workflow shell for finding, checking, and publishing executable standards. Dense rows and digest values remain readable without becoming a generic admin dashboard.</p>
+  </header>
+  <div class="v2-lab-canvas" data-layout="specs">
+    <Shell embedded={true} sidebar={false} aside={true} density="compact" mainId="specs-content">
+      <Header slot="header" section="Specs" nav={[
+        { href: "#www", label: "Home" },
+        { href: "#benchmarks", label: "Benchmarks" },
+        { href: "#docs", label: "Docs" },
+        { href: "#world", label: "World" }
+      ]}>
+        <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+        <ThemeToggle />
+      </Header>
+      <ContextNav slot="context" items={[
+        { href: "#specs", label: "Overview" },
+        { href: "#specs", label: "Registry", current: true },
+        { href: "#specs", label: "Check" },
+        { href: "#specs", label: "Publish" },
+        { href: "#specs", label: "API" }
+      ]}>
+        <a class="hara-v2-button" data-variant="primary" href="#specs">Publish specification</a>
+      </ContextNav>
+
+      <div class="hara-v2-breadcrumbs"><a href="#specs">Specifications</a><span aria-hidden="true">/</span><span>Registry</span></div>
+      <div class="hara-v2-row" data-spread="true">
+        <div><p class="hara-v2-kicker">Executable standards</p><h1 class="v2-lab-docs-title">Registry</h1></div>
+        <div class="hara-v2-row"><span class="hara-v2-badge" data-tone="success">Registry healthy</span><button class="hara-v2-button">Export JSON</button></div>
+      </div>
+      <div class="hara-v2-stat-grid">
+        <div class="hara-v2-stat"><span>Published specs</span><strong>48</strong><span>Across 9 namespaces</span></div>
+        <div class="hara-v2-stat"><span>Current revisions</span><strong>44</strong><span>Four superseded</span></div>
+        <div class="hara-v2-stat"><span>Checks today</span><strong>312</strong><span>99.4% valid</span></div>
+        <div class="hara-v2-stat"><span>Registry digest</span><strong class="hara-v2-mono">7e2a</strong><span>Signed index</span></div>
+      </div>
+      <div class="hara-v2-command-bar"><input class="hara-v2-field" aria-label="Search specifications" placeholder="Search namespace, capability, or digest" /><select class="hara-v2-select" aria-label="Specification status"><option>All status</option></select><button class="hara-v2-button">Filters</button></div>
+      <div class="hara-v2-table-wrap">
+        <table class="hara-v2-table">
+          <thead><tr><th>Specification</th><th>Revision</th><th>Capability</th><th>Checks</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>runtime.session</td><td class="hara-v2-mono">1.4.0</td><td>live lifecycle</td><td>82 / 82</td><td><span class="hara-v2-badge" data-tone="success">Current</span></td></tr>
+            <tr><td>std.typed.schema</td><td class="hara-v2-mono">0.9.2</td><td>typed values</td><td>61 / 61</td><td><span class="hara-v2-badge" data-tone="signal">Candidate</span></td></tr>
+            <tr><td>work.executor</td><td class="hara-v2-mono">0.3.0</td><td>execution ABI</td><td>44 / 46</td><td><span class="hara-v2-badge" data-tone="warning">Review</span></td></tr>
+            <tr><td>native.result</td><td class="hara-v2-mono">1.1.1</td><td>host boundary</td><td>38 / 38</td><td><span class="hara-v2-badge" data-tone="success">Current</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div slot="aside" class="v2-lab-inspector-stack">
+        <section class="hara-v2-panel" data-sketch="true">
+          <header class="hara-v2-panel-header"><h2>Selected spec</h2><span class="hara-v2-badge" data-tone="signal">Candidate</span></header>
+          <div class="hara-v2-panel-body"><strong>std.typed.schema</strong><p class="hara-v2-muted">Portable schema values and typed boundary checks.</p><div class="hara-v2-divider"></div><dl><div><dt>Revision</dt><dd>0.9.2</dd></div><div><dt>Digest</dt><dd>72f0…af3c</dd></div><div><dt>Checks</dt><dd>61 / 61</dd></div></dl></div>
+          <footer class="hara-v2-panel-footer"><a href="#specs">Open specification →</a></footer>
+        </section>
+        <section class="hara-v2-panel">
+          <header class="hara-v2-panel-header"><h2>Validation</h2></header>
+          <div class="hara-v2-panel-body"><div class="hara-v2-stack"><span class="hara-v2-badge" data-tone="success">Schema valid</span><span class="hara-v2-badge" data-tone="success">Examples pass</span><span class="hara-v2-badge" data-tone="warning">Two reviewers</span></div></div>
+        </section>
+      </div>
+    </Shell>
+  </div>
+  <div class="v2-lab-notes">
+    <article><b>Workflow tabs</b><p>The second navigation row belongs to the product workflow, not to the whole ecosystem.</p></article>
+    <article><b>Registry density</b><p>Rows stay compact, flat, and horizontally inspectable. Status uses words and colour together.</p></article>
+    <article><b>Inspector</b><p>Selection detail and validation state sit beside the registry and vanish first on smaller screens.</p></article>
+  </div>
+</section>

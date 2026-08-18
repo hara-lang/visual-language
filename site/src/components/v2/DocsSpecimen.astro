@@ -1,0 +1,89 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../src/astro/v2/ContextNav.astro";
+import Sidebar from "../../../../src/astro/v2/Sidebar.astro";
+
+const docsSidebar = [
+  { label: "Overview", items: [
+    { href: "#docs", label: "Orientation", current: true },
+    { href: "#docs", label: "First program" },
+    { href: "#docs", label: "Project model" }
+  ] },
+  { label: "Language", items: [
+    { href: "#docs", label: "Syntax" },
+    { href: "#docs", label: "Values" },
+    { href: "#docs", label: "Functions" },
+    { href: "#docs", label: "Modules", badge: 12 }
+  ] },
+  { label: "Runtime", items: [
+    { href: "#docs", label: "Sessions" },
+    { href: "#docs", label: "Work" },
+    { href: "#docs", label: "Native interface" }
+  ] }
+];
+---
+<section class="v2-lab-section" id="docs">
+  <header class="v2-lab-section-head">
+    <div><p class="hara-v2-kicker">Layout 02 · Knowledge system</p><h2>Docs</h2></div>
+    <p>The complete reading shell: ecosystem identity, local guide navigation, grouped rail, prose, executable surfaces, and a deliberately quiet outline.</p>
+  </header>
+  <div class="v2-lab-canvas" data-layout="docs">
+    <Shell embedded={true} sidebar={true} aside={true} mainId="docs-content">
+      <Header slot="header" section="Docs" nav={[
+        { href: "#www", label: "Home" },
+        { href: "#benchmarks", label: "Benchmarks" },
+        { href: "#specs", label: "Specs" },
+        { href: "#world", label: "World" }
+      ]}>
+        <button class="hara-v2-button" aria-label="Search documentation">⌕ Search <span class="hara-v2-mono">⌘K</span></button>
+        <ThemeToggle />
+      </Header>
+      <ContextNav slot="context" items={[
+        { href: "#docs", label: "Guide", current: true },
+        { href: "#docs", label: "Language" },
+        { href: "#docs", label: "Runtime" },
+        { href: "#docs", label: "Libraries" },
+        { href: "#docs", label: "API" }
+      ]}>
+        <select class="hara-v2-select" aria-label="Documentation version"><option>v1 · current</option></select>
+      </ContextNav>
+      <Sidebar slot="sidebar" title="Hara guide" groups={docsSidebar}>
+        <span class="hara-v2-badge" data-tone="success">Kernel ready</span>
+      </Sidebar>
+
+      <div class="hara-v2-breadcrumbs"><a href="#docs">Guide</a><span aria-hidden="true">/</span><span>Orientation</span></div>
+      <p class="hara-v2-kicker">Guide 01 · System orientation</p>
+      <h1 class="v2-lab-docs-title">A language you can inspect all the way down.</h1>
+      <div class="hara-v2-prose">
+        <p>Hara starts with ordinary forms and keeps the layers beneath them available. A browser session, a native runtime, and a packaged library are different hosts for the same language rather than separate products.</p>
+        <div class="hara-v2-callout"><div><b>Keep the boundary visible</b><p>Session, generation, and source revision are explicit whenever live code can outlive the interface that created it.</p></div></div>
+        <h2 id="first-form">Evaluate the first form</h2>
+        <p>The documentation evaluator is attached to the page. Its status belongs in the command strip, not in a floating promotional card.</p>
+        <div class="hara-v2-code" data-label="orientation.hal · isolated session"><pre><code>(<span class="signal">def</span> greeting <span class="string">"hello, system"</span>)
+
+(<span class="signal">map</span> #(str greeting <span class="string">" / "</span> %)
+     [<span class="string">:syntax</span> <span class="string">:runtime</span> <span class="string">:work</span>])</code></pre></div>
+        <div class="hara-v2-command-bar"><span class="hara-v2-badge" data-tone="success">Ready</span><span class="hara-v2-muted hara-v2-mono">session docs-01 · generation 4</span><button class="hara-v2-button" data-variant="primary">Run</button></div>
+        <h2 id="continue">Continue into the system</h2>
+        <p>Each next step narrows the question: syntax, values, modules, sessions, work, and native interfaces. The rail carries location; the prose carries explanation.</p>
+      </div>
+
+      <div slot="aside" class="hara-v2-outline">
+        <b>On this page</b>
+        <a href="#first-form" aria-current="true">Evaluate the first form</a>
+        <a href="#continue">Continue into the system</a>
+        <a href="#docs">Session contract</a>
+        <a href="#docs">Next: project model</a>
+        <div class="hara-v2-divider"></div>
+        <span class="hara-v2-badge" data-tone="signal">12 min</span>
+      </div>
+    </Shell>
+  </div>
+  <div class="v2-lab-notes">
+    <article><b>Rail</b><p>Groups, counts, and current location use the same compact item grammar across guide and reference trees.</p></article>
+    <article><b>Live surfaces</b><p>REPL, editor, canvas, and status controls inherit the flat command strip without changing runtime behaviour.</p></article>
+    <article><b>Reading order</b><p>The inspector disappears before the rail; the rail then becomes a product-owned drawer on narrow screens.</p></article>
+  </div>
+</section>
