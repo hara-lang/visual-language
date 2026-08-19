@@ -12,36 +12,30 @@ import "../../../styles/v2-calm-lab.css";
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
 const pageUrl = new URL(`${basePath}v2/graphics/`, Astro.site);
-const socialImage = new URL(`${basePath}cinematic/monolith-gate.svg`, Astro.site);
-const assetUrl = (id) => `${basePath}cinematic/${id}.svg`;
-const textureUrl = (id) => `${basePath}cinematic/textures/${id}.svg`;
+const rasterUrl = (file) => `${basePath}cinematic/${file}`;
+const backgrounds = cinematic.raster.backgrounds;
+const textures = cinematic.raster.textures;
+const socialImage = new URL(rasterUrl(backgrounds[0].file), Astro.site);
 const shaderModes = [
-  { id: "strata", label: "Strata", atmosphere: "silica", fallback: "silica-drift", copy: "Warped mineral layers and a measured route across a long technical horizon." },
-  { id: "ink", label: "Ink flux", atmosphere: "foundry", fallback: "ink-foundry", copy: "Domain-warped carbon constrained by a vertical execution rail." },
-  { id: "monolith", label: "Monolith", atmosphere: "monolith", fallback: "monolith-gate", copy: "Signed-distance masses, structural fog, and one isolated central seam." },
-  { id: "lattice", label: "Lattice", atmosphere: "nocturne", fallback: "phase-loom", copy: "Calibrated cells, braces, and stepped selection without decorative particles." },
-  { id: "shimmer", label: "Heat shear", atmosphere: "reliquary", fallback: "machine-sun", copy: "Dry optical displacement over layered ridges and a fixed instrument gate." },
-  { id: "field", label: "Vector field", atmosphere: "storm", fallback: "pressure-well", copy: "Directional conduits tighten around a pointer-responsive inspection aperture." }
+  { id: "strata", label: "Strata", atmosphere: "silica", fallback: "raster/backgrounds/desert-foundry.webp", copy: "Warped mineral layers and a measured route across a long technical horizon." },
+  { id: "ink", label: "Ink flux", atmosphere: "foundry", fallback: "raster/backgrounds/ink-conduit.webp", copy: "Domain-warped carbon constrained by a vertical execution rail." },
+  { id: "monolith", label: "Monolith", atmosphere: "monolith", fallback: "raster/backgrounds/monolith-gate.webp", copy: "Signed-distance masses, structural fog, and one isolated central seam." },
+  { id: "lattice", label: "Lattice", atmosphere: "nocturne", fallback: "raster/backgrounds/nocturne-lattice.webp", copy: "Calibrated cells, braces, and stepped selection without decorative particles." },
+  { id: "shimmer", label: "Heat shear", atmosphere: "reliquary", fallback: "raster/backgrounds/reliquary-engine.webp", copy: "Dry optical displacement over layered ridges and a fixed instrument gate." },
+  { id: "field", label: "Vector field", atmosphere: "storm", fallback: "raster/backgrounds/storm-archive.webp", copy: "Directional conduits tighten around a pointer-responsive inspection aperture." }
 ];
-const themeImages = {
-  monolith: "monolith-gate",
-  silica: "silica-drift",
-  foundry: "ink-foundry",
-  nocturne: "night-aperture",
-  reliquary: "machine-sun",
-  storm: "vault-storm"
-};
+const themeImages = Object.fromEntries(backgrounds.map((asset) => [asset.theme, asset.file]));
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hara v2 graphics laboratory: twelve original adaptive 4K fields, eight repeatable textures, six material atmospheres, and six live WebGL shaders." />
+    <meta name="description" content="Hara v2 graphics laboratory: six original 4K raster backgrounds, four 4K raster textures, six material atmospheres, and six live WebGL shaders." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
     <meta property="og:title" content="Hara v2 graphics laboratory" />
-    <meta property="og:description" content="Monumental painterly-industrial technology, adaptive imagery, repeatable materials, and live shader fields within the Hara identity." />
+    <meta property="og:description" content="Monumental painterly-industrial raster backgrounds, tactile 4K materials, and live shader fields within the Hara identity." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
@@ -55,9 +49,9 @@ const themeImages = {
     <main class="v2-lab-main">
       <section class="graphics-lab-hero">
         <div class="graphics-lab-hero-copy">
-          <p class="hara-v2-kicker">Cinematic material layer · Version 2</p>
+          <p class="hara-v2-kicker">Cinematic raster material layer · Version 2</p>
           <h1>Technology with scale, grain, and consequence.</h1>
-          <p>Original imagery combines monumental spatial pressure, dry mineral atmosphere, painterly industrial texture, exact Hara construction, and one functional signal. The result is expressive enough for heroes and worlds, but disciplined enough for editors, documentation, code, and long-running tools.</p>
+          <p>Ten real image assets combine monumental spatial pressure, dry mineral atmosphere, painterly industrial texture, weathered machinery, and restrained functional signal. The masters are delivered as high-resolution WebP files for heroes, editor canvases, covers, documentation, and long-running tools.</p>
           <p class="graphics-lab-hero-links"><a href={`${basePath}v2/`}>← Interface catalogue</a><a href={`${basePath}v2/tool/`}>Tool workbenches →</a></p>
         </div>
         <div class="graphics-lab-stage">
@@ -67,8 +61,8 @@ const themeImages = {
             atmosphere="monolith"
             motion={true}
             interactive={true}
-            fallback={assetUrl("monolith-gate")}
-            label="Interactive monumental Hara shader field"
+            fallback={rasterUrl("raster/backgrounds/monolith-gate.webp")}
+            label="Interactive monumental Hara shader over a 4K raster background"
             plate="monolith / live"
           />
           <div class="graphics-lab-stage-controls" role="group" aria-label="Choose hero shader field">
@@ -77,7 +71,7 @@ const themeImages = {
                 type="button"
                 data-graphics-mode={shader.id}
                 data-atmosphere={shader.atmosphere}
-                data-fallback={assetUrl(shader.fallback)}
+                data-fallback={rasterUrl(shader.fallback)}
                 aria-pressed={index === 2 ? "true" : "false"}
               ><span>{String(index + 1).padStart(2, "0")}</span>{shader.label}</button>
             ))}
@@ -87,17 +81,17 @@ const themeImages = {
 
       <nav class="graphics-lab-index" aria-label="Graphics catalogue">
         <a href="#atmospheres"><strong>6 atmospheres</strong><span>Material pressure and lighting without replacing the Hara identity.</span><code>theme / token / surface</code></a>
-        <a href="#imagery"><strong>12 adaptive fields</strong><span>Resolution-independent SVG compositions with internal light and dark palettes.</span><code>4096 × 2304 / accessible</code></a>
-        <a href="#textures"><strong>8 repeatable textures</strong><span>Mineral, metal, optical, circuit, paper, and dust material primitives.</span><code>repeat / scale / combine</code></a>
-        <a href="#shaders"><strong>6 WebGL effects</strong><span>Real fragment shaders with motion, pointer input, visibility pausing, and fallbacks.</span><code>webgl / progressive</code></a>
+        <a href="#imagery"><strong>6 raster backgrounds</strong><span>Wide cinematic WebP masters for heroes, product surfaces, and editorial imagery.</span><code>4096 × 2304 / WebP</code></a>
+        <a href="#textures"><strong>4 raster textures</strong><span>Square mineral, metal, carbon, and optical material masters.</span><code>4096 × 4096 / WebP</code></a>
+        <a href="#shaders"><strong>6 WebGL effects</strong><span>Real fragment shaders with motion, pointer input, visibility pausing, and raster fallbacks.</span><code>webgl / progressive</code></a>
       </nav>
 
       <section id="atmospheres" class="graphics-lab-section">
-        <header class="graphics-lab-section-head"><div><p class="hara-v2-kicker">Theme system</p><h2>Six material atmospheres.</h2></div><p>Atmospheres alter apparent substance, pressure, and lighting. Signal blue, typography, the block H, and the light/dark contract remain invariant.</p></header>
+        <header class="graphics-lab-section-head"><div><p class="hara-v2-kicker">Theme system</p><h2>Six material atmospheres.</h2></div><p>Each atmosphere is demonstrated by an actual raster background. Signal blue, typography, the block H, and the light/dark contract remain invariant.</p></header>
         <div class="graphics-lab-atmospheres">
           {cinematic.themes.map((theme, index) => (
             <article data-atmosphere={theme.id}>
-              <img src={assetUrl(themeImages[theme.id])} alt="" loading={index > 1 ? "lazy" : "eager"} decoding="async" />
+              <img src={rasterUrl(themeImages[theme.id])} alt="" loading={index > 1 ? "lazy" : "eager"} decoding="async" width="4096" height="2304" />
               <div><span>{String(index + 1).padStart(2, "0")} / {theme.id}</span><h3>{theme.label}</h3><p>{theme.character}</p></div>
             </article>
           ))}
@@ -105,30 +99,35 @@ const themeImages = {
       </section>
 
       <section id="imagery" class="graphics-lab-section">
-        <header class="graphics-lab-section-head"><div><p class="hara-v2-kicker">Generated imagery</p><h2>Twelve adaptive 4K fields.</h2></div><p>Each composition is a standalone SVG master with an accessible title and description, a 4096 × 2304 design canvas, an internal dark palette, procedural grain, and sparse functional signal.</p></header>
+        <header class="graphics-lab-section-head"><div><p class="hara-v2-kicker">Raster backgrounds</p><h2>Six 4K cinematic backgrounds.</h2></div><p>These are real high-resolution WebP image masters rather than vector illustrations. Each file is 4096 × 2304 and can be opened directly for full-resolution review or used as a cover, hero, editor surround, or shader fallback.</p></header>
         <div class="graphics-lab-gallery">
-          {cinematic.assets.map((asset, index) => (
+          {backgrounds.map((asset, index) => (
             <figure>
-              <a href={assetUrl(asset.id)} aria-label={`Open ${asset.id} full-size SVG`}><img src={assetUrl(asset.id)} alt="" loading={index > 3 ? "lazy" : "eager"} decoding="async" /></a>
-              <figcaption><span>{String(index + 1).padStart(2, "0")} · {asset.theme}</span><strong>{asset.id.replaceAll("-", " ")}</strong><p>{asset.use}</p></figcaption>
+              <a href={rasterUrl(asset.file)} aria-label={`Open ${asset.label} at 4096 by 2304 pixels`}>
+                <img src={rasterUrl(asset.file)} alt={asset.alt} loading={index > 2 ? "lazy" : "eager"} decoding="async" width={asset.width} height={asset.height} />
+              </a>
+              <figcaption><span>{String(index + 1).padStart(2, "0")} · {asset.theme} · {asset.width} × {asset.height}</span><strong>{asset.label}</strong><p>{asset.use}</p></figcaption>
             </figure>
           ))}
         </div>
       </section>
 
       <section id="textures" class="graphics-lab-section">
-        <header class="graphics-lab-section-head"><div><p class="hara-v2-kicker">Material primitives</p><h2>Eight repeatable textures.</h2></div><p>Use these under low-contrast surfaces, code regions, editor canvases, covers, and image treatments. They are scalable SVG fields rather than fixed raster noise.</p></header>
+        <header class="graphics-lab-section-head"><div><p class="hara-v2-kicker">Raster textures</p><h2>Four 4K material textures.</h2></div><p>Each square master is 4096 × 4096 and carries real surface variation for panels, editor surrounds, document covers, state treatments, and close editorial crops.</p></header>
         <div class="graphics-lab-textures">
-          {cinematic.textures.map((texture, index) => (
-            <article class="hara-v2-texture" data-texture={texture}>
-              <span>{String(index + 1).padStart(2, "0")}</span><strong>{texture.replaceAll("-", " ")}</strong><a href={textureUrl(texture)}>Open SVG</a>
-            </article>
+          {textures.map((texture, index) => (
+            <figure>
+              <a href={rasterUrl(texture.file)} aria-label={`Open ${texture.label} at 4096 by 4096 pixels`}>
+                <img src={rasterUrl(texture.file)} alt={texture.alt} loading={index > 1 ? "lazy" : "eager"} decoding="async" width={texture.width} height={texture.height} />
+              </a>
+              <figcaption><span>{String(index + 1).padStart(2, "0")} · {texture.width} × {texture.height}</span><strong>{texture.label}</strong><p>{texture.use}</p></figcaption>
+            </figure>
           ))}
         </div>
       </section>
 
       <section id="shaders" class="graphics-lab-section">
-        <header class="graphics-lab-section-head"><div><p class="hara-v2-kicker">Live visual effects</p><h2>Six real WebGL shader fields.</h2></div><p>Motion is explicitly enabled in this laboratory. Every field pauses off screen, caps device pixel ratio, honours reduced motion, follows Hara light/dark changes, and retains a matched static SVG if WebGL is unavailable.</p></header>
+        <header class="graphics-lab-section-head"><div><p class="hara-v2-kicker">Live visual effects</p><h2>Six real WebGL shader fields.</h2></div><p>Every field pauses off screen, caps device pixel ratio, honours reduced motion, follows Hara light/dark changes, and retains a matched 4K raster background if WebGL is unavailable.</p></header>
         <div class="graphics-lab-shaders">
           {shaderModes.map((shader, index) => (
             <article>
@@ -137,7 +136,7 @@ const themeImages = {
                 atmosphere={shader.atmosphere}
                 motion={true}
                 interactive={true}
-                fallback={assetUrl(shader.fallback)}
+                fallback={rasterUrl(shader.fallback)}
                 label={`${shader.label} procedural Hara shader`}
                 plate={`${String(index + 1).padStart(2, "0")} / ${shader.id}`}
               />
@@ -148,14 +147,14 @@ const themeImages = {
       </section>
 
       <section class="graphics-lab-contract hara-v2-material-surface">
-        <div><p class="hara-v2-kicker">Implementation contract</p><h2>Still imagery carries meaning. Motion deepens it.</h2></div>
+        <div><p class="hara-v2-kicker">Implementation contract</p><h2>Raster imagery carries meaning. Motion deepens it.</h2></div>
         <dl>
-          <div><dt>Signal</dt><dd>Functional and under five percent</dd></div>
+          <div><dt>Backgrounds</dt><dd>Six 4096 × 2304 WebP masters</dd></div>
+          <div><dt>Textures</dt><dd>Four 4096 × 4096 WebP masters</dd></div>
           <div><dt>Motion</dt><dd>Opt in and reduced-motion safe</dd></div>
-          <div><dt>Fallback</dt><dd>Matched adaptive SVG</dd></div>
-          <div><dt>Interaction</dt><dd>Material parallax, never UI state</dd></div>
-          <div><dt>Identity</dt><dd>H mark and type remain fixed</dd></div>
-          <div><dt>Distribution</dt><dd>Package exports plus public assets</dd></div>
+          <div><dt>Fallback</dt><dd>Matched high-resolution raster image</dd></div>
+          <div><dt>Identity</dt><dd>H mark, type, and functional signal remain fixed</dd></div>
+          <div><dt>Distribution</dt><dd>Package assets plus GitHub Pages delivery</dd></div>
         </dl>
       </section>
 
