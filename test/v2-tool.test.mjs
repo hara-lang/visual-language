@@ -124,3 +124,31 @@ test("workbench CSS preserves the viewport while secondary regions collapse", as
   assert.match(css, /@media \(max-width: 640px\)[\s\S]*hara-tool-workbench-bottom/);
   assert.match(css, /grid-area:\s*viewport/);
 });
+
+test("the tool laboratory covers 3D, node/material, and animation workbenches", async () => {
+  const [page, documentLab, specimens] = await Promise.all([
+    read("../site/src/pages/v2/tool/index.astro"),
+    read("../site/src/pages/v2/index.astro"),
+    Promise.all([
+      "ThreeDWorkbenchSpecimen", "NodeWorkbenchSpecimen", "AnimationWorkbenchSpecimen"
+    ].map((name) => read(`../site/src/components/v2-tool/${name}.astro`))).then((parts) => parts.join("\n"))
+  ]);
+
+  for (const [name, id] of [
+    ["ThreeDWorkbenchSpecimen", "three-d"],
+    ["NodeWorkbenchSpecimen", "node"],
+    ["AnimationWorkbenchSpecimen", "animation"]
+  ]) {
+    assert.match(page, new RegExp(`<${name}\\s*/>`), `missing ${name} composition`);
+    assert.match(specimens, new RegExp(`id="${id}"`), `missing ${id} specimen`);
+  }
+
+  for (const primitive of [
+    "WorkbenchShell", "Toolbar", "DockPanel", "PanelHeader", "InspectorSection",
+    "ViewportOverlay", "StatusBar"
+  ]) assert.match(specimens, new RegExp(primitive), `laboratory does not use ${primitive}`);
+
+  assert.match(page, /v2-tool\.css/);
+  assert.match(page, /class="hara-v2 hara-v2-tool"/);
+  assert.match(documentLab, /v2\/tool\//);
+});

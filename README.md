@@ -2,8 +2,13 @@
 
 Hara's shared precision-material design system. It contains brand tokens,
 cross-domain light/dark theme handling, responsive motifs, maximum-resolution
-vector backgrounds, restrained field effects, and small Astro primitives.
-Interactive editors and workbenches remain in `@hara-lang/ui`.
+vector backgrounds, restrained field effects, document/product shells, and an
+opt-in tool/workbench chrome for Astro and framework-free surfaces.
+
+This package owns the **visual and semantic contract**. Product state, docking
+engines, graph manipulation, drag-and-drop, command dispatch, and other
+behaviour-rich editor systems remain application concerns or belong in
+`@hara-lang/ui`.
 
 **[View the published visual language laboratory](https://hara-lang.github.io/visual-language/)**
 
@@ -41,11 +46,21 @@ complete material, motion, accessibility, and composition rules.
 
 ## Experimental interface language v2
 
-The v2 layer is an opt-in interface system for Hara WWW, Docs, Specs,
-Benchmarks, and World. It keeps the current block-H mark, signal dot, theme
-storage, and header font while moving application structure toward flatter
-fleet-command surfaces: one-pixel hull seams, compact rails, clipped controls,
-monochrome technical illustration, and a restrained hand-drawn second line.
+V2 has two related entry points. Both preserve the current block-H mark, signal
+dot, theme storage, and heading family.
+
+| Entry point | Use it for | Contract |
+| --- | --- | --- |
+| `v2.css` | WWW, Docs, Specs, Benchmarks, World, data products, and content-heavy application shells | [`V2-THEME.md`](./V2-THEME.md) |
+| `v2-tool.css` | Toolbars, docks, inspectors, palettes, viewports, timelines, consoles, and editor workbenches | [`V2-TOOL.md`](./V2-TOOL.md) |
+
+`v2-tool.css` imports `v2.css`, so a workbench consumer imports only the tool
+entry point and places both `hara-v2` and `hara-v2-tool` on its interface root.
+The two layers deliberately share identity, state colours, typography, and
+responsive priorities; the tool layer adds denser controls and stronger
+material hierarchy only where operational state requires it.
+
+### Document and product shells
 
 **[Open the five-layout v2 laboratory](https://hara-lang.github.io/visual-language/v2/)**
 
@@ -64,10 +79,53 @@ import "@hara-lang/visual-language/v2.css";
 </Shell>
 ```
 
-The contract is intentionally additive: v1 tokens and motifs are unchanged, so
-sites can migrate layout family by layout family. See
-[`V2-THEME.md`](./V2-THEME.md) for identity invariants, site anatomy, responsive
-behaviour, and the proposed adoption sequence.
+The document contract is intentionally additive: v1 tokens and motifs are
+unchanged, so sites can migrate layout family by layout family. See
+[`V2-THEME.md`](./V2-THEME.md) for identity invariants, site anatomy,
+responsive behaviour, and adoption order.
+
+### Tool and editor workbenches
+
+**[Open the 3D, node, and animation workbench laboratory](https://hara-lang.github.io/visual-language/v2/tool/)**
+
+```astro
+---
+import WorkbenchShell from "@hara-lang/visual-language/astro/v2/tool/WorkbenchShell.astro";
+import Toolbar from "@hara-lang/visual-language/astro/v2/tool/Toolbar.astro";
+import ToolGroup from "@hara-lang/visual-language/astro/v2/tool/ToolGroup.astro";
+import ToolButton from "@hara-lang/visual-language/astro/v2/tool/ToolButton.astro";
+import DockPanel from "@hara-lang/visual-language/astro/v2/tool/DockPanel.astro";
+import StatusBar from "@hara-lang/visual-language/astro/v2/tool/StatusBar.astro";
+import "@hara-lang/visual-language/v2-tool.css";
+---
+
+<div class="hara-v2 hara-v2-tool">
+  <WorkbenchShell label="Scene editor">
+    <Toolbar slot="top" label="Scene commands" density="dense">
+      <ToolGroup label="Transform">
+        <ToolButton label="Move" active />
+        <ToolButton label="Rotate" />
+      </ToolGroup>
+    </Toolbar>
+    <main slot="viewport">...</main>
+    <DockPanel slot="right" label="Inspector">...</DockPanel>
+    <StatusBar slot="status">Ready</StatusBar>
+  </WorkbenchShell>
+</div>
+```
+
+The package exports fifteen stateless Astro primitives:
+
+- controls: `Toolbar`, `ToolGroup`, `ToolButton`, `ToolToggle`, `ToolSelect`,
+  `ToolNumberField`, `TabStrip`, `IconRail`, and `StatusBar`;
+- structure: `WorkbenchShell`, `DockPanel`, `FloatingPalette`,
+  `ViewportOverlay`, `InspectorSection`, and `PanelHeader`.
+
+They provide geometry, theme, semantic roles, and state markers. Applications
+still own event handling, focus movement, persistence, drag/dock behaviour,
+command execution, and domain data. See [`V2-TOOL.md`](./V2-TOOL.md) for the
+complete token reference, component inventory, composition patterns,
+accessibility requirements, and responsive collapse order.
 
 The shared Open Graph system adds six `3840 × 2016` material masters and twelve
 site-specific cards with deterministic typography. See
