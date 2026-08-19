@@ -16,7 +16,7 @@ test("Learn owns runnable onboarding and guided World examples", async () => {
   assert.match(page, /id="tracks"/);
   assert.match(page, /id="world-examples"/);
   assert.match(page, /Programmer onboarding/);
-  assert.match(page, /Community reader study/);
+  assert.match(page, /Earlier community reader/);
   assert.match(page, /<WorldSpecimen\s*\/>/);
 
   assert.match(specimen, /section="Learn"/);
