@@ -1,0 +1,31 @@
+---
+import { benchmarkRuntimes, benchmarkWorkloads } from "../../lib/v2-www-family.mjs";
+
+const { selectedWorkload = "schema-check", selectedRuntime = "hara-rust" } = Astro.props;
+---
+<div class="www-benchmark-matrix" data-benchmark-matrix data-selected-workload={selectedWorkload} data-selected-runtime={selectedRuntime}>
+  <div class="hara-v2-table-wrap">
+    <table class="hara-v2-table">
+      <thead>
+        <tr><th>Workload</th>{benchmarkRuntimes.map((runtime) => <th data-comparable={runtime.comparable ? "true" : "false"}><span>{runtime.label}</span><small>{runtime.revision}</small></th>)}</tr>
+      </thead>
+      <tbody>
+        {benchmarkWorkloads.map((workload) => (
+          <tr data-workload={workload.id} data-selected={workload.id === selectedWorkload ? "true" : "false"}>
+            <th><button type="button" data-select-workload={workload.id}><b>{workload.label}</b><small>{workload.category} · {workload.unit}</small></button></th>
+            {benchmarkRuntimes.map((runtime) => {
+              const value = workload.values[runtime.id];
+              const selected = workload.id === selectedWorkload && runtime.id === selectedRuntime;
+              return (
+                <td data-runtime={runtime.id} data-comparable={runtime.comparable ? "true" : "false"} data-selected={selected ? "true" : "false"}>
+                  {value === null ? <span class="www-missing-result">—<small>not available</small></span> : <button type="button" data-select-result={`${workload.id}:${runtime.id}`}><strong>{value}</strong><small>{runtime.comparable ? "comparable" : "different machine"}</small></button>}
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <footer><span>Selected cells open exact evidence. Incomparable results remain visible and never enter headline rankings.</span><button type="button">Export matrix CSV</button></footer>
+</div>
