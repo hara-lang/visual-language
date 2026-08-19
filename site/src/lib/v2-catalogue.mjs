@@ -62,8 +62,9 @@ export const catalogueGroups = [
         id: "components",
         label: "Components",
         path: "/v2/components/",
-        summary: "Primitive, compound, document, data, profile, feed, form, and tool component specimens.",
-        status: "planned",
+        href: "/v2/components/",
+        summary: "Primitive, compound, document, data, profile, feed, form, tool, environment, and runtime component specimens.",
+        status: "active",
         issue: 35,
         eyebrow: "Reusable inventory"
       },
