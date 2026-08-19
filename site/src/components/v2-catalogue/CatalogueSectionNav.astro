@@ -1,20 +1,28 @@
 ---
 const {
-  label = "Sections",
+  label = "On this page",
   enabled = true
 } = Astro.props;
 ---
 {enabled && (
-  <nav class="v2-catalogue-section-nav" aria-label={`${label} on this page`} hidden data-catalogue-section-nav>
+  <nav
+    class="v2-catalogue-section-nav"
+    aria-label={label}
+    hidden
+    data-catalogue-section-nav
+    data-catalogue-section-label={label}
+  >
     <button
       class="v2-catalogue-section-trigger"
       type="button"
       aria-expanded="false"
       aria-controls="v2-catalogue-section-links"
+      aria-label={`Show ${label.toLowerCase()} navigation`}
       data-catalogue-section-trigger
     >
-      <span>{label}</span>
-      <small data-catalogue-section-current>On this page</small>
+      <span class="v2-catalogue-section-trigger-label">{label}</span>
+      <span class="v2-catalogue-section-trigger-current" data-catalogue-section-current>Overview</span>
+      <span class="v2-catalogue-section-trigger-chevron" aria-hidden="true"></span>
     </button>
     <div class="v2-catalogue-section-links" id="v2-catalogue-section-links" data-catalogue-section-links></div>
   </nav>
@@ -59,6 +67,14 @@ const {
       nav.dataset.ready = "true";
       links.replaceChildren();
       const linkById = new Map();
+      const navigationLabel = nav.dataset.catalogueSectionLabel || "On this page";
+
+      const setOpen = (open, restoreFocus = false) => {
+        nav.dataset.open = String(open);
+        trigger.setAttribute("aria-expanded", String(open));
+        trigger.setAttribute("aria-label", `${open ? "Hide" : "Show"} ${navigationLabel.toLowerCase()} navigation`);
+        if (restoreFocus) trigger.focus();
+      };
 
       const titleCaseId = (id) => id
         .split("-")
@@ -82,8 +98,10 @@ const {
         });
         const active = linkById.get(id);
         if (currentLabel instanceof HTMLElement && active instanceof HTMLAnchorElement) {
-          currentLabel.textContent = active.textContent || "On this page";
-          active.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+          currentLabel.textContent = active.textContent || "Overview";
+          if (window.matchMedia("(min-width: 841px)").matches) {
+            active.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+          }
         }
       };
 
@@ -93,8 +111,7 @@ const {
         anchor.textContent = labelFor(section);
         anchor.addEventListener("click", () => {
           setCurrent(section.id);
-          nav.dataset.open = "false";
-          trigger.setAttribute("aria-expanded", "false");
+          setOpen(false);
         });
         links.append(anchor);
         linkById.set(section.id, anchor);
@@ -102,14 +119,10 @@ const {
       });
 
       nav.hidden = false;
-      nav.dataset.open = "false";
+      setOpen(false);
       document.body.dataset.catalogueSectionReady = "true";
 
-      trigger.addEventListener("click", () => {
-        const open = nav.dataset.open !== "true";
-        nav.dataset.open = String(open);
-        trigger.setAttribute("aria-expanded", String(open));
-      });
+      trigger.addEventListener("click", () => setOpen(nav.dataset.open !== "true"));
 
       const observer = "IntersectionObserver" in window
         ? new IntersectionObserver((entries) => {
@@ -123,9 +136,7 @@ const {
 
       document.addEventListener("keydown", (event) => {
         if (event.key !== "Escape" || nav.dataset.open !== "true") return;
-        nav.dataset.open = "false";
-        trigger.setAttribute("aria-expanded", "false");
-        trigger.focus();
+        setOpen(false, true);
       });
     });
   };
