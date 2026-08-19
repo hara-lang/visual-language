@@ -87,9 +87,9 @@ unchanged, so sites can migrate layout family by layout family. See
 [`V2-THEME.md`](./V2-THEME.md) for identity invariants, surface rhythm, site
 anatomy, responsive behaviour, and adoption order.
 
-### Tool and editor workbenches
+### Tool, editor, and live-environment workbenches
 
-**[Open the 3D, node, and animation workbench laboratory](https://hara-lang.github.io/visual-language/v2/tool/)**
+**[Open the environment, 3D, node, and animation workbench laboratory](https://hara-lang.github.io/visual-language/v2/tool/)**
 
 ```astro
 ---
@@ -117,18 +117,27 @@ import "@hara-lang/visual-language/v2-tool.css";
 </div>
 ```
 
-The package exports fifteen stateless Astro primitives:
+The package exports twenty-one stateless Astro primitives and composites:
 
 - controls: `Toolbar`, `ToolGroup`, `ToolButton`, `ToolToggle`, `ToolSelect`,
   `ToolNumberField`, `TabStrip`, `IconRail`, and `StatusBar`;
 - structure: `WorkbenchShell`, `DockPanel`, `FloatingPalette`,
-  `ViewportOverlay`, `InspectorSection`, and `PanelHeader`.
+  `ViewportOverlay`, `InspectorSection`, and `PanelHeader`;
+- environment: `SectionNavigator`, `EnvironmentSection`, `FrontmatterGrid`,
+  `ResourceList`, `CapabilityPane`, and `EnvironmentWorkbench`.
 
-They provide geometry, theme, semantic roles, and state markers. Applications
-still own event handling, focus movement, persistence, drag/dock behaviour,
-command execution, and domain data. See [`V2-TOOL.md`](./V2-TOOL.md) for the
-complete token reference, component inventory, composition patterns,
-accessibility requirements, and responsive collapse order.
+The environment layer supplies the standard **Nav / Frontmatter / Graphics /
+Code** content series and capability-aware **Sessions / Files / Canvas / 3D**
+control pane. Only slots supplied by the host are rendered. See
+[`V2-ENVIRONMENT.md`](./V2-ENVIRONMENT.md) for the complete composition, slot,
+state, responsive, and adoption contract.
+
+All v2 tool components provide geometry, theme, semantic roles, and initial
+state markers. Applications still own event handling, focus movement,
+persistence, drag/dock behaviour, command execution, provider discovery, and
+domain data. See [`V2-TOOL.md`](./V2-TOOL.md) for the complete token reference,
+component inventory, composition patterns, accessibility requirements, and
+responsive collapse order.
 
 The shared Open Graph system adds six `3840 × 2016` material masters and twelve
 site-specific cards with deterministic typography. See
