@@ -67,7 +67,7 @@ test("the global shell composes a compact masthead, secondary route header, sect
   assert.match(header, /CatalogueSectionNav/);
   assert.match(header, /CataloguePageFooter/);
   assert.match(header, /resolvedActivePath/);
-  assert.match(header, /slot="route-actions"/);
+  assert.match(header, /slot name="route-actions"/);
 
   assert.match(masthead, /data-catalogue-launcher-trigger/);
   assert.match(masthead, /CatalogueLauncher/);
