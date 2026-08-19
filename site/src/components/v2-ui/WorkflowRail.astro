@@ -1,0 +1,34 @@
+---
+const { workflow, selected = "", compact = false } = Astro.props;
+---
+<section class="ui-workflow-rail" data-workflow={workflow.id} data-compact={compact ? "true" : "false"}>
+  <header>
+    <div>
+      <p class="hara-v2-kicker">Workflow contract</p>
+      <h3>{workflow.label}</h3>
+      <p>{workflow.summary}</p>
+    </div>
+    <div class="ui-workflow-products" aria-label="Example products">
+      {workflow.products.map((product) => <span>{product}</span>)}
+    </div>
+  </header>
+  <ol>
+    {workflow.stages.map((stage, index) => (
+      <li data-stage={stage.id} data-state={stage.state} data-selected={selected === stage.id ? "true" : "false"}>
+        <div class="ui-workflow-index"><span>{String(index + 1).padStart(2, "0")}</span><i aria-hidden="true"></i></div>
+        <div>
+          <b>{stage.label}</b>
+          <p>{stage.description}</p>
+          <dl>
+            <div><dt>Keyboard</dt><dd>{stage.keyboard}</dd></div>
+            <div><dt>Touch</dt><dd>{stage.touch}</dd></div>
+          </dl>
+        </div>
+      </li>
+    ))}
+  </ol>
+  <footer>
+    <span>Required states</span>
+    <div>{workflow.requiredStates.map((state) => <code>{state}</code>)}</div>
+  </footer>
+</section>
