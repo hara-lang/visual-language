@@ -1,0 +1,932 @@
+---
+import ThemeToggle from "../../../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../../../src/astro/HaraMark.astro";
+import Shell from "../../../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../../../src/astro/v2/ContextNav.astro";
+import Sidebar from "../../../../../../src/astro/v2/Sidebar.astro";
+import "../../../../../../src/v2.css";
+import "../../../../../../src/theme.js";
+import "../../../../styles/v2-lab.css";
+import "../../../../styles/v2-calm-lab.css";
+import "../../../../styles/v2-world-lab.css";
+import "../../../../styles/v2-world-discussion.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/world/discussion/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const worldLab = `${basePath}v2/world/`;
+const learnUrl = "https://learn.hara-lang.org/";
+
+const ecosystemNav = [
+  { href: "#front-page", label: "Home" },
+  { href: "#front-page", label: "World", current: true },
+  { href: "#profile", label: "Packages" },
+  { href: "#front-page", label: "Specs" },
+  { href: learnUrl, label: "Learn", external: true }
+];
+
+const worldNav = (current) => [
+  { href: "#front-page", label: "Hot", current: current === "hot" },
+  { href: "#front-page", label: "New", current: current === "new" },
+  { href: "#front-page", label: "Following", current: current === "following" },
+  { href: "#clipping", label: "Clippings", current: current === "clippings" },
+  { href: "#profile", label: "Profiles", current: current === "profiles" }
+];
+
+const frontPageSidebar = [
+  { label: "Front page", items: [
+    { href: "#front-page", label: "All Hara", current: true, badge: 38 },
+    { href: "#front-page", label: "Language", badge: 12 },
+    { href: "#front-page", label: "Packages", badge: 9 },
+    { href: "#front-page", label: "Projects", badge: 11 },
+    { href: "#front-page", label: "Community", badge: 6 }
+  ] },
+  { label: "Your world", items: [
+    { href: "#front-page", label: "Following", badge: 8 },
+    { href: "#clipping", label: "Saved clippings", badge: 14 },
+    { href: "#thread", label: "Saved threads", badge: 5 }
+  ] }
+];
+
+const threadSidebar = [
+  { label: "Discussion", items: [
+    { href: "#thread", label: "Best comments", current: true, badge: 34 },
+    { href: "#thread", label: "New comments", badge: 7 },
+    { href: "#thread", label: "People here", badge: 9 }
+  ] },
+  { label: "Related", items: [
+    { href: "#front-page", label: "std.typed" },
+    { href: "#clipping", label: "Schema clippings", badge: 4 },
+    { href: "#profile", label: "Contributors", badge: 6 }
+  ] }
+];
+
+const clippingSidebar = [
+  { label: "Create clipping", items: [
+    { href: "#clipping", label: "01 · Source", current: true },
+    { href: "#clipping", label: "02 · Excerpt" },
+    { href: "#clipping", label: "03 · Context" },
+    { href: "#clipping", label: "04 · Publish" }
+  ] },
+  { label: "Principles", items: [
+    { href: "#clipping", label: "Keep canonical link" },
+    { href: "#clipping", label: "Quote narrowly" },
+    { href: "#clipping", label: "Add your context" }
+  ] }
+];
+
+const presenceSidebar = [
+  { label: "Online now", items: [
+    { href: "#presence", label: "Everyone", current: true, badge: 22 },
+    { href: "#presence", label: "Commenting", badge: 7 },
+    { href: "#presence", label: "Reading", badge: 8 },
+    { href: "#presence", label: "Maintaining", badge: 3 },
+    { href: "#presence", label: "Accountable bots", badge: 4 }
+  ] },
+  { label: "Active threads", items: [
+    { href: "#thread", label: "Schema values", badge: 9 },
+    { href: "#front-page", label: "Hoplite release", badge: 5 },
+    { href: "#front-page", label: "Snippet of the day", badge: 4 }
+  ] }
+];
+
+const profileSidebar = [
+  { label: "Profile", items: [
+    { href: "#profile", label: "Overview", current: true },
+    { href: "#profile", label: "Contributions", badge: 137 },
+    { href: "#profile", label: "Packages", badge: 8 },
+    { href: "#profile", label: "Comments", badge: 143 },
+    { href: "#profile", label: "Clippings", badge: 12 }
+  ] },
+  { label: "Identity", items: [
+    { href: "#profile", label: "Contribution badges", badge: 5 },
+    { href: "#profile", label: "Owned bots", badge: 2 }
+  ] }
+];
+
+const boundarySidebar = [
+  { label: "World", items: [
+    { href: "#scope", label: "Articles and feeds", current: true },
+    { href: "#scope", label: "Clippings" },
+    { href: "#scope", label: "Comments" },
+    { href: "#scope", label: "Presence" },
+    { href: "#scope", label: "Profiles" }
+  ] },
+  { label: "Separate product", items: [
+    { href: learnUrl, label: "learn.hara-lang.org ↗" }
+  ] }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Focused Hara World v2 discussion laboratory: ranked articles and feeds, clippings, threaded comments, online presence, accountable bots, contributor profiles, and a separate Learn product." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara World discussion and presence laboratory" />
+    <meta property="og:description" content="A smaller Hara World focused on sources, clippings, comments, people, packages, and visible community presence." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara World discussion and presence laboratory" />
+    <meta name="twitter:description" content="Articles, feeds, clippings, comments, presence, and contribution identity in Hara v2." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara World discussion and presence laboratory</title>
+  </head>
+  <body class="hara-v2">
+    <header class="v2-lab-header">
+      <a class="v2-lab-brand" href={worldLab}>
+        <HaraMark size={28} />
+        <b>Hara visual language</b>
+        <small>Focused World field test</small>
+      </a>
+      <nav aria-label="Focused World prototype screens">
+        <a href="#front-page">Front page</a>
+        <a href="#thread">Thread</a>
+        <a href="#clipping">Clipping</a>
+        <a href="#presence">Online</a>
+        <a href="#profile">Profile</a>
+        <a href="#scope">Scope</a>
+      </nav>
+      <ThemeToggle />
+    </header>
+
+    <main class="v2-lab-main world-lab-main">
+      <section class="world-discussion-hero">
+        <div>
+          <p class="hara-v2-kicker">Focused product study · World v2</p>
+          <h1>A front page for the Hara community.</h1>
+          <p>World becomes deliberately smaller: a ranked index of articles and feeds, portable clippings, durable comment threads, visible community presence, and contributor profiles grounded in packages and reviewed work. Learning moves out to its own product.</p>
+          <div class="world-lab-hero-actions">
+            <a class="hara-v2-button" data-variant="primary" href="#front-page">Open the front page</a>
+            <a class="hara-v2-button" href="#thread">Inspect a discussion</a>
+            <a class="world-lab-back-link" href={worldLab}>← Earlier broad World study</a>
+          </div>
+        </div>
+        <div class="world-focus-map" aria-label="Focused World product map">
+          <div class="world-focus-core"><span>World</span><small>discussion index</small></div>
+          <span class="world-focus-node world-focus-node--articles">Articles</span>
+          <span class="world-focus-node world-focus-node--clips">Clippings</span>
+          <span class="world-focus-node world-focus-node--comments">Comments</span>
+          <span class="world-focus-node world-focus-node--people">People</span>
+          <span class="world-focus-node world-focus-node--online">Online</span>
+          <a class="world-focus-learn" href={learnUrl}>Learn lives elsewhere ↗</a>
+        </div>
+      </section>
+
+      <nav class="world-discussion-index" aria-label="Focused World screen catalogue">
+        <a href="#front-page"><strong>Front page</strong><span>Ranked articles, syndicated feeds, clippings, package releases, snippet of the day, and online presence.</span><code>sources / ranking / discovery</code></a>
+        <a href="#thread"><strong>Article thread</strong><span>Outbound source, linked users, nested comments, owner-present bot replies, and participants online.</span><code>article / comments / identity</code></a>
+        <a href="#clipping"><strong>Clipping</strong><span>A narrow excerpt with canonical provenance, contributor context, topics, and its own discussion.</span><code>quote / source / context</code></a>
+        <a href="#presence"><strong>Online presence</strong><span>People around active threads, package maintainers, and bots visibly connected to accountable owners.</span><code>presence / threads / bots</code></a>
+        <a href="#profile"><strong>Contributor profile</strong><span>Packages, reviewed contributions, evidence-linked badges, comments, clippings, and owned bots.</span><code>work / packages / badges</code></a>
+        <a href="#scope"><strong>World / Learn boundary</strong><span>World owns discussion and community identity. Learn owns tutorials, koans, courses, and progress.</span><code>focus / handoff / domains</code></a>
+      </nav>
+
+      <section class="world-discussion-screen" id="front-page">
+        <header class="world-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 01 · Ranked community index</p><h2>Articles and feeds are the centre.</h2></div>
+          <p>The home page behaves like a small technical Reddit: sources first, visible provenance, compact ranking, and discussion counts. It does not attempt to be a course, project manager, or game hub.</p>
+        </header>
+        <div class="world-discussion-canvas">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-front-page-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("hot")}>
+              <a class="hara-v2-button" href="#clipping">Create clipping</a>
+              <a class="hara-v2-button" data-variant="primary" href="#front-page">Submit article ↗</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Hara World" groups={frontPageSidebar}>
+              <span>RSS, Atom, JSON Feed, and canonical links remain first-class.</span>
+            </Sidebar>
+
+            <div class="world-front-heading">
+              <div><p class="hara-v2-kicker">Front page</p><h1>What the Hara community is reading and discussing.</h1></div>
+              <span class="hara-v2-badge" data-tone="success">22 online</span>
+            </div>
+            <div class="hara-v2-tabs world-sort-tabs" role="tablist" aria-label="Front page sorting">
+              <button class="hara-v2-tab" role="tab" aria-selected="true">Hot</button>
+              <button class="hara-v2-tab" role="tab">New</button>
+              <button class="hara-v2-tab" role="tab">Top</button>
+              <button class="hara-v2-tab" role="tab">Following</button>
+            </div>
+
+            <div class="world-post-list">
+              <article class="world-post world-post--article">
+                <div class="world-vote-rail">
+                  <button type="button" aria-label="Upvote article" aria-pressed="false" data-vote="up">▲</button>
+                  <strong data-vote-score>86</strong>
+                  <button type="button" aria-label="Downvote article" aria-pressed="false" data-vote="down">▼</button>
+                </div>
+                <div class="world-post-body">
+                  <div class="world-post-kicker"><span>Article</span><a href="#thread">hara-lang.org</a><small>submitted by <a href="#profile">@chris</a> · 42 min ago</small></div>
+                  <h2><a href="#thread">Schema values are making the type system feel like ordinary Hara</a></h2>
+                  <p>A field note on the boundary between typed values, portable forms, and the compiler.</p>
+                  <footer><a href="#thread"><b>34 comments</b></a><button type="button">save</button><button type="button">clip</button><span>std.typed</span></footer>
+                </div>
+              </article>
+
+              <article class="world-post world-post--clipping">
+                <div class="world-vote-rail">
+                  <button type="button" aria-label="Upvote clipping" aria-pressed="false" data-vote="up">▲</button>
+                  <strong data-vote-score>52</strong>
+                  <button type="button" aria-label="Downvote clipping" aria-pressed="false" data-vote="down">▼</button>
+                </div>
+                <div class="world-post-body">
+                  <div class="world-post-kicker"><span>Clipping</span><a href="#clipping">github.com</a><small>clipped by <a href="#profile">@mina</a> · 1 hr ago</small></div>
+                  <h2><a href="#clipping">“The executor and store can remain separate without inventing a runtime object.”</a></h2>
+                  <blockquote>Execution asks what can happen now; storage answers what already happened. The ABI can remain ordinary data between them.</blockquote>
+                  <footer><a href="#clipping"><b>18 comments</b></a><button type="button">save</button><button type="button">open source</button><span>work.*</span></footer>
+                </div>
+              </article>
+
+              <article class="world-post world-post--release">
+                <div class="world-vote-rail">
+                  <button type="button" aria-label="Upvote package release" aria-pressed="false" data-vote="up">▲</button>
+                  <strong data-vote-score>41</strong>
+                  <button type="button" aria-label="Downvote package release" aria-pressed="false" data-vote="down">▼</button>
+                </div>
+                <div class="world-post-body">
+                  <div class="world-post-kicker"><span>Package feed</span><a href="#profile">packages.hara-lang.org</a><small>published by <a href="#profile">@sara</a> · 2 hrs ago</small></div>
+                  <h2><a href="#thread">std.graphics 0.8.0 adds portable scene and material forms</a></h2>
+                  <p>Release notes, migration surface, and three source-linked examples.</p>
+                  <footer><a href="#thread"><b>11 comments</b></a><button type="button">save</button><button type="button">open package</button><span>graphics</span></footer>
+                </div>
+              </article>
+
+              <article class="world-post world-post--discussion">
+                <div class="world-vote-rail">
+                  <button type="button" aria-label="Upvote discussion" aria-pressed="false" data-vote="up">▲</button>
+                  <strong data-vote-score>27</strong>
+                  <button type="button" aria-label="Downvote discussion" aria-pressed="false" data-vote="down">▼</button>
+                </div>
+                <div class="world-post-body">
+                  <div class="world-post-kicker"><span>Discussion</span><small>started by <a href="#profile">@ari</a> · 3 hrs ago</small></div>
+                  <h2><a href="#thread">What belongs in std.lib.* versus a host-specific provider?</a></h2>
+                  <p>Trying to keep the portable surface useful without hiding the native boundary.</p>
+                  <footer><a href="#thread"><b>29 comments</b></a><button type="button">save</button><span>architecture</span></footer>
+                </div>
+              </article>
+            </div>
+
+            <div slot="aside" class="world-discussion-aside">
+              <section class="hara-v2-panel world-snippet-card">
+                <header class="hara-v2-panel-header"><h2>Snippet of the day</h2><span class="hara-v2-badge" data-tone="signal">#042</span></header>
+                <div class="hara-v2-panel-body">
+                  <p>Clippings, sorted by the source they point back to.</p>
+                  <pre><code>(-&gt;&gt; clippings
+     (group-by :source-id)
+     (sort-by (comp count val) &gt;))</code></pre>
+                  <div class="world-snippet-actions">
+                    <a class="hara-v2-button" data-variant="primary" href="#thread">Discuss snippet</a>
+                    <button class="hara-v2-button" type="button" data-copy-snippet>Copy</button>
+                  </div>
+                  <small>Shared by <a href="#profile">@noah</a> from <a href="#profile">std.world/feed</a>.</small>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel world-online-mini">
+                <header class="hara-v2-panel-header"><h2>Online now</h2><a href="#presence">See everyone</a></header>
+                <div class="hara-v2-panel-body">
+                  <div class="world-online-bubbles" aria-label="People online">
+                    <a href="#profile" title="@mina online"><span>MN</span><i></i></a>
+                    <a href="#profile" title="@chris online"><span>CZ</span><i></i></a>
+                    <a href="#profile" title="@sara online"><span>SV</span><i></i></a>
+                    <a href="#profile" title="@ari online"><span>AK</span><i></i></a>
+                    <a class="is-bot" href="#thread" title="@buildwatcher bot, owner present"><span>BW</span><i></i></a>
+                  </div>
+                  <p><b>22 people</b> and <b>4 accountable bots</b> are present across 9 active threads.</p>
+                  <a class="world-text-link" href="#presence">Open presence view →</a>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Feed sources</h2></header>
+                <div class="hara-v2-panel-body world-source-list">
+                  <div><b>Hara repositories</b><span>12 active feeds</span></div>
+                  <div><b>Community blogs</b><span>17 active feeds</span></div>
+                  <div><b>Package releases</b><span>8 active feeds</span></div>
+                </div>
+              </section>
+            </div>
+          </Shell>
+        </div>
+        <div class="world-lab-notes">
+          <article><b>Source before platform</b><p>Every article and clipping keeps its canonical origin visible. World is the discussion index, not the owner of the source.</p></article>
+          <article><b>Compact ranking</b><p>Votes, age, source, and comment count support discovery without replacing editorial provenance.</p></article>
+          <article><b>No learning dashboard</b><p>The daily object is a community snippet with a thread. Structured instruction belongs to Learn.</p></article>
+        </div>
+      </section>
+
+      <section class="world-discussion-screen" id="thread">
+        <header class="world-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 02 · Article and comment thread</p><h2>The article stays external; the conversation gathers here.</h2></div>
+          <p>Comments are durable, nested, and identity-rich. User mentions link to profiles. Bot comments are visibly labelled and permitted only while an accountable owner is present.</p>
+        </header>
+        <div class="world-discussion-canvas world-discussion-canvas--thread">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-thread-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("hot")}>
+              <a class="hara-v2-button" href="#front-page">← Front page</a>
+              <a class="hara-v2-button" href="#clipping">Clip article</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Thread" groups={threadSidebar}>
+              <span>Comments can mention users, packages, bots, and source-linked clippings.</span>
+            </Sidebar>
+
+            <article class="world-thread-article">
+              <div class="world-vote-rail">
+                <button type="button" aria-label="Upvote article" aria-pressed="true" data-vote="up">▲</button>
+                <strong data-vote-score>87</strong>
+                <button type="button" aria-label="Downvote article" aria-pressed="false" data-vote="down">▼</button>
+              </div>
+              <div>
+                <div class="world-post-kicker"><span>Article</span><a href="#thread">hara-lang.org ↗</a><small>submitted by <a href="#profile">@chris</a> · 42 min ago</small></div>
+                <h1>Schema values are making the type system feel like ordinary Hara</h1>
+                <p>The article remains on its canonical site. World carries the source facts, a short summary, related clippings, and the community conversation.</p>
+                <div class="world-thread-actions"><a class="hara-v2-button" data-variant="primary" href="#thread">Open original ↗</a><button class="hara-v2-button" type="button">Save</button><a class="hara-v2-button" href="#clipping">Create clipping</a></div>
+              </div>
+            </article>
+
+            <section class="world-comment-composer">
+              <div class="hara-v2-avatar">CZ</div>
+              <div>
+                <label for="world-comment">Join the discussion as <a href="#profile">@chris</a></label>
+                <textarea id="world-comment" class="hara-v2-field" rows="4" placeholder="Add context, link a user or package, or reply with a source…"></textarea>
+                <footer><span>Markdown · user and package mentions resolve to profiles</span><button class="hara-v2-button" data-variant="primary" type="button">Comment</button></footer>
+              </div>
+            </section>
+
+            <div class="world-comment-toolbar">
+              <b>34 comments</b>
+              <div><button aria-pressed="true">Best</button><button>New</button><button>Old</button></div>
+            </div>
+
+            <section class="world-comment-tree" aria-label="Comments">
+              <article class="world-comment" data-comment>
+                <div class="world-comment-line"><span class="world-presence-dot" data-status="online"></span></div>
+                <div class="world-comment-main">
+                  <header><a href="#profile">@mina</a><span class="world-contribution-mark">package maintainer</span><time>28 min ago</time></header>
+                  <div class="world-comment-body"><p>The useful change is that tooling no longer needs a parallel schema registry. <a href="#profile">@chris</a>, does the compiler now receive the same value that a normal program can inspect?</p></div>
+                  <footer class="world-comment-actions"><button type="button">▲ 21</button><button type="button">Reply</button><button type="button">Permalink</button><button type="button" data-comment-toggle>Collapse</button></footer>
+
+                  <div class="world-comment-children">
+                    <article class="world-comment" data-comment>
+                      <div class="world-comment-line"><span class="world-presence-dot" data-status="online"></span></div>
+                      <div class="world-comment-main">
+                        <header><a href="#profile">@chris</a><span class="world-contribution-mark">core contributor</span><time>19 min ago</time></header>
+                        <div class="world-comment-body"><p>Yes. The compile path can attach evidence, but the schema itself is still an ordinary Hara value. I clipped the exact boundary <a href="#clipping">here</a>.</p></div>
+                        <footer class="world-comment-actions"><button type="button">▲ 14</button><button type="button">Reply</button><button type="button">Permalink</button><button type="button" data-comment-toggle>Collapse</button></footer>
+                      </div>
+                    </article>
+
+                    <article class="world-comment world-comment--bot" data-comment data-bot-owner="@mina">
+                      <div class="world-comment-line"><span class="world-presence-dot" data-status="bot"></span></div>
+                      <div class="world-comment-main">
+                        <header>
+                          <a href="#profile">@buildwatcher</a>
+                          <span class="world-bot-label">BOT</span>
+                          <span>owned by <a href="#profile">@mina</a></span>
+                          <span class="hara-v2-badge" data-tone="success">Owner present</span>
+                          <time>12 min ago</time>
+                        </header>
+                        <div class="world-comment-body">
+                          <p><code>std.typed 1.4.0</code> now exports 18 public schema forms. The release and package index agree at commit <code>5ce1…</code>.</p>
+                          <div class="world-bot-receipt"><b>Automated source</b><span>packages registry · exact revision · no editorial endorsement</span></div>
+                        </div>
+                        <footer class="world-comment-actions"><button type="button">▲ 9</button><button type="button">Reply</button><button type="button">View bot profile</button><button type="button" data-comment-toggle>Collapse</button></footer>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              </article>
+
+              <article class="world-comment" data-comment>
+                <div class="world-comment-line"><span class="world-presence-dot" data-status="away"></span></div>
+                <div class="world-comment-main">
+                  <header><a href="#profile">@ari</a><span class="world-contribution-mark">reviewer</span><time>9 min ago</time></header>
+                  <div class="world-comment-body"><p>I would like the article to link one counterexample where metadata is still the better boundary. Otherwise the “ordinary value” claim reads broader than the current implementation.</p></div>
+                  <footer class="world-comment-actions"><button type="button">▲ 7</button><button type="button">Reply</button><button type="button">Permalink</button><button type="button" data-comment-toggle>Collapse</button></footer>
+                </div>
+              </article>
+            </section>
+
+            <div slot="aside" class="world-discussion-aside">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>In this thread</h2><span class="hara-v2-badge" data-tone="success">9 present</span></header>
+                <div class="hara-v2-panel-body world-thread-people">
+                  <a href="#profile"><span class="hara-v2-avatar">MN</span><b>@mina</b><small>commenting</small></a>
+                  <a href="#profile"><span class="hara-v2-avatar">CZ</span><b>@chris</b><small>replying</small></a>
+                  <a href="#profile"><span class="hara-v2-avatar">AK</span><b>@ari</b><small>reading</small></a>
+                  <a class="is-bot" href="#profile"><span class="hara-v2-avatar">BW</span><b>@buildwatcher</b><small>owner present</small></a>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel world-bot-policy">
+                <header class="hara-v2-panel-header"><h2>Bot accountability</h2></header>
+                <div class="hara-v2-panel-body">
+                  <p>Bot comments show the bot, its verified owner, and the owner’s presence state.</p>
+                  <div><span class="world-presence-dot" data-status="online"></span><b>@mina present</b><small>@buildwatcher may comment</small></div>
+                  <div class="is-paused"><span class="world-presence-dot" data-status="offline"></span><b>@noah offline</b><small>@release-notes replies paused</small></div>
+                  <strong>Bot replies pause when the accountable owner leaves.</strong>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Related clippings</h2></header>
+                <div class="hara-v2-panel-body world-related-clips">
+                  <a href="#clipping"><b>Compiler evidence is attached after parsing</b><span>12 comments</span></a>
+                  <a href="#clipping"><b>Schema data survives the native boundary</b><span>7 comments</span></a>
+                </div>
+              </section>
+            </div>
+          </Shell>
+        </div>
+        <div class="world-lab-notes">
+          <article><b>Linked identities</b><p>User mentions, contribution marks, packages, and bots all resolve to inspectable profiles.</p></article>
+          <article><b>Owner-present bots</b><p>Automation is welcome in discussion only when its accountable human owner is visibly present.</p></article>
+          <article><b>Source remains canonical</b><p>The thread can outlive a feed refresh without copying ownership of the article.</p></article>
+        </div>
+      </section>
+
+      <section class="world-discussion-screen" id="clipping">
+        <header class="world-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 03 · Clipping composer and preview</p><h2>Quote narrowly. Preserve the source. Add context.</h2></div>
+          <p>A clipping is the bridge between a link and a discussion: a selected excerpt, canonical URL, the clipper’s note, topics, and a stable comment thread.</p>
+        </header>
+        <div class="world-discussion-canvas world-discussion-canvas--clipping">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-clipping-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("clippings")}>
+              <a class="hara-v2-button" href="#front-page">Cancel</a>
+              <button class="hara-v2-button" data-variant="primary" type="button">Publish clipping</button>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="New clipping" groups={clippingSidebar}>
+              <span>A clipping never replaces the original article or package record.</span>
+            </Sidebar>
+
+            <div class="world-clipping-heading">
+              <div><p class="hara-v2-kicker">Create clipping</p><h1>Bring one useful passage into World.</h1></div>
+              <span class="hara-v2-badge" data-tone="success">Canonical source verified</span>
+            </div>
+
+            <div class="world-clipping-layout">
+              <form class="world-clip-editor" onsubmit="return false">
+                <div class="hara-v2-form-field" data-wide="true">
+                  <label for="clip-source">Source URL</label>
+                  <input id="clip-source" class="hara-v2-field" value="https://github.com/hara-lang/hara/blob/main/src/work/README.md" />
+                </div>
+                <div class="hara-v2-form-field" data-wide="true">
+                  <label for="clip-title">Clipping title</label>
+                  <input id="clip-title" class="hara-v2-field" value="Executor and store remain separate boundaries" data-clip-title-input />
+                </div>
+                <div class="hara-v2-form-field" data-wide="true">
+                  <label for="clip-excerpt">Selected excerpt</label>
+                  <textarea id="clip-excerpt" class="hara-v2-field" rows="7" data-clip-excerpt-input>The executor answers what can happen now; the store answers what already happened. Their shared boundary can remain ordinary data.</textarea>
+                  <small>26 words selected · original paragraph remains at the canonical URL</small>
+                </div>
+                <div class="hara-v2-form-field" data-wide="true">
+                  <label for="clip-note">Why are you clipping this?</label>
+                  <textarea id="clip-note" class="hara-v2-field" rows="5" data-clip-note-input>This is the clearest explanation I have seen for why work.* does not need a large runtime object.</textarea>
+                </div>
+                <div class="hara-v2-form-grid">
+                  <div class="hara-v2-form-field"><label for="clip-topics">Topics</label><input id="clip-topics" class="hara-v2-field" value="work.*, runtime, architecture" /></div>
+                  <div class="hara-v2-form-field"><label for="clip-feed">Post to</label><select id="clip-feed" class="hara-v2-select"><option>All Hara</option><option>Language</option><option>Packages</option></select></div>
+                </div>
+                <footer class="world-clip-editor-actions"><button class="hara-v2-button" type="button">Save draft</button><button class="hara-v2-button" data-variant="primary" type="button" data-clip-preview>Refresh preview</button></footer>
+              </form>
+
+              <article class="world-clip-preview">
+                <div class="world-post-kicker"><span>Clipping preview</span><a href="#profile">github.com</a><small>clipped by <a href="#profile">@mina</a> · now</small></div>
+                <h2 data-clip-title>Executor and store remain separate boundaries</h2>
+                <blockquote data-clip-excerpt>The executor answers what can happen now; the store answers what already happened. Their shared boundary can remain ordinary data.</blockquote>
+                <p data-clip-note>This is the clearest explanation I have seen for why work.* does not need a large runtime object.</p>
+                <dl class="world-clip-provenance">
+                  <div><dt>Canonical</dt><dd>github.com/hara-lang/hara/…/work/README.md</dd></div>
+                  <div><dt>Excerpt</dt><dd>26 words · exact source link</dd></div>
+                  <div><dt>Clipped by</dt><dd><a href="#profile">@mina</a></dd></div>
+                  <div><dt>Discussion</dt><dd>New durable thread</dd></div>
+                </dl>
+                <div class="world-clip-preview-comments">
+                  <b>Preview of the discussion</b>
+                  <div><a href="#profile">@ari</a><p>This phrasing makes the ABI decision much easier to review.</p></div>
+                  <div><a href="#profile">@chris</a><p>I would link the protocol definition beside it.</p></div>
+                </div>
+              </article>
+            </div>
+
+            <div slot="aside" class="world-discussion-aside">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Clipping contract</h2></header>
+                <div class="hara-v2-panel-body world-clipping-contract">
+                  <div><b>1 · Link</b><p>Keep the exact canonical source visible.</p></div>
+                  <div><b>2 · Quote</b><p>Select only the passage needed for discussion.</p></div>
+                  <div><b>3 · Context</b><p>Explain why the excerpt matters.</p></div>
+                  <div><b>4 · Discuss</b><p>Comments belong to the clipping, not a copied article.</p></div>
+                </div>
+              </section>
+              <section class="hara-v2-callout" data-tone="warning"><div><b>Not a mirror</b><p>Long excerpts and full article copies are rejected. World points back to the source.</p></div></section>
+            </div>
+          </Shell>
+        </div>
+        <div class="world-lab-notes">
+          <article><b>Portable context</b><p>The source URL, excerpt, note, topics, and author are enough to render the clipping elsewhere.</p></article>
+          <article><b>Discussion object</b><p>A clipping has its own stable thread and can be referenced by later comments.</p></article>
+          <article><b>Rights-aware by design</b><p>Quote length and provenance are visible before publication.</p></article>
+        </div>
+      </section>
+
+      <section class="world-discussion-screen" id="presence">
+        <header class="world-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 04 · Community presence</p><h2>See the people around the conversation.</h2></div>
+          <p>Presence is approximate, opt-in, and thread-oriented. It shows who is reading, commenting, or maintaining relevant packages—and connects every active bot to its present owner.</p>
+        </header>
+        <div class="world-discussion-canvas world-discussion-canvas--presence">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-presence-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("hot")}>
+              <a class="hara-v2-button" href="#front-page">Front page</a>
+              <a class="hara-v2-button" data-variant="primary" href="#thread">Join active thread</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Presence" groups={presenceSidebar}>
+              <span>Presence reveals activity mode, never physical location.</span>
+            </Sidebar>
+
+            <div class="world-presence-heading">
+              <div><p class="hara-v2-kicker">Online now</p><h1>22 people across 9 discussions.</h1><p>Four bots are active because their accountable owners are also present.</p></div>
+              <span class="hara-v2-badge" data-tone="success">Live</span>
+            </div>
+
+            <div class="hara-v2-tabs world-presence-filters" role="tablist" aria-label="Presence filters">
+              <button class="hara-v2-tab" role="tab" aria-selected="true" data-presence-filter="all">Everyone</button>
+              <button class="hara-v2-tab" role="tab" data-presence-filter="commenting">Commenting</button>
+              <button class="hara-v2-tab" role="tab" data-presence-filter="reading">Reading</button>
+              <button class="hara-v2-tab" role="tab" data-presence-filter="maintaining">Maintaining</button>
+              <button class="hara-v2-tab" role="tab" data-presence-filter="bot">Bots</button>
+            </div>
+
+            <section class="world-presence-map" aria-label="Online community map">
+              <span class="world-presence-link world-presence-link--mina-bot" aria-hidden="true"></span>
+              <span class="world-presence-link world-presence-link--sara-package" aria-hidden="true"></span>
+
+              <a class="world-presence-node world-presence-node--mina" href="#profile" data-presence-state="commenting">
+                <span class="hara-v2-avatar">MN</span><b>@mina</b><small>commenting in Schema values</small>
+              </a>
+              <a class="world-presence-node world-presence-node--chris" href="#profile" data-presence-state="commenting">
+                <span class="hara-v2-avatar">CZ</span><b>@chris</b><small>replying in Schema values</small>
+              </a>
+              <a class="world-presence-node world-presence-node--ari" href="#profile" data-presence-state="reading">
+                <span class="hara-v2-avatar">AK</span><b>@ari</b><small>reading work.* clipping</small>
+              </a>
+              <a class="world-presence-node world-presence-node--sara" href="#profile" data-presence-state="maintaining">
+                <span class="hara-v2-avatar">SV</span><b>@sara</b><small>maintaining std.graphics</small>
+              </a>
+              <a class="world-presence-node world-presence-node--noah" href="#profile" data-presence-state="reading">
+                <span class="hara-v2-avatar">NL</span><b>@noah</b><small>reading snippet thread</small>
+              </a>
+              <a class="world-presence-node world-presence-node--bot" href="#profile" data-presence-state="bot">
+                <span class="hara-v2-avatar">BW</span><b>@buildwatcher</b><small>bot · owned by @mina</small>
+              </a>
+
+              <a class="world-active-thread world-active-thread--schema" href="#thread">
+                <span>9 present</span><b>Schema values are ordinary Hara</b><small>34 comments · std.typed</small>
+              </a>
+              <a class="world-active-thread world-active-thread--graphics" href="#thread">
+                <span>5 present</span><b>std.graphics 0.8.0 release</b><small>11 comments · package feed</small>
+              </a>
+              <a class="world-active-thread world-active-thread--snippet" href="#thread">
+                <span>4 present</span><b>Snippet of the day #042</b><small>community snippet</small>
+              </a>
+            </section>
+
+            <div class="world-presence-summary">
+              <article><b>7 commenting</b><p>People actively writing or replying.</p></article>
+              <article><b>8 reading</b><p>People with presence sharing enabled.</p></article>
+              <article><b>3 maintaining</b><p>Package maintainers in relevant discussions.</p></article>
+              <article><b>4 bots</b><p>Every bot is connected to a present owner.</p></article>
+            </div>
+
+            <div slot="aside" class="world-discussion-aside">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Presence contract</h2></header>
+                <div class="hara-v2-panel-body world-presence-contract">
+                  <p><b>Approximate.</b> “Online” means an active World session, not continuous surveillance.</p>
+                  <p><b>Optional.</b> People can appear offline while continuing to read and comment.</p>
+                  <p><b>Thread-oriented.</b> Presence is attached to public community activity, not location.</p>
+                  <p><b>Accountable automation.</b> Bot comment permission follows owner presence.</p>
+                </div>
+              </section>
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Owner + bot</h2><span class="hara-v2-badge" data-tone="success">Both present</span></header>
+                <div class="hara-v2-panel-body world-owner-bot-pair">
+                  <a href="#profile"><span class="hara-v2-avatar">MN</span><b>@mina</b><small>owner</small></a>
+                  <span aria-hidden="true">↔</span>
+                  <a href="#profile"><span class="hara-v2-avatar">BW</span><b>@buildwatcher</b><small>package index bot</small></a>
+                </div>
+              </section>
+            </div>
+          </Shell>
+        </div>
+        <div class="world-lab-notes">
+          <article><b>Human scale</b><p>Presence helps a small language community feel inhabited without pretending to be a chat platform.</p></article>
+          <article><b>Useful context</b><p>Maintainer and thread activity make it easier to know when a question may receive an informed response.</p></article>
+          <article><b>Bot accountability</b><p>The visual relationship between bot and owner is part of the identity contract.</p></article>
+        </div>
+      </section>
+
+      <section class="world-discussion-screen" id="profile">
+        <header class="world-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 05 · Contributor and package profile</p><h2>Profiles explain what someone has contributed.</h2></div>
+          <p>The profile is not a generic social biography. It centres reviewed contributions, maintained packages, evidence-linked badges, useful comments, clippings, and accountable bots.</p>
+        </header>
+        <div class="world-discussion-canvas world-discussion-canvas--profile">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-profile-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("profiles")}>
+              <button class="hara-v2-button" type="button">Follow</button>
+              <button class="hara-v2-button" data-variant="primary" type="button">Mention in comment</button>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="@mina" groups={profileSidebar}>
+              <span>Contribution data links back to public package, repository, review, and World records.</span>
+            </Sidebar>
+
+            <header class="world-profile-header">
+              <div class="world-profile-avatar"><span>MN</span><i title="Online now"></i></div>
+              <div><p class="hara-v2-kicker">Contributor profile</p><h1>Mina N.</h1><p>Package maintainer working on typed values, durable workflows, and build tooling.</p><div class="world-profile-links"><a href="#profile">@mina</a><span>Melbourne · online now</span><a href="#front-page">17 followers</a></div></div>
+              <div class="world-profile-actions"><button class="hara-v2-button" data-variant="primary">Follow</button><a class="hara-v2-button" href="#thread">View comments</a></div>
+            </header>
+
+            <section class="world-contribution-badges">
+              <header><div><p class="hara-v2-kicker">Evidence-linked identity</p><h2>Contribution badges</h2></div><p>Badges describe reviewed work. Each one opens the evidence behind it.</p></header>
+              <div>
+                <a href="#profile" data-evidence="packages"><b>Package maintainer</b><span>3 active packages</span><small>View package records →</small></a>
+                <a href="#profile" data-evidence="commits"><b>Core contributor</b><span>137 merged contributions</span><small>View repository evidence →</small></a>
+                <a href="#profile" data-evidence="reviews"><b>Helpful reviewer</b><span>48 accepted reviews</span><small>View review history →</small></a>
+                <a href="#profile" data-evidence="feeds"><b>Feed publisher</b><span>2 verified sources</span><small>View source registry →</small></a>
+                <a href="#profile" data-evidence="bots"><b>Accountable bot owner</b><span>2 registered bots</span><small>View bot identities →</small></a>
+              </div>
+            </section>
+
+            <div class="world-profile-stats">
+              <article><strong>137</strong><span>merged contributions</span></article>
+              <article><strong>8</strong><span>packages contributed to</span></article>
+              <article><strong>143</strong><span>comments</span></article>
+              <article><strong>12</strong><span>clippings</span></article>
+            </div>
+
+            <div class="world-profile-grid">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Packages</h2><a href="#profile">View all</a></header>
+                <div class="hara-v2-table-wrap">
+                  <table class="hara-v2-table world-package-table">
+                    <thead><tr><th>Package</th><th>Role</th><th>Latest</th><th>Activity</th></tr></thead>
+                    <tbody>
+                      <tr><td><a href="#thread">std.typed</a></td><td>Maintainer</td><td>1.4.0</td><td><span class="hara-v2-badge" data-tone="success">Active</span></td></tr>
+                      <tr><td><a href="#thread">tool.lint</a></td><td>Contributor</td><td>0.9.2</td><td>6 days ago</td></tr>
+                      <tr><td><a href="#thread">work.core</a></td><td>Reviewer</td><td>0.4.0</td><td>Today</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Recent contribution record</h2></header>
+                <div class="hara-v2-panel-body world-contribution-timeline">
+                  <article><time>Today</time><div><b>Reviewed schema-argument diagnostics</b><p>Accepted after the legacy lint corpus remained unchanged.</p><a href="#thread">Open discussion →</a></div></article>
+                  <article><time>Mon</time><div><b>Released std.typed 1.4.0</b><p>Published package record and migration clipping.</p><a href="#front-page">Open release →</a></div></article>
+                  <article><time>Aug 14</time><div><b>Clipped the work executor/store boundary</b><p>18 comments across the architecture thread.</p><a href="#clipping">Open clipping →</a></div></article>
+                </div>
+              </section>
+            </div>
+
+            <section class="world-owned-bots">
+              <header><div><p class="hara-v2-kicker">Automation with an owner</p><h2>Owned bots</h2></div><p>Bot permissions, sources, and comment activity are visible beside the human account.</p></header>
+              <div class="world-bot-card">
+                <span class="hara-v2-avatar">BW</span>
+                <div><h3>@buildwatcher <span class="world-bot-label">BOT</span></h3><p>Reports exact package and CI facts into relevant threads.</p><div><span class="hara-v2-badge" data-tone="success">Owner present</span><span>Comments enabled</span><span>Last source check 2 min ago</span></div></div>
+                <a class="hara-v2-button" href="#thread">View 18 comments</a>
+              </div>
+              <div class="world-bot-card is-paused">
+                <span class="hara-v2-avatar">RN</span>
+                <div><h3>@release-notes <span class="world-bot-label">BOT</span></h3><p>Drafts package release summaries from reviewed manifests.</p><div><span class="hara-v2-badge">Owner away</span><span>Comments paused</span><span>Read-only presence</span></div></div>
+                <button class="hara-v2-button" disabled>Replies paused</button>
+              </div>
+            </section>
+
+            <div slot="aside" class="world-discussion-aside">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Online with Mina</h2></header>
+                <div class="hara-v2-panel-body world-profile-presence">
+                  <a href="#profile"><span class="hara-v2-avatar">CZ</span><b>@chris</b><small>Schema thread</small></a>
+                  <a href="#profile"><span class="hara-v2-avatar">AK</span><b>@ari</b><small>work.* clipping</small></a>
+                  <a class="is-bot" href="#profile"><span class="hara-v2-avatar">BW</span><b>@buildwatcher</b><small>owned bot</small></a>
+                </div>
+              </section>
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Recent comments</h2></header>
+                <div class="hara-v2-panel-body world-profile-comments">
+                  <a href="#thread"><p>“Tooling no longer needs a parallel schema registry.”</p><span>21 points · 28 min ago</span></a>
+                  <a href="#thread"><p>“The old lint corpus must remain the baseline.”</p><span>34 points · yesterday</span></a>
+                </div>
+              </section>
+            </div>
+          </Shell>
+        </div>
+        <div class="world-lab-notes">
+          <article><b>Contribution over popularity</b><p>Profiles answer what a person maintains, reviews, publishes, and helps explain.</p></article>
+          <article><b>Badges have evidence</b><p>Every badge links to a public record rather than an opaque point score.</p></article>
+          <article><b>Bots inherit accountability</b><p>Owned automation appears on the same profile as its permissions and activity.</p></article>
+        </div>
+      </section>
+
+      <section class="world-discussion-screen" id="scope">
+        <header class="world-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 06 · Product boundary</p><h2>World discusses Hara. Learn teaches it.</h2></div>
+          <p>The products remain connected through links and snippets, but they no longer compete for the same navigation, information architecture, or account progression.</p>
+        </header>
+        <div class="world-discussion-canvas world-discussion-canvas--scope">
+          <Shell embedded={true} sidebar={true} aside={false} mainId="world-scope-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("hot")}>
+              <a class="hara-v2-button" data-variant="primary" href={learnUrl} target="_blank" rel="noreferrer">Open Learn ↗</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Product boundary" groups={boundarySidebar}>
+              <span>Learn is an ecosystem destination, not a World section.</span>
+            </Sidebar>
+
+            <div class="world-boundary-heading">
+              <p class="hara-v2-kicker">One language · two focused products</p>
+              <h1>All learning materials live at learn.hara-lang.org.</h1>
+              <p>World can surface a snippet, article, clipping, or comment that sparks curiosity. Structured instruction and progress continue on Learn.</p>
+            </div>
+
+            <div class="world-boundary-grid" data-product-boundary>
+              <section class="world-boundary-card world-boundary-card--world">
+                <header><span>world.hara-lang.org</span><h2>Community discussion</h2><p>What the Hara community is reading, publishing, maintaining, and saying.</p></header>
+                <ul>
+                  <li>Ranked articles and syndicated feeds</li>
+                  <li>Clippings with canonical provenance</li>
+                  <li>Nested comments and user mentions</li>
+                  <li>Online presence and active threads</li>
+                  <li>Contribution, package, and bot profiles</li>
+                  <li>Snippet of the day with a discussion</li>
+                </ul>
+                <a class="hara-v2-button" data-variant="primary" href="#front-page">Return to World</a>
+              </section>
+
+              <div class="world-boundary-handoff" aria-label="Links between World and Learn">
+                <span>article links</span>
+                <span>snippet explanation</span>
+                <span>profile identity</span>
+                <b>↔</b>
+                <small>No duplicated course state</small>
+              </div>
+
+              <section class="world-boundary-card world-boundary-card--learn">
+                <header><span>learn.hara-lang.org</span><h2>Structured learning</h2><p>How someone learns the language through a coherent curriculum and executable practice.</p></header>
+                <ul>
+                  <li>Getting-started paths and tutorials</li>
+                  <li>Koans and guided exercises</li>
+                  <li>Courses and concept sequences</li>
+                  <li>Challenge verification and progress</li>
+                  <li>Teaching notes and reference explanations</li>
+                  <li>Learning-specific onboarding</li>
+                </ul>
+                <a class="hara-v2-button" data-variant="primary" href={learnUrl} target="_blank" rel="noreferrer">Open Learn ↗</a>
+              </section>
+            </div>
+
+            <section class="world-boundary-example">
+              <div>
+                <p class="hara-v2-kicker">Example handoff</p>
+                <h2>Snippet of the day stays social.</h2>
+                <p>World hosts the snippet, source attribution, votes, clippings, and comments. A reader who wants the underlying concept follows a deliberate link into Learn.</p>
+              </div>
+              <pre><code>(-&gt;&gt; entries
+     (filter :published?)
+     (sort-by :score &gt;))</code></pre>
+              <div><a class="hara-v2-button" href="#thread">Discuss on World</a><a class="hara-v2-button" data-variant="primary" href={learnUrl}>Read the pipeline explanation on Learn ↗</a></div>
+            </section>
+          </Shell>
+        </div>
+        <div class="world-lab-notes">
+          <article><b>World stays legible</b><p>Its navigation describes content and discussion rather than mixing in curriculum state.</p></article>
+          <article><b>Learn can go deeper</b><p>Tutorial structure, execution, progress, and pedagogy can evolve without making World heavier.</p></article>
+          <article><b>Identity can remain shared</b><p>The same Hara identity can link a contributor profile and a separate learning profile without merging the products.</p></article>
+        </div>
+      </section>
+
+      <footer class="v2-lab-footer">
+        <span>Focused World discussion study · Visual language v2</span>
+        <span><a href={worldLab}>Broad World study</a> · <a href={learnUrl}>Learn boundary ↗</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script>
+      const initWorldDiscussionPrototype = () => {
+        document.querySelectorAll("[data-vote]").forEach((button) => {
+          if (button.dataset.bound === "true") return;
+          button.dataset.bound = "true";
+          button.addEventListener("click", () => {
+            const rail = button.closest(".world-vote-rail");
+            const score = rail?.querySelector("[data-vote-score]");
+            if (!rail || !score) return;
+            const current = Number(score.textContent || "0");
+            const wasPressed = button.getAttribute("aria-pressed") === "true";
+            rail.querySelectorAll("[data-vote]").forEach((peer) => peer.setAttribute("aria-pressed", "false"));
+            if (wasPressed) {
+              score.textContent = String(current + (button.dataset.vote === "up" ? -1 : 1));
+              return;
+            }
+            button.setAttribute("aria-pressed", "true");
+            score.textContent = String(current + (button.dataset.vote === "up" ? 1 : -1));
+          });
+        });
+
+        document.querySelectorAll("[data-comment-toggle]").forEach((button) => {
+          if (button.dataset.bound === "true") return;
+          button.dataset.bound = "true";
+          button.addEventListener("click", () => {
+            const comment = button.closest("[data-comment]");
+            if (!comment) return;
+            const body = comment.querySelector(":scope > .world-comment-main > .world-comment-body");
+            const children = comment.querySelector(":scope > .world-comment-main > .world-comment-children");
+            const collapsed = comment.dataset.collapsed === "true";
+            comment.dataset.collapsed = collapsed ? "false" : "true";
+            if (body instanceof HTMLElement) body.hidden = !collapsed;
+            if (children instanceof HTMLElement) children.hidden = !collapsed;
+            button.textContent = collapsed ? "Collapse" : "Expand";
+          });
+        });
+
+        document.querySelectorAll("[data-presence-filter]").forEach((button) => {
+          if (button.dataset.bound === "true") return;
+          button.dataset.bound = "true";
+          button.addEventListener("click", () => {
+            const filter = button.dataset.presenceFilter || "all";
+            const shell = button.closest(".hara-v2-shell");
+            shell?.querySelectorAll("[data-presence-filter]").forEach((peer) => peer.setAttribute("aria-selected", String(peer === button)));
+            shell?.querySelectorAll("[data-presence-state]").forEach((node) => {
+              if (node instanceof HTMLElement) node.hidden = filter !== "all" && node.dataset.presenceState !== filter;
+            });
+          });
+        });
+
+        document.querySelectorAll("[data-copy-snippet]").forEach((button) => {
+          if (button.dataset.bound === "true") return;
+          button.dataset.bound = "true";
+          button.addEventListener("click", () => {
+            button.textContent = "Copied";
+            setTimeout(() => { button.textContent = "Copy"; }, 1200);
+          });
+        });
+
+        document.querySelectorAll("[data-clip-preview]").forEach((button) => {
+          if (button.dataset.bound === "true") return;
+          button.dataset.bound = "true";
+          button.addEventListener("click", () => {
+            const shell = button.closest(".hara-v2-shell");
+            if (!shell) return;
+            const title = shell.querySelector("[data-clip-title-input]");
+            const excerpt = shell.querySelector("[data-clip-excerpt-input]");
+            const note = shell.querySelector("[data-clip-note-input]");
+            const setText = (selector, input) => {
+              const target = shell.querySelector(selector);
+              if (target && (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement)) target.textContent = input.value;
+            };
+            setText("[data-clip-title]", title);
+            setText("[data-clip-excerpt]", excerpt);
+            setText("[data-clip-note]", note);
+            button.textContent = "Preview updated";
+          });
+        });
+      };
+
+      initWorldDiscussionPrototype();
+      document.addEventListener("astro:page-load", initWorldDiscussionPrototype);
+    </script>
+  </body>
+</html>
