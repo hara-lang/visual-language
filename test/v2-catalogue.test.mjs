@@ -27,7 +27,7 @@ test("the catalogue has three scalable groups and the complete top-level applica
 
   const world = catalogueItemById("world");
   assert.deepEqual(world?.children?.map(({ label }) => label), [
-    "Focused discussion", "Around Hara"
+    "Discussion", "Around Hara"
   ]);
 
   const learn = catalogueItemById("learn");
