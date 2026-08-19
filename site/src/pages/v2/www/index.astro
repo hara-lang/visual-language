@@ -1,0 +1,361 @@
+---
+import FleetField from "../../../../../src/astro/v2/FleetField.astro";
+import LiveHaraExample from "../../../components/v2-www/LiveHaraExample.astro";
+import StateSpecimen from "../../../components/v2-www/StateSpecimen.astro";
+import ViewportSpecimen from "../../../components/v2-www/ViewportSpecimen.astro";
+import WwwFamilyHeader from "../../../components/v2-www/WwwFamilyHeader.astro";
+import WwwSubnav from "../../../components/v2-www/WwwSubnav.astro";
+import {
+  adoptionNotes,
+  capabilitySections,
+  ecosystemMap,
+  gettingStartedChoices,
+  handoffs,
+  homeNarrative,
+  homeProofLedger,
+  homeSectionNavigation,
+  projectProof,
+  releaseSummary,
+  sharedOwnership,
+  withBasePath,
+  wwwContracts
+} from "../../../lib/v2-www.mjs";
+import "../../../../../src/v2.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-www.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/www/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const docsHref = withBasePath(basePath, "/v2/www/docs/");
+const benchmarksHref = withBasePath(basePath, "/v2/www/benchmarks/");
+const source = `;; static source is readable before a runtime attaches
+(defn describe [system]
+  {:language :hara
+   :runtime  (runtime/name system)
+   :portable (runtime/capability? system :portable-forms)
+   :result   (map inc [1 2 3])})
+
+(describe *session*)`;
+const expectedOutput = `{:language :hara
+ :runtime :wasm
+ :portable true
+ :result [2 3 4]}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="The detailed Hara v2 public WWW family: language proposition, executable first example, ecosystem proof, releases, getting started, responsive and degraded states." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara" />
+    <meta property="og:title" content="Hara · A small language with the whole system visible" />
+    <meta property="og:description" content={homeNarrative.summary} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara language and ecosystem" />
+    <meta name="twitter:description" content={homeNarrative.summary} />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara language and ecosystem · WWW family</title>
+  </head>
+  <body class="hara-v2 www-family-page www-home-page">
+    <WwwFamilyHeader basePath={basePath} activeRoute="home" />
+    <WwwSubnav label="Home" items={homeSectionNavigation} activeId="first-example">
+      <span slot="identity">{homeNarrative.schema} · {homeNarrative.schemaVersion}</span>
+      <a class="hara-v2-button" href={docsHref}>Read the Docs</a>
+      <a class="hara-v2-button" data-variant="primary" href="#first-example">Run Hara</a>
+    </WwwSubnav>
+
+    <main class="www-main">
+      <section class="www-hero" aria-labelledby="www-home-title">
+        <div class="www-hero__copy">
+          <p class="hara-v2-kicker">{homeNarrative.eyebrow}</p>
+          <h1 id="www-home-title">{homeNarrative.title}</h1>
+          <p class="www-hero__summary">{homeNarrative.summary}</p>
+          <div class="www-hero__actions">
+            <a class="hara-v2-button" data-variant="primary" href="#first-example">Evaluate the first form <span aria-hidden="true">→</span></a>
+            <a class="hara-v2-button" href={benchmarksHref}>Inspect evidence</a>
+            <a class="hara-v2-button" data-variant="ghost" href="#capabilities">Understand the system</a>
+          </div>
+          <div class="www-contract-line" aria-label="Content contract">
+            <span>{homeNarrative.contentType}</span>
+            <code>{homeNarrative.revision}</code>
+            <span>{homeNarrative.proofRefs.length} proof references</span>
+          </div>
+        </div>
+        <div class="www-hero__field" aria-label="Hara runtime and package field">
+          <FleetField title="Hara runtime fleet" />
+          <div class="www-hero-orbit" data-orbit="forms"><b>forms</b><small>authored intent</small></div>
+          <div class="www-hero-orbit" data-orbit="runtime"><b>runtime</b><small>explicit host</small></div>
+          <div class="www-hero-orbit" data-orbit="proof"><b>proof</b><small>exact evidence</small></div>
+          <div class="www-hero-orbit" data-orbit="package"><b>packages</b><small>owned release</small></div>
+        </div>
+      </section>
+
+      <section class="www-proof-ledger" aria-label="Language proof ledger">
+        {homeProofLedger.map((proof) => (
+          <article>
+            <span>{proof.label}</span>
+            <strong>{proof.value}</strong>
+            <p>{proof.detail}</p>
+          </article>
+        ))}
+      </section>
+
+      <section class="www-section" id="first-example">
+        <header class="www-section-head">
+          <div>
+            <p class="hara-v2-kicker">01 · Explanation, proof, action</p>
+            <h2>Read the form, inspect its boundary, then run it.</h2>
+          </div>
+          <p>
+            The source remains useful documentation before a runtime exists. Execution is a separate, capability-fenced state with an exact revision—not a promotional animation pretending to be a language demo.
+          </p>
+        </header>
+
+        <div class="www-three-part-argument" aria-label="Homepage argument structure">
+          <article data-kind="explanation"><span>Explanation</span><h3>One compact language model</h3><p>Forms, functions, macros, namespaces, schemas, and host edges stay available for inspection.</p></article>
+          <article data-kind="proof"><span>Proof</span><h3>Every claim has a doorway</h3><p>Open the benchmark, specification, package, source revision, or receipt that supports it.</p></article>
+          <article data-kind="action"><span>Action</span><h3>Start at the smallest useful boundary</h3><p>Run a browser example, install the CLI, or point an agent at an exact repository revision.</p></article>
+        </div>
+
+        <LiveHaraExample
+          id="home-first-example"
+          label="First example · capability-safe browser demo"
+          file="first-system.hal"
+          source={source}
+          expectedOutput={expectedOutput}
+          state="ready"
+          runtime="Wasm · isolated"
+          session="www-first-01"
+          generation={1}
+          capabilities={["pure", "portable-forms", "network:none", "filesystem:none"]}
+          revision="hara@9b6c10e + wasm@7ae1"
+          openHref={withBasePath(basePath, "/v2/start/")}
+          exactRevisionHref="#home-adoption"
+          controlPane={false}
+        />
+      </section>
+
+      <section class="www-section" id="capabilities">
+        <header class="www-section-head">
+          <div>
+            <p class="hara-v2-kicker">02 · Language capabilities</p>
+            <h2>The proposition narrows into four inspectable boundaries.</h2>
+          </div>
+          <p>Portability, tooling, runtimes, and interop are explained as concrete system contracts. The homepage does not become a directory of every Hara product.</p>
+        </header>
+
+        <div class="www-capability-stack">
+          {capabilitySections.map((capability) => (
+            <article id={`capability-${capability.id}`}>
+              <header><span>{capability.number}</span><div><p class="hara-v2-kicker">{capability.id}</p><h3>{capability.title}</h3></div></header>
+              <div class="www-capability-stack__body">
+                <p>{capability.summary}</p>
+                <ul>{capability.items.map((item) => <li>{item}</li>)}</ul>
+              </div>
+              <footer><span>Proof boundary</span><p>{capability.proof}</p></footer>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="www-section" id="proof">
+        <header class="www-section-head">
+          <div>
+            <p class="hara-v2-kicker">03 · Ecosystem map and project proof</p>
+            <h2>Show the path through Hara, then show real work.</h2>
+          </div>
+          <p>The ecosystem map answers “where am I?” The proof cards answer “what exists?” using packages, projects, specifications, and exact evidence references.</p>
+        </header>
+
+        <div class="www-ecosystem-map" aria-label="Hara ecosystem map">
+          {ecosystemMap.map((entry, index) => (
+            <article data-map-node={entry.id}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <p class="hara-v2-kicker">{entry.label}</p>
+              <h3>{entry.title}</h3>
+              <p>{entry.summary}</p>
+            </article>
+          ))}
+        </div>
+
+        <div class="www-project-grid">
+          {projectProof.map((project) => (
+            <article>
+              <header><code>{project.package}</code><span>{project.project}</span></header>
+              <p>{project.summary}</p>
+              <footer><span>Evidence</span><strong>{project.evidence}</strong><a href={`#project-${project.id}`}>Inspect project →</a></footer>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="www-section" id="changes">
+        <header class="www-section-head">
+          <div>
+            <p class="hara-v2-kicker">04 · Release and change summary</p>
+            <h2>What changed, why it matters, and which revision says so.</h2>
+          </div>
+          <p>A compact release rail hands detailed migration and compatibility questions to Docs and Packages without hiding the source revision.</p>
+        </header>
+
+        <div class="www-release-list">
+          {releaseSummary.map((release) => (
+            <article>
+              <time>{release.date}</time>
+              <span class="hara-v2-badge">{release.kind}</span>
+              <div><h3>{release.title}</h3><p>{release.impact}</p></div>
+              <code>{release.revision}</code>
+            </article>
+          ))}
+        </div>
+
+        <div class="www-handoff-grid">
+          {handoffs.map((handoff) => (
+            <article data-handoff={handoff.id}>
+              <p class="hara-v2-kicker">{handoff.label} handoff</p>
+              <h3>{handoff.title}</h3>
+              <p>{handoff.summary}</p>
+              <a class="hara-v2-button" href={withBasePath(basePath, handoff.href)}>{handoff.action}</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="www-section" id="start">
+        <header class="www-section-head">
+          <div>
+            <p class="hara-v2-kicker">05 · Download, install, and start</p>
+            <h2>Choose the first useful boundary, not a single funnel.</h2>
+          </div>
+          <p>Browser, local CLI, and agent-first paths are peers. Each path names what it can do and the evidence a reader should inspect next.</p>
+        </header>
+
+        <div class="www-start-grid">
+          {gettingStartedChoices.map((choice, index) => (
+            <article data-start={choice.id}>
+              <header><span>{String(index + 1).padStart(2, "0")}</span><p class="hara-v2-kicker">{choice.label}</p></header>
+              <h3>{choice.title}</h3>
+              <p>{choice.summary}</p>
+              <pre><code>{choice.command}</code></pre>
+              <a href={choice.id === "browser" ? "#first-example" : choice.id === "agent" ? withBasePath(basePath, "/v2/start/") : docsHref}>Continue →</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="www-section" id="states">
+        <header class="www-section-head">
+          <div>
+            <p class="hara-v2-kicker">06 · First-arrival and degraded states</p>
+            <h2>The public site remains coherent when the live system does not.</h2>
+          </div>
+          <p>Static explanation and proof survive runtime failure, constrained bandwidth, small screens, and anonymous arrival. Actions become explicit rather than disappearing.</p>
+        </header>
+
+        <div class="www-state-grid">
+          <StateSpecimen
+            id="demo-unavailable"
+            tone="warning"
+            eyebrow="Live demo unavailable"
+            title="The Wasm runtime could not attach"
+            summary="The source, capability contract, expected result, and exact revision remain visible. Run is disabled and retry is bounded."
+            details={["Static documentation retained", "Open-in-Playground remains revision-pinned", "No fake success state"]}
+            actionLabel="Read the static example"
+            actionHref="#first-example"
+          />
+          <StateSpecimen
+            id="low-bandwidth"
+            tone="notice"
+            eyebrow="Low-bandwidth arrival"
+            title="Text and proof load before runtime assets"
+            summary="The hero field becomes a quiet placeholder, executable code remains plain text, and large runtime payloads wait for a deliberate action."
+            details={["Core HTML first", "No autoplay shader", "Runtime download is opt-in"]}
+            actionLabel="Inspect loading contract"
+            actionHref="#responsive-home"
+          />
+          <StateSpecimen
+            id="anonymous-arrival"
+            tone="success"
+            eyebrow="Anonymous first arrival"
+            title="Reading and running do not require an account"
+            summary="Sign-in becomes useful for saved sessions, progress, subscriptions, and publication—not a gate in front of explanation."
+            details={["Search available", "Examples available", "Receipts remain local until saved"]}
+            actionLabel="Choose a start path"
+            actionHref="#start"
+          />
+        </div>
+      </section>
+
+      <section class="www-section" id="responsive-home">
+        <header class="www-section-head">
+          <div>
+            <p class="hara-v2-kicker">07 · Desktop, tablet, and mobile specimens</p>
+            <h2>The narrative survives reflow without becoming a card stack of everything.</h2>
+          </div>
+          <p>These specimens document reading order, navigation reduction, proof visibility, and when executable controls collapse into a deliberate drawer.</p>
+        </header>
+
+        <div class="www-viewport-grid">
+          <ViewportSpecimen viewport="desktop" label="Desktop" width="1440" note="Hero + proof ledger + adjacent action">
+            <div class="www-mini-home" data-size="wide"><span>Hara</span><h3>Whole system visible.</h3><div><b>Explain</b><b>Prove</b><b>Act</b></div><small>Four capability rows follow</small></div>
+          </ViewportSpecimen>
+          <ViewportSpecimen viewport="tablet" label="Tablet" width="900" note="Family routes remain; proof becomes two columns">
+            <div class="www-mini-home" data-size="medium"><span>Hara / Home</span><h3>Whole system visible.</h3><div><b>Explain</b><b>Prove</b></div><small>Action remains next in reading order</small></div>
+          </ViewportSpecimen>
+          <ViewportSpecimen viewport="mobile" label="Mobile" width="390" note="Text first; runtime opt-in">
+            <div class="www-mini-home" data-size="narrow"><span>Hara</span><h3>Whole system visible.</h3><b>Run first example</b><small>Proof stays directly below</small></div>
+          </ViewportSpecimen>
+        </div>
+      </section>
+
+      <section class="www-section www-adoption" id="home-adoption">
+        <header class="www-section-head">
+          <div>
+            <p class="hara-v2-kicker">08 · Ownership and downstream adoption</p>
+            <h2>Shared versus WWW-owned behaviour is explicit.</h2>
+          </div>
+          <p>The visual-language route is a directly reviewable product specimen. Production adopters replace fixture data and providers without forking the shared contracts or interaction hierarchy.</p>
+        </header>
+
+        <div class="www-ownership-table" role="table" aria-label="WWW ownership boundaries">
+          <div class="www-ownership-row www-ownership-row--head" role="row"><span role="columnheader">Layer</span><span role="columnheader">Owns</span><span role="columnheader">Source</span></div>
+          {sharedOwnership.map((entry) => (
+            <div class="www-ownership-row" role="row"><strong role="cell">{entry.layer}</strong><span role="cell">{entry.owns}</span><code role="cell">{entry.source}</code></div>
+          ))}
+        </div>
+
+        <div class="www-adoption-grid">
+          {adoptionNotes.map((note) => (
+            <article>
+              <header><p class="hara-v2-kicker">Downstream adopter</p><h3>{note.product}</h3></header>
+              <dl>
+                <div><dt>Consume</dt><dd>{note.consume.join(" · ")}</dd></div>
+                <div><dt>Replace</dt><dd>{note.replace.join(" · ")}</dd></div>
+                <div><dt>Preserve</dt><dd>{note.preserve}</dd></div>
+              </dl>
+            </article>
+          ))}
+        </div>
+
+        <aside class="www-contract-note">
+          <div><p class="hara-v2-kicker">Contract consumed</p><h3>{wwwContracts.www.schemaNamespace}@{wwwContracts.www.schemaVersion}</h3></div>
+          <p>{wwwContracts.www.summary}</p>
+          <code>{wwwContracts.www.types.map(({ id }) => id).join(" · ")}</code>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="www-family-footer">
+      <div><strong>Hara</strong><span>Small language · complete, inspectable system.</span></div>
+      <nav aria-label="WWW family footer"><a href={docsHref}>Docs</a><a href={benchmarksHref}>Benchmarks</a><a href="#home-adoption">Adoption</a></nav>
+      <code>{homeNarrative.revision}</code>
+    </footer>
+  </body>
+</html>
