@@ -1,0 +1,118 @@
+/* Workspace */
+.playground-workspace-study { padding-block: 72px 94px; }
+.playground-workspace-shell { position: relative; }
+.playground-workspace-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; margin-block-end: 14px; }
+.playground-runtime-summary { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; }
+.playground-runtime-summary > :where(span, code) { min-height: 30px; align-content: center; padding-inline: 8px; border: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel); font: 560 9px/1 var(--hara-v2-font-code); }
+.playground-studio-modebar { display: flex; gap: 3px; padding: 4px; overflow-x: auto; border: 1px solid var(--hara-v2-line-strong); border-block-end: 0; background: var(--hara-v2-panel-recess); scrollbar-width: none; }
+.playground-studio-modebar button { flex: 0 0 auto; min-height: 36px; padding-inline: 11px; border: 1px solid transparent; color: var(--hara-v2-muted); background: transparent; }
+.playground-studio-modebar button[aria-pressed="true"] { border-color: var(--hara-v2-line); color: var(--hara-v2-ink); background: var(--hara-v2-panel-raised); }
+.playground-environment-workbench .hara-tool-workbench { border-color: var(--hara-v2-line-strong); }
+.playground-command-rail .hara-tool-toolbar { border: 0; box-shadow: none; }
+.playground-backend-group { display: flex; align-items: center; gap: 6px; padding-inline: 7px; }
+.playground-backend-group label,
+.playground-backend-group span { color: var(--hara-v2-muted); font-size: 9px; }
+.playground-backend-group select { min-height: 30px; border: 1px solid var(--hara-v2-line); color: var(--hara-v2-ink); background: var(--hara-v2-panel-raised); }
+.playground-project-mode,
+.playground-frontmatter-mode,
+.playground-graphics-mode,
+.playground-code-mode { height: 100%; min-height: 0; }
+.playground-project-mode > header { display: flex; justify-content: space-between; padding: 11px 14px; border-block-end: 1px solid var(--hara-v2-line); }
+.playground-project-columns { display: grid; min-height: 430px; grid-template-columns: minmax(210px, .38fr) minmax(0, .62fr); }
+.playground-project-columns > :where(nav, div) { padding: 14px; }
+.playground-project-columns nav { border-inline-end: 1px solid var(--hara-v2-line); }
+.playground-tree { margin: 0; padding: 0; list-style: none; }
+.playground-tree button { width: 100%; min-height: 34px; border: 0; color: var(--hara-v2-ink); background: transparent; text-align: start; }
+.playground-tree button[aria-current="page"] { background: var(--playground-signal-wash); box-shadow: inset 2px 0 var(--hara-v2-signal); }
+.playground-tree-indent { padding-inline-start: 14px; }
+.playground-tree-indent-2 { padding-inline-start: 28px; }
+.playground-project-detail dl { display: grid; gap: 1px; margin: 0; background: var(--hara-v2-line); }
+.playground-project-detail dl > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); padding: 10px; background: var(--hara-v2-panel); }
+.playground-project-detail dt { color: var(--hara-v2-muted); }
+.playground-project-detail dd { margin: 0; font-family: var(--hara-v2-font-code); overflow-wrap: anywhere; }
+.playground-state-note { margin-block-start: 12px; padding: 12px; border-inline-start: 3px solid var(--hara-v2-signal); color: var(--hara-v2-muted); background: var(--hara-v2-panel); line-height: 1.55; }
+.playground-frontmatter-mode { padding: 16px; }
+.playground-mode-intro { display: flex; justify-content: space-between; gap: 14px; align-items: start; }
+.playground-mode-intro h3 { margin: 0; font-size: 22px; }
+.playground-ownership-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 14px 14px; }
+.playground-ownership-grid article { padding: 14px; border: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel-raised); }
+.playground-ownership-grid span { color: var(--hara-v2-signal); font: 650 9px/1 var(--hara-v2-font-code); text-transform: uppercase; }
+.playground-ownership-grid strong { display: block; margin-block: 8px; }
+.playground-ownership-grid p { margin: 0; color: var(--hara-v2-muted); font-size: 11px; line-height: 1.55; }
+.playground-graphics-mode { display: grid; grid-template-rows: minmax(360px, 1fr) auto; }
+.playground-canvas-stage { position: relative; min-height: 400px; overflow: hidden; background: radial-gradient(circle at 68% 32%, color-mix(in srgb, var(--hara-v2-signal) 20%, transparent), transparent 28%), var(--hara-v2-canvas-clean); }
+.playground-canvas-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--hara-v2-grid) 1px, transparent 1px), linear-gradient(90deg, var(--hara-v2-grid) 1px, transparent 1px); background-size: 28px 28px; }
+.playground-ribbon { position: absolute; width: 64%; height: 24%; border: 1px solid color-mix(in srgb, var(--hara-v2-signal) 45%, transparent); border-radius: 50%; filter: blur(.2px); transform: rotate(-14deg); }
+.playground-ribbon-a { inset: 32% auto auto 18%; box-shadow: 0 0 50px color-mix(in srgb, var(--hara-v2-signal) 18%, transparent); }
+.playground-ribbon-b { inset: 47% auto auto 28%; width: 46%; transform: rotate(19deg); opacity: .62; }
+.playground-canvas-object { position: absolute; inset: 50% auto auto 50%; display: grid; width: 96px; aspect-ratio: 1; place-items: center; border: 1px solid var(--hara-v2-line-strong); transform: translate(-50%, -50%) rotate(45deg); background: var(--hara-v2-panel-raised); }
+.playground-canvas-object span { transform: rotate(-45deg); font: 760 32px/1 var(--hara-v2-font-heading); }
+.playground-canvas-hud { position: absolute; inset: auto 12px 12px; display: flex; gap: 6px; justify-content: space-between; }
+.playground-canvas-hud span { padding: 6px 8px; border: 1px solid var(--hara-v2-line); background: color-mix(in srgb, var(--hara-v2-panel) 86%, transparent); font: 560 9px/1 var(--hara-v2-font-code); }
+.playground-editor-layout { display: grid; height: 100%; min-height: 520px; grid-template-columns: minmax(0, 1.15fr) minmax(330px, .85fr); }
+.playground-editor-pane,
+.playground-output-pane { min-width: 0; background: var(--hara-v2-panel-recess); }
+.playground-editor-pane { border-inline-end: 1px solid var(--hara-v2-line-strong); }
+.playground-editor-pane > header,
+.playground-output-pane > header,
+.playground-expanded-code header,
+.playground-phone-result header { display: flex; min-height: 38px; align-items: center; justify-content: space-between; gap: 10px; padding-inline: 10px; border-block-end: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel); }
+.playground-editor-pane > header > div { display: flex; gap: 9px; color: var(--hara-v2-muted); font-size: 9px; }
+.playground-file-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--hara-v2-warning); }
+.playground-editor-surface { display: grid; height: calc(100% - 38px); grid-template-columns: auto minmax(0, 1fr); }
+.playground-line-numbers { margin: 0; padding: 14px 9px; color: var(--hara-v2-faint); background: var(--hara-v2-panel); font: 520 11px/1.55 var(--hara-v2-font-code); list-style-position: inside; }
+.playground-editor-surface textarea { width: 100%; height: 100%; min-height: 480px; resize: none; border: 0; padding: 14px; color: var(--hara-v2-ink); background: transparent; font: 540 12px/1.55 var(--hara-v2-font-code); tab-size: 2; }
+.playground-output-pane { display: grid; grid-template-rows: auto minmax(0, 1fr); }
+.playground-output-state { color: var(--hara-v2-muted); font: 560 9px/1 var(--hara-v2-font-code); }
+.playground-output-pane [data-output-panel] { min-height: 0; overflow: auto; padding: 14px; }
+.playground-result-preview { position: relative; display: grid; min-height: 250px; place-content: end start; gap: 5px; overflow: hidden; padding: 18px; border: 1px solid var(--hara-v2-line); background: radial-gradient(circle at 50% 40%, var(--playground-signal-wash), transparent 48%), var(--hara-v2-panel); }
+.playground-result-preview strong { font-size: 20px; }
+.playground-result-preview small { color: var(--hara-v2-muted); }
+.playground-result-orbit { position: absolute; inset: 18% 18% auto; aspect-ratio: 2.2; border: 1px solid var(--hara-v2-signal); border-radius: 50%; transform: rotate(-12deg); box-shadow: 0 0 40px var(--playground-signal-wash); }
+.playground-output-pane pre,
+.playground-inline-embed pre,
+.playground-embed-code pre,
+.playground-portable-snippet pre,
+.playground-phone pre { overflow: auto; margin: 10px 0 0; padding: 12px; border: 1px solid var(--hara-v2-line); color: var(--hara-v2-ink); background: var(--hara-v2-canvas-clean); font: 530 11px/1.55 var(--hara-v2-font-code); }
+.playground-observation-list,
+.playground-console ol { margin: 0; padding: 0; list-style: none; }
+.playground-observation-list li,
+.playground-console li { display: grid; grid-template-columns: 42px 110px minmax(0, 1fr) auto; gap: 8px; padding: 8px 10px; border-block-end: 1px solid var(--hara-v2-line); align-items: center; }
+.playground-observation-list code,
+.playground-console code { color: var(--hara-v2-signal); }
+.playground-observation-list span,
+.playground-observation-list small,
+.playground-console span,
+.playground-console small { color: var(--hara-v2-muted); font-size: 9px; }
+.playground-diagnostic { padding: 14px; border: 1px solid color-mix(in srgb, var(--hara-v2-warning) 42%, var(--hara-v2-line)); background: color-mix(in srgb, var(--hara-v2-warning) 6%, var(--hara-v2-panel)); }
+.playground-diagnostic header { display: flex; justify-content: space-between; gap: 12px; }
+.playground-diagnostic p { color: var(--hara-v2-muted); line-height: 1.55; }
+.playground-diagnostic button { min-height: 34px; border: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel-raised); }
+.playground-control-group,
+.playground-canvas-controls,
+.playground-unavailable-capability { padding: 10px; }
+.playground-control-group > p,
+.playground-canvas-controls > p,
+.playground-unavailable-capability p { color: var(--hara-v2-muted); font-size: 10px; line-height: 1.5; }
+.playground-control-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.playground-canvas-controls { display: grid; gap: 12px; }
+.playground-canvas-controls > label { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; color: var(--hara-v2-muted); font-size: 10px; }
+.playground-canvas-controls input[type="range"] { grid-column: 1 / -1; width: 100%; }
+.playground-checkbox { display: flex !important; min-height: 32px; align-items: center; gap: 8px; }
+.playground-unavailable-capability h3 { margin: 8px 0; }
+.playground-console { height: 100%; max-height: 220px; overflow: auto; background: var(--hara-v2-panel-recess); }
+.playground-console[data-collapsed="true"] { max-height: 40px; overflow: hidden; }
+.playground-console > header { display: flex; min-height: 38px; align-items: center; justify-content: space-between; padding-inline: 10px; border-block-end: 1px solid var(--hara-v2-line); }
+.playground-console > header > div { display: flex; gap: 8px; }
+.playground-console form { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 9px; }
+.playground-command-palette-panel { position: fixed; z-index: 140; inset: 18vh auto auto 50%; width: min(560px, calc(100vw - 28px)); transform: translateX(-50%); border: 1px solid var(--hara-v2-line-strong); background: var(--hara-v2-panel-raised); box-shadow: var(--hara-v2-shadow); }
+.playground-command-palette-panel[hidden] { display: none; }
+.playground-command-palette-panel header,
+.playground-command-palette-panel label { display: flex; justify-content: space-between; gap: 10px; padding: 12px; border-block-end: 1px solid var(--hara-v2-line); }
+.playground-command-palette-panel label { display: grid; }
+.playground-command-palette-panel ul { margin: 0; padding: 6px; list-style: none; }
+.playground-command-palette-panel li button { display: flex; width: 100%; min-height: 40px; justify-content: space-between; border: 0; color: var(--hara-v2-ink); background: transparent; }
+.playground-density-contract { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-block-start: 10px; }
+.playground-density-contract button[aria-pressed="true"] { border-color: var(--hara-v2-signal); background: var(--playground-signal-wash); }
+.playground-density-contract p { flex: 1 1 360px; margin: 0 0 0 6px; color: var(--hara-v2-muted); font-size: 10px; }
+
