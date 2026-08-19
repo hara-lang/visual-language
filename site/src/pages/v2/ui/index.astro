@@ -1,0 +1,841 @@
+---
+import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
+import PatternStateCard from "../../../components/v2-ui/PatternStateCard.astro";
+import WorkflowRail from "../../../components/v2-ui/WorkflowRail.astro";
+import HaraMark from "../../../../../src/astro/HaraMark.astro";
+import FleetField from "../../../../../src/astro/v2/FleetField.astro";
+import Shell from "../../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../../src/astro/v2/ContextNav.astro";
+import Sidebar from "../../../../../src/astro/v2/Sidebar.astro";
+import PageHeader from "../../../../../src/astro/v2/PageHeader.astro";
+import {
+  identityStates,
+  interfaceStates,
+  ownershipBoundaries,
+  responsiveContracts,
+  uiPatternFamilies,
+  workflowById,
+  workflowStudies
+} from "../../../lib/v2-ui-patterns.mjs";
+import "../../../../../src/v2-tool.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-ui-patterns.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/ui/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const catalogueHome = `${basePath}v2/`;
+const foundationsRoute = `${basePath}v2/foundations/`;
+const componentsRoute = `${basePath}v2/components/`;
+const toolRoute = `${basePath}v2/tool/`;
+const issueRoute = "https://github.com/hara-lang/visual-language/issues/36";
+
+const searchWorkflow = workflowById("search-inspect") ?? workflowStudies[0];
+const publishWorkflow = workflowById("draft-publish") ?? workflowStudies[1];
+const runtimeWorkflow = workflowById("session-recovery") ?? workflowStudies[2];
+const feedWorkflow = workflowById("feed-comment") ?? workflowStudies[3];
+const evidenceWorkflow = workflowById("evidence-share") ?? workflowStudies[4];
+
+const sectionLinks = [
+  ["contract", "Contract"],
+  ["discovery", "Discovery"],
+  ["mutation", "Mutation"],
+  ["states", "State atlas"],
+  ["identity", "Identity"],
+  ["runtime", "Runtime"],
+  ["community", "Community"],
+  ["evidence", "Evidence"],
+  ["responsive", "Responsive"],
+  ["ownership", "Ownership"]
+];
+
+const exampleNav = [
+  { href: "#discovery", label: "Browse", current: true },
+  { href: "#mutation", label: "Publish" },
+  { href: "#identity", label: "Maintainers" }
+];
+
+const discoveryContext = [
+  { href: "#discovery", label: "Search", current: true },
+  { href: "#discovery", label: "Recent" },
+  { href: "#discovery", label: "Saved" }
+];
+
+const discoverySidebar = [
+  { label: "Type", items: [
+    { href: "#discovery", label: "Everything", current: true, badge: 18 },
+    { href: "#discovery", label: "Packages", badge: 6 },
+    { href: "#discovery", label: "Specifications", badge: 4 },
+    { href: "#discovery", label: "Guides", badge: 5 },
+    { href: "#discovery", label: "People", badge: 3 }
+  ] },
+  { label: "Status", items: [
+    { href: "#discovery", label: "Current", badge: 13 },
+    { href: "#discovery", label: "Experimental", badge: 3 },
+    { href: "#discovery", label: "Superseded", badge: 2 }
+  ] }
+];
+
+const adoptionTargets = [
+  { issue: 38, label: "WWW · Docs · Benchmarks", consumes: "navigation, discovery, evidence sharing, stale and degraded content" },
+  { issue: 39, label: "Playground", consumes: "session recovery, permissions, responsive collapse, explicit mobile editor focus" },
+  { issue: 40, label: "Specs", consumes: "search/inspect, proposal mutation, checker states, exact receipts" },
+  { issue: 41, label: "Packages", consumes: "registry discovery, publish validation, maintainer roles, provenance receipts" },
+  { issue: 42, label: "World", consumes: "feed/thread mutation, moderation, partial sources, user-owned automation" },
+  { issue: 43, label: "Learn", consumes: "anonymous execution, lesson progress, runtime recovery, mobile input behavior" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="The detailed Hara v2 UI patterns laboratory: navigation, discovery, mutation, data states, identity, permissions, runtime recovery, community publishing, evidence sharing, responsive behavior, keyboard and touch contracts." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara v2 UI patterns laboratory" />
+    <meta property="og:description" content="Complete reusable workflows and state transitions for the Hara interface ecosystem." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara v2 UI patterns laboratory" />
+    <meta name="twitter:description" content="Discovery, mutation, recovery, community, evidence, permission, responsive and accessibility patterns." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara v2 UI patterns laboratory</title>
+  </head>
+  <body class="hara-v2 hara-v2-tool ui-patterns-page">
+    <CatalogueHeader basePath={basePath} activePath="/v2/ui/" />
+
+    <main class="ui-patterns-main">
+      <section class="ui-patterns-hero" aria-labelledby="ui-patterns-title">
+        <div>
+          <p class="hara-v2-kicker">Shared library · Behaviour over time</p>
+          <h1 id="ui-patterns-title">Interfaces are stories, not screenshots.</h1>
+          <p>Components define reusable parts. This laboratory defines what happens before, during, and after a person acts: how focus moves, how uncertainty is shown, how failure preserves work, how permissions remain visible, and how every successful mutation produces evidence.</p>
+          <div class="ui-patterns-hero-actions">
+            <a class="hara-v2-button" data-variant="primary" href="#discovery">Open a complete workflow</a>
+            <a class="hara-v2-button" href={componentsRoute}>Review components</a>
+            <a class="hara-v2-button" data-variant="ghost" href={issueRoute}>Issue #36 ↗</a>
+          </div>
+          <div class="ui-patterns-hero-stats" aria-label="UI pattern contract counts">
+            <div><strong>{uiPatternFamilies.length}</strong><span>pattern families</span></div>
+            <div><strong>{workflowStudies.length}</strong><span>end-to-end workflows</span></div>
+            <div><strong>{interfaceStates.length}</strong><span>content and transport states</span></div>
+            <div><strong>{identityStates.length}</strong><span>identity and authority states</span></div>
+          </div>
+        </div>
+        <div class="ui-patterns-hero-art">
+          <FleetField title="Hara interface state transition field" />
+          <div class="ui-patterns-orbit ui-patterns-orbit--start"><span>Initial</span><small>intent visible</small></div>
+          <div class="ui-patterns-orbit ui-patterns-orbit--active"><span>Active</span><small>work preserved</small></div>
+          <div class="ui-patterns-orbit ui-patterns-orbit--receipt"><span>Receipt</span><small>result inspectable</small></div>
+          <div class="ui-patterns-orbit ui-patterns-orbit--recover"><span>Recover</span><small>safe next action</small></div>
+          <div class="ui-patterns-core"><HaraMark size={40} /><b>State contract</b></div>
+        </div>
+      </section>
+
+      <nav class="ui-patterns-section-nav" aria-label="UI pattern laboratory sections">
+        {sectionLinks.map(([href, label]) => <a href={`#${href}`}>{label}</a>)}
+      </nav>
+
+      <section class="ui-patterns-section" id="contract">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">01 · Shared interaction contract</p><h2>Products share behavior, not business rules.</h2></div>
+          <p>The package owns semantic state, focus, validation placement, receipts, responsive yielding, touch targets, and reduced-motion behavior. Products still own ranking, permissions, moderation, curriculum, compatibility, and runtime truth.</p>
+        </header>
+
+        <div class="ui-pattern-family-grid">
+          {uiPatternFamilies.map((family, index) => (
+            <article class="ui-pattern-family" id={`family-${family.id}`}>
+              <header><span>{String(index + 1).padStart(2, "0")}</span><h3>{family.label}</h3></header>
+              <p>{family.summary}</p>
+              <div class="ui-pattern-tags">{family.patterns.map((pattern) => <code>{pattern}</code>)}</div>
+              <footer>
+                <b>Non-negotiable</b>
+                <ul>{family.nonNegotiables.map((rule) => <li>{rule}</li>)}</ul>
+              </footer>
+            </article>
+          ))}
+        </div>
+
+        <div class="ui-pattern-do-dont">
+          <article data-guidance="do"><span>Do</span><strong>Model the full transition.</strong><p>Initial intent, active work, transport, failure, recovery, and receipt are one interface contract.</p></article>
+          <article data-guidance="avoid"><span>Avoid</span><strong>Design only the successful screenshot.</strong><p>A blank pane, silent rollback, or invented success becomes downstream product behavior by accident.</p></article>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="discovery">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">02 · Navigation and discovery</p><h2>Search, filter, select, inspect.</h2></div>
+          <p>The same choreography can serve a package registry, specification index, documentation search, World feed, or curriculum catalogue while each product retains its own ranking and object model.</p>
+        </header>
+
+        <WorkflowRail workflow={searchWorkflow} selected="inspect" />
+
+        <div class="ui-pattern-canvas ui-discovery-demo" data-search-demo data-mode="success">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="ui-search-content">
+            <Header slot="header" section="Registry" nav={exampleNav} homeHref="#discovery">
+              <button class="hara-v2-icon-button" type="button" aria-label="Open account menu">MZ</button>
+            </Header>
+            <ContextNav slot="context" items={discoveryContext}>
+              <button class="hara-v2-button" type="button">Saved views</button>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Discover" groups={discoverySidebar}>
+              <span>Filters never erase the query or pretend an empty result means the registry is empty.</span>
+            </Sidebar>
+
+            <PageHeader
+              kicker="Search contract"
+              title="Find one exact Hara object."
+              description="Results preserve type, source, status, exact identifier, and enough context to choose before opening the inspector."
+              meta={["18 indexed objects", "3 source families", "revision 637c14a"]}
+            >
+              <div slot="illustration" class="ui-discovery-illustration"><FleetField title="Search and inspect field" /></div>
+            </PageHeader>
+
+            <form class="ui-search-command" data-search-form onsubmit="return false">
+              <label>
+                <span>Search packages, specs, guides, and people</span>
+                <input class="hara-v2-field" type="search" value="schema" data-search-input />
+              </label>
+              <button class="hara-v2-button" data-variant="primary" type="submit">Search</button>
+              <kbd>/</kbd>
+            </form>
+
+            <div class="ui-state-switcher" aria-label="Review discovery states">
+              <span>Review state</span>
+              <button type="button" data-search-mode="success" aria-pressed="true">Results</button>
+              <button type="button" data-search-mode="loading" aria-pressed="false">Loading</button>
+              <button type="button" data-search-mode="empty" aria-pressed="false">Filtered empty</button>
+              <button type="button" data-search-mode="partial" aria-pressed="false">Partial</button>
+              <button type="button" data-search-mode="error" aria-pressed="false">Error</button>
+            </div>
+
+            <section class="ui-search-panel" data-search-panel="success" aria-live="polite">
+              <header class="ui-result-summary"><div><b>18 results for “schema”</b><span>Type: all · Status: current</span></div><button type="button">Sort: relevance</button></header>
+              <div class="ui-result-list">
+                <button class="ui-result-row" type="button" aria-pressed="true" data-result="std-typed">
+                  <span class="hara-v2-badge" data-tone="success">Package</span>
+                  <span><b>std.typed</b><small>Runtime Schema values, typed forms, validation, and portable evidence.</small></span>
+                  <span><code>v1.4.0</code><small>current · 3h</small></span>
+                </button>
+                <button class="ui-result-row" type="button" aria-pressed="false" data-result="schema-values">
+                  <span class="hara-v2-badge" data-tone="signal">Spec</span>
+                  <span><b>HARA-TYPE-014 · Schema values</b><small>Normative runtime representation and conformance requirements.</small></span>
+                  <span><code>accepted</code><small>rev 9c143d2</small></span>
+                </button>
+                <button class="ui-result-row" type="button" aria-pressed="false" data-result="schema-guide">
+                  <span class="hara-v2-badge">Guide</span>
+                  <span><b>Inspecting schemas as ordinary Hara</b><small>A task-oriented guide with runnable examples and exact package links.</small></span>
+                  <span><code>8 min</code><small>docs · current</small></span>
+                </button>
+                <button class="ui-result-row" type="button" aria-pressed="false" data-result="mina">
+                  <span class="hara-v2-badge">Person</span>
+                  <span><b>@mina</b><small>Maintains std.typed and reviews schema conformance proposals.</small></span>
+                  <span><code>maintainer</code><small>online</small></span>
+                </button>
+              </div>
+            </section>
+
+            <section class="ui-search-panel" data-search-panel="loading" hidden aria-live="polite">
+              <div class="ui-loading-heading"><span class="ui-spinner" aria-hidden="true"></span><div><b>Searching 3 indexes…</b><small>Packages complete · Specs loading · Docs queued</small></div><button class="hara-v2-button" type="button">Cancel</button></div>
+              <div class="ui-skeleton-list" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            </section>
+
+            <section class="ui-search-panel" data-search-panel="empty" hidden aria-live="polite">
+              <div class="ui-empty-state"><span>0</span><h3>No current packages match “schema” with runtime “Truffle”.</h3><p>The registry contains 18 results before the runtime filter. Your query is preserved.</p><button class="hara-v2-button" data-variant="primary" type="button">Clear runtime filter</button><button class="hara-v2-button" type="button">Save this search</button></div>
+            </section>
+
+            <section class="ui-search-panel" data-search-panel="partial" hidden aria-live="polite">
+              <div class="hara-v2-callout" data-tone="warning"><div><b>Partial result set</b><p>Packages and Docs returned 14 objects. The Specs index has not refreshed since revision <code>51a7e6d</code>.</p></div><button class="hara-v2-button" type="button">Inspect coverage</button></div>
+              <div class="ui-result-list ui-result-list--muted"><button class="ui-result-row" type="button"><span class="hara-v2-badge" data-tone="success">Package</span><span><b>std.typed</b><small>Available from the current package index.</small></span><span><code>v1.4.0</code><small>trusted</small></span></button></div>
+            </section>
+
+            <section class="ui-search-panel" data-search-panel="error" hidden aria-live="assertive">
+              <div class="ui-error-state"><span>!</span><h3>The search service could not establish a consistent revision.</h3><p>No selection changed. The last complete result set from 10:42 remains available read-only.</p><div><button class="hara-v2-button" data-variant="primary" type="button">Retry exact search</button><button class="hara-v2-button" type="button">Use cached results</button><button class="hara-v2-button" type="button">Copy diagnostic</button></div><code>search-receipt: 18c2 · package=637c14a · specs=unavailable</code></div>
+            </section>
+
+            <div slot="aside" class="ui-inspector-stack">
+              <section class="hara-v2-panel ui-result-inspector" aria-labelledby="selected-result-title">
+                <header class="hara-v2-panel-header"><h2 id="selected-result-title">std.typed</h2><span class="hara-v2-badge" data-tone="success">Current</span></header>
+                <div class="hara-v2-panel-body">
+                  <p>Runtime Schema values, portable typed forms, conformance evidence, and lint integration.</p>
+                  <dl><div><dt>Exact version</dt><dd>1.4.0</dd></div><div><dt>Revision</dt><dd><code>af6273c</code></dd></div><div><dt>Maintainers</dt><dd>@mina · @cora</dd></div><div><dt>Targets</dt><dd>JVM · Rust · Wasm</dd></div></dl>
+                  <a class="hara-v2-button" data-variant="primary" href="#discovery">Open package</a>
+                  <button class="hara-v2-button" type="button">Pin exact view</button>
+                </div>
+              </section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Focus contract</h2></header><div class="hara-v2-panel-body"><p>On wide screens selection updates this inspector. On narrow screens it becomes the next view, receives heading focus, and returns focus to the selected row when closed.</p></div></section>
+            </div>
+          </Shell>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="mutation">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">03 · Forms and mutation</p><h2>Drafts remain reversible until a named consequence.</h2></div>
+          <p>Editable, generated, and reviewer-controlled facts remain visually distinct. Validation never destroys input; preview precedes mutation; the final state is a receipt rather than a green toast.</p>
+        </header>
+
+        <WorkflowRail workflow={publishWorkflow} selected="preview" />
+
+        <div class="ui-mutation-board" data-publish-demo data-phase="draft">
+          <nav class="ui-mutation-steps" aria-label="Publication workflow">
+            <button type="button" data-publish-step="draft" aria-current="step"><span>01</span><b>Draft</b><small>editable</small></button>
+            <button type="button" data-publish-step="validate"><span>02</span><b>Validate</b><small>2 checks</small></button>
+            <button type="button" data-publish-step="preview"><span>03</span><b>Preview</b><small>public + machine</small></button>
+            <button type="button" data-publish-step="submit"><span>04</span><b>Submit</b><small>named mutation</small></button>
+            <button type="button" data-publish-step="receipt"><span>05</span><b>Receipt</b><small>exact result</small></button>
+          </nav>
+
+          <div class="ui-mutation-layout">
+            <form class="ui-publish-form" data-publish-form onsubmit="return false">
+              <header><div><p class="hara-v2-kicker">Package proposal</p><h3>Publish std.signal 0.3.0</h3></div><span class="ui-autosave-state" data-autosave-state>Draft saved locally · 10:58</span></header>
+
+              <div class="hara-v2-form-grid">
+                <div class="hara-v2-form-field" data-wide="true"><label for="ui-package-name">Package name</label><input class="hara-v2-field" id="ui-package-name" value="std.signal" aria-describedby="ui-package-name-note" /><small id="ui-package-name-note">Registry identity; changing this creates a different package.</small></div>
+                <div class="hara-v2-form-field"><label for="ui-package-version">Version</label><input class="hara-v2-field" id="ui-package-version" value="0.3.0" data-required-field="version" /></div>
+                <div class="hara-v2-form-field"><label for="ui-package-license">License</label><select class="hara-v2-select" id="ui-package-license"><option>EPL-2.0</option><option>MIT</option></select></div>
+                <div class="hara-v2-form-field" data-wide="true"><label for="ui-package-summary">Release summary</label><textarea class="hara-v2-field" id="ui-package-summary" rows="4">Adds portable signal graphs, deterministic subscriptions, and runtime-neutral observation receipts.</textarea></div>
+                <div class="hara-v2-form-field"><label for="ui-package-runtime">Runtime targets</label><input class="hara-v2-field" id="ui-package-runtime" value="jvm, rust, wasm" /></div>
+                <div class="hara-v2-form-field"><label for="ui-package-revision">Source revision</label><input class="hara-v2-field" id="ui-package-revision" value="" placeholder="Required exact commit" data-required-field="revision" aria-describedby="ui-revision-error" /><small id="ui-revision-error" class="ui-field-error" hidden>Enter the exact source revision before preview.</small></div>
+                <div class="hara-v2-form-field"><label for="ui-package-publisher">Publisher</label><input class="hara-v2-field" id="ui-package-publisher" value="@mina" readonly /><small>Identity-controlled from the signed-in subject.</small></div>
+                <div class="hara-v2-form-field"><label for="ui-package-status">Registry status</label><input class="hara-v2-field" id="ui-package-status" value="Proposed after checks" readonly /><small>Server/reviewer-controlled generated fact.</small></div>
+              </div>
+
+              <div class="ui-validation-summary" data-validation-summary hidden tabindex="-1">
+                <b>1 blocking issue</b><p>The source revision is required so the registry can reproduce the proposed artifacts.</p><a href="#ui-package-revision">Go to Source revision</a>
+              </div>
+
+              <footer class="ui-publish-actions">
+                <button class="hara-v2-button" type="button" data-publish-action="save">Save draft</button>
+                <button class="hara-v2-button" type="button" data-open-destructive>Discard draft</button>
+                <span aria-live="polite" data-publish-live>Draft is editable. No server mutation has occurred.</span>
+                <button class="hara-v2-button" data-variant="primary" type="button" data-publish-action="validate">Validate</button>
+              </footer>
+            </form>
+
+            <aside class="ui-publish-preview" aria-live="polite">
+              <section data-publish-panel="draft">
+                <span class="hara-v2-badge">Draft</span><h3>Nothing has been submitted.</h3><p>Editable fields are preserved locally. Generated publisher and registry status fields remain locked.</p><div class="ui-preview-placeholder"><i></i><i></i><i></i></div>
+              </section>
+              <section data-publish-panel="validate" hidden>
+                <span class="hara-v2-badge" data-tone="warning">Validation</span><h3>One exact fact is still missing.</h3><ul><li><b>Blocking:</b> source revision</li><li><b>Passed:</b> package identity</li><li><b>Passed:</b> semantic version</li><li><b>Passed:</b> runtime targets</li></ul><button class="hara-v2-button" type="button" data-fill-revision>Use current revision 637c14a</button>
+              </section>
+              <section data-publish-panel="preview" hidden>
+                <span class="hara-v2-badge" data-tone="signal">Preview</span><h3>std.signal <code>0.3.0</code></h3><p>Portable signal graphs, deterministic subscriptions, and runtime-neutral observation receipts.</p><dl><div><dt>Publisher</dt><dd>@mina</dd></div><div><dt>Revision</dt><dd><code data-preview-revision>637c14a</code></dd></div><div><dt>Targets</dt><dd>JVM · Rust · Wasm</dd></div><div><dt>Next state</dt><dd>Proposal pending review</dd></div></dl><div class="ui-preview-tabs"><button type="button" aria-pressed="true">Registry card</button><button type="button">Install command</button><button type="button">Machine metadata</button></div><button class="hara-v2-button" data-variant="primary" type="button" data-publish-action="submit">Submit proposal</button>
+              </section>
+              <section data-publish-panel="submit" hidden aria-busy="true">
+                <span class="hara-v2-badge" data-tone="signal">Submitting</span><h3>Creating one proposal…</h3><p>The action is fenced by package, version, source revision, and publisher. Duplicate requests return the same proposal receipt.</p><div class="ui-submit-progress"><i></i><span>Validating artifacts</span><span>Registering immutable proposal</span><span>Opening review record</span></div><button class="hara-v2-button" type="button" data-publish-action="receipt">Show simulated receipt</button>
+              </section>
+              <section data-publish-panel="receipt" hidden tabindex="-1">
+                <span class="hara-v2-badge" data-tone="success">Proposal created</span><h3>std.signal 0.3.0 is awaiting review.</h3><p>Your draft is now represented by an immutable proposal receipt. Editing creates a new revision rather than silently changing the reviewed object.</p><dl><div><dt>Proposal</dt><dd><code>pkg-proposal-042</code></dd></div><div><dt>Source</dt><dd><code>637c14a</code></dd></div><div><dt>Status</dt><dd>review requested</dd></div><div><dt>Next actor</dt><dd>package reviewer</dd></div></dl><div><button class="hara-v2-button" data-variant="primary" type="button">Open review</button><button class="hara-v2-button" type="button">Copy receipt</button><button class="hara-v2-button" type="button" data-publish-action="draft">Create another draft</button></div>
+              </section>
+            </aside>
+          </div>
+
+          <dialog class="ui-confirm-dialog" data-destructive-dialog aria-labelledby="ui-discard-title">
+            <form method="dialog"><p class="hara-v2-kicker">Destructive confirmation</p><h3 id="ui-discard-title">Discard this local draft?</h3><p>This removes unpublished local edits. It does not affect any registry proposal or package release.</p><label><input type="checkbox" data-confirm-discard /> I understand this draft cannot be recovered.</label><footer><button class="hara-v2-button" value="cancel">Keep draft</button><button class="hara-v2-button" data-variant="danger" value="confirm" disabled data-confirm-discard-button>Discard local draft</button></footer></form>
+          </dialog>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="states">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">04 · Data and transport state atlas</p><h2>Nothing, late, stale, broken, and recovered all look different.</h2></div>
+          <p>Every state carries a textual cue, object context, and safe next action. Colour reinforces state but never bears meaning alone.</p>
+        </header>
+
+        <div class="ui-state-atlas">
+          {interfaceStates.map((state) => (
+            <PatternStateCard
+              id={state.id}
+              label={state.label}
+              tone={state.tone}
+              cue={state.cue}
+              summary={state.summary}
+              action={state.action}
+            />
+          ))}
+        </div>
+
+        <div class="ui-state-comparison">
+          <article data-state="loading"><header><span class="ui-spinner" aria-hidden="true"></span><div><b>Loading package evidence</b><small>2 of 4 sources complete</small></div></header><div class="ui-skeleton-list" aria-hidden="true"><i></i><i></i><i></i></div><footer><button class="hara-v2-button" type="button">Cancel</button><span>Source names remain visible</span></footer></article>
+          <article data-state="partial"><header><span>½</span><div><b>Partial compatibility matrix</b><small>Rust runner unavailable</small></div></header><table><tbody><tr><th>JVM</th><td>passed</td></tr><tr><th>Wasm</th><td>passed</td></tr><tr><th>Rust</th><td>not observed</td></tr></tbody></table><footer><button class="hara-v2-button" type="button">Inspect missing runner</button><span>Never displayed as “all passed”</span></footer></article>
+          <article data-state="success"><header><span>✓</span><div><b>Release published</b><small>Exact receipt available</small></div></header><dl><div><dt>Package</dt><dd>std.signal 0.3.0</dd></div><div><dt>Revision</dt><dd>637c14a</dd></div><div><dt>Receipt</dt><dd>release-9f2a</dd></div></dl><footer><button class="hara-v2-button" type="button">Open receipt</button><span>Success names the durable result</span></footer></article>
+          <article data-state="offline"><header><span>↻</span><div><b>Offline with one queued draft</b><small>Nothing has been published</small></div></header><p>The local comment is preserved and attributed to no server timestamp until acknowledgement.</p><footer><button class="hara-v2-button" type="button">Review queued comment</button><span>Reconnect does not imply success</span></footer></article>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="identity">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">05 · Identity and permission</p><h2>Who acts—and under which authority—stays visible.</h2></div>
+          <p>Roles describe scope, not social prestige. Account switching pauses mutation. User-owned automation inherits visible attribution, purpose, source and policy from an accountable owner.</p>
+        </header>
+
+        <div class="ui-identity-ledger">
+          {identityStates.map((state) => (
+            <article data-identity={state.id}>
+              <header><span class="ui-identity-avatar">{state.label.slice(0, 2).toUpperCase()}</span><div><h3>{state.label}</h3><p>{state.authority}</p></div></header>
+              <footer><b>Evidence</b><span>{state.evidence}</span></footer>
+            </article>
+          ))}
+        </div>
+
+        <div class="ui-identity-demo" data-identity-demo>
+          <section class="ui-account-switcher">
+            <header><div><p class="hara-v2-kicker">Acting identity</p><h3>Choose before mutation.</h3></div><span class="hara-v2-badge" data-tone="success" data-identity-status>Signed in</span></header>
+            <div role="listbox" aria-label="Acting account">
+              <button type="button" role="option" aria-selected="true" data-account="mina" data-role="Maintainer" data-authority="May publish std.typed and review its namespace changes"><span class="hara-v2-avatar">MN</span><span><b>@mina</b><small>Maintainer · personal account</small></span><i>✓</i></button>
+              <button type="button" role="option" aria-selected="false" data-account="hara" data-role="Organization owner" data-authority="May administer Hara-owned sources and package ownership"><span class="hara-v2-avatar">H</span><span><b>hara-lang</b><small>Organization · owner scope</small></span><i></i></button>
+              <button type="button" role="option" aria-selected="false" data-account="buildwatcher" data-role="Owned bot" data-authority="May post exact build facts while @mina policy permits"><span class="hara-v2-avatar">BW</span><span><b>@buildwatcher</b><small>Bot owned by @mina</small></span><i></i></button>
+            </div>
+            <footer><button class="hara-v2-button" type="button" data-account-anonymous>Continue anonymously</button><span>Unsaved local work survives account selection.</span></footer>
+          </section>
+
+          <section class="ui-authority-panel" aria-live="polite">
+            <p class="hara-v2-kicker">Current authority</p><h3 data-authority-role>Maintainer</h3><p data-authority-copy>May publish std.typed and review its namespace changes</p>
+            <dl><div><dt>Mutation identity</dt><dd data-authority-account>@mina</dd></div><div><dt>Evidence</dt><dd>registry stewardship record</dd></div><div><dt>Scope</dt><dd>std.typed · schema namespaces</dd></div></dl>
+            <div class="ui-permission-example"><span>Publish package</span><b>Allowed</b><small>Exact scope and consequence visible</small></div>
+            <div class="ui-permission-example" data-denied="true"><span>Withdraw std.graphics</span><b>Not allowed</b><small>Requires std.graphics owner or registry reviewer</small><button type="button">Request review</button></div>
+          </section>
+
+          <section class="ui-bot-attribution">
+            <header><span class="hara-v2-avatar">BW</span><div><h3>@buildwatcher <span class="ui-bot-label">BOT</span></h3><p>Exact package and CI facts only.</p></div><span class="hara-v2-badge" data-tone="success">Owner present</span></header>
+            <dl><div><dt>Owner</dt><dd>@mina</dd></div><div><dt>Purpose</dt><dd>Report exact build and release facts</dd></div><div><dt>Sources</dt><dd>GitHub checks · package registry</dd></div><div><dt>Policy</dt><dd>Replies pause when owner policy is absent</dd></div></dl>
+            <div class="ui-bot-comment"><b>@buildwatcher</b><p><code>std.typed 1.4.0</code> passed JVM and Wasm conformance at revision <code>af6273c</code>. Rust evidence is not yet available.</p><small>Automated fact · owner @mina · exact receipt build-18c2</small></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="runtime">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">06 · Live session recovery</p><h2>Run, observe, fail, and recover without losing the source.</h2></div>
+          <p>The shared lifecycle exposes session, generation, source revision, backend and capabilities. A failure can preserve the editor and last result while changing only the unavailable operation.</p>
+        </header>
+
+        <WorkflowRail workflow={runtimeWorkflow} selected="recover" />
+
+        <div class="ui-runtime-demo hara-tool-workbench" data-runtime-demo data-runtime-state="ready">
+          <header class="hara-tool-toolbar ui-runtime-toolbar">
+            <div class="hara-tool-group"><button class="hara-tool-button" type="button" data-runtime-action="run">▶ Run</button><button class="hara-tool-button" type="button" data-runtime-action="stop" disabled>■ Stop</button><button class="hara-tool-button" type="button" data-runtime-action="recover">↻ Restart</button></div>
+            <div class="hara-tool-group"><span class="ui-runtime-identity">session <code>s-42</code></span><span>generation <code data-runtime-generation>7</code></span><span>source <code>rev-19</code></span></div>
+            <div class="hara-tool-group"><button class="hara-tool-button" type="button" data-runtime-action="fail">Simulate compile failure</button><button class="hara-tool-button" type="button" data-runtime-action="offline">Simulate disconnect</button></div>
+          </header>
+
+          <div class="ui-runtime-grid">
+            <aside class="hara-tool-dock-panel ui-runtime-files">
+              <header class="hara-tool-panel-header"><b>Files</b><span>3</span></header>
+              <nav aria-label="Session files"><button aria-current="page">main.hara</button><button>scene.hara</button><button>README.md</button></nav>
+              <section><b>Capabilities</b><span>eval</span><span>files</span><span>canvas</span><span data-capability="3d">3D unavailable</span></section>
+            </aside>
+
+            <main class="ui-runtime-editor" aria-label="Hara source editor specimen">
+              <header><span>main.hara</span><small>modified · local revision 19</small></header>
+              <pre><code><span>1</span> (defn orbit [t]
+<span>2</span>   {:x (* 120 (cos t))
+<span>3</span>    :y (* 120 (sin t))})
+<span>4</span>
+<span>5</span> (draw! (orbit time))</code></pre>
+              <footer><span>Hara</span><span>Ln 5, Col 22</span><span>UTF-8</span><button type="button">Edit explicitly</button></footer>
+            </main>
+
+            <section class="ui-runtime-observation">
+              <header><div><b>Observation</b><small data-runtime-observation-label>Ready · last success retained</small></div><span class="ui-runtime-lamp" aria-hidden="true"></span></header>
+              <div class="ui-runtime-state" data-runtime-panel="ready"><div class="ui-canvas-placeholder"><span>Canvas</span><i></i><i></i><i></i></div><p>Last successful frame from generation 6 remains visible until a new result commits.</p></div>
+              <div class="ui-runtime-state" data-runtime-panel="running" hidden><div class="ui-runtime-progress"><span class="ui-spinner"></span><b>Running generation 8</b><small>request fenced by session s-42 · source rev-19</small></div><ol><li>request accepted</li><li>compile started</li><li>waiting for result</li></ol></div>
+              <div class="ui-runtime-state" data-runtime-panel="failed" hidden><div class="hara-v2-callout" data-tone="danger"><div><b>Compile failed at main.hara:5:22</b><p><code>draw!</code> expects a Scene value; received a point map.</p></div></div><p>The source, session, and generation remain intact. The previous successful canvas is not relabelled as the new result.</p><button class="hara-v2-button" data-variant="primary" type="button" data-runtime-action="recover">Restore last working source</button><button class="hara-v2-button" type="button">Open diagnostic</button></div>
+              <div class="ui-runtime-state" data-runtime-panel="offline" hidden><div class="hara-v2-callout" data-tone="warning"><div><b>Connection lost after event 118.</b><p>Local source is safe. Run, file mutation, and reset are unavailable until session identity is re-established.</p></div></div><button class="hara-v2-button" data-variant="primary" type="button" data-runtime-action="recover">Reconnect session</button><button class="hara-v2-button" type="button">Continue read-only</button></div>
+              <div class="ui-runtime-state" data-runtime-panel="recovered" hidden><div class="ui-success-receipt"><span>✓</span><div><b>Session recovered</b><p>Generation 9 · source rev-19 · event sequence resumed at 119.</p></div></div><dl><div><dt>Backend</dt><dd>interpreter-wasm</dd></div><div><dt>Capabilities</dt><dd>eval · files · canvas</dd></div><div><dt>Previous result</dt><dd>generation 6 preserved</dd></div></dl></div>
+            </section>
+          </div>
+
+          <footer class="hara-tool-status-bar ui-runtime-status"><span data-runtime-status-text>Ready · source has local changes</span><span>backend interpreter-wasm</span><span>sequence 118</span><span>3 capabilities</span></footer>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="community">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">07 · Community publication</p><h2>Browse, open, comment, publish in context.</h2></div>
+          <p>The social workflow preserves canonical source, acting identity, moderation state, comment context and a stable permalink. Optimistic display never masquerades as server acknowledgement.</p>
+        </header>
+
+        <WorkflowRail workflow={feedWorkflow} selected="published" />
+
+        <div class="ui-community-flow" data-community-demo>
+          <section class="ui-community-stage" data-stage="browse">
+            <header><span>01</span><div><b>Feed</b><small>canonical source visible</small></div></header>
+            <article class="ui-feed-story"><div class="ui-feed-score"><button type="button">▲</button><strong>86</strong><button type="button">▼</button></div><div><p><span class="hara-v2-badge" data-tone="signal">Article</span> hara.devlog.org · submitted by @mina · 42m</p><h3>Schema values become ordinary runtime data</h3><p>A field note with exact package and specification links.</p><footer><button type="button">34 comments</button><button type="button">save</button><button type="button">clip</button></footer></div></article>
+            <small>Keyboard: J/K augments—not replaces—normal links. Touch: no swipe-only actions.</small>
+          </section>
+
+          <section class="ui-community-stage" data-stage="thread">
+            <header><span>02</span><div><b>Thread</b><small>source remains external</small></div></header>
+            <article class="ui-thread-excerpt"><header><span class="ui-presence-dot"></span><b>@mina</b><small>maintainer · online</small></header><p>The useful change is that tooling no longer needs a second schema registry. <a href="#community">@cora</a>, does the checker now receive the same value?</p><footer>▲ 21 · reply · permalink</footer></article>
+            <article class="ui-thread-excerpt ui-thread-excerpt--bot"><header><span class="ui-presence-dot" data-bot="true"></span><b>@buildwatcher</b><span class="ui-bot-label">BOT</span><small>owned by @mina · owner present</small></header><p>Package and specification indexes agree at revision <code>af6273c</code>.</p><footer>Automated fact · receipt build-18c2</footer></article>
+          </section>
+
+          <section class="ui-community-stage" data-stage="comment">
+            <header><span>03</span><div><b>Comment</b><small>acting identity explicit</small></div></header>
+            <label>Comment as <b>@chris</b><textarea class="hara-v2-field" rows="5" data-comment-input>Could the article include one example where metadata remains the better boundary?</textarea></label>
+            <div class="ui-comment-preview"><b>Preview</b><p data-comment-preview>Could the article include one example where metadata remains the better boundary?</p></div>
+            <footer><button class="hara-v2-button" type="button" data-comment-preview-action>Refresh preview</button><button class="hara-v2-button" data-variant="primary" type="button" data-comment-publish>Publish comment</button></footer>
+          </section>
+
+          <section class="ui-community-stage" data-stage="published" aria-live="polite">
+            <header><span>04</span><div><b>Published state</b><small>receipt, not toast</small></div></header>
+            <div class="ui-comment-pending" data-comment-pending><span>…</span><div><b>Comment not yet published</b><p>The preview is local and can still be edited.</p></div></div>
+            <article class="ui-published-comment" data-published-comment hidden tabindex="-1"><header><span class="ui-presence-dot"></span><b>@chris</b><span class="hara-v2-badge" data-tone="success">Published</span><time>now</time></header><p data-published-copy>Could the article include one example where metadata remains the better boundary?</p><footer><a href="#community">comment-7f3a</a><span>best/new index pending</span><button type="button">Undo within 30s</button></footer></article>
+            <small>Publication receives focus, permalink, timestamp, identity, and moderation state.</small>
+          </section>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="evidence">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">08 · Evidence and exact view</p><h2>Comparison state survives tab changes and sharing.</h2></div>
+          <p>Benchmarks, conformance and compatibility interfaces may be dense, but a shared link must still encode filters, selected records, view mode and exact revision.</p>
+        </header>
+
+        <WorkflowRail workflow={evidenceWorkflow} selected="share" />
+
+        <div class="ui-evidence-board" data-evidence-demo data-view="summary">
+          <header class="ui-evidence-command">
+            <div><p class="hara-v2-kicker">Benchmark comparison</p><h3>Persistent map lookup · Hara vs Clojure vs Rust</h3></div>
+            <div><button class="hara-v2-button" type="button" data-copy-exact-view>Copy exact view</button><span aria-live="polite" data-exact-view-status>Not copied</span></div>
+          </header>
+
+          <div class="hara-v2-tabs" role="tablist" aria-label="Evidence views">
+            <button class="hara-v2-tab" role="tab" aria-selected="true" data-evidence-tab="summary">Summary</button>
+            <button class="hara-v2-tab" role="tab" aria-selected="false" data-evidence-tab="samples">Samples</button>
+            <button class="hara-v2-tab" role="tab" aria-selected="false" data-evidence-tab="methodology">Methodology</button>
+            <button class="hara-v2-tab" role="tab" aria-selected="false" data-evidence-tab="history">History</button>
+          </div>
+
+          <section class="ui-evidence-panel" data-evidence-panel="summary">
+            <div class="ui-evidence-insight"><span>Primary insight</span><strong>Hara is within 8% of Rust and 1.7× faster than the Clojure baseline for this workload.</strong><p>Same input size, warmup policy, machine class and revision family. One Truffle result is excluded as incomparable.</p></div>
+            <div class="hara-v2-table-wrap"><table class="hara-v2-table"><thead><tr><th>Runtime</th><th>Median</th><th>p95</th><th>Confidence</th><th>Exact context</th></tr></thead><tbody><tr aria-selected="true"><td>Hara HBC · Rust</td><td>38.4 ns</td><td>41.7 ns</td><td>high · 40 samples</td><td><code>bench-a82f</code></td></tr><tr><td>Rust native</td><td>35.6 ns</td><td>39.1 ns</td><td>high · 40 samples</td><td><code>bench-792c</code></td></tr><tr><td>Clojure JVM</td><td>65.1 ns</td><td>72.8 ns</td><td>high · 40 samples</td><td><code>bench-61d4</code></td></tr><tr data-incomparable="true"><td>Hara Truffle</td><td>—</td><td>—</td><td>incomparable</td><td>different warmup policy</td></tr></tbody></table></div>
+          </section>
+
+          <section class="ui-evidence-panel" data-evidence-panel="samples" hidden>
+            <div class="ui-sample-bars" aria-label="Sample distribution"><article><b>Hara HBC</b><i style="--sample: 59%"></i><span>38.4 ns</span></article><article><b>Rust native</b><i style="--sample: 55%"></i><span>35.6 ns</span></article><article><b>Clojure JVM</b><i style="--sample: 100%"></i><span>65.1 ns</span></article></div><p>Accessible table values remain the source of truth; bars provide shape, not the only comparison cue.</p>
+          </section>
+
+          <section class="ui-evidence-panel" data-evidence-panel="methodology" hidden>
+            <dl class="ui-methodology-grid"><div><dt>Workload</dt><dd>1,000 persistent-map lookups over a fixed key distribution.</dd></div><div><dt>Warmup</dt><dd>20 iterations; measurement starts after variance stabilizes below 2%.</dd></div><div><dt>Machine</dt><dd>AMD 7950X · Linux 6.12 · performance governor.</dd></div><div><dt>Revisions</dt><dd>Hara <code>637c14a</code> · Rust baseline <code>4a881d0</code>.</dd></div><div><dt>Exclusion</dt><dd>Truffle result uses a different warmup policy and is shown but not ranked.</dd></div><div><dt>Receipt</dt><dd><code>evidence-view-9d21</code></dd></div></dl>
+          </section>
+
+          <section class="ui-evidence-panel" data-evidence-panel="history" hidden>
+            <div class="ui-history-list"><article><time>Aug 19</time><div><b>38.4 ns · current</b><p>8% improvement after persistent lookup lowering.</p></div></article><article><time>Aug 12</time><div><b>41.8 ns</b><p>Baseline before lowering change.</p></div></article><article><time>Aug 02</time><div><b>44.1 ns</b><p>First comparable HBC result.</p></div></article></div>
+          </section>
+
+          <footer class="ui-exact-view-receipt"><span>Exact view</span><code>/benchmarks/?workload=map-lookup&amp;runtimes=hbc-rust,rust,clojure&amp;view=summary&amp;revision=637c14a</code><button type="button" data-copy-exact-view>Copy</button></footer>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="responsive">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">09 · Responsive and input behavior</p><h2>The primary task survives every collapse.</h2></div>
+          <p>Responsive design is an ordered yielding contract. Inspectors disappear before main content, sidebars become disclosures before they become absent, and mobile editors wait for an explicit Edit action.</p>
+        </header>
+
+        <div class="ui-responsive-grid">
+          {responsiveContracts.map((contract) => (
+            <article class="ui-responsive-card" data-responsive={contract.id}>
+              <header><span>{contract.width}</span><h3>{contract.label}</h3></header>
+              <div class="ui-responsive-frame">
+                <div class="ui-responsive-chrome"><i></i><i></i><i></i></div>
+                <div class="ui-responsive-layout"><span data-region="rail">rail</span><strong data-region="main">primary task</strong><span data-region="inspector">inspector</span></div>
+              </div>
+              <dl><div><dt>Primary</dt><dd>{contract.primary}</dd></div><div><dt>Collapse</dt><dd>{contract.collapse}</dd></div><div><dt>Targets</dt><dd>{contract.targets}</dd></div></dl>
+            </article>
+          ))}
+        </div>
+
+        <div class="ui-input-contracts">
+          <section class="hara-v2-panel">
+            <header class="hara-v2-panel-header"><h2>Keyboard traversal</h2><span class="hara-v2-badge" data-tone="signal">Visible focus</span></header>
+            <div class="hara-v2-table-wrap"><table class="hara-v2-table"><thead><tr><th>Interaction</th><th>Key</th><th>Focus contract</th></tr></thead><tbody><tr><td>Open catalogue group</td><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Trigger remains focused; first link follows in tab order</td></tr><tr><td>Close disclosure/dialog</td><td><kbd>Escape</kbd></td><td>Focus returns to the initiating control</td></tr><tr><td>Run Hara</td><td><kbd>Ctrl</kbd> + <kbd>Enter</kbd></td><td>Equivalent labelled Run button remains available</td></tr><tr><td>Move tabs</td><td><kbd>←</kbd> <kbd>→</kbd></td><td>Selected tab and panel relationship announced</td></tr><tr><td>Search</td><td><kbd>/</kbd></td><td>Focus moves only after an explicit key action</td></tr></tbody></table></div>
+          </section>
+
+          <section class="ui-touch-contract">
+            <p class="hara-v2-kicker">Touch and mobile</p><h3>No surprise keyboard.</h3><div class="ui-mobile-editor-demo" data-mobile-editor-demo data-editing="false"><header><span>Sample result</span><button class="hara-v2-button" data-variant="primary" type="button" data-enter-edit>Edit</button></header><pre tabindex="0"><code>(map inc [1 2 3])
+;; → [2 3 4]</code></pre><footer><button class="hara-v2-button" type="button">Run</button><button class="hara-v2-button" type="button">Result</button><span data-mobile-edit-status>Editor is read-only until Edit is pressed.</span></footer></div><ul><li>44px primary actions</li><li>Transport remains visible above the virtual keyboard</li><li>Output precedes optional controls</li><li>No automatic focus on arrival or Run</li></ul>
+          </section>
+
+          <section class="ui-focus-return">
+            <p class="hara-v2-kicker">Focus return</p><h3>Dialogs end where they began.</h3><p>The trigger, dialog heading, first safe action, Escape behavior, and restored focus are all part of the pattern.</p><button class="hara-v2-button" data-variant="primary" type="button" data-open-focus-dialog>Open exact-view dialog</button><span data-focus-return-status>Dialog closed.</span>
+            <dialog data-focus-dialog aria-labelledby="ui-focus-dialog-title"><form method="dialog"><h3 id="ui-focus-dialog-title">Share exact comparison</h3><p>The link contains selected runtimes, workload, view mode, and revision.</p><input class="hara-v2-field" value="/benchmarks/?view=summary&amp;revision=637c14a" readonly /><footer><button class="hara-v2-button" value="cancel">Cancel</button><button class="hara-v2-button" data-variant="primary" value="copy">Copy link</button></footer></form></dialog>
+          </section>
+
+          <section class="ui-motion-contract">
+            <p class="hara-v2-kicker">Reduced motion</p><h3>State remains legible without animation.</h3><div><span class="ui-motion-object"></span><code>190ms functional transition</code></div><div data-reduced="true"><span class="ui-motion-object"></span><code>immediate state + textual cue</code></div><ul><li>Ambient fields become static</li><li>Progress uses discrete steps or text</li><li>Focus and selected states never animate away</li><li>No meaning depends on trajectory</li></ul>
+          </section>
+        </div>
+      </section>
+
+      <section class="ui-patterns-section" id="ownership">
+        <header class="ui-patterns-section-head">
+          <div><p class="hara-v2-kicker">10 · Ownership and adoption</p><h2>Shared behavior stops before product truth.</h2></div>
+          <p>Future application PRs consume this state vocabulary and choreography, then add their own domain fields, evidence, permissions, ranking, moderation, runtime and curriculum rules.</p>
+        </header>
+
+        <div class="hara-v2-table-wrap ui-ownership-table"><table class="hara-v2-table"><thead><tr><th>Layer</th><th>Owns</th><th>Does not own</th></tr></thead><tbody>{ownershipBoundaries.map((boundary) => <tr><th>{boundary.layer}</th><td>{boundary.owns}</td><td>{boundary.doesNotOwn}</td></tr>)}</tbody></table></div>
+
+        <div class="ui-adoption-grid">
+          {adoptionTargets.map((target) => (
+            <a href={`https://github.com/hara-lang/visual-language/issues/${target.issue}`}>
+              <span>Issue #{target.issue}</span><h3>{target.label}</h3><p>{target.consumes}</p><small>Open product buildout ↗</small>
+            </a>
+          ))}
+        </div>
+
+        <section class="ui-adoption-note">
+          <div><p class="hara-v2-kicker">Downstream rule</p><h3>Adopt merged contracts, then compose locally.</h3><p>Products should pin a merged Visual Language revision, reuse package components and state semantics, and keep business logic in the downstream application. Laboratory annotation CSS is not a product dependency.</p></div>
+          <div><a class="hara-v2-button" data-variant="primary" href={catalogueHome}>Return to catalogue</a><a class="hara-v2-button" href={foundationsRoute}>Foundations</a><a class="hara-v2-button" href={componentsRoute}>Components</a><a class="hara-v2-button" href={toolRoute}>Tool workbenches</a></div>
+        </section>
+      </section>
+
+      <footer class="ui-patterns-footer">
+        <span>Hara v2 UI patterns · Issue #36</span>
+        <span><a href={catalogueHome}>Catalogue</a> · <a href={componentsRoute}>Components</a> · <a href={issueRoute}>Implementation issue</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script>
+      const initialiseUiPatterns = () => {
+        document.querySelectorAll("[data-search-demo]").forEach((root) => {
+          if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
+          root.dataset.ready = "true";
+          const buttons = [...root.querySelectorAll("[data-search-mode]")];
+          const panels = [...root.querySelectorAll("[data-search-panel]")];
+          const setMode = (mode) => {
+            root.dataset.mode = mode;
+            buttons.forEach((button) => button.setAttribute("aria-pressed", String(button.getAttribute("data-search-mode") === mode)));
+            panels.forEach((panel) => {
+              if (panel instanceof HTMLElement) panel.hidden = panel.getAttribute("data-search-panel") !== mode;
+            });
+          };
+          buttons.forEach((button) => button.addEventListener("click", () => setMode(button.getAttribute("data-search-mode") || "success")));
+          root.querySelector("[data-search-form]")?.addEventListener("submit", () => setMode("loading"));
+          root.querySelectorAll("[data-result]").forEach((row) => row.addEventListener("click", () => {
+            root.querySelectorAll("[data-result]").forEach((item) => item.setAttribute("aria-pressed", String(item === row)));
+          }));
+        });
+
+        document.querySelectorAll("[data-publish-demo]").forEach((root) => {
+          if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
+          root.dataset.ready = "true";
+          const live = root.querySelector("[data-publish-live]");
+          const revision = root.querySelector("[data-required-field='revision']");
+          const revisionError = root.querySelector("#ui-revision-error");
+          const validationSummary = root.querySelector("[data-validation-summary]");
+          const panels = [...root.querySelectorAll("[data-publish-panel]")];
+          const steps = [...root.querySelectorAll("[data-publish-step]")];
+
+          const setPhase = (phase) => {
+            root.dataset.phase = phase;
+            panels.forEach((panel) => {
+              if (panel instanceof HTMLElement) panel.hidden = panel.getAttribute("data-publish-panel") !== phase;
+            });
+            steps.forEach((step) => {
+              if (step.getAttribute("data-publish-step") === phase) step.setAttribute("aria-current", "step");
+              else step.removeAttribute("aria-current");
+            });
+            const activePanel = root.querySelector(`[data-publish-panel='${phase}']`);
+            if (phase === "receipt" && activePanel instanceof HTMLElement) activePanel.focus();
+          };
+
+          const validate = () => {
+            const missing = !(revision instanceof HTMLInputElement) || revision.value.trim() === "";
+            if (revisionError instanceof HTMLElement) revisionError.hidden = !missing;
+            if (validationSummary instanceof HTMLElement) validationSummary.hidden = !missing;
+            if (revision instanceof HTMLInputElement) revision.setAttribute("aria-invalid", String(missing));
+            if (missing) {
+              setPhase("validate");
+              if (validationSummary instanceof HTMLElement) validationSummary.focus();
+              if (live instanceof HTMLElement) live.textContent = "Validation found one blocking issue. No proposal was submitted.";
+              return false;
+            }
+            setPhase("preview");
+            root.querySelectorAll("[data-preview-revision]").forEach((node) => { node.textContent = revision.value; });
+            if (live instanceof HTMLElement) live.textContent = "Validation passed. Review the public and machine preview before submission.";
+            return true;
+          };
+
+          root.querySelectorAll("[data-publish-action]").forEach((button) => button.addEventListener("click", () => {
+            const action = button.getAttribute("data-publish-action") || "draft";
+            if (action === "validate") { validate(); return; }
+            if (action === "submit") {
+              if (!validate()) return;
+              setPhase("submit");
+              if (live instanceof HTMLElement) live.textContent = "Submitting one revision-fenced proposal.";
+              return;
+            }
+            setPhase(action);
+            if (live instanceof HTMLElement) live.textContent = action === "draft" ? "New reversible draft ready." : `Workflow moved to ${action}.`;
+          }));
+
+          root.querySelectorAll("[data-publish-step]").forEach((button) => button.addEventListener("click", () => {
+            const phase = button.getAttribute("data-publish-step") || "draft";
+            if (phase === "preview" && !validate()) return;
+            setPhase(phase);
+          }));
+
+          root.querySelector("[data-fill-revision]")?.addEventListener("click", () => {
+            if (revision instanceof HTMLInputElement) revision.value = "637c14a";
+            validate();
+          });
+
+          root.querySelectorAll("input, textarea, select").forEach((field) => field.addEventListener("input", () => {
+            const autosave = root.querySelector("[data-autosave-state]");
+            if (autosave instanceof HTMLElement) autosave.textContent = "Unsaved local change · autosaving…";
+            window.setTimeout(() => { if (autosave instanceof HTMLElement) autosave.textContent = "Draft saved locally · just now"; }, 450);
+          }));
+
+          const dialog = root.querySelector("[data-destructive-dialog]");
+          root.querySelector("[data-open-destructive]")?.addEventListener("click", () => {
+            if (dialog instanceof HTMLDialogElement) dialog.showModal();
+          });
+          const checkbox = root.querySelector("[data-confirm-discard]");
+          const confirmButton = root.querySelector("[data-confirm-discard-button]");
+          checkbox?.addEventListener("change", () => {
+            if (checkbox instanceof HTMLInputElement && confirmButton instanceof HTMLButtonElement) confirmButton.disabled = !checkbox.checked;
+          });
+        });
+
+        document.querySelectorAll("[data-identity-demo]").forEach((root) => {
+          if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
+          root.dataset.ready = "true";
+          const setAccount = (button) => {
+            root.querySelectorAll("[data-account]").forEach((item) => item.setAttribute("aria-selected", String(item === button)));
+            const role = button.getAttribute("data-role") || "Signed in";
+            const authority = button.getAttribute("data-authority") || "";
+            const account = button.getAttribute("data-account") || "";
+            const roleNode = root.querySelector("[data-authority-role]");
+            const copyNode = root.querySelector("[data-authority-copy]");
+            const accountNode = root.querySelector("[data-authority-account]");
+            const statusNode = root.querySelector("[data-identity-status]");
+            if (roleNode) roleNode.textContent = role;
+            if (copyNode) copyNode.textContent = authority;
+            if (accountNode) accountNode.textContent = `@${account}`;
+            if (statusNode) statusNode.textContent = account === "buildwatcher" ? "Owned bot" : "Signed in";
+          };
+          root.querySelectorAll("[data-account]").forEach((button) => button.addEventListener("click", () => setAccount(button)));
+          root.querySelector("[data-account-anonymous]")?.addEventListener("click", () => {
+            root.querySelectorAll("[data-account]").forEach((item) => item.setAttribute("aria-selected", "false"));
+            const roleNode = root.querySelector("[data-authority-role]");
+            const copyNode = root.querySelector("[data-authority-copy]");
+            const accountNode = root.querySelector("[data-authority-account]");
+            const statusNode = root.querySelector("[data-identity-status]");
+            if (roleNode) roleNode.textContent = "Anonymous";
+            if (copyNode) copyNode.textContent = "May read, run, and draft locally. Server mutation is paused until an identity is chosen.";
+            if (accountNode) accountNode.textContent = "none";
+            if (statusNode) statusNode.textContent = "No mutation identity";
+          });
+        });
+
+        document.querySelectorAll("[data-runtime-demo]").forEach((root) => {
+          if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
+          root.dataset.ready = "true";
+          const panels = [...root.querySelectorAll("[data-runtime-panel]")];
+          const status = root.querySelector("[data-runtime-status-text]");
+          const observation = root.querySelector("[data-runtime-observation-label]");
+          const generation = root.querySelector("[data-runtime-generation]");
+          const setState = (state) => {
+            root.dataset.runtimeState = state;
+            panels.forEach((panel) => {
+              if (panel instanceof HTMLElement) panel.hidden = panel.getAttribute("data-runtime-panel") !== state;
+            });
+            const labels = {
+              ready: ["Ready · source has local changes", "Ready · last success retained"],
+              running: ["Running generation 8", "Compiling source rev-19"],
+              failed: ["Compile failed · source preserved", "Failure · previous success retained"],
+              offline: ["Disconnected · mutation disabled", "Offline · reconnect or read-only"],
+              recovered: ["Recovered · sequence resumed", "Recovered · exact receipt available"]
+            };
+            const pair = labels[state] || labels.ready;
+            if (status) status.textContent = pair[0];
+            if (observation) observation.textContent = pair[1];
+            if (state === "recovered" && generation) generation.textContent = "9";
+          };
+          root.querySelectorAll("[data-runtime-action]").forEach((button) => button.addEventListener("click", () => {
+            const action = button.getAttribute("data-runtime-action");
+            if (action === "run") setState("running");
+            if (action === "fail") setState("failed");
+            if (action === "offline") setState("offline");
+            if (action === "recover") setState("recovered");
+            if (action === "stop") setState("ready");
+          }));
+        });
+
+        document.querySelectorAll("[data-community-demo]").forEach((root) => {
+          if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
+          root.dataset.ready = "true";
+          const input = root.querySelector("[data-comment-input]");
+          const preview = root.querySelector("[data-comment-preview]");
+          const published = root.querySelector("[data-published-comment]");
+          const pending = root.querySelector("[data-comment-pending]");
+          const publishedCopy = root.querySelector("[data-published-copy]");
+          const refresh = () => {
+            if (input instanceof HTMLTextAreaElement && preview) preview.textContent = input.value;
+          };
+          root.querySelector("[data-comment-preview-action]")?.addEventListener("click", refresh);
+          root.querySelector("[data-comment-publish]")?.addEventListener("click", () => {
+            refresh();
+            if (input instanceof HTMLTextAreaElement && publishedCopy) publishedCopy.textContent = input.value;
+            if (pending instanceof HTMLElement) pending.hidden = true;
+            if (published instanceof HTMLElement) { published.hidden = false; published.focus(); }
+          });
+        });
+
+        document.querySelectorAll("[data-evidence-demo]").forEach((root) => {
+          if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
+          root.dataset.ready = "true";
+          const tabs = [...root.querySelectorAll("[data-evidence-tab]")];
+          const panels = [...root.querySelectorAll("[data-evidence-panel]")];
+          const setView = (view) => {
+            root.dataset.view = view;
+            tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.getAttribute("data-evidence-tab") === view)));
+            panels.forEach((panel) => { if (panel instanceof HTMLElement) panel.hidden = panel.getAttribute("data-evidence-panel") !== view; });
+          };
+          tabs.forEach((tab) => tab.addEventListener("click", () => setView(tab.getAttribute("data-evidence-tab") || "summary")));
+          root.querySelectorAll("[data-copy-exact-view]").forEach((button) => button.addEventListener("click", () => {
+            const status = root.querySelector("[data-exact-view-status]");
+            if (status) status.textContent = `Copied exact ${root.dataset.view || "summary"} view · revision 637c14a`;
+          }));
+        });
+
+        document.querySelectorAll("[data-mobile-editor-demo]").forEach((root) => {
+          if (!(root instanceof HTMLElement) || root.dataset.ready === "true") return;
+          root.dataset.ready = "true";
+          root.querySelector("[data-enter-edit]")?.addEventListener("click", () => {
+            root.dataset.editing = "true";
+            const status = root.querySelector("[data-mobile-edit-status]");
+            if (status) status.textContent = "Edit mode entered explicitly. The editor may now receive focus.";
+          });
+        });
+
+        document.querySelectorAll("[data-open-focus-dialog]").forEach((button) => {
+          if (!(button instanceof HTMLButtonElement) || button.dataset.ready === "true") return;
+          button.dataset.ready = "true";
+          const section = button.closest(".ui-focus-return");
+          const dialog = section?.querySelector("[data-focus-dialog]");
+          const status = section?.querySelector("[data-focus-return-status]");
+          button.addEventListener("click", () => { if (dialog instanceof HTMLDialogElement) dialog.showModal(); });
+          dialog?.addEventListener("close", () => {
+            button.focus();
+            if (status) status.textContent = dialog.returnValue === "copy" ? "Link copied. Focus returned to the trigger." : "Dialog closed. Focus returned to the trigger.";
+          });
+        });
+      };
+
+      initialiseUiPatterns();
+      document.addEventListener("astro:page-load", initialiseUiPatterns);
+    </script>
+  </body>
+</html>
