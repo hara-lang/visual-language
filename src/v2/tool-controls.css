@@ -9,9 +9,15 @@
 }
 
 .hara-tool-toolbar {
+  min-width: 0;
+  max-width: 100%;
   min-height: var(--hara-tool-toolbar);
+  flex-wrap: nowrap;
   gap: var(--hara-tool-gap);
   padding: 4px 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
   border-color: var(--hara-tool-edge-strong);
   background-color: var(--hara-tool-bg-raised);
   box-shadow: var(--hara-tool-shadow-inset);
@@ -26,8 +32,10 @@
 .hara-tool-toolbar[data-orientation="vertical"] {
   width: max-content;
   min-height: 0;
+  max-width: none;
   flex-direction: column;
   align-items: stretch;
+  overflow: visible;
 }
 
 .hara-tool-toolbar[data-sticky="true"] {
@@ -37,6 +45,8 @@
 }
 
 .hara-tool-group {
+  flex: 0 0 auto;
+  min-width: max-content;
   gap: 2px;
   padding-inline: 4px;
   border-inline-end: 1px solid var(--hara-tool-edge);
@@ -49,6 +59,7 @@
 }
 
 .hara-tool-group[data-orientation="vertical"] {
+  min-width: 0;
   flex-direction: column;
   padding: 4px 0;
   border-inline-end: 0;
@@ -112,8 +123,17 @@
 
 .hara-tool-button[data-icon-only="true"],
 .hara-tool-toggle[data-icon-only="true"] {
+  flex: 0 0 var(--hara-tool-control);
   width: var(--hara-tool-control);
+  max-width: var(--hara-tool-control);
   padding: 0;
+}
+
+[data-density="dense"] :where(.hara-tool-button, .hara-tool-toggle)[data-icon-only="true"],
+:where(.hara-tool-button, .hara-tool-toggle)[data-density="dense"][data-icon-only="true"] {
+  flex-basis: var(--hara-tool-control-dense);
+  width: var(--hara-tool-control-dense);
+  max-width: var(--hara-tool-control-dense);
 }
 
 .hara-tool-control-icon {
@@ -126,6 +146,11 @@
 
 .hara-tool-control-icon:empty {
   display: none;
+}
+
+.hara-tool-control-label,
+.hara-tool-command-hint {
+  white-space: nowrap;
 }
 
 .hara-tool-control-label[data-visually-hidden="true"] {
@@ -262,14 +287,6 @@
 }
 
 @media (max-width: 680px) {
-  .hara-tool-toolbar {
-    overflow-x: auto;
-  }
-
-  .hara-tool-group {
-    flex: 0 0 auto;
-  }
-
   .hara-tool-field[data-inline="true"] {
     grid-template-columns: minmax(86px, 1fr);
   }
