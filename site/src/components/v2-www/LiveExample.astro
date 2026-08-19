@@ -1,0 +1,32 @@
+---
+import { docsGuide, liveExampleStates } from "../../lib/v2-www-family.mjs";
+
+const { compact = false, id = "docs-live-example" } = Astro.props;
+---
+<section class="www-live-example" data-live-example data-state="ready" data-compact={compact ? "true" : "false"} id={id}>
+  <header>
+    <div><span class="www-live-lamp" aria-hidden="true"></span><b>Live example</b><small data-live-state-label>Ready · interpreter</small></div>
+    <div><button type="button" data-live-action="run">Run</button><button type="button" data-live-action="stop" disabled>Stop</button><button type="button" data-live-action="restart">Restart</button></div>
+  </header>
+  <div class="www-live-layout">
+    <section class="www-live-editor">
+      <header><span>schema-values.hara</span><small>source rev-19</small></header>
+      <pre><code>{docsGuide.code}</code></pre>
+      <footer><button type="button" data-live-edit>Edit</button><span>Editor remains read-only until Edit is pressed on touch devices.</span></footer>
+    </section>
+    <section class="www-live-output">
+      {liveExampleStates.map((state) => (
+        <div data-live-panel={state.id} hidden={state.id !== "ready"}>
+          <p class="hara-v2-kicker">{state.label}</p>
+          <h3>{state.description}</h3>
+          {state.id === "ready" && <p>Run the exact source through session <code>docs-42</code>, generation <code>7</code>.</p>}
+          {state.id === "running" && <div class="www-live-progress"><i></i><span>Compiling source revision rev-19…</span></div>}
+          {state.id === "success" && <pre><code>{docsGuide.result}</code></pre>}
+          {state.id === "error" && <div class="www-live-error"><b>Compile error at line 4</b><p>Expected a schema predicate. Source is preserved; the previous result remains stale.</p><button type="button" data-live-fix>Restore valid source</button></div>}
+          {state.id === "offline" && <div class="www-live-error"><b>Execution backend unavailable</b><p>Reading and editing remain available. Durable share actions are paused.</p><button type="button" data-live-reconnect>Reconnect</button></div>}
+        </div>
+      ))}
+    </section>
+  </div>
+  <footer class="www-live-status"><span>session docs-42</span><span>generation <b data-live-generation>7</b></span><span>source rev-19</span><span>capabilities eval · cancel · restart</span><span>3D unavailable</span></footer>
+</section>
