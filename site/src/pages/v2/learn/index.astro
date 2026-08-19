@@ -1,0 +1,125 @@
+---
+import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
+import WorldSpecimen from "../../../components/v2/WorldSpecimen.astro";
+import "../../../../../src/v2.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-lab.css";
+import "../../../styles/v2-command-retune.css";
+import "../../../styles/v2-calm-lab.css";
+import "../../../styles/v2-learn.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/learn/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const catalogueHome = `${basePath}v2/`;
+const toolLab = `${basePath}v2/tool/`;
+const worldDiscussionLab = `${basePath}v2/world/discussion/`;
+const worldAroundLab = `${basePath}v2/world/around/`;
+const communityStudy = `${basePath}v2/world/community/`;
+const onboardingStudy = `${basePath}v2/world/onboarding/`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Hara Learn v2: runnable lessons, guided product examples, programmer onboarding, projects, and the teaching contracts shared by Hara learning surfaces." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara Learn v2" />
+    <meta property="og:description" content="Learn Hara by running small forms, reading real product surfaces, and growing one useful project." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara Learn v2" />
+    <meta name="twitter:description" content="Runnable lessons, guided examples, projects, and programmer onboarding." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara Learn v2</title>
+  </head>
+  <body class="hara-v2">
+    <CatalogueHeader basePath={basePath} activePath="/v2/learn/" />
+
+    <main class="v2-lab-main learn-lab-main">
+      <section class="learn-lab-hero">
+        <div class="learn-lab-hero-copy">
+          <p class="hara-v2-kicker">Application buildout · Learn</p>
+          <h1>Learn by running something real.</h1>
+          <p>Hara Learn starts with one executable form, then grows through data, packages, durable work, and complete projects. Product examples live here when their purpose is to teach an interface rather than to define the product’s permanent navigation.</p>
+          <nav class="v2-lab-quick-links" aria-label="Learn section shortcuts">
+            <a href="#start"><span>Start here</span><strong>Run the first lesson →</strong></a>
+            <a href="#tracks"><span>Tracks</span><strong>Choose a practical path →</strong></a>
+            <a href="#world-examples"><span>World examples</span><strong>Read a real product screen →</strong></a>
+            <a href={toolLab}><span>Workbench</span><strong>Open the tool laboratory →</strong></a>
+          </nav>
+        </div>
+
+        <div class="learn-lab-demo" aria-label="Runnable Hara lesson preview">
+          <header><strong>lesson-01.hara</strong><span>local Wasm session · ready</span></header>
+          <pre><code><b>(defn</b> greet [name]
+  {<i>:message</i> (str "Hello, " name)
+   <i>:next</i>    <i>:build-something</i>})
+
+(greet "Hara")</code></pre>
+          <div class="learn-lab-demo-output"><i></i><strong>Evaluation complete</strong><span>one value · no setup required</span><code>⌘ ↵</code></div>
+        </div>
+      </section>
+
+      <section class="learn-lab-section" id="start">
+        <header class="learn-lab-section-head">
+          <div><p class="hara-v2-kicker">Start here</p><h2>Four steps to a useful first session.</h2></div>
+          <p>The first visit should not begin with a documentation maze. Each step produces a visible result, preserves the current session, and offers a deeper explanation only when it becomes relevant.</p>
+        </header>
+        <div class="learn-lab-path">
+          <article><small>01 · Run</small><h3>Evaluate one form</h3><p>See Hara read, evaluate, and return an ordinary value in the browser.</p><code>about 2 minutes</code></article>
+          <article><small>02 · Change</small><h3>Make the value yours</h3><p>Edit data and function input while the result stays visible beside the source.</p><code>about 4 minutes</code></article>
+          <article><small>03 · Connect</small><h3>Call a real capability</h3><p>Use an explicit file, timer, network, or graphics boundary and inspect the receipt.</p><code>about 8 minutes</code></article>
+          <article><small>04 · Keep</small><h3>Save a small project</h3><p>Turn the session into a shareable package with source, manifest, and replayable output.</p><code>about 15 minutes</code></article>
+        </div>
+      </section>
+
+      <section class="learn-lab-section" id="tracks">
+        <header class="learn-lab-section-head">
+          <div><p class="hara-v2-kicker">Learning tracks</p><h2>Follow the problem, not a textbook order.</h2></div>
+          <p>Tracks share the same runnable lesson shell but organise examples around things people actually want to build. Reference material remains available without interrupting the project flow.</p>
+        </header>
+        <div class="learn-lab-tracks">
+          <a class="learn-lab-track" href={onboardingStudy}><small>New programmer</small><h3>First session and first project</h3><p>The earlier executable-feed onboarding study now belongs to Learn as a comparison and teaching surface.</p><span>Open onboarding study →</span></a>
+          <a class="learn-lab-track" href={`${catalogueHome}#catalogue-foundations`}><small>Language foundations</small><h3>Forms, values, functions, and schemas</h3><p>Build a precise mental model through small evaluations and visual traces.</p><span>See foundation buildout →</span></a>
+          <a class="learn-lab-track" href={toolLab}><small>Creative tools</small><h3>Graphics, animation, audio, and 3D</h3><p>Use the shared workbench shell to learn through visible, editable output.</p><span>Open tool workbenches →</span></a>
+          <a class="learn-lab-track" href={`${catalogueHome}#catalogue-applications`}><small>Packages</small><h3>Publish something other people can use</h3><p>Move from a local namespace to a versioned package with explicit capabilities.</p><span>See application buildouts →</span></a>
+          <a class="learn-lab-track" href={worldDiscussionLab}><small>Community reading</small><h3>Follow a release through World</h3><p>Learn source attribution, clippings, comments, contributor identity, and presence from the active product.</p><span>Open focused World →</span></a>
+          <a class="learn-lab-track" href={worldAroundLab}><small>Open web</small><h3>Inspect how Around Hara finds a story</h3><p>Read provider provenance, clustering, moderation, ranking, and relay receipts.</p><span>Open Around Hara →</span></a>
+        </div>
+      </section>
+
+      <section class="learn-lab-section" id="world-examples">
+        <header class="learn-lab-section-head">
+          <div><p class="hara-v2-kicker">Guided product examples</p><h2>World screens are examples here, not extra World destinations.</h2></div>
+          <p>The active World product keeps a smaller menu: discussion and Around Hara. Earlier community and onboarding explorations are retained under Learn, where they can be compared, annotated, and used to teach interface decisions.</p>
+        </header>
+
+        <div class="learn-lab-note">
+          <strong>Navigation change</strong>
+          <p>Community study and programmer onboarding no longer appear as World menu children. Their compatibility URLs remain available, but the catalogue and teaching links now place them under Learn.</p>
+        </div>
+
+        <div class="learn-lab-example-grid">
+          <a class="learn-lab-example-link" href="#world"><small>Embedded walkthrough</small><h3>World community publication</h3><p>A guided reading of the shared shell, feed, attribution, side information, and action hierarchy.</p><span>Open the example below ↓</span></a>
+          <a class="learn-lab-example-link" href={worldDiscussionLab}><small>Active product</small><h3>Focused World discussion</h3><p>The current articles, clippings, comments, profiles, presence, and accountable-bot study.</p><span>Open active screen →</span></a>
+          <a class="learn-lab-example-link" href={communityStudy}><small>Settled comparison</small><h3>Earlier community reader</h3><p>The broader articles, feeds, profiles, presence, and digest exploration retained for comparison.</p><span>Open community study →</span></a>
+          <a class="learn-lab-example-link" href={onboardingStudy}><small>Settled comparison</small><h3>Programmer onboarding</h3><p>The earlier acquisition journey, now treated as a Learn example rather than a World feature.</p><span>Open onboarding study →</span></a>
+        </div>
+      </section>
+
+      <WorldSpecimen />
+
+      <footer class="v2-lab-footer">
+        <span>Hara Learn · Visual language v2 · Buildout issue <a href="https://github.com/hara-lang/visual-language/issues/43">#43</a></span>
+        <span><a href={catalogueHome}>Catalogue</a> · <a href={worldDiscussionLab}>World</a> · <a href={worldAroundLab}>Around Hara</a> · <a href={toolLab}>Tools</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+  </body>
+</html>

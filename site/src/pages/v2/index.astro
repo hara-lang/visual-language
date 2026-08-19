@@ -5,7 +5,6 @@ import WwwSpecimen from "../../components/v2/WwwSpecimen.astro";
 import DocsSpecimen from "../../components/v2/DocsSpecimen.astro";
 import SpecsSpecimen from "../../components/v2/SpecsSpecimen.astro";
 import BenchmarksSpecimen from "../../components/v2/BenchmarksSpecimen.astro";
-import WorldSpecimen from "../../components/v2/WorldSpecimen.astro";
 import {
   catalogueGroups,
   catalogueHref,
@@ -24,9 +23,7 @@ const basePath = base.endsWith("/") ? base : `${base}/`;
 const pageUrl = new URL(`${basePath}v2/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
 const toolLab = `${basePath}v2/tool/`;
-const worldLab = `${basePath}v2/world/`;
-const worldFocusedLab = `${basePath}v2/world/community/`;
-const worldOnboardingLab = `${basePath}v2/world/onboarding/`;
+const learnLab = `${basePath}v2/learn/`;
 const worldDiscussionLab = `${basePath}v2/world/discussion/`;
 const worldAroundLab = `${basePath}v2/world/around/`;
 const topLevelItems = catalogueGroups.flatMap((group) => group.items);
@@ -38,16 +35,16 @@ const currentCount = catalogueItems.filter((item) => item.href).length;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hara interface language v2: a scalable catalogue of foundations, components, UI patterns, front matter, tools, and detailed product laboratories." />
+    <meta name="description" content="Hara interface language v2: a scalable catalogue of foundations, components, UI patterns, front matter, tools, detailed product laboratories, and structured learning." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
     <meta property="og:title" content="Hara interface language v2 catalogue" />
-    <meta property="og:description" content="One shared interface language, organized into Foundations, Library, and detailed Application buildouts." />
+    <meta property="og:description" content="One shared interface language, organized into Foundations, Library, Applications, and a dedicated Learn buildout." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Hara interface language v2 catalogue" />
-    <meta name="twitter:description" content="Foundations, components, UI patterns, tools, and focused product laboratories." />
+    <meta name="twitter:description" content="Foundations, components, UI patterns, tools, focused products, and runnable learning." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
@@ -61,14 +58,19 @@ const currentCount = catalogueItems.filter((item) => item.href).length;
         <div>
           <p class="hara-v2-kicker">Interface catalogue · Version 2</p>
           <h1>Precision, with room to breathe.</h1>
-          <p><b>One language. Many product grammars.</b> The visual language now has room to grow beyond one specimen page. Shared foundations and reusable interface contracts sit beside detailed, independent buildouts for WWW, Playground, Specs, Packages, World, and Learn.</p>
+          <p><b>One language. Many product grammars.</b> Shared foundations and reusable interface contracts sit beside detailed, independent buildouts for WWW, Playground, Specs, Packages, World, and Learn. Learning material now has its own home instead of competing with the World reader.</p>
           <div class="v2-lab-principles">
             <div><b>One manifest</b><span>Every current and planned route belongs to one typed catalogue instead of a page-local menu array.</span></div>
             <div><b>Grouped navigation</b><span>Foundations, Library, and Applications can expand without crowding the permanent header row.</span></div>
             <div><b>Detailed buildouts</b><span>Applications own realistic screens and full states rather than sharing one generic product layout.</span></div>
             <div><b>Stable contract</b><span>The block H, signal, themes, shared primitives, and protected tokens remain fixed.</span></div>
           </div>
-          <p><a href="https://github.com/hara-lang/visual-language/issues/32">Open the catalogue epic →</a> · <a href={worldDiscussionLab}>Focused World discussion laboratory →</a> · <a href={worldAroundLab}>Open the Around Hara feed explorer →</a> · <a href={toolLab}>Tool workbench laboratory →</a></p>
+          <nav class="v2-lab-quick-links" aria-label="Featured v2 laboratories">
+            <a href={learnLab}><span>Learn</span><strong>Start with a runnable path →</strong></a>
+            <a href={worldDiscussionLab}><span>World</span><strong>Open the focused community →</strong></a>
+            <a href={worldAroundLab}><span>Around Hara</span><strong>Explore attributed signals →</strong></a>
+            <a href={toolLab}><span>Tools</span><strong>Open the workbench laboratory →</strong></a>
+          </nav>
         </div>
         <div class="v2-lab-hero-art"><FleetField title="Hara scalable interface catalogue field" /></div>
       </section>
@@ -139,29 +141,27 @@ const currentCount = catalogueItems.filter((item) => item.href).length;
       <section class="v2-catalogue-legacy-head">
         <div>
           <p class="hara-v2-kicker">Existing reference material</p>
-          <h2>The original five-layout field test remains reviewable.</h2>
+          <h2>The original document layouts remain reviewable.</h2>
         </div>
-        <p>These compact WWW, Docs, Specs, Benchmarks, and World compositions established the shared v2 shell. The new application issues will replace each compact study with detailed route families while preserving this historical comparison surface.</p>
+        <p>WWW, Docs, Specs, and Benchmarks established the shared v2 shell. The World example has moved to Learn, where it can be explained as a guided interface rather than appearing as another permanent destination on this catalogue page.</p>
       </section>
 
-      <div class="v2-lab-index" aria-label="Historical and focused World studies">
-        <a href={worldDiscussionLab}><strong>Focused World discussion laboratory</strong><span>Articles, feeds, clippings, comments, profiles, presence, and accountable bots.</span><code>current focused study</code></a>
-        <a href={worldAroundLab}><strong>Open the Around Hara feed explorer</strong><span>External signal discovery, source provenance, curation, moderation, and review-first relay workflows.</span><code>current signal study</code></a>
-        <a href={worldFocusedLab}><strong>Open the focused World community</strong><span>Articles, clippings, comments, feeds, profiles, presence, and digest.</span><code>earlier focused study</code></a>
-        <a href={worldLab}><strong>World community laboratory</strong><span>The current cross-source feed explorer route and earlier product studies.</span><code>active product route</code></a>
-        <a href={worldOnboardingLab}><strong>Open programmer onboarding journey</strong><span>Executable-feed and first-session acquisition study.</span><code>historical study</code></a>
+      <div class="v2-lab-index" aria-label="Focused product and learning studies">
+        <a href={learnLab}><strong>Open Learn</strong><span>Runnable lessons, programmer onboarding, projects, and the guided World interface example.</span><code>active learning route</code></a>
+        <a href={worldDiscussionLab}><strong>Focused World discussion</strong><span>Articles, feeds, clippings, comments, profiles, presence, and accountable bots.</span><code>active product route</code></a>
+        <a href={worldAroundLab}><strong>Around Hara feed explorer</strong><span>External signal discovery, source provenance, curation, moderation, and review-first relays.</span><code>active signal route</code></a>
         <a href={toolLab}><strong>Tool workbenches</strong><span>3D, node/material, and animation editor compositions.</span><code>settled tool contract</code></a>
+        <a href="https://github.com/hara-lang/visual-language/issues/32"><strong>Catalogue epic</strong><span>The implementation ledger for the remaining foundations and application buildouts.</span><code>issue #32</code></a>
       </div>
 
       <WwwSpecimen />
       <DocsSpecimen />
       <SpecsSpecimen />
       <BenchmarksSpecimen />
-      <WorldSpecimen />
 
       <footer class="v2-lab-footer">
         <span>Hara interface catalogue · Epic <a href="https://github.com/hara-lang/visual-language/issues/32">#32</a></span>
-        <span><a href="https://github.com/hara-lang/visual-language/issues/33">Catalogue navigation issue</a> · <a href={worldAroundLab}>Around Hara</a> · <a href={toolLab}>Tool workbenches</a> · <a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+        <span><a href={learnLab}>Learn</a> · <a href={worldAroundLab}>Around Hara</a> · <a href={toolLab}>Tool workbenches</a> · <a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>
   </body>

@@ -48,8 +48,11 @@ test("the shell accounts for optional context and illustration slots", async () 
   assert.match(pageHeader, /data-illustrated=/);
 });
 
-test("the v2 laboratory covers WWW, Docs, Specs, Benchmarks, and World", async () => {
-  const page = await read("../site/src/pages/v2/index.astro");
+test("the v2 catalogue and Learn route cover WWW, Docs, Specs, Benchmarks, and World", async () => {
+  const [page, learn] = await Promise.all([
+    read("../site/src/pages/v2/index.astro"),
+    read("../site/src/pages/v2/learn/index.astro")
+  ]);
   const specimens = (await Promise.all([
     "WwwSpecimen", "DocsSpecimen", "SpecsSpecimen", "BenchmarksSpecimen", "WorldSpecimen"
   ].map((name) => read(`../site/src/components/v2/${name}.astro`)))).join("\n");
@@ -58,12 +61,15 @@ test("the v2 laboratory covers WWW, Docs, Specs, Benchmarks, and World", async (
     ["WwwSpecimen", "www"],
     ["DocsSpecimen", "docs"],
     ["SpecsSpecimen", "specs"],
-    ["BenchmarksSpecimen", "benchmarks"],
-    ["WorldSpecimen", "world"]
+    ["BenchmarksSpecimen", "benchmarks"]
   ]) {
     assert.match(page, new RegExp(`<${name}\\s*/>`), `missing ${name} composition`);
     assert.match(specimens, new RegExp(`id="${id}"`), `missing ${id} layout`);
   }
+
+  assert.doesNotMatch(page, /<WorldSpecimen\s*\/>/);
+  assert.match(learn, /<WorldSpecimen\s*\/>/);
+  assert.match(specimens, /id="world"/);
   assert.match(page, /FleetField/);
   assert.match(specimens, /data-layout="benchmarks"/);
   assert.match(specimens, /data-layout="world"/);
