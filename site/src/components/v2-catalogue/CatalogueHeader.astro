@@ -1,14 +1,9 @@
 ---
 import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
 import HaraMark from "../../../../src/astro/HaraMark.astro";
-import {
-  catalogueGroups,
-  catalogueGroupIsCurrent,
-  catalogueHref,
-  catalogueItemIsCurrent,
-  catalogueLinkIsExternal,
-  catalogueStatusLabels
-} from "../../lib/v2-catalogue.mjs";
+import CatalogueFallback from "./CatalogueFallback.astro";
+import CatalogueGroup from "./CatalogueGroup.astro";
+import { catalogueGroups } from "../../lib/v2-catalogue.mjs";
 import "../../styles/v2-catalogue.css";
 import "../../styles/v2-catalogue-disclosure.css";
 
@@ -20,23 +15,9 @@ const {
 } = Astro.props;
 
 const catalogueHome = `${basePath.endsWith("/") ? basePath : `${basePath}/`}v2/`;
-const menuGroups = catalogueGroups.map((group) => ({
-  ...group,
-  current: catalogueGroupIsCurrent(group, activePath),
-  items: group.items.map((item) => ({
-    ...item,
-    current: catalogueItemIsCurrent(item, activePath),
-    external: catalogueLinkIsExternal(item),
-    resolvedHref: catalogueHref(item, basePath),
-    children: (item.children ?? []).map((child) => ({
-      ...child,
-      current: catalogueItemIsCurrent(child, activePath),
-      external: catalogueLinkIsExternal(child),
-      resolvedHref: catalogueHref(child, basePath)
-    }))
-  }))
-}));
-const fallbackItems = menuGroups.flatMap((group) => group.items.flatMap((item) => [item, ...item.children]));
+const foundations = catalogueGroups[0];
+const library = catalogueGroups[1];
+const applications = catalogueGroups[2];
 ---
 <header class="v2-catalogue-header" data-catalogue-header data-menu-open="false">
   <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
@@ -59,75 +40,12 @@ const fallbackItems = menuGroups.flatMap((group) => group.items.flatMap((item) =
   </button>
 
   <nav class="v2-catalogue-nav" id="v2-catalogue-navigation" aria-label="Visual language catalogue" data-catalogue-navigation>
-    {menuGroups.map((group) => (
-      <div class="v2-catalogue-group" data-catalogue-group data-current={group.current ? "true" : "false"} data-open="false">
-        <button
-          class="v2-catalogue-group-trigger"
-          type="button"
-          aria-expanded="false"
-          aria-controls={`v2-catalogue-panel-${group.id}`}
-          data-catalogue-group-trigger
-        >
-          <span>{group.label}</span>
-          <small>{group.items.length}</small>
-        </button>
-        <div class="v2-catalogue-panel" id={`v2-catalogue-panel-${group.id}`}>
-          <header>
-            <p class="hara-v2-kicker">Catalogue group</p>
-            <h2>{group.label}</h2>
-            <p>{group.summary}</p>
-          </header>
-          <div class="v2-catalogue-panel-grid">
-            {group.items.map((item) => (
-              <article class="v2-catalogue-menu-item" data-status={item.status} data-current={item.current ? "true" : "false"}>
-                <a
-                  href={item.resolvedHref}
-                  target={item.external ? "_blank" : undefined}
-                  rel={item.external ? "noreferrer" : undefined}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  <span class="v2-catalogue-menu-eyebrow">{item.eyebrow ?? group.label}</span>
-                  <b>{item.label}</b>
-                  <p>{item.summary}</p>
-                  <span class="v2-catalogue-status" data-status={item.status}>
-                    {catalogueStatusLabels[item.status]}
-                    {item.external && item.issue ? ` · #${item.issue}` : ""}
-                  </span>
-                </a>
-                {item.children.length > 0 && (
-                  <nav aria-label={`${item.label} routes`} class="v2-catalogue-children">
-                    {item.children.map((child) => (
-                      <a
-                        href={child.resolvedHref}
-                        target={child.external ? "_blank" : undefined}
-                        rel={child.external ? "noreferrer" : undefined}
-                        aria-current={child.current ? "page" : undefined}
-                      >
-                        <span>{child.label}</span>
-                        <small data-status={child.status}>{catalogueStatusLabels[child.status]}</small>
-                      </a>
-                    ))}
-                  </nav>
-                )}
-              </article>
-            ))}
-          </div>
-        </div>
-      </div>
-    ))}
+    <CatalogueGroup group={foundations} basePath={basePath} activePath={activePath} />
+    <CatalogueGroup group={library} basePath={basePath} activePath={activePath} />
+    <CatalogueGroup group={applications} basePath={basePath} activePath={activePath} />
   </nav>
 
-  <noscript>
-    <nav class="v2-catalogue-noscript" aria-label="Visual language catalogue without JavaScript">
-      {fallbackItems.map((item) => (
-        <a
-          href={item.resolvedHref}
-          target={item.external ? "_blank" : undefined}
-          rel={item.external ? "noreferrer" : undefined}
-        >{item.label}</a>
-      ))}
-    </nav>
-  </noscript>
+  <CatalogueFallback basePath={basePath} />
 
   <div class="v2-catalogue-actions">
     <a href={sourceHref}>Source</a>
