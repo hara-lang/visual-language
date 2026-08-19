@@ -72,21 +72,32 @@ test("every implemented laboratory advertised by the manifest exists", async () 
   ]) await access(new URL(path, import.meta.url));
 });
 
-test("the shared header renders grouped button disclosures from the manifest", async () => {
-  const component = await read("../site/src/components/v2-catalogue/CatalogueHeader.astro");
+test("the shared header composes grouped button disclosures from small components", async () => {
+  const [header, group, item, child, fallback] = await Promise.all([
+    read("../site/src/components/v2-catalogue/CatalogueHeader.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueGroup.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueMenuItem.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueChildLink.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueFallback.astro")
+  ]);
 
-  assert.match(component, /catalogueGroups\.map/);
-  assert.match(component, /data-catalogue-group-trigger/);
-  assert.match(component, /aria-controls={`v2-catalogue-panel-\$\{group\.id\}`}/);
-  assert.match(component, /aria-expanded="false"/);
-  assert.match(component, /data-catalogue-menu-button/);
-  assert.match(component, /aria-controls="v2-catalogue-navigation"/);
-  assert.match(component, /catalogueHref\(item, basePath\)/);
-  assert.match(component, /catalogueHref\(child, basePath\)/);
-  assert.match(component, /<noscript>/);
-  assert.match(component, /event\.key !== "Escape"/);
-  assert.match(component, /header\.contains\(event\.target\)/);
-  assert.match(component, /document\.addEventListener\("astro:page-load"/);
+  assert.match(header, /import CatalogueGroup/);
+  assert.match(header, /<CatalogueGroup group=\{foundations\}/);
+  assert.match(header, /<CatalogueGroup group=\{library\}/);
+  assert.match(header, /<CatalogueGroup group=\{applications\}/);
+  assert.match(header, /data-catalogue-menu-button/);
+  assert.match(header, /aria-controls="v2-catalogue-navigation"/);
+  assert.match(header, /event\.key !== "Escape"/);
+  assert.match(header, /header\.contains\(event\.target\)/);
+  assert.match(header, /document\.addEventListener\("astro:page-load"/);
+
+  assert.match(group, /data-catalogue-group-trigger/);
+  assert.match(group, /aria-controls={`v2-catalogue-panel-\$\{group\.id\}`}/);
+  assert.match(group, /items\.map\(\(item\) => <CatalogueMenuItem/);
+  assert.match(item, /item\.children\.map\(\(child\) => <CatalogueChildLink/);
+  assert.match(child, /catalogueStatusLabels\[child\.status\]/);
+  assert.match(fallback, /<noscript>/);
+  assert.match(fallback, /catalogueHref\(item, basePath\)/);
 });
 
 test("the catalogue home is manifest-driven and preserves the existing reference specimens", async () => {
