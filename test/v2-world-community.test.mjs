@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { catalogueItemById } from "../site/src/lib/v2-catalogue.mjs";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
@@ -132,9 +133,14 @@ test("focused World styling is responsive and does not redefine protected Hara t
   assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/);
 });
 
-test("the main v2 review surface points to the focused World direction", async () => {
-  const index = await read("../site/src/pages/v2/index.astro");
-  assert.match(index, /const worldFocusedLab = `\$\{basePath\}v2\/world\/community\/`/);
-  assert.match(index, /Open the focused World community/);
-  assert.match(index, /articles, clippings, comments, feeds, profiles, presence, and digest/i);
+test("the earlier community study is linked from Learn rather than the active World menu", async () => {
+  const learnPage = await read("../site/src/pages/v2/learn/index.astro");
+  const world = catalogueItemById("world");
+  const learn = catalogueItemById("learn");
+
+  assert.deepEqual(world?.children?.map(({ label }) => label), ["Focused discussion", "Around Hara"]);
+  assert.ok(learn?.children?.some(({ id }) => id === "learn-community-study"));
+  assert.match(learnPage, /const communityStudy = `\$\{basePath\}v2\/world\/community\/`/);
+  assert.match(learnPage, /Earlier community reader/);
+  assert.match(learnPage, /Open community study/);
 });

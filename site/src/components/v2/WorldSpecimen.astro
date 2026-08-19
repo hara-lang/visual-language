@@ -7,6 +7,9 @@ import Sidebar from "../../../../src/astro/v2/Sidebar.astro";
 
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
+const catalogueHome = `${basePath}v2/`;
+const learnLab = `${basePath}v2/learn/`;
+const worldDiscussionLab = `${basePath}v2/world/discussion/`;
 const worldAroundLab = `${basePath}v2/world/around/`;
 
 const worldSidebar = [
@@ -25,17 +28,16 @@ const worldSidebar = [
 ---
 <section class="v2-lab-section" id="world">
   <header class="v2-lab-section-head">
-    <div><p class="hara-v2-kicker">Layout 05 · Community publication</p><h2>World</h2></div>
-    <p>An editorial surface inside the same fleet language. Paper-like panels and compact directories keep it humane; native posts, external signals, source registration, and feed management remain explicit and attributable.</p>
+    <div><p class="hara-v2-kicker">Guided example · Learn / World</p><h2>World</h2></div>
+    <p>This World surface now lives inside Learn as a guided interface reading. Paper-like panels and compact directories keep it humane; native posts, external signals, source registration, and feed management remain explicit and attributable.</p>
   </header>
   <div class="v2-lab-canvas" data-layout="world">
     <Shell embedded={true} sidebar={true} aside={true} mainId="world-content">
-      <Header slot="header" section="World" nav={[
-        { href: "#www", label: "Home" },
-        { href: "#world", label: "World", current: true },
-        { href: "#specs", label: "Specs" },
-        { href: "#docs", label: "Packages" },
-        { href: "#world", label: "Identity" }
+      <Header slot="header" section="Learn" nav={[
+        { href: catalogueHome, label: "Catalogue" },
+        { href: learnLab, label: "Learn", current: true },
+        { href: worldDiscussionLab, label: "World" },
+        { href: worldAroundLab, label: "Around Hara" }
       ]}>
         <button class="hara-v2-icon-button" aria-label="Account">◎</button>
         <ThemeToggle />
@@ -55,7 +57,7 @@ const worldSidebar = [
       </Sidebar>
 
       <div class="hara-v2-row" data-spread="true">
-        <div><p class="hara-v2-kicker">Community transmission</p><h1 class="v2-lab-docs-title">Hara World</h1></div>
+        <div><p class="hara-v2-kicker">World example · Learn</p><h1 class="v2-lab-docs-title">Hara World</h1></div>
         <span class="hara-v2-badge" data-tone="success">43 sources online</span>
       </div>
       <div class="v2-lab-world-grid">
@@ -78,7 +80,7 @@ const worldSidebar = [
     </Shell>
   </div>
   <div class="v2-lab-notes">
-    <article><b>Mixed, not muddled</b><p>Native posts, canonical updates, external signals, and user-authored clips use distinct labels inside one reading surface.</p></article>
+    <article><b>Learn owns the explanation</b><p>This World composition is a guided example, not another permanent World destination. <a href={`${learnLab}#world-examples`}>Return to Learn →</a></p></article>
     <article><b>Source-relative ranking</b><p>X likes, Reddit votes, and Hacker News points remain source facts; percentile and velocity make comparison explainable.</p></article>
     <article><b>Accountable commands</b><p>Submit, clip, discuss, and relay actions stay visible without turning the front page into an automation dashboard.</p></article>
   </div>

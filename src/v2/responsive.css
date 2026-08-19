@@ -23,9 +23,9 @@
 
 @media (max-width: 560px) {
   :root { --hara-v2-page: 14px; --hara-v2-header-height: 56px; }
-  .hara-v2-brand-section,
-  .hara-v2 .hara-theme-toggle [data-hara-theme-label] { display: none; }
-  .hara-v2 .hara-theme-toggle { width: var(--hara-v2-control); padding: 0; }
+  .hara-v2-brand-section { display: none; }
+  .hara-v2 .hara-theme-toggle { min-width: 72px; width: auto; padding-inline: .4rem .5rem; }
+  .hara-v2 .hara-theme-toggle [data-hara-theme-label] { display: inline; }
   .hara-v2-page-copy { padding: 1.25rem; }
   .hara-v2-page-copy h1 { font-size: 2.55rem; }
   .hara-v2-page-actions { align-items: stretch; flex-direction: column; }

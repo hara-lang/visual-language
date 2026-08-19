@@ -25,14 +25,22 @@ test("the retune strengthens operational seams without importing tool-only token
   assert.doesNotMatch(css, /--hara-tool-/);
 });
 
-test("all five document specimens use the retuned laboratory frame", async () => {
-  const [page, lab] = await Promise.all([
+test("four catalogue references and the Learn World example use the retuned laboratory frame", async () => {
+  const [page, learn, lab] = await Promise.all([
     read("../site/src/pages/v2/index.astro"),
+    read("../site/src/pages/v2/learn/index.astro"),
     read("../site/src/styles/v2-command-retune.css")
   ]);
+
   assert.match(page, /v2-command-retune\.css/);
-  for (const name of ["WwwSpecimen", "DocsSpecimen", "SpecsSpecimen", "BenchmarksSpecimen", "WorldSpecimen"])
+  assert.match(learn, /v2-command-retune\.css/);
+
+  for (const name of ["WwwSpecimen", "DocsSpecimen", "SpecsSpecimen", "BenchmarksSpecimen"])
     assert.match(page, new RegExp(`<${name}\\s*/>`), `missing ${name}`);
+
+  assert.doesNotMatch(page, /<WorldSpecimen\s*\/>/);
+  assert.match(learn, /<WorldSpecimen\s*\/>/);
+
   for (const selector of ["v2-lab-canvas", "v2-lab-index", "v2-lab-notes"])
     assert.match(lab, new RegExp(`\\.${selector}\\b`), `missing .${selector}`);
 });

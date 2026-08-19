@@ -13,7 +13,7 @@ test("the focused World laboratory is linked from the v2 review surface", async 
   ]);
 
   assert.match(index, /const worldDiscussionLab = `\$\{basePath\}v2\/world\/discussion\/`/);
-  assert.match(index, /Focused World discussion laboratory/);
+  assert.match(index, /<strong>Focused World discussion<\/strong>/);
   assert.match(page, /Focused product study · World v2/);
 });
 
