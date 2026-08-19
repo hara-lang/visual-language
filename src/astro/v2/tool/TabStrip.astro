@@ -5,6 +5,10 @@ type Tab = {
   active?: boolean;
   disabled?: boolean;
   command?: string;
+  controls?: string;
+  value?: string;
+  badge?: string | number;
+  description?: string;
 };
 
 interface Props {
@@ -12,6 +16,7 @@ interface Props {
   label?: string;
   orientation?: "horizontal" | "vertical";
   density?: "regular" | "dense";
+  variant?: "tabs" | "sections" | "groups";
   class?: string;
 }
 
@@ -20,6 +25,7 @@ const {
   label = "Editor tabs",
   orientation = "horizontal",
   density = "regular",
+  variant = "tabs",
   class: className = ""
 } = Astro.props;
 ---
@@ -30,6 +36,7 @@ const {
   aria-orientation={orientation}
   data-orientation={orientation}
   data-density={density}
+  data-variant={variant}
 >
   {tabs.map((tab: Tab) => (
     <button
@@ -38,11 +45,16 @@ const {
       id={tab.id}
       role="tab"
       aria-selected={tab.active ? "true" : "false"}
+      aria-controls={tab.controls}
       aria-keyshortcuts={tab.command}
       tabindex={tab.active ? 0 : -1}
       disabled={tab.disabled}
+      data-value={tab.value ?? tab.id}
+      data-variant={variant}
+      title={tab.description}
     >
-      <span>{tab.label}</span>
+      <span class="hara-tool-tab-label">{tab.label}</span>
+      {tab.badge !== undefined && <span class="hara-tool-tab-badge">{tab.badge}</span>}
       {tab.command && <kbd class="hara-tool-command-hint">{tab.command}</kbd>}
     </button>
   ))}
