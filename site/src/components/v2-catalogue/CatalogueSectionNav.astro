@@ -39,20 +39,39 @@ const {
       const sections = candidates.filter((section) => section instanceof HTMLElement && section.id);
       if (sections.length < 2) return;
 
+      const labelCandidates = new Map();
+      document.querySelectorAll("nav:not([data-catalogue-section-nav]) a[href^='#']").forEach((anchor) => {
+        if (!(anchor instanceof HTMLAnchorElement) || anchor.closest("[data-prototype-frame]")) return;
+        const id = anchor.getAttribute("href")?.slice(1);
+        const text = anchor.textContent?.trim().replace(/\s+/g, " ");
+        if (!id || !text || text.length > 36 || !sections.some((section) => section.id === id)) return;
+        const source = anchor.closest("nav");
+        const aria = source?.getAttribute("aria-label") ?? "";
+        const preferred = source?.matches(".foundations-section-nav, .components-section-nav, .ui-section-nav, .playground-local-nav, .start-journey")
+          || /section|journey|laboratory/i.test(aria);
+        const candidate = { text, score: preferred ? 0 : 1 };
+        const existing = labelCandidates.get(id);
+        if (!existing || candidate.score < existing.score || (candidate.score === existing.score && text.length < existing.text.length)) {
+          labelCandidates.set(id, candidate);
+        }
+      });
+
       nav.dataset.ready = "true";
       links.replaceChildren();
       const linkById = new Map();
 
+      const titleCaseId = (id) => id
+        .split("-")
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+
       const labelFor = (section) => {
         const explicit = section.getAttribute("data-section-label");
         if (explicit) return explicit;
-        const heading = section.querySelector(":scope > header h2, :scope > header h1, :scope > h2, :scope > h1");
-        if (heading?.textContent?.trim()) return heading.textContent.trim();
-        return section.id
-          .split("-")
-          .filter(Boolean)
-          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-          .join(" ");
+        const mapped = labelCandidates.get(section.id);
+        if (mapped?.text) return mapped.text;
+        return titleCaseId(section.id);
       };
 
       const setCurrent = (id) => {
@@ -64,6 +83,7 @@ const {
         const active = linkById.get(id);
         if (currentLabel instanceof HTMLElement && active instanceof HTMLAnchorElement) {
           currentLabel.textContent = active.textContent || "On this page";
+          active.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
         }
       };
 
@@ -97,7 +117,7 @@ const {
               .filter((entry) => entry.isIntersecting)
               .sort((left, right) => left.boundingClientRect.top - right.boundingClientRect.top)[0];
             if (visible?.target instanceof HTMLElement) setCurrent(visible.target.id);
-          }, { rootMargin: "-34% 0px -58% 0px", threshold: [0, .05, .25] })
+          }, { rootMargin: "-30% 0px -62% 0px", threshold: [0, .05, .25] })
         : null;
       sections.forEach((section) => observer?.observe(section));
 

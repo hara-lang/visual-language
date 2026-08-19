@@ -1,98 +1,63 @@
 ---
-import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
-import HaraMark from "../../../../src/astro/HaraMark.astro";
-import GlobalMasthead from "../v2-catalogue/GlobalMasthead.astro";
-import { familyRoutes, withBasePath } from "../../lib/v2-www.mjs";
+import CatalogueHeader from "../v2-catalogue/CatalogueHeader.astro";
+import { familyRoutes } from "../../lib/v2-www.mjs";
 
 const {
   basePath,
   activeRoute = "home",
-  searchLabel = "Search Hara",
+  searchLabel = "Search",
   accountLabel = "Sign in"
 } = Astro.props;
 
-const catalogueHref = withBasePath(basePath, "/v2/");
 const activeFamilyRoute = familyRoutes.find(({ id }) => id === activeRoute) ?? familyRoutes[0];
 ---
-<GlobalMasthead
+<CatalogueHeader
   basePath={basePath}
   activePath={activeFamilyRoute.path}
   label="Hara public language family"
   autoSections={false}
-/>
+  pageFooter={false}
+>
+  <Fragment slot="route-actions">
+    <button
+      class="www-family-search-trigger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="www-family-search"
+      data-www-search-trigger
+    >
+      <span aria-hidden="true">⌕</span>
+      <span>{searchLabel}</span>
+      <kbd>/</kbd>
+    </button>
+    <a class="www-family-account" href="#account">{accountLabel}</a>
+  </Fragment>
+</CatalogueHeader>
 
-<header class="www-family-header" data-www-family-header>
-  <div class="www-family-header__primary">
-    <a class="www-family-brand" href={withBasePath(basePath, "/v2/www/")} aria-label="Hara public language site">
-      <HaraMark size={30} title="Hara" />
-      <span>
-        <b>Hara</b>
-        <small>Language and ecosystem</small>
-      </span>
-    </a>
-
-    <nav class="www-family-routes" aria-label="Hara public site family">
-      {familyRoutes.map((route) => (
-        <a
-          href={withBasePath(basePath, route.path)}
-          aria-current={route.id === activeRoute ? "page" : undefined}
-          data-route={route.id}
-        >
-          <span>{route.label}</span>
-          <small>{route.schemaNamespace}</small>
-        </a>
-      ))}
-    </nav>
-
-    <div class="www-family-actions">
-      <button
-        class="www-family-search-trigger"
-        type="button"
-        aria-expanded="false"
-        aria-controls="www-family-search"
-        data-www-search-trigger
-      >
-        <span aria-hidden="true">⌕</span>
-        <span>{searchLabel}</span>
-        <kbd>/</kbd>
-      </button>
-      <a class="www-family-account" href="#account">{accountLabel}</a>
-      <ThemeToggle />
-    </div>
+<div class="www-family-search" id="www-family-search" hidden data-www-search-panel>
+  <label>
+    <span>Search Home, Docs, and Benchmarks</span>
+    <input class="hara-v2-field" type="search" placeholder="Try “work algebra”, “std.lib.fs”, or “parser-small”" data-www-search-input />
+  </label>
+  <div class="www-family-search__scope" aria-label="Search categories">
+    <button type="button" aria-pressed="true">All</button>
+    <button type="button" aria-pressed="false">Guides</button>
+    <button type="button" aria-pressed="false">API</button>
+    <button type="button" aria-pressed="false">Evidence</button>
   </div>
-
-  <div class="www-family-search" id="www-family-search" hidden data-www-search-panel>
-    <label>
-      <span>Search Home, Docs, and Benchmarks</span>
-      <input class="hara-v2-field" type="search" placeholder="Try “work algebra”, “std.lib.fs”, or “parser-small”" data-www-search-input />
-    </label>
-    <div class="www-family-search__scope" aria-label="Search categories">
-      <button type="button" aria-pressed="true">All</button>
-      <button type="button" aria-pressed="false">Guides</button>
-      <button type="button" aria-pressed="false">API</button>
-      <button type="button" aria-pressed="false">Evidence</button>
-    </div>
-    <p>Search is represented as a family-owned interaction. Production adopters replace this fixture with their shared index.</p>
-  </div>
-
-  <div class="www-family-header__context">
-    <span>Public Hara family</span>
-    <span aria-hidden="true">/</span>
-    <strong>{activeFamilyRoute.label}</strong>
-    <a href={catalogueHref}>Visual language catalogue</a>
-  </div>
-</header>
+  <p>Search is represented as a family-owned interaction. Production adopters replace this fixture with their shared index.</p>
+</div>
 
 <script>
   const initialiseWwwFamilyHeader = () => {
-    document.querySelectorAll("[data-www-family-header]").forEach((header) => {
-      if (!(header instanceof HTMLElement) || header.dataset.ready === "true") return;
-      header.dataset.ready = "true";
+    document.querySelectorAll("[data-www-search-trigger]").forEach((trigger) => {
+      if (!(trigger instanceof HTMLButtonElement) || trigger.dataset.ready === "true") return;
+      trigger.dataset.ready = "true";
 
-      const trigger = header.querySelector("[data-www-search-trigger]");
-      const panel = header.querySelector("[data-www-search-panel]");
-      const input = header.querySelector("[data-www-search-input]");
-      if (!(trigger instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
+      const panelId = trigger.getAttribute("aria-controls");
+      const panel = panelId ? document.getElementById(panelId) : null;
+      const input = panel?.querySelector("[data-www-search-input]");
+      if (!(panel instanceof HTMLElement)) return;
 
       const setOpen = (open, focus = false) => {
         panel.hidden = !open;
@@ -101,9 +66,9 @@ const activeFamilyRoute = familyRoutes.find(({ id }) => id === activeRoute) ?? f
       };
 
       trigger.addEventListener("click", () => setOpen(panel.hidden, true));
-      header.querySelectorAll("[data-www-search-panel] button").forEach((button) => {
+      panel.querySelectorAll("button").forEach((button) => {
         button.addEventListener("click", () => {
-          header.querySelectorAll("[data-www-search-panel] button").forEach((item) => item.setAttribute("aria-pressed", "false"));
+          panel.querySelectorAll("button").forEach((item) => item.setAttribute("aria-pressed", "false"));
           button.setAttribute("aria-pressed", "true");
         });
       });

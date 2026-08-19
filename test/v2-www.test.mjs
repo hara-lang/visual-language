@@ -90,17 +90,17 @@ test("the family consumes the shared hara.www, hara.docs, and hara.benchmarks co
   assert.equal(withBasePath("/visual-language", "/v2/www/benchmarks/"), "/visual-language/v2/www/benchmarks/");
 });
 
-test("the shared family header owns route relationships, search, account, and theme without duplicating the catalogue header", async () => {
+test("the WWW family puts search and account actions into the shared secondary header", async () => {
   const header = await read(familyHeaderPath);
-  assert.match(header, /familyRoutes\.map/);
+  assert.match(header, /CatalogueHeader/);
   assert.match(header, /activeRoute/);
+  assert.match(header, /activeFamilyRoute\.path/);
+  assert.match(header, /slot="route-actions"/);
   assert.match(header, /Search Home, Docs, and Benchmarks/);
   assert.match(header, /accountLabel/);
-  assert.match(header, /ThemeToggle/);
-  assert.match(header, /Visual language catalogue/);
   assert.match(header, /data-www-search-trigger/);
-  assert.match(header, /aria-current=\{route\.id === activeRoute/);
-  assert.doesNotMatch(header, /CatalogueHeader/);
+  assert.match(header, /data-www-search-panel/);
+  assert.doesNotMatch(header, /ThemeToggle|HaraMark|familyRoutes\.map|Visual language catalogue/);
 });
 
 test("the homepage is a detailed language narrative with proof, ecosystem, releases, starts, states, and adoption", async () => {

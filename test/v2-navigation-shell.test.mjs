@@ -50,36 +50,60 @@ test("Learn owns Start and historical teaching studies even while compatibility 
   assert.equal(normalizeCataloguePath("https://example.test/v2/world/around/?view=wide#relay"), "/v2/world/around/");
 });
 
-test("the global shell composes location, page sections and predictable footer navigation", async () => {
-  const [header, routeBar, sectionNav, footer, prototype, wwwHeader] = await Promise.all([
+test("the global shell composes a compact masthead, secondary route header, sections and footer", async () => {
+  const [header, masthead, routeBar, sectionNav, footer, prototype, wwwHeader, tighten] = await Promise.all([
     read("../site/src/components/v2-catalogue/CatalogueHeader.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueMasthead.astro"),
     read("../site/src/components/v2-catalogue/CatalogueRouteBar.astro"),
     read("../site/src/components/v2-catalogue/CatalogueSectionNav.astro"),
     read("../site/src/components/v2-catalogue/CataloguePageFooter.astro"),
     read("../site/src/components/v2-catalogue/PrototypeFrame.astro"),
-    read("../site/src/components/v2-www/WwwFamilyHeader.astro")
+    read("../site/src/components/v2-www/WwwFamilyHeader.astro"),
+    read("../site/src/styles/v2-navigation-tighten.css")
   ]);
 
+  assert.match(header, /CatalogueMasthead/);
   assert.match(header, /CatalogueRouteBar/);
   assert.match(header, /CatalogueSectionNav/);
   assert.match(header, /CataloguePageFooter/);
   assert.match(header, /resolvedActivePath/);
+  assert.match(header, /slot="route-actions"/);
+
+  assert.match(masthead, /data-catalogue-launcher-trigger/);
+  assert.match(masthead, /CatalogueLauncher/);
+  assert.match(masthead, /event\.key === "Escape"/);
+
   assert.match(routeBar, /v2-catalogue-breadcrumbs/);
   assert.match(routeBar, /v2-catalogue-family-tabs/);
-  assert.match(routeBar, /Back to/);
+  assert.match(routeBar, /v2-catalogue-parent-link/);
+  assert.match(routeBar, /v2-catalogue-route-tools/);
+  assert.match(routeBar, /slot name="actions"/);
+
   assert.match(sectionNav, /IntersectionObserver/);
   assert.match(sectionNav, /data-catalogue-section-current/);
+  assert.match(sectionNav, /labelCandidates/);
+  assert.match(sectionNav, /titleCaseId/);
   assert.match(sectionNav, /event\.key !== "Escape"/);
+
   assert.match(footer, /data-catalogue-footer-template/);
   assert.match(footer, /Previous/);
   assert.match(footer, /Next/);
   assert.match(prototype, /data-prototype-frame/);
   assert.match(prototype, /Navigation inside this frame belongs to the demonstrated product/);
-  assert.match(wwwHeader, /GlobalMasthead/);
+
+  assert.match(wwwHeader, /CatalogueHeader/);
   assert.match(wwwHeader, /activeFamilyRoute\.path/);
+  assert.match(wwwHeader, /slot="route-actions"/);
+  assert.doesNotMatch(wwwHeader, /ThemeToggle|HaraMark|familyRoutes\.map/);
+
+  assert.match(tighten, /--v2-catalogue-masthead-height: 56px/);
+  assert.match(tighten, /--v2-catalogue-route-height: 48px/);
+  assert.match(tighten, /--v2-catalogue-section-height: 38px/);
+  assert.match(tighten, /\.ui-pattern-page main\.ui-main/);
+  assert.match(tighten, /width: min\(1440px, calc\(100% - 2 \* var\(--hara-v2-page\)\)\)/);
 });
 
-test("legacy studies expose catalogue groups, a parent action and explicitly local section navigation", async () => {
+test("legacy studies expose the same launcher, secondary header and local section layer", async () => {
   const [bridge, bridgeCss, navigationCss, entry] = await Promise.all([
     read("../src/v2/catalogue-bridge.js"),
     read("../src/v2/catalogue-bridge.css"),
@@ -89,12 +113,20 @@ test("legacy studies expose catalogue groups, a parent action and explicitly loc
 
   assert.match(bridge, /header\.v2-lab-header/);
   assert.match(bridge, /Back to the Hara visual-language catalogue/);
+  assert.match(bridge, /createLauncher/);
   assert.match(bridge, /Foundations/);
   assert.match(bridge, /Library/);
   assert.match(bridge, /Applications/);
+  assert.match(bridge, /v2-legacy-route-bar/);
+  assert.match(bridge, /v2-legacy-family-tabs/);
   assert.match(bridge, /dataset\.legacySectionNav/);
-  assert.match(bridgeCss, /v2-legacy-catalogue-groups/);
-  assert.match(bridgeCss, /v2-legacy-parent-link/);
+
+  assert.match(bridgeCss, /v2-legacy-launcher-trigger/);
+  assert.match(bridgeCss, /v2-legacy-launcher-grid/);
+  assert.match(bridgeCss, /v2-legacy-route-bar/);
+  assert.match(bridgeCss, /v2-legacy-family-tabs/);
+  assert.match(bridgeCss, /v2-legacy-section-nav/);
+
   assert.match(navigationCss, /v2-catalogue-route-bar/);
   assert.match(navigationCss, /v2-catalogue-section-nav/);
   assert.match(navigationCss, /v2-catalogue-page-footer/);
