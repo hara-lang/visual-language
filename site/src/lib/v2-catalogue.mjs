@@ -81,8 +81,9 @@ export const catalogueGroups = [
         id: "ui-patterns",
         label: "UI patterns",
         path: "/v2/ui/",
+        href: "/v2/ui/",
         summary: "Navigation, workflows, loading, empty, error, permission, responsive, and input states.",
-        status: "planned",
+        status: "active",
         issue: 36,
         eyebrow: "Behaviour over time"
       },
