@@ -1,0 +1,132 @@
+---
+const destinations = [
+  { id: "world-hot", label: "World · What’s hot", mode: "auto", state: "enabled" },
+  { id: "x", label: "Hara Bot · X / Twitter", mode: "review", state: "enabled" },
+  { id: "reddit", label: "Hara-owned Reddit", mode: "review", state: "enabled" },
+  { id: "channels", label: "Matrix / Discord", mode: "review", state: "enabled" },
+  { id: "newsletter", label: "What’s New newsletter", mode: "review", state: "paused" }
+];
+---
+<div class="world-relay-console">
+  <header class="world-relay-head">
+    <div>
+      <p class="hara-v2-kicker">Hara Bot relay</p>
+      <h1>Amplify useful work without impersonating the community.</h1>
+      <p>Ranking proposes candidates. Policy decides whether they can enter World automatically or must wait for a human before an external post is created.</p>
+    </div>
+    <div class="world-relay-master-state">
+      <span>External relay</span>
+      <strong>Review mode</strong>
+      <small>No unattended community reposts</small>
+    </div>
+  </header>
+
+  <section class="world-relay-policy-strip">
+    <article><span>Auto-eligible</span><strong>3 kinds</strong><small>Hara release · advisory · daily snippet</small></article>
+    <article><span>Review queue</span><strong>6</strong><small>community and third-party items</small></article>
+    <article><span>Cooldown</span><strong>72 h</strong><small>per canonical story + destination</small></article>
+    <article><span>Delivery receipts</span><strong>128</strong><small>idempotent provider effects</small></article>
+  </section>
+
+  <div class="world-relay-layout">
+    <main>
+      <section class="world-relay-queue">
+        <header>
+          <div><p class="hara-v2-kicker">Candidate queue</p><h2>Ranked for amplification</h2></div>
+          <div class="hara-v2-tabs" role="tablist" aria-label="Relay queue state"><button class="hara-v2-tab" role="tab" aria-selected="true">Needs review · 6</button><button class="hara-v2-tab" role="tab">Scheduled · 2</button><button class="hara-v2-tab" role="tab">Published</button></div>
+        </header>
+
+        <article class="world-relay-candidate is-selected">
+          <div class="world-relay-rank"><strong>01</strong><span>0.88</span></div>
+          <div class="world-relay-candidate-copy">
+            <div><span class="world-source-badge" data-source="x"><i></i>X / Twitter</span><b>@mina_forms</b><time>1 h</time></div>
+            <h3>What if a work runtime is just executor + store + capabilities?</h3>
+            <p>Community post · external relay requires review even though it is the top non-release item.</p>
+            <footer><span class="hara-v2-badge" data-tone="warning">Review required</span><span>canonical link present</span><span>cooldown clear</span></footer>
+          </div>
+          <button aria-label="Open relay candidate">→</button>
+        </article>
+
+        <article class="world-relay-candidate">
+          <div class="world-relay-rank"><strong>02</strong><span>0.81</span></div>
+          <div class="world-relay-candidate-copy">
+            <div><span class="world-source-badge" data-source="reddit"><i></i>Reddit</span><b>u/quietcompiler</b><time>3 h</time></div>
+            <h3>I made my first small Hara graphics program</h3>
+            <p>Newcomer showcase · suggested for World and community channels after author attribution review.</p>
+            <footer><span class="hara-v2-badge" data-tone="warning">Review required</span><span>runnable snippet</span><span>author link present</span></footer>
+          </div>
+          <button aria-label="Open relay candidate">→</button>
+        </article>
+
+        <article class="world-relay-candidate world-relay-candidate--auto">
+          <div class="world-relay-rank"><strong>03</strong><span>0.79</span></div>
+          <div class="world-relay-candidate-copy">
+            <div><span class="world-source-badge" data-source="world"><i></i>Hara World</span><b>Hara Bot</b><time>scheduled</time></div>
+            <h3>Snippet of the day: thread a value through a small pipeline</h3>
+            <p>Hara-owned scheduled content · eligible to enter World’s internal hot module automatically.</p>
+            <footer><span class="hara-v2-badge" data-tone="success">World auto-eligible</span><span>external destinations still reviewed</span></footer>
+          </div>
+          <button aria-label="Open relay candidate">→</button>
+        </article>
+
+        <article class="world-relay-candidate is-blocked">
+          <div class="world-relay-rank"><strong>—</strong><span>blocked</span></div>
+          <div class="world-relay-candidate-copy">
+            <div><span class="world-source-badge" data-source="x"><i></i>X / Twitter</span><b>@link_relay</b><time>39 min</time></div>
+            <h3>A quote copied without the canonical release link</h3>
+            <p>Blocked before drafting. The source envelope does not satisfy attribution and canonical-link requirements.</p>
+            <footer><span class="hara-v2-badge" data-tone="danger">Policy block</span><span>quote-without-canonical-link</span></footer>
+          </div>
+          <button aria-label="Inspect blocked candidate">→</button>
+        </article>
+      </section>
+    </main>
+
+    <aside class="world-relay-review">
+      <header><div><p class="hara-v2-kicker">Review candidate 01</p><h2>Publication envelope</h2></div><button aria-label="Close review">×</button></header>
+
+      <section class="world-relay-source-card">
+        <div><span class="world-source-badge" data-source="x"><i></i>X / Twitter</span><span class="hara-v2-badge" data-tone="warning">Community</span></div>
+        <h3>What if a work runtime is just executor + store + capabilities?</h3>
+        <dl><div><dt>Author</dt><dd>@mina_forms</dd></div><div><dt>Canonical URL</dt><dd>present</dd></div><div><dt>Rank score</dt><dd>0.88</dd></div><div><dt>Cooldown</dt><dd>clear</dd></div></dl>
+        <button>Open original ↗</button>
+      </section>
+
+      <section class="world-relay-destinations">
+        <header><h3>Destinations</h3><button>Select none</button></header>
+        {destinations.map((destination) => (
+          <label data-state={destination.state}>
+            <input type="checkbox" checked={destination.state === "enabled"} />
+            <span><b>{destination.label}</b><small>{destination.mode === "auto" ? "automatic for eligible Hara facts" : destination.state === "paused" ? "paused" : "human approval required"}</small></span>
+            <em data-mode={destination.mode}>{destination.mode}</em>
+          </label>
+        ))}
+      </section>
+
+      <section class="world-relay-draft">
+        <header><h3>Attributed draft</h3><span>218 / 280</span></header>
+        <textarea spellcheck="false">What if a work runtime is just executor + store + capabilities?
+
+@mina_forms · X / Twitter
+https://source.example/canonical-thread</textarea>
+        <div class="world-relay-draft-tools"><button>Use title only</button><button>Add Hara context</button><button>Reset draft</button></div>
+      </section>
+
+      <section class="world-relay-receipt-preview">
+        <header><h3>Receipt preview</h3><span>immutable after delivery</span></header>
+        <code>relay: x-work-algebra / x / 8df0c3a4d91c8e276530</code>
+        <dl><div><dt>Decision</dt><dd>operator approval</dd></div><div><dt>Deduplication</dt><dd>canonical + destination</dd></div><div><dt>Retry</dt><dd>same receipt</dd></div></dl>
+      </section>
+
+      <footer class="world-relay-review-actions"><button class="hara-v2-button">Reject</button><button class="hara-v2-button">Save draft</button><button class="hara-v2-button" data-variant="primary">Approve 3 destinations</button></footer>
+    </aside>
+  </div>
+
+  <section class="world-relay-ledger">
+    <header><div><p class="hara-v2-kicker">Recent delivery receipts</p><h2>Every effect can be traced.</h2></div><button class="hara-v2-button">Export ledger</button></header>
+    <div class="world-relay-ledger-head" aria-hidden="true"><span>Published</span><span>Item</span><span>Destination</span><span>Decision</span><span>Receipt</span><span>Result</span></div>
+    <article><time>08:02</time><b>Schema runtime release</b><span>World · What’s hot</span><span>policy auto</span><code>67a1…d920</code><em data-state="delivered">delivered</em></article>
+    <article><time>Yesterday</time><b>Hara Wasm session note</b><span>X / Twitter</span><span>approved by maintainer</span><code>a09f…139c</code><em data-state="delivered">delivered</em></article>
+    <article><time>Yesterday</time><b>Snippet 041</b><span>Reddit</span><span>approved + edited</span><code>187e…ba40</code><em data-state="delivered">delivered</em></article>
+  </section>
+</div>
