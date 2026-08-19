@@ -1,0 +1,69 @@
+---
+import { feedDirectory } from "../../lib/v2-world.mjs";
+
+const healthTone = (health) => health.startsWith("Healthy") ? "success" : health.startsWith("Stale") ? "warning" : "danger";
+const statusTone = (status) => status === "active" ? "success" : status === "paused" ? "warning" : "neutral";
+---
+<div class="world-screen world-feed-directory" data-world-screen="feeds">
+  <header class="world-app-bar world-app-bar--compact">
+    <div class="world-app-identity"><span class="world-app-mark" aria-hidden="true">H<i></i></span><div><b>Feed directory</b><small>Reviewed RSS, Atom, and package sources</small></div></div>
+    <div class="world-directory-search"><label for="world-source-search">Search reviewed sources</label><input id="world-source-search" type="search" placeholder="Package, owner, topic, or URL" /></div>
+    <div class="world-app-actions"><button class="hara-v2-button">Export OPML</button><button class="hara-v2-button" data-variant="primary">Submit a feed</button></div>
+  </header>
+
+  <nav class="world-filter-strip" aria-label="Feed directory filters">
+    {feedDirectory.filters.map((filter, index) => <button aria-pressed={index === 0}>{filter}</button>)}
+  </nav>
+
+  <div class="world-feed-directory-layout">
+    <main class="world-source-directory-list">
+      <header><div><p class="hara-v2-kicker">3 specimens</p><h3>Sources expose permission, owner, health, and review.</h3></div><span>Sorted by last reviewed activity</span></header>
+      {feedDirectory.sources.map((source) => (
+        <article class="world-source-directory-row" data-source-status={source.status}>
+          <div class="world-source-icon" aria-hidden="true">⌁</div>
+          <div class="world-source-directory-copy">
+            <div><h4>{source.name}</h4><span class="hara-v2-badge" data-tone={statusTone(source.status)}>{source.status}</span><span class="hara-v2-badge">{source.sourceType}</span></div>
+            <p>{source.url}</p>
+            <dl>
+              <div><dt>Owner</dt><dd>{source.owner}</dd></div>
+              <div><dt>Cadence</dt><dd>{source.cadence}</dd></div>
+              <div><dt>Approved entries</dt><dd>{source.entries}</dd></div>
+              <div><dt>Review receipt</dt><dd><code>{source.reviewReceipt}</code></dd></div>
+            </dl>
+          </div>
+          <div class="world-source-health">
+            <span class="hara-v2-badge" data-tone={healthTone(source.health)}>{source.health.split(" · ")[0]}</span>
+            <small>{source.health.split(" · ").slice(1).join(" · ")}</small>
+            <button class="hara-v2-button">Inspect source</button>
+          </div>
+        </article>
+      ))}
+    </main>
+
+    <aside class="world-feed-submission hara-v2-panel">
+      <header class="hara-v2-panel-header"><div><p class="hara-v2-kicker">Source proposal</p><h3>Submit a feed you control</h3></div><span class="hara-v2-badge" data-tone="warning">Awaiting review</span></header>
+      <div class="hara-v2-panel-body">
+        <label>Feed URL<input type="url" value={feedDirectory.submission.url} /></label>
+        <label>Verified owner<input value={feedDirectory.submission.owner} readonly /></label>
+        <label class="world-check-row"><input type="checkbox" checked /><span>{feedDirectory.submission.permission}</span></label>
+        <div class="world-feed-proposal-lifecycle">
+          {feedDirectory.submission.lifecycle.map((state, index) => (
+            <div data-state={index < 2 ? "complete" : index === 2 ? "current" : "pending"}><span>{index + 1}</span><b>{state}</b></div>
+          ))}
+        </div>
+        <div class="world-receipt-row"><span>Proposal receipt</span><code>{feedDirectory.submission.receipt}</code></div>
+        <button class="hara-v2-button" data-variant="primary">Open review record</button>
+      </div>
+    </aside>
+  </div>
+
+  <section class="world-inline-state-grid world-inline-state-grid--feeds" aria-label="Feed directory state specimens">
+    {feedDirectory.states.map((state) => (
+      <article data-state={state.id}>
+        <span>{state.label}</span>
+        <b>{state.detail}</b>
+        <button>{state.id === "empty" ? "Submit first source" : "Inspect receipt"}</button>
+      </article>
+    ))}
+  </section>
+</div>

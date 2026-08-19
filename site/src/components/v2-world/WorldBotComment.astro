@@ -1,0 +1,29 @@
+---
+const { bot, reply } = Astro.props;
+---
+<article class="world-comment world-comment--bot" data-comment-state="published" data-bot-owner={bot.owner.handle}>
+  <div class="world-comment-rail"><span class="world-avatar world-avatar--bot">HI</span><i data-presence={bot.owner.presence}></i></div>
+  <div class="world-comment-body">
+    <header>
+      <div>
+        <b>{bot.name}</b>
+        <span class="hara-v2-badge" data-tone="signal">{bot.label}</span>
+        <small>{bot.handle}</small>
+      </div>
+      <time>5 min ago</time>
+    </header>
+    <div class="world-bot-accountability">
+      <span><b>Owner</b> <a href={bot.owner.profileUrl}>{bot.owner.name} · {bot.owner.handle}</a></span>
+      <span><b>Presence</b> {bot.owner.presenceLabel}</span>
+      <span><b>Purpose</b> {bot.purpose}</span>
+      <span><b>Sources</b> {bot.sources.join(" · ")}</span>
+      <span title={bot.policy.receipt}><b>Policy</b> {bot.policy.id} · {bot.policy.mode}</span>
+    </div>
+    <p>{bot.comment}</p>
+    <footer>
+      <span title={bot.commentReceipt}>receipt {bot.commentReceipt}</span>
+      <button disabled={!reply.canReply} aria-describedby="world-bot-reply-reason">{reply.label}</button>
+      <small id="world-bot-reply-reason">{reply.reason}</small>
+    </footer>
+  </div>
+</article>

@@ -1,0 +1,126 @@
+---
+import WorldBotComment from "./WorldBotComment.astro";
+import {
+  articleThread,
+  ownedBot,
+  ownedBotReply
+} from "../../lib/v2-world.mjs";
+---
+<div class="world-screen world-thread-screen" data-world-screen="article-thread">
+  <header class="world-app-bar world-app-bar--compact">
+    <a class="world-back-link" href="#front-page">← Hot</a>
+    <nav class="world-thread-nav" aria-label="Article view">
+      <a href="#article-thread" aria-current="page">Article</a>
+      <a href="#thread-comments">Comments <span>{articleThread.comments.length + 1}</span></a>
+      <a href="#thread-evidence">Evidence <span>{articleThread.evidence.length}</span></a>
+    </nav>
+    <div class="world-app-actions"><button class="hara-v2-button">Save</button><button class="hara-v2-button">Share exact view</button></div>
+  </header>
+
+  <div class="world-thread-layout">
+    <article class="world-article">
+      <header>
+        <div class="world-article-kind"><span class="hara-v2-badge" data-tone="signal">World article</span><span>{articleThread.contentType}</span></div>
+        <h3>{articleThread.title}</h3>
+        <p class="world-article-dek">{articleThread.dek}</p>
+        <div class="world-article-author">
+          <span class="world-avatar">{articleThread.author.avatar}</span>
+          <p><b>{articleThread.author.name}</b><span>{articleThread.author.handle} · GitHub {articleThread.author.github}</span></p>
+          <button class="hara-v2-button">Follow</button>
+        </div>
+      </header>
+      <div class="world-article-copy">
+        {articleThread.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <aside class="world-article-callout">
+          <b>Boundary under review</b>
+          <p>Machine selection and retry policy remain runtime data. The article does not grant package or namespace authority to its author.</p>
+        </aside>
+      </div>
+      <footer class="world-publication-ledger">
+        <div><span>Canonical URL</span><code>{articleThread.publication.canonicalUrl}</code></div>
+        <div><span>Exact revision</span><code>{articleThread.publication.revision}</code></div>
+        <div><span>Publication receipt</span><code>{articleThread.publication.receipt}</code></div>
+        <div><span>Reviewed</span><code>{articleThread.publication.reviewedBy} · {articleThread.publication.publishedAt}</code></div>
+      </footer>
+    </article>
+
+    <aside class="world-evidence-rail" id="thread-evidence">
+      <section class="hara-v2-panel">
+        <header class="hara-v2-panel-header"><h3>Contribution evidence</h3><span class="hara-v2-badge">3 facts</span></header>
+        <div class="hara-v2-panel-body world-evidence-list">
+          {articleThread.evidence.map((item) => (
+            <article>
+              <span>{item.label}</span>
+              <b>{item.value}</b>
+              <code>{item.receipt}</code>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section class="hara-v2-panel">
+        <header class="hara-v2-panel-header"><h3>Thread controls</h3></header>
+        <div class="hara-v2-panel-body world-thread-controls">
+          <button>Oldest first</button>
+          <button>Collapse tangents</button>
+          <button>Only maintainers</button>
+          <button>Show receipts</button>
+        </div>
+      </section>
+      <section class="hara-v2-panel" data-state="stale">
+        <header class="hara-v2-panel-header"><h3>Evidence degraded</h3><span class="hara-v2-badge" data-tone="warning">Partial</span></header>
+        <div class="hara-v2-panel-body"><p>The namespace registry is refreshing. Last reviewed evidence remains visible and marked with its receipt.</p></div>
+      </section>
+    </aside>
+  </div>
+
+  <section class="world-comments" id="thread-comments" aria-labelledby="thread-comments-title">
+    <header class="world-comments-head">
+      <div><p class="hara-v2-kicker">Durable discussion</p><h3 id="thread-comments-title">Comments keep identity, revision, and state.</h3></div>
+      <div><button class="hara-v2-button">Mention a contributor</button><button class="hara-v2-button" data-variant="primary">Join discussion</button></div>
+    </header>
+
+    <div class="world-comment-composer" data-state="offline-composer">
+      <span class="world-avatar">CZ</span>
+      <div><label for="world-comment-draft">Add context, a question, or evidence</label><textarea id="world-comment-draft" rows="3" placeholder="Your draft is stored locally while World reconnects."></textarea></div>
+      <div><span class="hara-v2-badge" data-tone="warning">Offline draft</span><button class="hara-v2-button" disabled>Publish when connected</button></div>
+    </div>
+
+    <div class="world-comment-list">
+      {articleThread.comments.slice(0, 1).map((comment) => (
+        <article class="world-comment" data-comment-state={comment.state}>
+          <div class="world-comment-rail"><span class="world-avatar">{comment.author.avatar}</span><i></i></div>
+          <div class="world-comment-body">
+            <header><div><b>{comment.author.name}</b><small>{comment.author.handle}</small></div><time>{comment.age} ago</time></header>
+            <p>{comment.body}</p>
+            <footer><button>Reply</button><button>Link exact revision</button><span>{comment.replies} replies</span><code>{comment.receipt}</code></footer>
+          </div>
+        </article>
+      ))}
+
+      <WorldBotComment bot={ownedBot} reply={ownedBotReply} />
+
+      {articleThread.comments.slice(1).map((comment) => (
+        <article class:list={["world-comment", `world-comment--${comment.state}`]} data-comment-state={comment.state}>
+          <div class="world-comment-rail"><span class="world-avatar">{comment.author.avatar}</span><i></i></div>
+          <div class="world-comment-body">
+            <header>
+              <div><b>{comment.author.name}</b><span class="hara-v2-badge" data-tone={comment.state === "moderated" ? "danger" : "neutral"}>{comment.state}</span><small>{comment.author.handle}</small></div>
+              <time>{comment.age} ago</time>
+            </header>
+            {comment.state === "collapsed" ? (
+              <details>
+                <summary>{comment.moderation} · Show exact revision</summary>
+                <p>{comment.body}</p>
+              </details>
+            ) : <p>{comment.body}</p>}
+            <footer>
+              {comment.state === "deleted" && <button>View {comment.replies} preserved reply</button>}
+              {comment.state === "moderated" && <button>Read moderation decision</button>}
+              <code>{comment.receipt}</code>
+            </footer>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</div>

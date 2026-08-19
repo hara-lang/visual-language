@@ -29,9 +29,10 @@ const [focusedPage, canonicalPage, styles, sharedCalmStyles, policyText, feedTex
 const policy = JSON.parse(policyText);
 const feed = JSON.parse(feedText);
 
-test("World keeps its canonical cross-source route and a focused data-driven feed laboratory", () => {
-  for (const anchor of ["feed-explorer", "sources", "conversation", "relay"])
-    assert.match(canonicalPage, new RegExp(`id=\\"${anchor}\\"`));
+test("World keeps the focused application route and retains the cross-source feed laboratory", () => {
+  assert.match(canonicalPage, /historicalWorldStudies\.map/);
+  assert.match(canonicalPage, /Earlier studies remain reachable without redefining the product/);
+  assert.doesNotMatch(canonicalPage, /id=\"feed-explorer\"/);
 
   assert.match(focusedPage, /v2\/world\/feed\//);
   assert.match(focusedPage, /const worldLab = `\$\{basePath\}v2\/world\/`/);

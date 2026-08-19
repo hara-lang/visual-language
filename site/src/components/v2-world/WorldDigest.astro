@@ -1,0 +1,75 @@
+---
+import {
+  snippetOfTheDay,
+  worldDigest
+} from "../../lib/v2-world.mjs";
+
+const outputTone = (id) => id === "email" ? "signal" : id === "rss" ? "success" : "neutral";
+---
+<div class="world-screen world-digest-screen" data-world-screen="digest">
+  <header class="world-app-bar world-app-bar--compact">
+    <div class="world-app-identity"><span class="world-app-mark" aria-hidden="true">H<i></i></span><div><b>What’s New</b><small>Weekly reviewed digest</small></div></div>
+    <nav class="world-thread-nav" aria-label="Digest views"><a href="#digest" aria-current="page">Current edition</a><a href="#digest-archive">Archive</a><a href="#digest-subscribe">Subscribe</a></nav>
+    <div class="world-app-actions"><span class="hara-v2-badge" data-tone="warning">{worldDigest.status}</span><button class="hara-v2-button">Share preview</button></div>
+  </header>
+
+  <div class="world-digest-layout">
+    <article class="world-digest-edition">
+      <header>
+        <span class="world-digest-issue">Issue {String(worldDigest.issue).padStart(2, "0")}</span>
+        <p class="hara-v2-kicker">Exact selection fenced · editorial review complete</p>
+        <h3>{worldDigest.title}</h3>
+        <p>{worldDigest.intro}</p>
+      </header>
+      <div class="world-digest-sections">
+        {worldDigest.sections.map((section, sectionIndex) => (
+          <section>
+            <h4><span>{String(sectionIndex + 1).padStart(2, "0")}</span>{section.label}</h4>
+            {section.items.map((item) => (
+              <article>
+                <div><span class="hara-v2-badge">{item.sourceType}</span><h5><a href={item.canonicalUrl}>{item.title}</a></h5></div>
+                <code>{item.receipt}</code>
+              </article>
+            ))}
+          </section>
+        ))}
+      </div>
+      <aside class="world-digest-snippet">
+        <div><p class="hara-v2-kicker">Snippet of the Day</p><h4>{snippetOfTheDay.title}</h4><span>By {snippetOfTheDay.author}</span></div>
+        <pre><code>{snippetOfTheDay.code}</code></pre>
+        <span title={snippetOfTheDay.receipt}>{snippetOfTheDay.receipt}</span>
+      </aside>
+    </article>
+
+    <aside class="world-digest-rail">
+      <section class="hara-v2-panel">
+        <header class="hara-v2-panel-header"><h3>Projection receipts</h3><span class="hara-v2-badge">3 outputs</span></header>
+        <div class="hara-v2-panel-body world-digest-outputs">
+          {worldDigest.outputs.map((output) => (
+            <article><span class="hara-v2-badge" data-tone={outputTone(output.id)}>{output.label}</span><b>{output.status}</b><code>{output.receipt}</code><button class="hara-v2-button">Preview</button></article>
+          ))}
+        </div>
+      </section>
+
+      <section class="hara-v2-panel" id="digest-subscribe">
+        <header class="hara-v2-panel-header"><h3>Subscribe</h3><span class="hara-v2-badge" data-tone="success">{worldDigest.subscription.state}</span></header>
+        <div class="hara-v2-panel-body world-subscription-form">
+          <label>Email address<input type="email" value="reader@example.org" /></label>
+          <fieldset><legend>Formats</legend>{worldDigest.subscription.formats.map((format) => <label><input type="checkbox" checked /> {format}</label>)}</fieldset>
+          <label>Frequency<select><option selected>{worldDigest.subscription.frequency}</option></select></label>
+          <button class="hara-v2-button" data-variant="primary">Update subscription</button>
+          <code>{worldDigest.subscription.consentReceipt}</code>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <section class="world-digest-state-row" id="digest-archive" aria-label="Digest lifecycle states">
+    {worldDigest.states.map((state, index) => (
+      <article data-state={state.id} aria-current={state.id === worldDigest.status ? "step" : undefined}>
+        <span>{String(index + 1).padStart(2, "0")}</span>
+        <div><b>{state.label}</b><p>{state.detail}</p></div>
+      </article>
+    ))}
+  </section>
+</div>
