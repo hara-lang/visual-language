@@ -3,23 +3,34 @@ import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
 import HaraMark from "../../../../src/astro/HaraMark.astro";
 import CatalogueFallback from "./CatalogueFallback.astro";
 import CatalogueGroup from "./CatalogueGroup.astro";
+import CataloguePageFooter from "./CataloguePageFooter.astro";
+import CatalogueRouteBar from "./CatalogueRouteBar.astro";
+import CatalogueSectionNav from "./CatalogueSectionNav.astro";
 import { catalogueGroups } from "../../lib/v2-catalogue.mjs";
+import "../../../../src/v2/catalogue-navigation.css";
 import "../../styles/v2-catalogue.css";
 import "../../styles/v2-catalogue-disclosure.css";
 import "../../styles/v2-mobile-polish.css";
 
 const {
   basePath,
-  activePath = "/v2/",
+  activePath,
   label = "Hara visual language catalogue",
-  sourceHref = "https://github.com/hara-lang/visual-language"
+  sourceHref = "https://github.com/hara-lang/visual-language",
+  autoSections = true,
+  pageFooter = true
 } = Astro.props;
 
 const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
 const catalogueHome = `${normalizedBasePath}v2/`;
+const pathname = Astro.url.pathname.startsWith(normalizedBasePath)
+  ? `/${Astro.url.pathname.slice(normalizedBasePath.length)}`
+  : Astro.url.pathname;
+const resolvedActivePath = activePath ?? pathname;
 const foundations = catalogueGroups[0];
 const library = catalogueGroups[1];
 const applications = catalogueGroups[2];
+const deepRoute = resolvedActivePath !== "/v2/";
 ---
 <header class="v2-catalogue-header" data-catalogue-header data-menu-open="false">
   <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
@@ -42,9 +53,9 @@ const applications = catalogueGroups[2];
   </button>
 
   <nav class="v2-catalogue-nav" id="v2-catalogue-navigation" aria-label="Visual language catalogue" data-catalogue-navigation>
-    <CatalogueGroup group={foundations} basePath={basePath} activePath={activePath} />
-    <CatalogueGroup group={library} basePath={basePath} activePath={activePath} />
-    <CatalogueGroup group={applications} basePath={basePath} activePath={activePath} />
+    <CatalogueGroup group={foundations} basePath={basePath} activePath={resolvedActivePath} />
+    <CatalogueGroup group={library} basePath={basePath} activePath={resolvedActivePath} />
+    <CatalogueGroup group={applications} basePath={basePath} activePath={resolvedActivePath} />
   </nav>
 
   <CatalogueFallback basePath={basePath} />
@@ -54,6 +65,10 @@ const applications = catalogueGroups[2];
     <ThemeToggle />
   </div>
 </header>
+
+<CatalogueRouteBar basePath={basePath} activePath={resolvedActivePath} />
+<CatalogueSectionNav enabled={deepRoute && autoSections} />
+<CataloguePageFooter basePath={basePath} activePath={pageFooter ? resolvedActivePath : "/v2/"} />
 
 <script>
   const initialiseCatalogueHeader = () => {
