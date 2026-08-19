@@ -92,7 +92,7 @@ test("legacy studies expose catalogue groups, a parent action and explicitly loc
   assert.match(bridge, /Foundations/);
   assert.match(bridge, /Library/);
   assert.match(bridge, /Applications/);
-  assert.match(bridge, /data\.legacySectionNav/);
+  assert.match(bridge, /dataset\.legacySectionNav/);
   assert.match(bridgeCss, /v2-legacy-catalogue-groups/);
   assert.match(bridgeCss, /v2-legacy-parent-link/);
   assert.match(navigationCss, /v2-catalogue-route-bar/);
