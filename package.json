@@ -74,9 +74,11 @@
   "scripts": {
     "assets:build": "node scripts/build-motifs.mjs",
     "assets:og": "node scripts/build-og.mjs",
-    "test": "node --test test/*.test.mjs",
-    "site:dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev --root site",
-    "site:build": "ASTRO_TELEMETRY_DISABLED=1 astro build --root site"
+    "assets:raster": "node scripts/build-raster-graphics.mjs",
+    "test": "npm run assets:raster && node --test test/*.test.mjs",
+    "site:dev": "npm run assets:raster && ASTRO_TELEMETRY_DISABLED=1 astro dev --root site",
+    "site:build": "npm run assets:raster && ASTRO_TELEMETRY_DISABLED=1 astro build --root site",
+    "prepack": "npm run assets:raster"
   },
   "peerDependencies": {
     "astro": ">=5"
