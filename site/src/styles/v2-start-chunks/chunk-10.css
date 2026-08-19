@@ -1,0 +1,30 @@
+.start-live-receipt { display: grid; grid-template-rows: auto auto 1fr auto; }
+.start-live-receipt-head { display: flex; gap: .75rem; align-items: center; justify-content: space-between; min-height: 42px; padding: 0 .8rem; border-bottom: 1px solid var(--hara-v2-line); }
+.start-live-receipt-head span { color: var(--hara-v2-faint); font: 700 .53rem var(--hara-v2-font-code); text-transform: uppercase; }
+.start-live-receipt-head b { color: var(--hara-v2-signal); font: 650 .52rem var(--hara-v2-font-code); }
+.start-live-receipt dl { margin: 0; padding: .6rem .8rem; }
+.start-live-receipt dl > div { display: grid; grid-template-columns: 1fr auto; gap: .5rem; align-items: center; min-height: 38px; border-bottom: 1px solid var(--hara-v2-line); }
+.start-live-receipt dt { color: var(--hara-v2-faint); font-size: .55rem; }
+.start-live-receipt dd { margin: 0; color: var(--hara-v2-ink); font: 600 .51rem var(--hara-v2-font-code); text-align: right; }
+.start-live-receipt-reason { margin: .7rem .8rem; padding: .8rem; border: 1px solid var(--hara-v2-line); border-radius: 6px; background: var(--hara-v2-panel-recess); }
+.start-live-receipt-reason span { color: var(--hara-v2-faint); font: 700 .5rem var(--hara-v2-font-code); text-transform: uppercase; }
+.start-live-receipt-reason p { margin: .45rem 0 0; color: var(--hara-v2-muted); font-size: .57rem; line-height: 1.55; }
+.start-live-receipt > a { align-self: end; padding: .75rem .8rem; color: var(--hara-v2-signal); border-top: 1px solid var(--hara-v2-line); font-size: .56rem; text-decoration: none; }
+
+.start-graduation-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--hara-v2-line); border-radius: 11px; background: var(--hara-v2-line); }
+.start-graduation-grid article { position: relative; display: grid; grid-template-rows: auto auto 1fr auto; min-height: 310px; padding: 1rem; overflow: hidden; background: var(--hara-v2-panel); }
+.start-graduation-grid article::after { position: absolute; right: -45px; bottom: -45px; width: 110px; height: 110px; border: 1px solid var(--hara-v2-line); border-radius: 50%; content: ""; }
+.start-graduation-grid article > span { color: var(--hara-v2-signal); font: 700 .51rem var(--hara-v2-font-code); letter-spacing: .06em; text-transform: uppercase; }
+.start-graduation-grid article > small { position: absolute; top: .85rem; right: .9rem; color: var(--hara-v2-faint); font: 700 .51rem var(--hara-v2-font-code); }
+.start-graduation-grid h3 { margin: 3rem 0 .8rem; font: 740 1.65rem/.95 var(--hara-v2-font-heading); letter-spacing: -.045em; }
+.start-graduation-grid p { margin: 0; color: var(--hara-v2-muted); font-size: .65rem; line-height: 1.6; }
+.start-graduation-grid code { position: relative; align-self: end; color: var(--hara-v2-faint); font-size: .54rem; }
+
+.start-learned-strip { display: grid; grid-template-columns: 1.05fr repeat(4, 1fr); gap: 1px; margin-top: 1rem; overflow: hidden; border: 1px solid var(--hara-v2-line); border-radius: 9px; background: var(--hara-v2-line); }
+.start-learned-strip > div { min-height: 98px; padding: .8rem; background: var(--hara-v2-panel-recess); }
+.start-learned-strip > div:first-child { display: flex; align-items: center; background: var(--hara-v2-panel); }
+.start-learned-strip > div:first-child span { max-width: 160px; font: 740 .72rem/1.35 var(--hara-v2-font-heading); }
+.start-learned-strip b { display: block; margin-bottom: .4rem; font-size: .61rem; }
+.start-learned-strip small { color: var(--hara-v2-faint); font-size: .54rem; line-height: 1.45; }
+
+.start-closing { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); gap: clamp(2rem, 5vw, 6rem); align-items: end; margin-top: clamp(3rem, 7vw, 7rem); padding: clamp(2rem, 5vw, 5rem); overflow: hidden; border: 1px solid var(--hara-v2-line-strong); border-radius: 14px; background: radial-gradient(circle at 80% 10%, color-mix(in srgb, var(--hara-v2-signal) 18%, transparent), transparent 32%), var(--hara-v2-panel-recess); clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%, 0 18px); }

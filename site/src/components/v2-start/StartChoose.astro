@@ -1,0 +1,53 @@
+---
+const { recipes } = Astro.props;
+---
+      <section id="choose" class="start-stage" data-start-stage="choose">
+        <header class="start-stage-head">
+          <div class="start-stage-number"><span>02</span><i></i></div>
+          <div>
+            <p class="hara-v2-kicker">Outcome catalogue</p>
+            <h2>Choose by what changes on screen.</h2>
+          </div>
+          <p>Each project states its promise, runtime posture, capability boundary, first meaningful edit, and why it is a good first encounter with Hara.</p>
+        </header>
+
+        <div class="start-recipe-layout">
+          <div class="start-recipe-grid" role="list" aria-label="Recommended Hara starter projects">
+            {recipes.map((recipe, index) => (
+              <article
+                class:list={["start-recipe-card", { "is-selected": index === 0 }]}
+                data-recipe-card={recipe.id}
+                role="listitem"
+              >
+                <div class="start-recipe-topline">
+                  <span>{recipe.label}</span>
+                  <small>{recipe.status}</small>
+                </div>
+                <h3>{recipe.title}</h3>
+                <p>{recipe.promise}</p>
+                <dl>
+                  <div><dt>First success</dt><dd>{recipe.time}</dd></div>
+                  <div><dt>First edit</dt><dd><code>{recipe.edit}</code></dd></div>
+                </dl>
+                <div class="start-capability-list" aria-label={`${recipe.title} capabilities`}>
+                  {recipe.capabilities.map((capability) => <span>{capability}</span>)}
+                </div>
+                <button type="button" data-recipe-select={recipe.id} aria-pressed={index === 0 ? "true" : "false"}>
+                  {index === 0 ? "Selected direction" : "Choose this direction"}
+                </button>
+              </article>
+            ))}
+          </div>
+
+          <aside class="start-recommendation" data-recommendation-panel>
+            <div class="start-recommendation-mark" aria-hidden="true"><span>H</span><i></i></div>
+            <p class="hara-v2-kicker">Agent recommendation</p>
+            <h3 data-recommendation-title>Build Hara Habitat first.</h3>
+            <p data-recommendation-why>{recipes[0].why}</p>
+            <div class="start-recommendation-contract">
+              <span>request</span><i>→</i><span>source patch</span><i>→</i><span>state transition</span><i>→</i><span>visible result</span>
+            </div>
+            <a class="start-action start-action-primary" href="#habitat" data-open-recommendation>Open Habitat workbench</a>
+          </aside>
+        </div>
+      </section>

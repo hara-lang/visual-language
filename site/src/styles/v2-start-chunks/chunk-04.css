@@ -1,0 +1,68 @@
+.start-scan-index {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: var(--hara-v2-faint);
+  border: 1px solid var(--hara-v2-line);
+  border-radius: 7px;
+  font: 700 .56rem var(--hara-v2-font-code);
+}
+.start-scan-pipeline li div { display: grid; gap: .26rem; }
+.start-scan-pipeline b { font-size: .74rem; }
+.start-scan-pipeline small { color: var(--hara-v2-faint); font: 500 .58rem var(--hara-v2-font-code); }
+.start-scan-pipeline output { color: var(--hara-v2-faint); font: 700 .55rem var(--hara-v2-font-code); letter-spacing: .06em; text-transform: uppercase; }
+.start-scan-pipeline li[data-state="checking"] { border-color: var(--hara-v2-signal); transform: translateX(4px); }
+.start-scan-pipeline li[data-state="checking"]::before { background: var(--hara-v2-signal); box-shadow: 0 0 0 6px color-mix(in srgb, var(--hara-v2-signal) 13%, transparent); }
+.start-scan-pipeline li[data-state="found"] { border-color: color-mix(in srgb, var(--hara-v2-success) 46%, var(--hara-v2-line)); }
+.start-scan-pipeline li[data-state="found"]::before { background: var(--hara-v2-success); }
+.start-scan-pipeline li[data-state="found"] output { color: var(--hara-v2-success); }
+.start-scan-pipeline li[data-state="gap"] { border-color: color-mix(in srgb, var(--hara-v2-warning) 52%, var(--hara-v2-line)); background: color-mix(in srgb, var(--hara-v2-panel) 96%, var(--hara-v2-warning)); }
+.start-scan-pipeline li[data-state="gap"]::before { background: var(--hara-v2-warning); }
+.start-scan-pipeline li[data-state="gap"] output { color: var(--hara-v2-warning); }
+
+.start-evidence-panel {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  border-left: 1px solid var(--hara-v2-line);
+  background: var(--hara-v2-panel);
+}
+.start-evidence-head {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: .7rem 1rem;
+  border-bottom: 1px solid var(--hara-v2-line);
+}
+.start-evidence-head span { font-size: .68rem; font-weight: 750; }
+.start-evidence-head output { color: var(--hara-v2-faint); font: 600 .55rem var(--hara-v2-font-code); text-align: right; }
+.start-evidence-panel dl { margin: 0; padding: .7rem 1rem; }
+.start-evidence-panel dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .8rem;
+  align-items: center;
+  min-height: 42px;
+  border-bottom: 1px solid var(--hara-v2-line);
+}
+.start-evidence-panel dt { color: var(--hara-v2-muted); font-size: .63rem; }
+.start-evidence-panel dd { display: flex; gap: .45rem; align-items: center; margin: 0; color: var(--hara-v2-ink); font: 650 .58rem var(--hara-v2-font-code); text-align: right; }
+.start-evidence-dot { width: 6px; height: 6px; border-radius: 50%; }
+.start-evidence-dot.is-found { background: var(--hara-v2-success); }
+.start-evidence-dot.is-gap { background: var(--hara-v2-warning); }
+.start-evidence-dot.is-candidate { background: var(--hara-v2-signal); }
+.start-evidence-rule { align-self: end; margin: 1rem; padding: 1rem; border: 1px solid color-mix(in srgb, var(--hara-v2-warning) 38%, var(--hara-v2-line)); border-radius: 8px; background: color-mix(in srgb, var(--hara-v2-panel-recess) 94%, var(--hara-v2-warning)); }
+.start-evidence-rule b { color: var(--hara-v2-warning); font-size: .67rem; }
+.start-evidence-rule p { margin: .45rem 0 0; color: var(--hara-v2-muted); font-size: .61rem; line-height: 1.55; }
+
+.start-recipe-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.22fr) minmax(350px, .78fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+.start-recipe-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid var(--hara-v2-line); border-radius: 12px; background: var(--hara-v2-line); }
+.start-recipe-card { display: grid; grid-template-rows: auto auto auto auto auto 1fr; min-height: 475px; padding: 1rem; background: var(--hara-v2-panel); transition: background var(--hara-v2-motion), box-shadow var(--hara-v2-motion); }
+.start-recipe-card.is-selected { position: relative; background: color-mix(in srgb, var(--hara-v2-panel-raised) 94%, var(--hara-v2-signal)); box-shadow: inset 0 3px var(--hara-v2-signal); }

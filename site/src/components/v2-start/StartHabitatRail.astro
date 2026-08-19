@@ -1,0 +1,47 @@
+---
+---
+            <aside class="start-workbench-rail" aria-label="Habitat project navigation">
+              <div class="start-rail-tabs" role="tablist" aria-label="Project views">
+                <button class="is-active" type="button" role="tab" aria-selected="true" data-rail-tab="files">Files</button>
+                <button type="button" role="tab" aria-selected="false" data-rail-tab="world">World</button>
+                <button type="button" role="tab" aria-selected="false" data-rail-tab="session">Session</button>
+              </div>
+
+              <div class="start-rail-panel" data-rail-panel="files">
+                <p>habitat/</p>
+                <ul class="start-tree">
+                  <li class="is-open"><span>▾</span><b>src</b></li>
+                  <li class="is-file is-selected"><span>λ</span>nocturnal-garden.hal</li>
+                  <li class="is-file"><span>◇</span>behaviour.hal</li>
+                  <li class="is-file"><span>□</span>world.edn</li>
+                  <li><span>▸</span><b>receipts</b></li>
+                  <li class="is-file"><span>✓</span>verify.hal</li>
+                </ul>
+              </div>
+
+              <div class="start-rail-panel" data-rail-panel="world" hidden>
+                <p>Entities / 13</p>
+                <ul class="start-entity-list">
+                  <li><i class="is-light"></i><span>light/main</span><small>0.84</small></li>
+                  <li><i class="is-bat"></i><span>bat/01</span><small>active</small></li>
+                  <li><i class="is-moth"></i><span>moths</span><small>12</small></li>
+                  <li><i class="is-rule"></i><span>rules</span><small>4</small></li>
+                </ul>
+              </div>
+
+              <div class="start-rail-panel" data-rail-panel="session" hidden>
+                <p>Live boundary</p>
+                <dl class="start-rail-session">
+                  <div><dt>Status</dt><dd>running</dd></div>
+                  <div><dt>Host</dt><dd>browser</dd></div>
+                  <div><dt>Canvas</dt><dd>attached</dd></div>
+                  <div><dt>Clock</dt><dd>attached</dd></div>
+                  <div><dt>Evaluator</dt><dd>simulated</dd></div>
+                </dl>
+              </div>
+
+              <div class="start-rail-hint">
+                <span>Agent context</span>
+                <p>Only the selected file, current state, and capability ledger are sent with the next change request.</p>
+              </div>
+            </aside>

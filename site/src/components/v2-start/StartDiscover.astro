@@ -1,0 +1,71 @@
+---
+---
+      <section id="discover" class="start-stage" data-start-stage="discover">
+        <header class="start-stage-head">
+          <div class="start-stage-number"><span>01</span><i></i></div>
+          <div>
+            <p class="hara-v2-kicker">Repository intelligence</p>
+            <h2>Make the agent show its evidence.</h2>
+          </div>
+          <p>The recommendation should not materialise from a generic model answer. The interface exposes what was found, what remains a gap, and which claims are merely candidates.</p>
+        </header>
+
+        <div class="start-scan-shell" data-scan-shell>
+          <div class="start-scan-command">
+            <div>
+              <span>Repository scan model</span>
+              <code>hara-lang/hara @ current main</code>
+            </div>
+            <button class="start-action start-action-primary" type="button" data-run-scan>Run visual scan</button>
+          </div>
+
+          <div class="start-scan-grid">
+            <ol class="start-scan-pipeline" aria-label="Repository discovery pipeline">
+              <li data-scan-row data-state="idle">
+                <span class="start-scan-index">01</span>
+                <div><b>Orient</b><small>README · GETTING_STARTED · AGENTS</small></div>
+                <output>queued</output>
+              </li>
+              <li data-scan-row data-state="idle">
+                <span class="start-scan-index">02</span>
+                <div><b>Find examples</b><small>core/lib/examples · runnable seams</small></div>
+                <output>queued</output>
+              </li>
+              <li data-scan-row data-state="idle">
+                <span class="start-scan-index">03</span>
+                <div><b>Inspect hosts</b><small>session · canvas · clock · files</small></div>
+                <output>queued</output>
+              </li>
+              <li data-scan-row data-state="idle">
+                <span class="start-scan-index">04</span>
+                <div><b>Check catalogue</b><small>status · run command · verification</small></div>
+                <output>queued</output>
+              </li>
+              <li data-scan-row data-state="idle">
+                <span class="start-scan-index">05</span>
+                <div><b>Recommend</b><small>smallest useful visible outcome</small></div>
+                <output>queued</output>
+              </li>
+            </ol>
+
+            <aside class="start-evidence-panel" aria-label="Repository evidence">
+              <div class="start-evidence-head">
+                <span>Evidence ledger</span>
+                <output data-scan-summary aria-live="polite">Not scanned in this specimen</output>
+              </div>
+              <dl>
+                <div><dt>Repository</dt><dd>hara-lang/hara</dd></div>
+                <div><dt>Orientation</dt><dd><span class="start-evidence-dot is-found"></span>present</dd></div>
+                <div><dt>Examples</dt><dd><span class="start-evidence-dot is-found"></span>present</dd></div>
+                <div><dt>Browser host evidence</dt><dd><span class="start-evidence-dot is-found"></span>canvas · clock</dd></div>
+                <div><dt>Canonical build catalogue</dt><dd><span class="start-evidence-dot is-gap"></span>proposed gap</dd></div>
+                <div><dt>Habitat recipe</dt><dd><span class="start-evidence-dot is-candidate"></span>candidate</dd></div>
+              </dl>
+              <div class="start-evidence-rule">
+                <b>Fail closed</b>
+                <p>A missing recipe never becomes “supported” because an agent can imagine the glue. The final answer must label evidence, assumptions, and planned work separately.</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>

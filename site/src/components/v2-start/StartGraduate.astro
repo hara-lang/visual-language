@@ -1,0 +1,61 @@
+---
+const { sourceRepo, toolLab } = Astro.props;
+---
+      <section id="graduate" class="start-stage" data-start-stage="graduate">
+        <header class="start-stage-head">
+          <div class="start-stage-number"><span>05</span><i></i></div>
+          <div>
+            <p class="hara-v2-kicker">From toy to tool</p>
+            <h2>Reveal one capability at a time.</h2>
+          </div>
+          <p>Habitat is not the destination. It is the smallest visible system that can graduate into persistence, durable work, external data, services, packages, and headless execution.</p>
+        </header>
+
+        <div class="start-graduation-grid">
+          <article>
+            <span>Next boundary</span><small>01</small>
+            <h3>Save snapshots</h3>
+            <p>Attach a store and preserve selected world states without changing the behaviour algebra.</p>
+            <code>:store / snapshots</code>
+          </article>
+          <article>
+            <span>Durable path</span><small>02</small>
+            <h3>Run as work</h3>
+            <p>Move clock-driven effects into explicit steps with results, retries, and inspectable receipts.</p>
+            <code>:work / checkpoint</code>
+          </article>
+          <article>
+            <span>External input</span><small>03</small>
+            <h3>Attach a source</h3>
+            <p>Let weather, files, sensors, or another agent influence the same small world through a declared provider.</p>
+            <code>:provider / input</code>
+          </article>
+          <article>
+            <span>Distribution</span><small>04</small>
+            <h3>Publish a package</h3>
+            <p>Turn the behaviour into a reusable namespace with verification, capability metadata, and a clear handoff.</p>
+            <code>:package / deploy</code>
+          </article>
+        </div>
+
+        <div class="start-learned-strip">
+          <div><span>Without a syntax tour, you learned:</span></div>
+          <div><b>State is visible</b><small>The world is inspectable data.</small></div>
+          <div><b>Capabilities are explicit</b><small>Canvas and clock are host boundaries.</small></div>
+          <div><b>Changes have identity</b><small>Generation and source revision fence the result.</small></div>
+          <div><b>Programs can stay alive</b><small>The system survives a meaningful edit.</small></div>
+        </div>
+
+        <div class="start-closing">
+          <div>
+            <p class="hara-v2-kicker">The Hara hello world</p>
+            <h2>Hello, living system.</h2>
+            <p>Do not ask an agent to explain the whole language. Give it a truthful menu of things it can build, require it to make one run, and make the first change visible.</p>
+          </div>
+          <div class="start-closing-actions">
+            <button class="start-action start-action-primary" type="button" data-copy-agent-brief>Copy the agent brief</button>
+            <a class="start-action" href={sourceRepo}>Point an agent at Hara</a>
+            <a href={toolLab}>See the full tool workbench language →</a>
+          </div>
+        </div>
+      </section>

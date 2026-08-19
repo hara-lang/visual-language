@@ -197,6 +197,14 @@ export const catalogueGroups = [
             issue: 43
           },
           {
+            id: "start",
+            label: "Agent-first Start",
+            path: "/v2/start/",
+            href: "/v2/start/",
+            summary: "Point an agent at Hara, inspect the evidence behind its recommendation, build a living Habitat, and make one visible mutation.",
+            status: "active"
+          },
+          {
             id: "learn-world-examples",
             label: "World interface examples",
             path: "/v2/learn/world-examples/",

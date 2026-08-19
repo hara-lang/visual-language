@@ -1,0 +1,15 @@
+---
+import StartHabitatWorkbench from "./StartHabitatWorkbench.astro";
+const { initialSource } = Astro.props;
+---
+      <section id="habitat" class="start-stage start-stage-workbench" data-start-stage="habitat">
+        <header class="start-stage-head">
+          <div class="start-stage-number"><span>03</span><i></i></div>
+          <div>
+            <p class="hara-v2-kicker">The first living system</p>
+            <h2>Hello, living world.</h2>
+          </div>
+          <p>This is an interactive browser simulation of the proposed Habitat recipe. It demonstrates the intended interface and mutation semantics; it is not connected to a Hara evaluator in this visual-language specimen.</p>
+        </header>
+        <StartHabitatWorkbench initialSource={initialSource} />
+      </section>

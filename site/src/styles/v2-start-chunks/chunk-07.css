@@ -1,0 +1,34 @@
+.start-entity-list li { display: grid; grid-template-columns: auto 1fr auto; gap: .5rem; align-items: center; min-height: 34px; padding: .35rem .45rem; border: 1px solid var(--hara-v2-line); border-radius: 5px; background: var(--hara-v2-panel-recess); }
+
+.start-entity-list i { width: 7px; height: 7px; border-radius: 50%; background: var(--hara-v2-faint); }
+.start-entity-list i.is-light { background: #f4c86a; box-shadow: 0 0 9px #f4c86a; }
+.start-entity-list i.is-bat { background: var(--hara-v2-warning); }
+.start-entity-list i.is-moth { background: var(--hara-v2-signal); }
+.start-entity-list i.is-rule { border-radius: 1px; background: var(--hara-v2-success); }
+.start-entity-list span { font-size: .57rem; }
+.start-entity-list small { color: var(--hara-v2-faint); font: .5rem var(--hara-v2-font-code); }
+.start-rail-session { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--hara-v2-line); }
+.start-rail-session div { display: grid; grid-template-columns: 1fr auto; gap: .5rem; align-items: center; min-height: 34px; border-bottom: 1px solid var(--hara-v2-line); }
+.start-rail-session dt { color: var(--hara-v2-faint); font-size: .54rem; }
+.start-rail-session dd { margin: 0; font: 600 .52rem var(--hara-v2-font-code); }
+.start-rail-hint { margin: .65rem; padding: .7rem; border: 1px solid var(--hara-v2-line); border-radius: 6px; background: var(--hara-v2-panel-recess); }
+.start-rail-hint span { color: var(--hara-v2-signal); font: 700 .5rem var(--hara-v2-font-code); text-transform: uppercase; }
+.start-rail-hint p { margin: .4rem 0 0; color: var(--hara-v2-faint); font-size: .54rem; line-height: 1.5; }
+
+.start-viewport-column { display: grid; grid-template-rows: auto minmax(440px, 1fr) 286px; min-width: 0; background: var(--hara-v2-panel-recess); }
+.start-viewport-toolbar { display: flex; gap: 1rem; align-items: center; justify-content: space-between; min-height: 39px; padding: 0 .65rem; border-bottom: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel); }
+.start-viewport-toolbar > div { display: flex; gap: .25rem; align-items: center; }
+.start-viewport-toolbar button { min-height: 27px; padding: .25rem .5rem; color: var(--hara-v2-faint); border: 0; border-radius: 4px; background: transparent; font: 650 .54rem var(--hara-v2-font-body); cursor: pointer; }
+.start-viewport-toolbar button.is-active { color: var(--hara-v2-ink); background: var(--hara-v2-panel-raised); }
+.start-viewport-toolbar span { color: var(--hara-v2-faint); font: 550 .49rem var(--hara-v2-font-code); }
+.start-viewport-toolbar span + span { padding-left: .5rem; border-left: 1px solid var(--hara-v2-line); }
+.start-viewport-toolbar b { color: var(--hara-v2-ink); }
+
+.start-habitat-viewport { position: relative; min-height: 440px; overflow: hidden; background: var(--hara-v2-panel-recess); }
+#habitat-canvas { display: block; width: 100%; height: 100%; min-height: 440px; }
+.start-viewport-grid { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 50%, transparent 0, transparent 56%, color-mix(in srgb, var(--hara-v2-panel-recess) 70%, transparent) 100%); }
+.start-viewport-caption { position: absolute; right: .75rem; bottom: .65rem; left: .75rem; display: flex; gap: 1rem; align-items: center; justify-content: space-between; color: color-mix(in srgb, var(--hara-v2-ink) 62%, transparent); font: 650 .49rem var(--hara-v2-font-code); pointer-events: none; }
+.start-viewport-caption span:first-child { display: flex; gap: .4rem; align-items: center; }
+.start-viewport-caption i { width: 5px; height: 5px; border-radius: 50%; background: var(--hara-v2-success); }
+.start-canvas-instruction { position: absolute; top: 1rem; left: 1rem; display: grid; gap: .3rem; width: min(270px, calc(100% - 2rem)); padding: .75rem; border: 1px solid color-mix(in srgb, var(--hara-v2-signal) 45%, var(--hara-v2-line)); border-radius: 7px; background: color-mix(in srgb, var(--hara-v2-panel-raised) 88%, transparent); box-shadow: 0 16px 36px rgba(0, 0, 0, .16); backdrop-filter: blur(10px); transition: opacity 220ms, transform 220ms; }
+.start-canvas-instruction.is-complete { opacity: 0; transform: translateY(-8px); pointer-events: none; }

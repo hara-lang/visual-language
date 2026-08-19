@@ -1,0 +1,37 @@
+---
+import StartHabitatRail from "./StartHabitatRail.astro";
+import StartHabitatViewport from "./StartHabitatViewport.astro";
+import StartHabitatInspector from "./StartHabitatInspector.astro";
+const { initialSource } = Astro.props;
+---
+        <div class="start-workbench" data-habitat-workbench>
+          <div class="start-workbench-topbar">
+            <div class="start-workbench-brand">
+              <span class="start-live-dot"></span>
+              <b>Hara Habitat</b>
+              <small>nocturnal-garden.hal</small>
+            </div>
+            <div class="start-workbench-session">
+              <span>session <b data-session-id>habitat/01</b></span>
+              <span>generation <b data-generation>1</b></span>
+              <span>revision <b data-revision>1</b></span>
+            </div>
+            <div class="start-workbench-actions">
+              <span class="start-prototype-badge">visual simulation</span>
+              <button type="button" data-reset-world>Reset</button>
+              <button type="button" data-toggle-pause aria-pressed="false">Pause</button>
+            </div>
+          </div>
+          <div class="start-workbench-grid">
+            <StartHabitatRail />
+            <StartHabitatViewport initialSource={initialSource} />
+            <StartHabitatInspector />
+          </div>
+
+          <div class="start-workbench-statusbar">
+            <span><i></i><b data-runtime-status>running</b></span>
+            <span>12 moths · 1 bat · 1 light</span>
+            <span data-status-message aria-live="polite">Habitat visual simulation ready</span>
+            <span>prototype host / no evaluator</span>
+          </div>
+        </div>

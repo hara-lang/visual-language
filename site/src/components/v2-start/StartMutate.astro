@@ -1,0 +1,59 @@
+---
+---
+      <section id="mutate" class="start-stage" data-start-stage="mutate">
+        <header class="start-stage-head">
+          <div class="start-stage-number"><span>04</span><i></i></div>
+          <div>
+            <p class="hara-v2-kicker">The decisive moment</p>
+            <h2>Change a rule. Keep the world.</h2>
+          </div>
+          <p>The first mutation is the actual onboarding milestone. It connects natural-language intent, a precise source patch, a fenced state transition, and an outcome the user can see.</p>
+        </header>
+
+        <div class="start-mutation-layout">
+          <div class="start-mutation-requests">
+            <span class="start-panel-label">Try an agent request</span>
+            <button type="button" data-mutation="brave">
+              <i>01</i><span><b>Make the moths braver.</b><small>Reduce their avoidance radius.</small></span><code>42 → 28</code>
+            </button>
+            <button type="button" data-mutation="cautious">
+              <i>02</i><span><b>Keep them farther from bats.</b><small>Increase their avoidance radius.</small></span><code>42 → 70</code>
+            </button>
+            <button type="button" data-mutation="space">
+              <i>03</i><span><b>Give the swarm more room.</b><small>Increase separation pressure.</small></span><code>18 → 28</code>
+            </button>
+            <button type="button" data-mutation="slow">
+              <i>04</i><span><b>Make the night feel calmer.</b><small>Lower the clock multiplier.</small></span><code>1.20 → 0.70</code>
+            </button>
+          </div>
+
+          <div class="start-mutation-flow" aria-label="Mutation lifecycle">
+            <div><span>01</span><b>Request</b><p>“Make the moths more cautious.”</p></div>
+            <i aria-hidden="true">→</i>
+            <div><span>02</span><b>Patch</b><p><code>[:rules :fear-radius]</code><br />42 → 70</p></div>
+            <i aria-hidden="true">→</i>
+            <div><span>03</span><b>Fence</b><p>session · generation · source revision</p></div>
+            <i aria-hidden="true">→</i>
+            <div><span>04</span><b>Observe</b><p>Moths begin evasive movement earlier.</p></div>
+          </div>
+
+          <aside class="start-live-receipt">
+            <div class="start-live-receipt-head">
+              <span>Latest mutation receipt</span>
+              <b data-receipt-id>none</b>
+            </div>
+            <dl>
+              <div><dt>Path</dt><dd data-receipt-path>—</dd></div>
+              <div><dt>Before</dt><dd data-receipt-before>—</dd></div>
+              <div><dt>After</dt><dd data-receipt-after>—</dd></div>
+              <div><dt>Generation</dt><dd data-receipt-generation>1</dd></div>
+              <div><dt>Source revision</dt><dd data-receipt-revision>1</dd></div>
+            </dl>
+            <div class="start-live-receipt-reason">
+              <span>Reason</span>
+              <p data-receipt-reason>Change a Habitat rule to produce the first accountable receipt.</p>
+            </div>
+            <a href="#habitat">Return to the live world ↑</a>
+          </aside>
+        </div>
+      </section>
