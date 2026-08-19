@@ -19,7 +19,7 @@ test("the catalogue has three scalable groups and the complete top-level applica
   const applications = catalogueGroups.find(({ id }) => id === "applications");
   assert.ok(applications);
   assert.deepEqual(applications.items.map(({ label }) => label), [
-    "WWW", "Playground", "Specs", "Packages", "World", "Learn"
+    "Start", "WWW", "Playground", "Specs", "Packages", "World", "Learn"
   ]);
 
   const www = catalogueItemById("www");
@@ -44,6 +44,7 @@ test("catalogue identifiers and canonical paths are unique", () => {
 });
 
 test("planned routes resolve to implementation issues while current routes use the Pages base path", () => {
+  const start = catalogueItemById("start");
   const foundations = catalogueItemById("design-system");
   const components = catalogueItemById("components");
   const tool = catalogueItemById("tool-workbenches");
@@ -51,17 +52,20 @@ test("planned routes resolve to implementation issues while current routes use t
   const around = catalogueItemById("world-around");
   const learn = catalogueItemById("learn");
 
-  assert.ok(foundations && components && tool && world && around && learn);
+  assert.ok(start && foundations && components && tool && world && around && learn);
+  assert.equal(catalogueHref(start, "/visual-language/"), "/visual-language/v2/start/");
   assert.equal(catalogueHref(foundations, "/visual-language/"), "/visual-language/v2/foundations/");
   assert.equal(catalogueHref(components, "/visual-language/"), "/visual-language/v2/components/");
   assert.equal(catalogueHref(tool, "/visual-language/"), "/visual-language/v2/tool/");
   assert.equal(catalogueHref(world, "/visual-language/"), "/visual-language/v2/world/");
   assert.equal(catalogueHref(around, "/visual-language/"), "/visual-language/v2/world/around/");
   assert.equal(catalogueHref(learn, "/visual-language/"), "/visual-language/v2/learn/");
+  assert.equal(catalogueLinkIsExternal(start), false);
   assert.equal(catalogueLinkIsExternal(foundations), false);
   assert.equal(catalogueLinkIsExternal(components), false);
   assert.equal(catalogueLinkIsExternal(tool), false);
   assert.equal(catalogueLinkIsExternal(learn), false);
+  assert.equal(catalogueItemIsCurrent(start, "/v2/start/"), true);
   assert.equal(catalogueItemIsCurrent(foundations, "/v2/foundations/"), true);
   assert.equal(catalogueItemIsCurrent(components, "/v2/components/"), true);
   assert.equal(catalogueItemIsCurrent(world, "/v2/world/discussion/"), true);
@@ -77,6 +81,7 @@ test("planned routes resolve to implementation issues while current routes use t
 
 test("every implemented laboratory advertised by the manifest exists", async () => {
   for (const path of [
+    "../site/src/pages/v2/start/index.astro",
     "../site/src/pages/v2/foundations/index.astro",
     "../site/src/pages/v2/components/index.astro",
     "../site/src/pages/v2/tool/index.astro",
