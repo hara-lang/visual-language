@@ -19,6 +19,7 @@ const pageUrl = new URL(`${basePath}v2/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
 const toolLab = `${basePath}v2/tool/`;
 const worldLab = `${basePath}v2/world/`;
+const worldOnboardingLab = `${basePath}v2/world/onboarding/`;
 const ecosystem = [
   { href: "#www", label: "WWW" },
   { href: "#docs", label: "Docs" },
@@ -73,7 +74,7 @@ const ecosystem = [
             <div><b>Gentle rhythm</b><span>Roomier controls, restrained rounding, and smoother transitions support long sessions.</span></div>
             <div><b>Same identity</b><span>The block H, signal dot, heading family, and light/dark contract do not move.</span></div>
           </div>
-          <p><a href={worldLab}>Open the World community laboratory →</a> · <a href={toolLab}>Open the tool workbench laboratory →</a></p>
+          <p><a href={worldLab}>Open the World community laboratory →</a> · <a href={worldOnboardingLab}>Open the programmer onboarding journey →</a> · <a href={toolLab}>Open the tool workbench laboratory →</a></p>
         </div>
         <div class="v2-lab-hero-art"><FleetField title="Hara calm command visual field" /></div>
       </section>
@@ -83,7 +84,7 @@ const ecosystem = [
         <a href="#docs"><strong>Docs</strong><span>Persistent rail, prose column, outline, search, and live code surfaces.</span><code>rail / prose / inspector</code></a>
         <a href="#specs"><strong>Specs</strong><span>Registry, checker, publishing workflow, status, and digest inspection.</span><code>workflow / table / inspector</code></a>
         <a href="#benchmarks"><strong>Benchmarks</strong><span>Evidence tabs, metric strips, dense matrices, and selected-result detail.</span><code>data board / compact</code></a>
-        <a href={worldLab}><strong>World</strong><span>Feed, Play, people, agents, projects, lessons, and lightweight community loops.</span><code>community / games / discovery</code></a>
+        <a href={worldLab}><strong>World</strong><span>Feed, Play, people, agents, projects, lessons, and lightweight community loops. A deeper onboarding journey explores how World recruits programmers into the language.</span><code>community / games / onboarding</code></a>
       </nav>
 
       <WwwSpecimen />
@@ -93,7 +94,7 @@ const ecosystem = [
       <WorldSpecimen />
       <footer class="v2-lab-footer">
         <span>Experimental v2 interface contract · Hara visual language</span>
-        <span><a href={worldLab}>World community laboratory</a> · <a href={toolLab}>Tool workbench laboratory</a> · <a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+        <span><a href={worldLab}>World community laboratory</a> · <a href={worldOnboardingLab}>Programmer onboarding journey</a> · <a href={toolLab}>Tool workbench laboratory</a> · <a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>
   </body>
