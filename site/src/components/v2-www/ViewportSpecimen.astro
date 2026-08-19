@@ -1,0 +1,16 @@
+---
+const {
+  viewport = "desktop",
+  label = "Desktop",
+  width = "1440",
+  note = "Complete layout"
+} = Astro.props;
+---
+<article class="www-viewport-specimen" data-viewport={viewport}>
+  <header>
+    <div><span class="www-viewport-specimen__dot"></span><span class="www-viewport-specimen__dot"></span><span class="www-viewport-specimen__dot"></span></div>
+    <p>{label} · {width}px</p>
+    <small>{note}</small>
+  </header>
+  <div class="www-viewport-specimen__screen"><slot /></div>
+</article>
