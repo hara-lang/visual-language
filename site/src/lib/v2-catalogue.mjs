@@ -36,8 +36,9 @@ export const catalogueGroups = [
         id: "design-system",
         label: "Design system",
         path: "/v2/foundations/",
+        href: "/v2/foundations/",
         summary: "Identity, colour, material, typography, geometry, imagery, motion, and accessibility foundations.",
-        status: "planned",
+        status: "active",
         issue: 34,
         eyebrow: "Shared language"
       },

@@ -45,12 +45,13 @@ test("planned routes resolve to implementation issues while current routes use t
   const around = catalogueItemById("world-around");
 
   assert.ok(foundations && tool && world && around);
-  assert.equal(catalogueHref(foundations, "/visual-language/"), "https://github.com/hara-lang/visual-language/issues/34");
+  assert.equal(catalogueHref(foundations, "/visual-language/"), "/visual-language/v2/foundations/");
   assert.equal(catalogueHref(tool, "/visual-language/"), "/visual-language/v2/tool/");
   assert.equal(catalogueHref(world, "/visual-language/"), "/visual-language/v2/world/");
   assert.equal(catalogueHref(around, "/visual-language/"), "/visual-language/v2/world/around/");
-  assert.equal(catalogueLinkIsExternal(foundations), true);
+  assert.equal(catalogueLinkIsExternal(foundations), false);
   assert.equal(catalogueLinkIsExternal(tool), false);
+  assert.equal(catalogueItemIsCurrent(foundations, "/v2/foundations/"), true);
   assert.equal(catalogueItemIsCurrent(world, "/v2/world/discussion/"), true);
 
   for (const item of catalogueItems.filter(({ status }) => status === "planned")) {
@@ -63,6 +64,7 @@ test("planned routes resolve to implementation issues while current routes use t
 
 test("every implemented laboratory advertised by the manifest exists", async () => {
   for (const path of [
+    "../site/src/pages/v2/foundations/index.astro",
     "../site/src/pages/v2/tool/index.astro",
     "../site/src/pages/v2/world/index.astro",
     "../site/src/pages/v2/world/discussion/index.astro",
