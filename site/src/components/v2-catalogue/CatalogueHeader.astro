@@ -14,7 +14,8 @@ const {
   sourceHref = "https://github.com/hara-lang/visual-language"
 } = Astro.props;
 
-const catalogueHome = `${basePath.endsWith("/") ? basePath : `${basePath}/`}v2/`;
+const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
+const catalogueHome = `${normalizedBasePath}v2/`;
 const foundations = catalogueGroups[0];
 const library = catalogueGroups[1];
 const applications = catalogueGroups[2];
