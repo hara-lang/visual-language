@@ -173,22 +173,6 @@ export const catalogueGroups = [
             summary: "External signal discovery, curation, source provenance, moderation, and review-first relay workflows.",
             status: "active",
             issue: 42
-          },
-          {
-            id: "world-community-study",
-            label: "Community study",
-            path: "/v2/world/community/",
-            href: "/v2/world/community/",
-            summary: "Earlier focused articles, feeds, profiles, presence, and digest exploration.",
-            status: "settled"
-          },
-          {
-            id: "world-onboarding-study",
-            label: "Onboarding study",
-            path: "/v2/world/onboarding/",
-            href: "/v2/world/onboarding/",
-            summary: "Earlier executable-feed and programmer-acquisition exploration.",
-            status: "settled"
           }
         ]
       },
@@ -196,10 +180,47 @@ export const catalogueGroups = [
         id: "learn",
         label: "Learn",
         path: "/v2/learn/",
-        summary: "Curriculum, lessons, runnable practice, koans, projects, progress, and teaching contracts.",
-        status: "planned",
+        href: "/v2/learn/",
+        summary: "Curriculum, runnable lessons, guided product examples, projects, progress, and teaching contracts.",
+        status: "active",
         issue: 43,
-        eyebrow: "Structured learning"
+        eyebrow: "Structured learning",
+        children: [
+          {
+            id: "learn-start",
+            label: "Start here",
+            path: "/v2/learn/start/",
+            href: "/v2/learn/#start",
+            summary: "A short path from the first runnable form to a useful Hara project.",
+            status: "active",
+            issue: 43
+          },
+          {
+            id: "learn-world-examples",
+            label: "World interface examples",
+            path: "/v2/learn/world-examples/",
+            href: "/v2/learn/#world-examples",
+            summary: "Guided readings of World screens, attribution, discussion, presence, and source handling.",
+            status: "active",
+            issue: 43
+          },
+          {
+            id: "learn-community-study",
+            label: "Community reader study",
+            path: "/v2/world/community/",
+            href: "/v2/world/community/",
+            summary: "The earlier focused community interface retained as a Learn example rather than a World menu destination.",
+            status: "settled"
+          },
+          {
+            id: "learn-onboarding-study",
+            label: "Programmer onboarding study",
+            path: "/v2/world/onboarding/",
+            href: "/v2/world/onboarding/",
+            summary: "The executable-feed acquisition study retained under Learn for comparison and teaching.",
+            status: "settled"
+          }
+        ]
       }
     ]
   }
