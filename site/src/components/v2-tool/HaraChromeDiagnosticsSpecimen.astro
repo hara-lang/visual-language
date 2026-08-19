@@ -1,0 +1,107 @@
+---
+import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import RuntimeAppShell from "../../../../src/astro/v2/tool/RuntimeAppShell.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import StatusLamp from "../../../../src/astro/v2/tool/StatusLamp.astro";
+import TabStrip from "../../../../src/astro/v2/tool/TabStrip.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolGroup from "../../../../src/astro/v2/tool/ToolGroup.astro";
+import ToolToggle from "../../../../src/astro/v2/tool/ToolToggle.astro";
+import Toolbar from "../../../../src/astro/v2/tool/Toolbar.astro";
+
+const apps = [
+  { id: "diagnostics-app-runtime", label: "Runtime" },
+  { id: "diagnostics-app-chatgpt", label: "ChatGPT", badge: 8 },
+  { id: "diagnostics-app-tripo", label: "Tripo", badge: 18 },
+  { id: "diagnostics-app-diagnostics", label: "Diagnostics", active: true }
+];
+---
+
+<section class="tool-lab-section hara-chrome-lab-section" id="diagnostics-app" data-hara-chrome-screen="diagnostics">
+  <header class="tool-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Hara Chrome specimen 05 · CDP diagnostics</p>
+      <h2>Diagnostics application</h2>
+    </div>
+    <p>Browser-owned CDP Overlay drawing is controlled as a bounded exact-tab capability. The app visualizes the selected DOM snapshot, overlay options, lease state, and errors without injecting a page dashboard or exposing raw CDP.</p>
+  </header>
+
+  <RuntimeAppShell idPrefix="diagnostics-screen" label="Hara Chrome diagnostics" title="Diagnostics" activeApp="diagnostics" state="ready">
+    <StatusLamp slot="header-actions" label="Diagnostics ready" state="ready" detail="tab 73" />
+    <TabStrip slot="navigation" tabs={apps} label="Hara Chrome applications" density="dense" />
+
+    <Toolbar slot="toolbar" label="Diagnostics commands" density="dense">
+      <ToolGroup label="Overlay">
+        <ToolButton label="Inspect element" active density="dense" />
+        <ToolButton label="Clear" density="dense" />
+        <ToolButton label="Disable" density="dense" />
+      </ToolGroup>
+      <ToolGroup label="Signals">
+        <ToolToggle label="Paint" pressed density="dense" />
+        <ToolToggle label="Layout shifts" density="dense" />
+        <ToolToggle label="Scroll bottlenecks" pressed density="dense" />
+        <ToolToggle label="FPS" density="dense" />
+      </ToolGroup>
+    </Toolbar>
+
+    <div class="hara-chrome-diagnostics-canvas">
+      <div class="hara-chrome-browser-frame">
+        <header><span></span><span></span><span></span><code>https://chatgpt.com/c/visual-language</code></header>
+        <main>
+          <aside><strong>ChatGPT</strong><span>Projects</span><span>Chats</span></aside>
+          <article>
+            <h3>Hara Chrome runtime</h3>
+            <p>Make the toolbar the primary connection control surface.</p>
+            <button type="button" id="diagnostic-save">Save</button>
+            <div class="hara-chrome-highlight-box" aria-hidden="true"><span>button#diagnostic-save</span></div>
+          </article>
+        </main>
+      </div>
+      <div class="hara-chrome-overlay-legend">
+        <span><i data-state="signal"></i>content</span>
+        <span><i data-state="warning"></i>padding</span>
+        <span><i data-state="danger"></i>scroll bottleneck</span>
+      </div>
+    </div>
+
+    <div slot="inspector" class="hara-chrome-inspector">
+      <InspectorSection title="DOM snapshot" open>
+        <dl class="hara-chrome-definition-list">
+          <div><dt>Tab</dt><dd>73</dd></div>
+          <div><dt>Backend node</dt><dd>441</dd></div>
+          <div><dt>Tag</dt><dd>BUTTON</dd></div>
+          <div><dt>Text</dt><dd>Save</dd></div>
+          <div><dt>Document</dt><dd>generation 8</dd></div>
+        </dl>
+      </InspectorSection>
+      <InspectorSection title="Highlight options" open>
+        <div class="hara-chrome-toggle-stack">
+          <ToolToggle label="Show info" pressed />
+          <ToolToggle label="Show rulers" pressed />
+          <ToolToggle label="Accessibility" pressed />
+        </div>
+      </InspectorSection>
+      <InspectorSection title="Failure states" open>
+        <ul class="hara-chrome-error-list">
+          <li><code>dom/target-missing</code><span>No exact bound tab</span></li>
+          <li><code>dom/node-detached</code><span>Backend node no longer resolves</span></li>
+          <li><code>dom/reference-stale</code><span>Navigation changed generation</span></li>
+        </ul>
+      </InspectorSection>
+    </div>
+
+    <div slot="bottom" class="hara-chrome-event-log">
+      <header><strong>Diagnostic events</strong><span>CDP Overlay only</span></header>
+      <ol>
+        <li><time>10:47:12.004</time><span data-state="current">diagnostics/enable</span><code>tab 73 · lease 1</code></li>
+        <li><time>10:47:12.210</time><span data-state="ready">overlay/highlight</span><code>backend-node 441</code></li>
+        <li><time>10:47:15.912</time><span data-state="warning">navigation</span><code>references invalidated</code></li>
+      </ol>
+    </div>
+
+    <StatusBar slot="status" label="Diagnostics application status">
+      <span>Overlay ready</span><span>Backend node 441</span><span>Generation 8</span>
+      <span slot="secondary">No content script · no Runtime.evaluate</span>
+    </StatusBar>
+  </RuntimeAppShell>
+</section>

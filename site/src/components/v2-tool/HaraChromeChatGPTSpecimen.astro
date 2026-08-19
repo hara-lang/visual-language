@@ -1,0 +1,106 @@
+---
+import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import RuntimeAppShell from "../../../../src/astro/v2/tool/RuntimeAppShell.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import StatusLamp from "../../../../src/astro/v2/tool/StatusLamp.astro";
+import TabStrip from "../../../../src/astro/v2/tool/TabStrip.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolGroup from "../../../../src/astro/v2/tool/ToolGroup.astro";
+import ToolSelect from "../../../../src/astro/v2/tool/ToolSelect.astro";
+import Toolbar from "../../../../src/astro/v2/tool/Toolbar.astro";
+
+const apps = [
+  { id: "chatgpt-app-runtime", label: "Runtime" },
+  { id: "chatgpt-app-chatgpt", label: "ChatGPT", active: true, badge: 8 },
+  { id: "chatgpt-app-tripo", label: "Tripo", badge: 18 },
+  { id: "chatgpt-app-diagnostics", label: "Diagnostics" }
+];
+
+const items = [
+  { group: "Pinned", title: "Hara Chrome runtime", detail: "Today · 18 messages", current: true },
+  { group: "Projects", title: "Visual Language", detail: "6 chats · updated 4m ago" },
+  { group: "Projects", title: "Greenways OS", detail: "12 chats · updated 19m ago" },
+  { group: "Chats", title: "Tripo asset downloads", detail: "Yesterday · 34 messages" }
+];
+---
+
+<section class="tool-lab-section hara-chrome-lab-section" id="chatgpt-app" data-hara-chrome-screen="chatgpt">
+  <header class="tool-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Hara Chrome specimen 03 · Site application</p>
+      <h2>ChatGPT browser app</h2>
+    </div>
+    <p>Chats, projects, pinned items, search, login state, and safe visible-UI actions are presented as a browser-controlled application. Passwords, OTPs, cookies, tokens, and provider pages stay inside Chromium.</p>
+  </header>
+
+  <RuntimeAppShell idPrefix="chatgpt-screen" label="ChatGPT Hara application" title="ChatGPT" activeApp="chatgpt" state="attention">
+    <StatusLamp slot="header-actions" label="Signed in" state="ready" detail="Personal" />
+    <TabStrip slot="navigation" tabs={apps} label="Hara Chrome applications" density="dense" />
+
+    <Toolbar slot="toolbar" label="ChatGPT application commands" density="dense">
+      <ToolGroup label="Inventory">
+        <ToolSelect label="Surface" value="all" inline options={[
+          { value: "all", label: "Chats, projects, pinned" },
+          { value: "projects", label: "Projects" },
+          { value: "pinned", label: "Pinned" }
+        ]} />
+      </ToolGroup>
+      <ToolGroup label="Actions">
+        <ToolButton label="Refresh" density="dense" />
+        <ToolButton label="Search" active density="dense" />
+        <ToolButton label="Open selected" density="dense" />
+      </ToolGroup>
+    </Toolbar>
+
+    <div class="hara-chrome-site-app hara-chrome-chatgpt">
+      <aside class="hara-chrome-site-list" aria-label="ChatGPT inventory">
+        <label class="hara-chrome-search"><span>Search chats</span><input type="search" value="Hara" readonly /></label>
+        <div class="hara-chrome-list-items">
+          {items.map((item) => (
+            <button type="button" data-current={item.current ? "true" : "false"}>
+              <small>{item.group}</small><strong>{item.title}</strong><span>{item.detail}</span>
+            </button>
+          ))}
+        </div>
+      </aside>
+      <article class="hara-chrome-site-detail">
+        <header><div><span>Pinned chat</span><h3>Hara Chrome runtime</h3></div><StatusLamp label="Current tab" state="ready" detail="tab 73" /></header>
+        <div class="hara-chrome-chat-transcript">
+          <p data-speaker="user"><span>You</span>Make the toolbar the primary Greenways control surface.</p>
+          <p data-speaker="assistant"><span>Assistant</span>The popup now separates desired connection state from actual runtime state.</p>
+          <p data-speaker="user"><span>You</span>Add diagnostics without injecting a website interface.</p>
+        </div>
+        <footer><ToolButton label="Open in browser" /><ToolButton label="Copy chat reference" /></footer>
+      </article>
+    </div>
+
+    <div slot="inspector" class="hara-chrome-inspector">
+      <InspectorSection title="Authentication" open>
+        <div class="hara-chrome-state-strip">
+          <article data-state="off"><span>1</span><strong>Signed out</strong><small>Visible login control</small></article>
+          <article data-state="attention"><span>2</span><strong>Provider login</strong><small>Browser-only credentials</small></article>
+          <article data-state="ready"><span>3</span><strong>Signed in</strong><small>Inventory available</small></article>
+        </div>
+      </InspectorSection>
+      <InspectorSection title="Authority" open>
+        <dl class="hara-chrome-definition-list">
+          <div><dt>Target</dt><dd>tab 73 only</dd></div>
+          <div><dt>Origin</dt><dd>chatgpt.com</dd></div>
+          <div><dt>Credentials</dt><dd>never cross bridge</dd></div>
+          <div><dt>Page JavaScript</dt><dd>not exposed</dd></div>
+        </dl>
+      </InspectorSection>
+    </div>
+
+    <div slot="bottom" class="hara-chrome-receipts">
+      <header><strong>Operation receipts</strong><span>visible UI only</span></header>
+      <div><time>10:44:02</time><code>chatgpt/search</code><span>8 results</span><b data-state="ready">complete</b></div>
+      <div><time>10:44:10</time><code>chatgpt/open-chat</code><span>tab 73</span><b data-state="ready">complete</b></div>
+    </div>
+
+    <StatusBar slot="status" label="ChatGPT application status">
+      <span>Signed in</span><span>8 results</span><span>Exact tab 73</span>
+      <span slot="secondary">Credentials remain in Chromium</span>
+    </StatusBar>
+  </RuntimeAppShell>
+</section>

@@ -1,0 +1,97 @@
+---
+import ThemeToggle from "../../../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../../../src/astro/HaraMark.astro";
+import HaraChromePopupSpecimen from "../../../../components/v2-tool/HaraChromePopupSpecimen.astro";
+import HaraChromeRuntimeSpecimen from "../../../../components/v2-tool/HaraChromeRuntimeSpecimen.astro";
+import HaraChromeChatGPTSpecimen from "../../../../components/v2-tool/HaraChromeChatGPTSpecimen.astro";
+import HaraChromeTripoSpecimen from "../../../../components/v2-tool/HaraChromeTripoSpecimen.astro";
+import HaraChromeDiagnosticsSpecimen from "../../../../components/v2-tool/HaraChromeDiagnosticsSpecimen.astro";
+import "../../../../../../src/v2-tool.css";
+import "../../../../../../src/theme.js";
+import "../../../../styles/v2-lab.css";
+import "../../../../styles/v2-tool-lab.css";
+import "../../../../styles/v2-calm-lab.css";
+import "../../../../styles/v2-hara-chrome-lab.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/tool/hara-chrome/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const toolLab = `${basePath}v2/tool/`;
+const documentLab = `${basePath}v2/`;
+const sections = [
+  { href: "#toolbar-popup", label: "Toolbar" },
+  { href: "#runtime-app", label: "Runtime" },
+  { href: "#chatgpt-app", label: "ChatGPT" },
+  { href: "#tripo-app", label: "Tripo" },
+  { href: "#diagnostics-app", label: "Diagnostics" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Hara v2 browser-runtime chrome: toolbar connection control plus Runtime, ChatGPT, Tripo, and bounded CDP diagnostics application screens." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara Chrome v2 runtime screens" />
+    <meta property="og:description" content="Compact extension controls and browser-runtime applications built from the Hara v2 tool language." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara Chrome v2 runtime screens" />
+    <meta name="twitter:description" content="Toolbar, Runtime, ChatGPT, Tripo, and CDP diagnostics screen studies." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara Chrome v2 runtime screens</title>
+  </head>
+  <body class="hara-v2 hara-v2-tool">
+    <header class="v2-lab-header">
+      <a class="v2-lab-brand" href={toolLab}>
+        <HaraMark size={28} />
+        <b>Hara visual language</b>
+        <small>V2 browser runtime</small>
+      </a>
+      <nav aria-label="Hara Chrome screen specimens">
+        {sections.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+      <ThemeToggle />
+    </header>
+
+    <main class="v2-lab-main">
+      <section class="hara-chrome-runtime-hero">
+        <div>
+          <p class="hara-v2-kicker">Browser runtime family · Version 2</p>
+          <h1>The extension is the operating surface.</h1>
+          <p>Hara Chrome uses a compact toolbar action for connection control and a calm application workbench for the persistent runtime, ChatGPT, Tripo, and bounded diagnostics. Desired state stays separate from actual state, and every screen preserves exact-tab authority.</p>
+          <p><a class="tool-lab-back-link" href={toolLab}>← Return to the complete tool workbench laboratory</a> · <a class="tool-lab-back-link" href={documentLab}>Document and product shells</a></p>
+        </div>
+        <div class="hara-chrome-runtime-hero-art" aria-hidden="true">
+          <div class="hara-chrome-runtime-core">H</div>
+          <div class="hara-chrome-runtime-telemetry"><span>Offscreen / ready</span><span>RESP / connected</span><span>Target / tab 73</span></div>
+        </div>
+      </section>
+
+      <nav class="hara-chrome-screen-index" aria-label="Hara Chrome screen catalogue">
+        <a href="#toolbar-popup"><strong>Toolbar control</strong><span>Exact tab, runtime, RESP, adapter, diagnostics, downloads, and quick commands.</span><code>compact / desired + actual</code></a>
+        <a href="#runtime-app"><strong>Runtime</strong><span>REPL, sessions, frontmatter, providers, events, filesystem, and persistent status.</span><code>offscreen / repl</code></a>
+        <a href="#chatgpt-app"><strong>ChatGPT</strong><span>Chats, projects, pinned items, search, authentication state, and visible-UI receipts.</span><code>browser app / safe</code></a>
+        <a href="#tripo-app"><strong>Tripo</strong><span>Workspace, assets, export options, explicit download, and local receipt.</span><code>assets / explicit effect</code></a>
+        <a href="#diagnostics-app"><strong>Diagnostics</strong><span>DOM snapshot, CDP Overlay, exact-tab lease, highlight options, and bounded errors.</span><code>overlay / no injection</code></a>
+      </nav>
+
+      <HaraChromePopupSpecimen />
+      <HaraChromeRuntimeSpecimen />
+      <HaraChromeChatGPTSpecimen />
+      <HaraChromeTripoSpecimen />
+      <HaraChromeDiagnosticsSpecimen />
+
+      <footer class="v2-lab-footer">
+        <span>Experimental v2 browser-runtime contract · Hara visual language</span>
+        <span><a href={toolLab}>Tool laboratory</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+  </body>
+</html>
