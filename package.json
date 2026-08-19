@@ -37,6 +37,15 @@
     "./astro/v2/Sidebar.astro": "./src/astro/v2/Sidebar.astro",
     "./astro/v2/PageHeader.astro": "./src/astro/v2/PageHeader.astro",
     "./astro/v2/FleetField.astro": "./src/astro/v2/FleetField.astro",
+    "./astro/v2/tool/Toolbar.astro": "./src/astro/v2/tool/Toolbar.astro",
+    "./astro/v2/tool/ToolGroup.astro": "./src/astro/v2/tool/ToolGroup.astro",
+    "./astro/v2/tool/ToolButton.astro": "./src/astro/v2/tool/ToolButton.astro",
+    "./astro/v2/tool/ToolToggle.astro": "./src/astro/v2/tool/ToolToggle.astro",
+    "./astro/v2/tool/ToolSelect.astro": "./src/astro/v2/tool/ToolSelect.astro",
+    "./astro/v2/tool/ToolNumberField.astro": "./src/astro/v2/tool/ToolNumberField.astro",
+    "./astro/v2/tool/TabStrip.astro": "./src/astro/v2/tool/TabStrip.astro",
+    "./astro/v2/tool/IconRail.astro": "./src/astro/v2/tool/IconRail.astro",
+    "./astro/v2/tool/StatusBar.astro": "./src/astro/v2/tool/StatusBar.astro",
     "./assets/*": "./assets/*"
   },
   "scripts": {
