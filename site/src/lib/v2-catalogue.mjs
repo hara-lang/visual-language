@@ -94,6 +94,15 @@ export const catalogueGroups = [
     summary: "Focused product laboratories with distinct information architecture and complete workflow states.",
     items: [
       {
+        id: "start",
+        label: "Start",
+        path: "/v2/start/",
+        href: "/v2/start/",
+        summary: "Agent-first onboarding from repository evidence to a visible live mutation and precise receipt.",
+        status: "active",
+        eyebrow: "Build something alive"
+      },
+      {
         id: "www",
         label: "WWW",
         path: "/v2/www/",
