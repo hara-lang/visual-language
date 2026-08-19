@@ -1,6 +1,7 @@
 // @ts-check
 
 /** @typedef {"planned" | "active" | "settled"} CatalogueStatus */
+/** @typedef {"current" | "historical" | "compatibility"} CatalogueKind */
 
 /**
  * @typedef {object} CatalogueItem
@@ -12,6 +13,10 @@
  * @property {string=} href
  * @property {number=} issue
  * @property {string=} eyebrow
+ * @property {string=} canonicalPath
+ * @property {string[]=} aliases
+ * @property {CatalogueKind=} kind
+ * @property {string=} tabLabel
  * @property {CatalogueItem[]=} children
  */
 
@@ -174,12 +179,13 @@ export const catalogueGroups = [
         children: [
           {
             id: "world-discussion",
-            label: "Focused discussion",
+            label: "Discussion",
             path: "/v2/world/discussion/",
             href: "/v2/world/discussion/",
             summary: "Articles, feeds, clippings, comments, presence, contributor identity, and the World/Learn boundary.",
             status: "active",
-            issue: 42
+            issue: 42,
+            tabLabel: "Discussion"
           },
           {
             id: "world-around",
@@ -216,8 +222,11 @@ export const catalogueGroups = [
             label: "Agent-first Start",
             path: "/v2/start/",
             href: "/v2/start/",
+            canonicalPath: "/v2/learn/start/agent-first/",
+            aliases: ["/v2/start/"],
             summary: "Point an agent at Hara, inspect the evidence behind its recommendation, build a living Habitat, and make one visible mutation.",
-            status: "active"
+            status: "active",
+            tabLabel: "Agent-first"
           },
           {
             id: "learn-world-examples",
@@ -226,23 +235,32 @@ export const catalogueGroups = [
             href: "/v2/learn/#world-examples",
             summary: "Guided readings of World screens, attribution, discussion, presence, and source handling.",
             status: "active",
-            issue: 43
+            issue: 43,
+            tabLabel: "World examples"
           },
           {
             id: "learn-community-study",
             label: "Community reader study",
             path: "/v2/world/community/",
             href: "/v2/world/community/",
+            canonicalPath: "/v2/learn/studies/world-community/",
+            aliases: ["/v2/world/community/"],
             summary: "The earlier focused community interface retained as a Learn example rather than a World menu destination.",
-            status: "settled"
+            status: "settled",
+            kind: "historical",
+            tabLabel: "Community study"
           },
           {
             id: "learn-onboarding-study",
             label: "Programmer onboarding study",
             path: "/v2/world/onboarding/",
             href: "/v2/world/onboarding/",
+            canonicalPath: "/v2/learn/studies/programmer-onboarding/",
+            aliases: ["/v2/world/onboarding/"],
             summary: "The executable-feed acquisition study retained under Learn for comparison and teaching.",
-            status: "settled"
+            status: "settled",
+            kind: "historical",
+            tabLabel: "Onboarding study"
           }
         ]
       }
@@ -256,14 +274,26 @@ export const catalogueStatusLabels = {
   settled: "Settled contract"
 };
 
+export const catalogueKindLabels = {
+  current: "Current route",
+  historical: "Historical study",
+  compatibility: "Compatibility route"
+};
+
 /**
  * Flatten the route inventory while preserving parent relationships.
  * @param {CatalogueGroup[]=} groups
  */
 export function flattenCatalogueItems(groups = catalogueGroups) {
   return groups.flatMap((group) => group.items.flatMap((item) => [
-    { ...item, groupId: group.id, parentId: null },
-    ...(item.children ?? []).map((child) => ({ ...child, groupId: group.id, parentId: item.id }))
+    { ...item, groupId: group.id, groupLabel: group.label, parentId: null, parentLabel: null },
+    ...(item.children ?? []).map((child) => ({
+      ...child,
+      groupId: group.id,
+      groupLabel: group.label,
+      parentId: item.id,
+      parentLabel: item.label
+    }))
   ]));
 }
 
@@ -272,6 +302,27 @@ export const catalogueItems = flattenCatalogueItems();
 /** @param {string} id */
 export function catalogueItemById(id) {
   return catalogueItems.find((item) => item.id === id);
+}
+
+/** @param {string} value */
+export function normalizeCataloguePath(value) {
+  if (!value) return "/";
+  let path = String(value).trim();
+  try {
+    if (/^[a-z][a-z\d+.-]*:\/\//i.test(path)) path = new URL(path).pathname;
+  } catch {}
+  path = path.split(/[?#]/, 1)[0] || "/";
+  if (!path.startsWith("/")) path = `/${path}`;
+  return path === "/" || path.endsWith("/") ? path : `${path}/`;
+}
+
+/** @param {CatalogueItem} item */
+export function catalogueRoutePaths(item) {
+  return [...new Set([
+    item.path,
+    item.canonicalPath,
+    ...(item.aliases ?? [])
+  ].filter(Boolean).map(normalizeCataloguePath))];
 }
 
 /**
@@ -288,6 +339,12 @@ export function catalogueHref(item, basePath) {
   return "#";
 }
 
+/** @param {string} path @param {string} basePath */
+export function cataloguePathHref(path, basePath) {
+  const base = basePath.endsWith("/") ? basePath : `${basePath}/`;
+  return `${base}${normalizeCataloguePath(path).replace(/^\/+/, "")}`;
+}
+
 /** @param {CatalogueItem} item */
 export function catalogueLinkIsExternal(item) {
   return !item.href && Boolean(item.issue);
@@ -298,10 +355,74 @@ export function catalogueLinkIsExternal(item) {
  * @param {string} activePath
  */
 export function catalogueItemIsCurrent(item, activePath) {
-  return activePath === item.path || activePath.startsWith(item.path.endsWith("/") ? item.path : `${item.path}/`);
+  const active = normalizeCataloguePath(activePath);
+  return catalogueRoutePaths(item).some((path) => active === path || active.startsWith(path));
 }
 
 /** @param {CatalogueGroup} group @param {string} activePath */
 export function catalogueGroupIsCurrent(group, activePath) {
   return group.items.some((item) => catalogueItemIsCurrent(item, activePath) || (item.children ?? []).some((child) => catalogueItemIsCurrent(child, activePath)));
+}
+
+/** @param {CatalogueItem} item @param {string} activePath */
+function catalogueMatchLength(item, activePath) {
+  const active = normalizeCataloguePath(activePath);
+  return Math.max(0, ...catalogueRoutePaths(item)
+    .filter((path) => active === path || active.startsWith(path))
+    .map((path) => path.length));
+}
+
+/**
+ * Resolve the catalogue location, family tabs and predictable parent/previous/next
+ * navigation for a deep route. The manifest remains the only source of route
+ * relationships; pages supply only their own in-page section anchors.
+ * @param {string} activePath
+ */
+export function catalogueRouteContext(activePath) {
+  const active = normalizeCataloguePath(activePath);
+  if (active === "/v2/") return null;
+
+  const item = [...catalogueItems]
+    .filter((candidate) => catalogueItemIsCurrent(candidate, active))
+    .sort((left, right) => catalogueMatchLength(right, active) - catalogueMatchLength(left, active))[0];
+  if (!item) return null;
+
+  const group = catalogueGroups.find(({ id }) => id === item.groupId);
+  if (!group) return null;
+
+  const parent = item.parentId ? catalogueItemById(item.parentId) : null;
+  const family = parent ?? item;
+  const familyChildren = family.children ?? [];
+  const siblings = parent || familyChildren.length > 0
+    ? [family, ...familyChildren]
+    : group.items;
+  const currentIndex = siblings.findIndex(({ id }) => id === item.id);
+  const canonicalPath = normalizeCataloguePath(item.canonicalPath ?? item.path);
+  const isAlias = active !== canonicalPath && catalogueRoutePaths(item).includes(active);
+  const statusLabel = item.kind === "historical"
+    ? catalogueKindLabels.historical
+    : catalogueStatusLabels[item.status];
+
+  const crumbs = [
+    { id: "catalogue", label: "Catalogue", path: "/v2/" },
+    { id: group.id, label: group.label, path: `/v2/#catalogue-${group.id}` }
+  ];
+  if (parent) crumbs.push({ id: family.id, label: family.label, path: family.path });
+  crumbs.push({ id: item.id, label: item.label, path: item.path, current: true });
+
+  return {
+    activePath: active,
+    item,
+    group,
+    family,
+    parent,
+    siblings,
+    previous: currentIndex > 0 ? siblings[currentIndex - 1] : null,
+    next: currentIndex >= 0 && currentIndex < siblings.length - 1 ? siblings[currentIndex + 1] : null,
+    parentTarget: parent ?? { id: "catalogue", label: "Catalogue", path: "/v2/", href: "/v2/", status: "active" },
+    crumbs,
+    canonicalPath,
+    isAlias,
+    statusLabel
+  };
 }
