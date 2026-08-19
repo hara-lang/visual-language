@@ -24,6 +24,7 @@
     "./motifs.css": "./src/motifs.css",
     "./effects.css": "./src/effects.css",
     "./v2.css": "./src/v2.css",
+    "./v2-tool.css": "./src/v2-tool.css",
     "./theme.js": "./src/theme.js",
     "./astro/ThemeToggle.astro": "./src/astro/ThemeToggle.astro",
     "./astro/HaraMark.astro": "./src/astro/HaraMark.astro",
