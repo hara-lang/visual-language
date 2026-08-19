@@ -1,0 +1,23 @@
+---
+import HaraMark from "../../../../src/astro/HaraMark.astro";
+import { wwwFamilyRoutes } from "../../lib/v2-www-family.mjs";
+
+const { basePath, active = "www", actions = [] } = Astro.props;
+const base = basePath.endsWith("/") ? basePath : `${basePath}/`;
+---
+<header class="www-family-nav">
+  <a class="www-family-brand" href={`${base}v2/www/`}>
+    <HaraMark size={26} />
+    <span><b>Hara</b><small>Public language family</small></span>
+  </a>
+  <nav aria-label="WWW family">
+    {wwwFamilyRoutes.map((route) => (
+      <a href={`${base}${route.path.replace(/^\/+/, "")}`} aria-current={route.id === active ? "page" : undefined}>
+        <span>{route.label}</span><small>{route.summary}</small>
+      </a>
+    ))}
+  </nav>
+  <div class="www-family-actions">
+    {actions.map((action) => <a class="hara-v2-button" data-variant={action.primary ? "primary" : undefined} href={action.href}>{action.label}</a>)}
+  </div>
+</header>
