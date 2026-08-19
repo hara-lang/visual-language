@@ -40,18 +40,22 @@ test("catalogue identifiers and canonical paths are unique", () => {
 
 test("planned routes resolve to implementation issues while current routes use the Pages base path", () => {
   const foundations = catalogueItemById("design-system");
+  const components = catalogueItemById("components");
   const tool = catalogueItemById("tool-workbenches");
   const world = catalogueItemById("world");
   const around = catalogueItemById("world-around");
 
-  assert.ok(foundations && tool && world && around);
+  assert.ok(foundations && components && tool && world && around);
   assert.equal(catalogueHref(foundations, "/visual-language/"), "/visual-language/v2/foundations/");
+  assert.equal(catalogueHref(components, "/visual-language/"), "/visual-language/v2/components/");
   assert.equal(catalogueHref(tool, "/visual-language/"), "/visual-language/v2/tool/");
   assert.equal(catalogueHref(world, "/visual-language/"), "/visual-language/v2/world/");
   assert.equal(catalogueHref(around, "/visual-language/"), "/visual-language/v2/world/around/");
   assert.equal(catalogueLinkIsExternal(foundations), false);
+  assert.equal(catalogueLinkIsExternal(components), false);
   assert.equal(catalogueLinkIsExternal(tool), false);
   assert.equal(catalogueItemIsCurrent(foundations, "/v2/foundations/"), true);
+  assert.equal(catalogueItemIsCurrent(components, "/v2/components/"), true);
   assert.equal(catalogueItemIsCurrent(world, "/v2/world/discussion/"), true);
 
   for (const item of catalogueItems.filter(({ status }) => status === "planned")) {
@@ -65,6 +69,7 @@ test("planned routes resolve to implementation issues while current routes use t
 test("every implemented laboratory advertised by the manifest exists", async () => {
   for (const path of [
     "../site/src/pages/v2/foundations/index.astro",
+    "../site/src/pages/v2/components/index.astro",
     "../site/src/pages/v2/tool/index.astro",
     "../site/src/pages/v2/world/index.astro",
     "../site/src/pages/v2/world/discussion/index.astro",
