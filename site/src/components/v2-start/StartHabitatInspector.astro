@@ -1,0 +1,51 @@
+---
+---
+            <aside class="start-inspector" aria-label="Habitat controls">
+              <div class="start-inspector-head">
+                <div><span>Inspector</span><b>world/rules</b></div>
+                <small>editable state</small>
+              </div>
+
+              <section class="start-inspector-section">
+                <header><b>Behaviour</b><span>4 values</span></header>
+                <label class="start-control-row" for="fear-radius">
+                  <span><b>Fear radius</b><small>distance from bat</small></span>
+                  <output data-fear-output>42</output>
+                </label>
+                <input id="fear-radius" data-world-control="fear" type="range" min="18" max="90" step="1" value="42" />
+                <div class="start-preset-row" aria-label="Fear radius presets">
+                  <button type="button" data-mutation="brave">Brave</button>
+                  <button class="is-active" type="button" data-mutation="default">Default</button>
+                  <button type="button" data-mutation="cautious">Cautious</button>
+                </div>
+
+                <label class="start-control-row" for="separation">
+                  <span><b>Separation</b><small>personal space</small></span>
+                  <output data-separation-output>18</output>
+                </label>
+                <input id="separation" data-world-control="separation" type="range" min="8" max="38" step="1" value="18" />
+              </section>
+
+              <section class="start-inspector-section">
+                <header><b>Environment</b><span>2 values</span></header>
+                <label class="start-control-row" for="light-strength">
+                  <span><b>Light strength</b><small>moth attraction</small></span>
+                  <output data-light-output>0.84</output>
+                </label>
+                <input id="light-strength" data-world-control="light" type="range" min="0.2" max="1" step="0.01" value="0.84" />
+
+                <label class="start-control-row" for="night-speed">
+                  <span><b>Night speed</b><small>clock multiplier</small></span>
+                  <output data-speed-output>1.20×</output>
+                </label>
+                <input id="night-speed" data-world-control="speed" type="range" min="0.4" max="2" step="0.05" value="1.2" />
+              </section>
+
+              <section class="start-inspector-section start-inspector-agent">
+                <header><b>Ask the agent</b><span>safe edits</span></header>
+                <button type="button" data-mutation="brave"><span>“Make the moths braver.”</span><small>:fear-radius 28</small></button>
+                <button type="button" data-mutation="space"><span>“Give them more room.”</span><small>:separation 28</small></button>
+                <button type="button" data-mutation="bright"><span>“Make the light irresistible.”</span><small>:strength 1.00</small></button>
+                <button type="button" data-mutation="slow"><span>“Slow the night down.”</span><small>:night-speed 0.70</small></button>
+              </section>
+            </aside>

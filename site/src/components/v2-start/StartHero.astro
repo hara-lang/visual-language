@@ -1,0 +1,62 @@
+---
+const { intents, agentBrief, sourceRepo } = Astro.props;
+---
+      <section id="brief" class="start-hero start-stage" data-start-stage="brief">
+        <div class="start-hero-copy">
+          <p class="hara-v2-kicker">Agent-first getting started · Visual prototype</p>
+          <h1>Point your agent at Hara. Get a living thing back.</h1>
+          <p class="start-lede">No empty editor. No tour of language history. Begin with an outcome, let the agent ground itself in the repository, and reach the moment that matters: changing a rule while the program is still alive.</p>
+
+          <fieldset class="start-intent-fieldset">
+            <legend>What do you want to happen?</legend>
+            <div class="start-intent-grid" role="group" aria-label="Choose a first outcome">
+              {intents.map((intent, index) => (
+                <button
+                  class:list={["start-intent", { "is-active": index === 0 }]}
+                  type="button"
+                  data-intent={intent.id}
+                  data-intent-prompt={intent.prompt}
+                  aria-pressed={index === 0 ? "true" : "false"}
+                >
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {intent.label}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+
+          <div class="start-hero-actions">
+            <button class="start-action start-action-primary" type="button" data-copy-agent-brief>
+              <span aria-hidden="true">↗</span>
+              Copy the agent brief
+            </button>
+            <a class="start-action" href={sourceRepo}>Open hara-lang/hara</a>
+            <a class="start-text-link" href="#habitat">Skip to the living system ↓</a>
+          </div>
+
+          <div class="start-trust-strip" aria-label="Prototype boundaries">
+            <div><b>One question</b><span>Choose by desired outcome</span></div>
+            <div><b>Three options</b><span>Grounded in repository evidence</span></div>
+            <div><b>One live edit</b><span>Visible, inspectable, reversible</span></div>
+          </div>
+        </div>
+
+        <div class="start-agent-window" aria-label="Copyable agent brief">
+          <div class="start-window-bar">
+            <div class="start-window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <span>Agent brief / hara-lang/hara</span>
+            <span class="start-window-state"><i></i> Ready to copy</span>
+          </div>
+          <div class="start-repo-field">
+            <span aria-hidden="true">⌘</span>
+            <code>github.com/hara-lang/hara</code>
+            <span>public repository</span>
+          </div>
+          <pre class="start-agent-brief" data-agent-brief tabindex="0">{agentBrief}</pre>
+          <div class="start-agent-footer">
+            <span>Selected intent: <b data-selected-intent>make something move</b></span>
+            <button type="button" data-copy-agent-brief>Copy brief</button>
+          </div>
+          <p class="start-agent-note"><b>Prototype note.</b> This visual-language route does not call GitHub or execute Hara. It models the product contract and runs a local browser simulation so capability claims remain explicit.</p>
+        </div>
+      </section>

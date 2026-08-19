@@ -1,0 +1,111 @@
+.start-action {
+  display: inline-flex;
+  gap: .5rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: .65rem .9rem;
+  color: var(--hara-v2-ink);
+  border: 1px solid var(--hara-v2-line-strong);
+  border-radius: 7px;
+  background: var(--hara-v2-panel-raised);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--hara-v2-ink) 8%, transparent);
+  font: 720 .7rem var(--hara-v2-font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--hara-v2-motion), border-color var(--hara-v2-motion), background var(--hara-v2-motion);
+}
+
+.start-action:hover {
+  border-color: color-mix(in srgb, var(--hara-v2-line-strong) 40%, var(--hara-v2-signal));
+  background: color-mix(in srgb, var(--hara-v2-panel-raised) 94%, var(--hara-v2-signal));
+  transform: translateY(-1px);
+}
+
+.start-action:disabled { opacity: .65; cursor: progress; transform: none; }
+.start-action-primary {
+  color: #f5f8fc;
+  border-color: color-mix(in srgb, var(--hara-v2-signal) 78%, #101419);
+  background: color-mix(in srgb, var(--hara-v2-signal) 76%, #111923);
+}
+.start-action-primary:hover { background: color-mix(in srgb, var(--hara-v2-signal) 86%, #111923); }
+
+.start-text-link {
+  margin-left: .35rem;
+  color: var(--hara-v2-muted);
+  font-size: .68rem;
+  text-decoration: none;
+}
+.start-text-link:hover { color: var(--hara-v2-ink); }
+
+.start-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hara-v2-line);
+}
+.start-trust-strip div { display: grid; gap: .25rem; }
+.start-trust-strip b { font-size: .68rem; }
+.start-trust-strip span { color: var(--hara-v2-faint); font-size: .61rem; line-height: 1.4; }
+
+.start-agent-window {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--hara-v2-line-strong);
+  border-radius: 15px;
+  background: var(--hara-v2-panel-recess);
+  box-shadow: 0 32px 90px color-mix(in srgb, var(--hara-v2-ink) 15%, transparent), inset 0 1px color-mix(in srgb, white 8%, transparent);
+  clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%, 0 16px);
+}
+
+.start-agent-window::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 82% 14%, color-mix(in srgb, var(--hara-v2-signal) 17%, transparent), transparent 30%),
+    linear-gradient(transparent 31px, var(--hara-v2-grid) 32px),
+    linear-gradient(90deg, transparent 31px, var(--hara-v2-grid) 32px);
+  background-size: auto, 32px 32px, 32px 32px;
+  content: "";
+  opacity: .7;
+}
+
+.start-agent-window > * { position: relative; z-index: 1; }
+
+.start-window-bar {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 .85rem;
+  color: var(--hara-v2-faint);
+  border-bottom: 1px solid var(--hara-v2-line);
+  background: color-mix(in srgb, var(--hara-v2-panel) 86%, transparent);
+  font: 700 .56rem var(--hara-v2-font-code);
+  letter-spacing: .04em;
+}
+
+.start-window-dots { display: flex; gap: .32rem; }
+.start-window-dots i { width: 6px; height: 6px; border: 1px solid var(--hara-v2-line-strong); border-radius: 50%; }
+.start-window-dots i:first-child { background: var(--hara-v2-warning); border-color: transparent; }
+.start-window-state { display: flex; gap: .42rem; align-items: center; color: var(--hara-v2-muted); }
+.start-window-state i { width: 5px; height: 5px; border-radius: 50%; background: var(--hara-v2-success); box-shadow: 0 0 0 4px color-mix(in srgb, var(--hara-v2-success) 13%, transparent); }
+
+.start-repo-field {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: .65rem;
+  align-items: center;
+  margin: 1rem 1rem 0;
+  padding: .72rem .78rem;
+  border: 1px solid var(--hara-v2-line);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--hara-v2-panel-raised) 78%, transparent);
+}
+.start-repo-field > span:first-child { color: var(--hara-v2-signal); }
+.start-repo-field code { overflow: hidden; color: var(--hara-v2-ink); font-size: .69rem; text-overflow: ellipsis; }

@@ -1,0 +1,59 @@
+@media (max-width: 620px) {
+  .start-hero-actions { align-items: stretch; }
+  .start-hero-actions .start-action { width: 100%; }
+  .start-text-link { width: 100%; margin: .3rem 0 0; text-align: center; }
+  .start-trust-strip { grid-template-columns: 1fr; gap: .65rem; }
+  .start-trust-strip div { grid-template-columns: 120px 1fr; gap: .6rem; }
+  .start-window-bar { grid-template-columns: auto 1fr; }
+  .start-window-state { display: none; }
+  .start-repo-field { grid-template-columns: auto 1fr; }
+  .start-repo-field > span:last-child { display: none; }
+  .start-agent-footer { align-items: flex-start; flex-direction: column; }
+  .start-agent-footer button { width: 100%; }
+  .start-scan-command { align-items: stretch; flex-direction: column; }
+  .start-scan-command .start-action { width: 100%; }
+  .start-scan-pipeline { padding: 1.1rem .8rem 1.1rem 1.5rem; }
+  .start-scan-pipeline li { grid-template-columns: 36px 1fr; gap: .6rem; }
+  .start-scan-pipeline output { grid-column: 2; }
+  .start-recipe-grid { grid-template-columns: 1fr; overflow-x: visible; }
+  .start-recipe-card { min-height: 420px; }
+  .start-recommendation { min-height: 430px; }
+  .start-recommendation-mark { top: 1.2rem; right: 1.2rem; width: 68px; height: 68px; }
+  .start-recommendation-mark::before { width: 96px; }
+  .start-recommendation-mark::after { height: 96px; }
+  .start-workbench-topbar { grid-template-columns: 1fr; padding: .65rem; }
+  .start-workbench-actions { justify-content: flex-start; }
+  .start-prototype-badge { margin-right: auto; }
+  .start-viewport-toolbar > div:last-child span:not(:last-child) { display: none; }
+  .start-viewport-column { grid-template-rows: auto minmax(340px, 1fr) 270px; }
+  #habitat-canvas { min-height: 340px; }
+  .start-canvas-instruction { top: .65rem; left: .65rem; width: calc(100% - 1.3rem); }
+  .start-inspector { grid-template-columns: 1fr; }
+  .start-inspector-section { border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .start-inspector-agent { grid-column: auto; border-top: 0; }
+  .start-workbench-statusbar { grid-template-columns: auto 1fr; }
+  .start-workbench-statusbar span:nth-child(4) { display: none; }
+  .start-workbench-statusbar span:nth-child(3) { text-align: right; }
+  .start-mutation-flow { grid-template-columns: 1fr 1fr; }
+  .start-live-receipt { grid-template-columns: 1fr; }
+  .start-live-receipt dl,
+  .start-live-receipt-reason { grid-column: auto; grid-row: auto; }
+  .start-graduation-grid { grid-template-columns: 1fr; }
+  .start-learned-strip { grid-template-columns: 1fr; }
+  .start-learned-strip > div:first-child { grid-column: auto; }
+  .start-closing { padding: 1.4rem; }
+  .start-closing h2 { font-size: clamp(3rem, 16vw, 5rem); }
+  .start-footer { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start-intent,
+  .start-action,
+  .start-scan-pipeline li,
+  .start-canvas-instruction,
+  .start-recipe-card { transition: none; }
+  .start-action:hover,
+  .start-scan-pipeline li[data-state="checking"] { transform: none; }
+  .start-live-dot,
+  .start-window-state i { box-shadow: none; }
+}

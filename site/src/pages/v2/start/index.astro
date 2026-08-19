@@ -1,0 +1,150 @@
+---
+import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
+import StartHero from "../../../components/v2-start/StartHero.astro";
+import StartDiscover from "../../../components/v2-start/StartDiscover.astro";
+import StartChoose from "../../../components/v2-start/StartChoose.astro";
+import StartHabitat from "../../../components/v2-start/StartHabitat.astro";
+import StartMutate from "../../../components/v2-start/StartMutate.astro";
+import StartGraduate from "../../../components/v2-start/StartGraduate.astro";
+import "../../../../../src/v2.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-lab.css";
+import "../../../styles/v2-calm-lab.css";
+import "../../../styles/v2-start.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/start/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const v2Lab = `${basePath}v2/`;
+const toolLab = `${basePath}v2/tool/`;
+const sourceRepo = "https://github.com/hara-lang/hara";
+
+const journey = [
+  { href: "#brief", label: "Point agent" },
+  { href: "#discover", label: "Discover" },
+  { href: "#choose", label: "Choose" },
+  { href: "#habitat", label: "Build" },
+  { href: "#mutate", label: "Change" },
+  { href: "#graduate", label: "Grow" }
+];
+
+const intents = [
+  { id: "move", label: "Move", prompt: "make something move" },
+  { id: "automate", label: "Automate", prompt: "automate a repeated job" },
+  { id: "inspect", label: "Inspect", prompt: "inspect a living program" },
+  { id: "transform", label: "Transform", prompt: "transform data or code" },
+  { id: "coordinate", label: "Coordinate", prompt: "coordinate several pieces of work" },
+  { id: "publish", label: "Publish", prompt: "publish a small reusable package" }
+];
+
+const recipes = [
+  {
+    id: "habitat",
+    label: "Recommended",
+    status: "Prototype runs here",
+    title: "Hara Habitat",
+    promise: "Describe a small living system, watch it appear, then change one rule while it is running.",
+    why: "It makes Hara's live session, explicit state, and capability boundaries visible before syntax becomes the lesson.",
+    time: "Immediate visual result",
+    capabilities: ["session", "canvas", "clock"],
+    edit: ":fear-radius 42 → 70"
+  },
+  {
+    id: "receipts",
+    label: "Automation path",
+    status: "Recipe candidate",
+    title: "Work receipts",
+    promise: "Turn an ordinary multi-step task into visible work with boundaries, results, retries, and receipts.",
+    why: "It shows why Hara's work algebra matters without asking a newcomer to understand the runtime first.",
+    time: "Local runtime handoff",
+    capabilities: ["work", "store", "executor"],
+    edit: ":retry-limit 2 → 4"
+  },
+  {
+    id: "inspector",
+    label: "Systems path",
+    status: "Recipe candidate",
+    title: "Live inspector",
+    promise: "Open a session, inspect state and events, then make a fenced source revision and see the receipt.",
+    why: "It turns the architecture into something a programmer can operate instead of merely reading about.",
+    time: "Repository-guided build",
+    capabilities: ["session", "events", "files"],
+    edit: ":observation :summary → :trace"
+  }
+];
+
+const agentBrief = `Open https://github.com/hara-lang/hara.
+
+Read README.md, GETTING_STARTED.md, AGENTS.md, and inspect core/lib/examples plus the browser Studio capability surfaces. If BUILD_WITH_HARA.md or examples/catalog.edn exists, treat it as the authoritative product catalogue.
+
+Do not begin with language history, installation, or a generic tutorial.
+Ask me one question:
+“What would you like to see move, automate, inspect, transform, coordinate, or publish?”
+
+My first goal: make something move.
+
+Give me three concrete projects grounded in files and capabilities that actually exist. Recommend one, explain why it is a good first Hara project, and label every option as runs here, runs locally, prototype, experimental, or planned.
+
+Then build the smallest runnable version, execute its verification command, and show me one meaningful value I can change while it is running. Never silently invent an API or claim a capability you did not verify.`;
+
+const initialSource = `(def world
+  {:light     {:position [0.72 0.28]
+               :strength 0.84}
+
+   :rules     {:attraction   0.16
+               :separation   18
+               :fear-radius  42
+               :night-speed  1.20}
+
+   :creatures [{:id :moth-1 :kind :moth}
+               {:id :moth-2 :kind :moth}
+               {:id :bat-1  :kind :bat}]})`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="An agent-first Hara getting-started laboratory: discover a useful project, build a living Habitat, and make a visible live mutation." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Start with Hara — build a living system" />
+    <meta property="og:description" content="Point an agent at Hara, choose a verified direction, and experience the language through a visible live change." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Start with Hara — build a living system" />
+    <meta name="twitter:description" content="An agent-first Hara product-discovery and living-system prototype." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Start with Hara — build a living system</title>
+  </head>
+  <body class="hara-v2 hara-v2-start">
+    <CatalogueHeader basePath={basePath} activePath="/v2/start/" label="Start with Hara" />
+    <nav class="start-journey" aria-label="Getting started journey">
+      <span>Start with Hara</span>
+      <div>{journey.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+    </nav>
+
+    <main class="start-main">
+      <StartHero intents={intents} agentBrief={agentBrief} sourceRepo={sourceRepo} />
+      <StartDiscover />
+      <StartChoose recipes={recipes} />
+      <StartHabitat initialSource={initialSource} />
+      <StartMutate />
+      <StartGraduate sourceRepo={sourceRepo} toolLab={toolLab} />
+
+      <footer class="v2-lab-footer start-footer">
+        <span>Agent-first getting-started field test · Hara visual language v2</span>
+        <span><a href={v2Lab}>V2 catalogue</a> · <a href={toolLab}>Tool workbenches</a> · <a href="https://github.com/hara-lang/visual-language">Visual-language source</a> · <a href={sourceRepo}>Hara source</a></span>
+      </footer>
+    </main>
+
+    <script>
+      import { initialiseStart } from "../../../scripts/v2-start-ui.js";
+      initialiseStart();
+    </script>
+  </body>
+</html>

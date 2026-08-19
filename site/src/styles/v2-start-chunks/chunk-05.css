@@ -1,0 +1,44 @@
+.start-recipe-topline { display: flex; gap: .5rem; align-items: center; justify-content: space-between; min-height: 28px; }
+
+.start-recipe-topline span { color: var(--hara-v2-signal); font: 700 .54rem var(--hara-v2-font-code); letter-spacing: .06em; text-transform: uppercase; }
+.start-recipe-topline small { color: var(--hara-v2-faint); font: 650 .51rem var(--hara-v2-font-code); }
+.start-recipe-card h3 { margin: 1.6rem 0 .7rem; font: 760 clamp(1.6rem, 2.4vw, 2.4rem)/.95 var(--hara-v2-font-heading); letter-spacing: -.05em; }
+.start-recipe-card > p { min-height: 92px; margin: 0; color: var(--hara-v2-muted); font-size: .7rem; line-height: 1.58; }
+.start-recipe-card dl { margin: 1.2rem 0 .8rem; border-top: 1px solid var(--hara-v2-line); }
+.start-recipe-card dl > div { display: grid; grid-template-columns: 1fr auto; gap: .5rem; min-height: 38px; align-items: center; border-bottom: 1px solid var(--hara-v2-line); }
+.start-recipe-card dt { color: var(--hara-v2-faint); font-size: .57rem; }
+.start-recipe-card dd { margin: 0; color: var(--hara-v2-ink); font-size: .58rem; text-align: right; }
+.start-recipe-card dd code { color: var(--hara-v2-signal); font-size: .55rem; }
+.start-capability-list { display: flex; flex-wrap: wrap; gap: .35rem; align-content: start; margin-bottom: 1rem; }
+.start-capability-list span { padding: .3rem .42rem; color: var(--hara-v2-muted); border: 1px solid var(--hara-v2-line); border-radius: 4px; background: var(--hara-v2-panel-recess); font: 650 .51rem var(--hara-v2-font-code); }
+.start-recipe-card > button { align-self: end; width: 100%; min-height: 38px; color: var(--hara-v2-ink); border: 1px solid var(--hara-v2-line-strong); border-radius: 6px; background: var(--hara-v2-panel-raised); font: 700 .62rem var(--hara-v2-font-body); cursor: pointer; }
+.start-recipe-card.is-selected > button { color: var(--hara-v2-signal); border-color: color-mix(in srgb, var(--hara-v2-signal) 55%, var(--hara-v2-line)); }
+
+.start-recommendation {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 475px;
+  padding: clamp(1.4rem, 3vw, 2.5rem);
+  overflow: hidden;
+  border: 1px solid var(--hara-v2-line-strong);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 70% 16%, color-mix(in srgb, var(--hara-v2-signal) 20%, transparent), transparent 28%),
+    var(--hara-v2-panel-recess);
+}
+.start-recommendation::before { position: absolute; inset: 0; pointer-events: none; background-image: var(--hara-v2-paper); content: ""; opacity: .55; }
+.start-recommendation > * { position: relative; }
+.start-recommendation-mark { position: absolute; top: 2rem; right: 2rem; display: grid; place-items: center; width: 88px; height: 88px; border: 1px solid var(--hara-v2-line-strong); border-radius: 50%; }
+.start-recommendation-mark::before,
+.start-recommendation-mark::after { position: absolute; background: var(--hara-v2-line); content: ""; }
+.start-recommendation-mark::before { width: 128px; height: 1px; }
+.start-recommendation-mark::after { width: 1px; height: 128px; }
+.start-recommendation-mark span { font: 800 2.1rem var(--hara-v2-font-heading); letter-spacing: -.09em; }
+.start-recommendation-mark i { position: absolute; right: 9px; bottom: 15px; width: 7px; height: 7px; border-radius: 50%; background: var(--hara-v2-signal); box-shadow: 0 0 18px var(--hara-v2-signal); }
+.start-recommendation h3 { max-width: 470px; margin: .45rem 0 .8rem; font: 760 clamp(2rem, 3vw, 3.1rem)/.94 var(--hara-v2-font-heading); letter-spacing: -.055em; }
+.start-recommendation > p:not(.hara-v2-kicker) { max-width: 500px; margin: 0; color: var(--hara-v2-muted); font-size: .73rem; line-height: 1.6; }
+.start-recommendation-contract { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin: 1.35rem 0; color: var(--hara-v2-faint); font: 620 .52rem var(--hara-v2-font-code); }
+.start-recommendation-contract span { padding: .32rem .42rem; border: 1px solid var(--hara-v2-line); border-radius: 4px; background: color-mix(in srgb, var(--hara-v2-panel) 86%, transparent); }
+.start-recommendation-contract i { color: var(--hara-v2-signal); font-style: normal; }

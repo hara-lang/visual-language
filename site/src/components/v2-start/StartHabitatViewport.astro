@@ -1,0 +1,59 @@
+---
+const { initialSource } = Astro.props;
+---
+            <div class="start-viewport-column">
+              <div class="start-viewport-toolbar">
+                <div>
+                  <button class="is-active" type="button">Graphics</button>
+                  <button type="button" data-code-focus>Code</button>
+                  <button type="button" data-receipt-focus>Receipt</button>
+                </div>
+                <div>
+                  <span>640 × 360</span>
+                  <span>clock <b data-clock-rate>1.20×</b></span>
+                  <span>canvas <b>ready</b></span>
+                </div>
+              </div>
+
+              <div class="start-habitat-viewport">
+                <canvas id="habitat-canvas" aria-label="Animated nocturnal habitat with moths, a bat, and a light source">
+                  A simulated nocturnal habitat. Use the controls beside the canvas to change its rules.
+                </canvas>
+                <div class="start-viewport-grid" aria-hidden="true"></div>
+                <div class="start-viewport-caption">
+                  <span><i></i> live state</span>
+                  <span>Move a rule, not a mock-up</span>
+                </div>
+                <div class="start-canvas-instruction" data-canvas-instruction>
+                  <b>Try the first mutation</b>
+                  <span>Move <code>:fear-radius</code> from 42 to 70.</span>
+                  <button type="button" data-mutation="cautious">Make moths more cautious</button>
+                </div>
+              </div>
+
+              <div class="start-code-dock" data-code-dock>
+                <div class="start-code-tabs" role="tablist" aria-label="Habitat source and runtime output">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-workbench-tab="code">Code</button>
+                  <button type="button" role="tab" aria-selected="false" data-workbench-tab="state">State</button>
+                  <button type="button" role="tab" aria-selected="false" data-workbench-tab="receipt">Receipt <span data-receipt-count>0</span></button>
+                </div>
+                <div class="start-code-panel" data-workbench-panel="code">
+                  <pre><code data-habitat-source>{initialSource}</code></pre>
+                </div>
+                <div class="start-code-panel" data-workbench-panel="state" hidden>
+                  <pre><code data-habitat-state>{`{:status :running
+ :generation 1
+ :source-revision 1
+ :entities {:moths 12 :bats 1 :lights 1}
+ :capabilities #{:canvas :clock}
+ :host :visual-simulation}`}</code></pre>
+                </div>
+                <div class="start-code-panel start-receipt-empty" data-workbench-panel="receipt" hidden>
+                  <div data-receipt-empty>
+                    <b>No mutation receipt yet.</b>
+                    <span>Change a rule in the inspector or use an agent request below.</span>
+                  </div>
+                  <pre data-receipt-output hidden></pre>
+                </div>
+              </div>
+            </div>

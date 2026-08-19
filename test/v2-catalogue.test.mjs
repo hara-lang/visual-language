@@ -32,7 +32,7 @@ test("the catalogue has three scalable groups and the complete top-level applica
 
   const learn = catalogueItemById("learn");
   assert.deepEqual(learn?.children?.map(({ label }) => label), [
-    "Start here", "World interface examples", "Community reader study", "Programmer onboarding study"
+    "Start here", "Agent-first Start", "World interface examples", "Community reader study", "Programmer onboarding study"
   ]);
 });
 
@@ -50,22 +50,26 @@ test("planned routes resolve to implementation issues while current routes use t
   const world = catalogueItemById("world");
   const around = catalogueItemById("world-around");
   const learn = catalogueItemById("learn");
+  const start = catalogueItemById("start");
 
-  assert.ok(foundations && components && tool && world && around && learn);
+  assert.ok(foundations && components && tool && world && around && learn && start);
   assert.equal(catalogueHref(foundations, "/visual-language/"), "/visual-language/v2/foundations/");
   assert.equal(catalogueHref(components, "/visual-language/"), "/visual-language/v2/components/");
   assert.equal(catalogueHref(tool, "/visual-language/"), "/visual-language/v2/tool/");
   assert.equal(catalogueHref(world, "/visual-language/"), "/visual-language/v2/world/");
   assert.equal(catalogueHref(around, "/visual-language/"), "/visual-language/v2/world/around/");
   assert.equal(catalogueHref(learn, "/visual-language/"), "/visual-language/v2/learn/");
+  assert.equal(catalogueHref(start, "/visual-language/"), "/visual-language/v2/start/");
   assert.equal(catalogueLinkIsExternal(foundations), false);
   assert.equal(catalogueLinkIsExternal(components), false);
   assert.equal(catalogueLinkIsExternal(tool), false);
   assert.equal(catalogueLinkIsExternal(learn), false);
+  assert.equal(catalogueLinkIsExternal(start), false);
   assert.equal(catalogueItemIsCurrent(foundations, "/v2/foundations/"), true);
   assert.equal(catalogueItemIsCurrent(components, "/v2/components/"), true);
   assert.equal(catalogueItemIsCurrent(world, "/v2/world/discussion/"), true);
   assert.equal(catalogueItemIsCurrent(learn, "/v2/learn/#world-examples"), true);
+  assert.equal(catalogueItemIsCurrent(start, "/v2/start/"), true);
 
   for (const item of catalogueItems.filter(({ status }) => status === "planned")) {
     assert.equal(typeof item.issue, "number", `${item.id} needs an implementation issue`);
@@ -85,7 +89,8 @@ test("every implemented laboratory advertised by the manifest exists", async () 
     "../site/src/pages/v2/world/around/index.astro",
     "../site/src/pages/v2/world/community/index.astro",
     "../site/src/pages/v2/world/onboarding/index.astro",
-    "../site/src/pages/v2/learn/index.astro"
+    "../site/src/pages/v2/learn/index.astro",
+    "../site/src/pages/v2/start/index.astro"
   ]) await access(new URL(path, import.meta.url));
 });
 
