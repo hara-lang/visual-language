@@ -5,6 +5,7 @@ import test from "node:test";
 const focusedPageUrl = new URL("../site/src/pages/v2/world/feed/index.astro", import.meta.url);
 const canonicalPageUrl = new URL("../site/src/pages/v2/world/index.astro", import.meta.url);
 const styleUrl = new URL("../site/src/styles/v2-world-feed.css", import.meta.url);
+const sharedCalmStyleUrl = new URL("../src/v2/calm-surfaces.css", import.meta.url);
 const policyUrl = new URL("../site/src/data/world-feed-policy.json", import.meta.url);
 const feedUrl = new URL("../site/src/data/world-feed-sample.json", import.meta.url);
 
@@ -16,10 +17,11 @@ const {
   scoreFeedItem
 } = await import("../site/src/lib/world-feed-ranking.mjs");
 
-const [focusedPage, canonicalPage, styles, policyText, feedText] = await Promise.all([
+const [focusedPage, canonicalPage, styles, sharedCalmStyles, policyText, feedText] = await Promise.all([
   readFile(focusedPageUrl, "utf8"),
   readFile(canonicalPageUrl, "utf8"),
   readFile(styleUrl, "utf8"),
+  readFile(sharedCalmStyleUrl, "utf8"),
   readFile(policyUrl, "utf8"),
   readFile(feedUrl, "utf8")
 ]);
@@ -139,11 +141,12 @@ test("relay decisions are narrow, attributable, and review-first", () => {
   assert.equal(relayDecision({ ...communityPost, kind: "replies" }, policy.relay).state, "blocked");
 });
 
-test("the World feed styling consumes shared v2 tokens", () => {
+test("the World feed styling consumes shared v2 tokens and the shared motion contract", () => {
   assert.match(styles, /var\(--hara-v2-canvas-clean\)/);
   assert.match(styles, /var\(--hara-v2-panel-raised\)/);
   assert.match(styles, /var\(--hara-v2-signal\)/);
-  assert.match(styles, /prefers-reduced-motion/);
+  assert.match(focusedPage, /import "\.\.\/\.\.\/\.\.\/\.\.\/\.\.\/\.\.\/src\/v2\.css"/);
+  assert.match(sharedCalmStyles, /prefers-reduced-motion/);
   assert.doesNotMatch(styles, /--hara-v2-[\w-]+\s*:/);
   assert.doesNotMatch(focusedPage, /<style(?:\s|>)/);
 });
