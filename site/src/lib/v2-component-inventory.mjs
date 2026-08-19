@@ -108,6 +108,12 @@ export const componentGroups = [
         states: ["light", "dark", "static"],
         densities: ["section", "hero"],
         accessibility: "Requires a concise SVG title when informative; motion is never required."
+      }),
+      shared("ShaderField", "Progressively enhances static imagery with real WebGL material fields.", {
+        states: ["loading", "ready", "fallback", "light", "dark", "reduced motion"],
+        densities: ["section", "hero", "gallery"],
+        responsive: "Caps device pixel ratio, resizes with its container, and pauses while off screen.",
+        accessibility: "Canvas requires a concise label; matched static SVG fallback preserves the complete composition."
       })
     ]
   },
