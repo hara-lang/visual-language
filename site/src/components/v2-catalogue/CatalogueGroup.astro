@@ -1,0 +1,46 @@
+---
+import CatalogueMenuItem from "./CatalogueMenuItem.astro";
+import {
+  catalogueGroupIsCurrent,
+  catalogueHref,
+  catalogueItemIsCurrent,
+  catalogueLinkIsExternal
+} from "../../lib/v2-catalogue.mjs";
+
+const { group, basePath, activePath } = Astro.props;
+const current = catalogueGroupIsCurrent(group, activePath);
+const items = group.items.map((item) => ({
+  ...item,
+  current: catalogueItemIsCurrent(item, activePath),
+  external: catalogueLinkIsExternal(item),
+  resolvedHref: catalogueHref(item, basePath),
+  children: (item.children ?? []).map((child) => ({
+    ...child,
+    current: catalogueItemIsCurrent(child, activePath),
+    external: catalogueLinkIsExternal(child),
+    resolvedHref: catalogueHref(child, basePath)
+  }))
+}));
+---
+<div class="v2-catalogue-group" data-catalogue-group data-current={current ? "true" : "false"} data-open="false">
+  <button
+    class="v2-catalogue-group-trigger"
+    type="button"
+    aria-expanded="false"
+    aria-controls={`v2-catalogue-panel-${group.id}`}
+    data-catalogue-group-trigger
+  >
+    <span>{group.label}</span>
+    <small>{items.length}</small>
+  </button>
+  <div class="v2-catalogue-panel" id={`v2-catalogue-panel-${group.id}`}>
+    <header>
+      <p class="hara-v2-kicker">Catalogue group</p>
+      <h2>{group.label}</h2>
+      <p>{group.summary}</p>
+    </header>
+    <div class="v2-catalogue-panel-grid">
+      {items.map((item) => <CatalogueMenuItem item={item} groupLabel={group.label} />)}
+    </div>
+  </div>
+</div>
