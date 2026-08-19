@@ -1,0 +1,385 @@
+---
+import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
+import AgentHandoff from "../../../components/v2-start/AgentHandoff.astro";
+import HabitatWorkbench from "../../../components/v2-start/HabitatWorkbench.astro";
+import "../../../../../src/v2-tool.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-lab.css";
+import "../../../styles/v2-calm-lab.css";
+import "../../../styles/v2-start.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/start/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const documentLab = `${basePath}v2/`;
+const toolLab = `${basePath}v2/tool/`;
+
+const agentPrompt = `Open https://github.com/hara-lang/hara.
+
+Read README.md, GETTING_STARTED.md, AGENTS.md, and the available examples before answering. Treat repository evidence as authoritative.
+
+Do not begin with language history, installation, runtime architecture, or a generic tutorial.
+
+Ask me one question:
+“What would you like to see move, automate, inspect, transform, or publish?”
+
+Then:
+1. Give me three concrete projects that match my answer.
+2. Mark each project as working, experimental, or proposed, with evidence.
+3. Recommend one and explain why it is a good first Hara project.
+4. Build the smallest runnable version using an existing verified path.
+5. Run the repository's real validation command.
+6. Show me one meaningful value I can change and what visible or inspectable effect it has.
+
+Never invent a capability, command, runtime, package, or example. Clearly separate what works now from what would require new Hara product work.`;
+
+const nextPrompt = `Continue the Hara Habitat concept as product work.
+
+First inspect hara-lang/hara and verify the current browser session, canvas, clock, file, and work capabilities. Do not copy the visual-language simulation into product code.
+
+Propose the smallest real vertical slice that replaces the prototype host with Hara evaluation while preserving:
+- source revision and generation fencing;
+- explicit capability reporting;
+- one live :fear-radius mutation;
+- a human-readable mutation receipt;
+- an exact verification command.
+
+List any missing runtime or catalogue work separately from the runnable slice.`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="An agent-first Hara getting-started laboratory: point an agent at the repository, choose an outcome, and change a living Habitat prototype." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Build something alive with Hara" />
+    <meta property="og:description" content="A lazy-person, agent-first path from repository evidence to a visible live mutation." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Build something alive with Hara" />
+    <meta name="twitter:description" content="Point your agent at Hara. Leave with a living system." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Build something alive with Hara</title>
+  </head>
+  <body class="hara-v2 hara-v2-tool start-lab">
+    <CatalogueHeader basePath={basePath} activePath="/v2/start/" label="Hara agent-first start" />
+
+    <main class="v2-lab-main start-lab-main">
+      <section class="start-hero" id="arrival">
+        <div class="start-hero-copy">
+          <p class="hara-v2-kicker">Agent-first getting started · Visual-language study</p>
+          <h1>Point your agent at Hara. Leave with a living system.</h1>
+          <p>Skip the empty editor and the language lecture. Ask for an outcome, let the agent find an honest build path, then change one rule while the result is still alive.</p>
+          <div class="start-hero-actions">
+            <button class="hara-v2-button" data-variant="primary" type="button" data-copy-agent-prompt>Copy the agent brief</button>
+            <a class="hara-v2-button" href="#habitat">Enter Hara Habitat</a>
+          </div>
+          <div class="start-hero-proof">
+            <span><b>01</b> repository evidence</span>
+            <span><b>02</b> concrete recommendation</span>
+            <span><b>03</b> visible mutation</span>
+            <span><b>04</b> precise receipt</span>
+          </div>
+        </div>
+
+        <div class="start-hero-system" aria-label="Agent to living system journey">
+          <div class="start-hero-agent">
+            <header><span class="start-status-dot" data-state="ready"></span><b>agent / hara</b><small>repository attached</small></header>
+            <p>What would you like to see <em>move</em>, automate, inspect, transform, or publish?</p>
+            <div><span>Recommend</span><span>Verify</span><span>Build</span><span>Change</span></div>
+          </div>
+          <div class="start-hero-flow" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="start-hero-habitat" aria-hidden="true">
+            <div class="start-hero-light"></div>
+            {Array.from({ length: 12 }, () => <i></i>)}
+            <b>HARA HABITAT</b>
+            <small>one rule · visible consequence</small>
+          </div>
+          <footer><span>Visual prototype</span><span>Hara evaluator not attached</span></footer>
+        </div>
+      </section>
+
+      <nav class="start-journey-index" aria-label="Agent-first journey">
+        <a href="#handoff"><strong>01 · Point</strong><span>Give any coding agent a concise, evidence-fenced repository brief.</span></a>
+        <a href="#scan"><strong>02 · Read</strong><span>Make the agent show what it found, what is verified, and what is still missing.</span></a>
+        <a href="#choose"><strong>03 · Choose</strong><span>Select by desired outcome rather than runtime, backend, or experience level.</span></a>
+        <a href="#habitat"><strong>04 · Change</strong><span>Mutate one rule in a living visual system and observe the consequence.</span></a>
+        <a href="#graduate"><strong>05 · Grow</strong><span>Turn the toy into files, work, receipts, persistence, and a package.</span></a>
+      </nav>
+
+      <AgentHandoff prompt={agentPrompt} />
+
+      <section class="start-lab-section" id="scan">
+        <header class="start-lab-section-head">
+          <div>
+            <p class="hara-v2-kicker">Screen 02 · Repository scan</p>
+            <h2>Show the evidence behind the recommendation.</h2>
+          </div>
+          <p>The user should see why the agent chose a project. The scan separates evidence available in the repository today from a stronger product-discovery contract that Hara can add later.</p>
+        </header>
+
+        <div class="start-scan-grid">
+          <article class="start-repository-scan">
+            <header><div><span class="start-status-dot" data-state="ready"></span><b>hara-lang/hara</b></div><small>prototype scan model</small></header>
+            <ol>
+              <li data-scan-state="found"><span>README.md</span><b>found</b><small>language and runtime orientation</small></li>
+              <li data-scan-state="found"><span>GETTING_STARTED.md</span><b>found</b><small>verified setup and first execution</small></li>
+              <li data-scan-state="found"><span>AGENTS.md</span><b>found</b><small>repository workflow and validation rules</small></li>
+              <li data-scan-state="found"><span>core/lib/examples</span><b>found</b><small>evidence of runnable project shapes</small></li>
+              <li data-scan-state="proposed"><span>BUILD_WITH_HARA.md</span><b>proposed</b><small>outcome-oriented product contract</small></li>
+              <li data-scan-state="proposed"><span>examples/catalog.edn</span><b>proposed</b><small>machine-readable status, run, verify, first edit</small></li>
+              <li data-scan-state="proposed"><span>hara discover --json</span><b>proposed</b><small>runtime and capability discovery</small></li>
+            </ol>
+          </article>
+
+          <article class="start-scan-output">
+            <header><span>Agent recommendation envelope</span><span class="hara-v2-badge" data-tone="success">Evidence fenced</span></header>
+            <dl>
+              <div><dt>Desired outcome</dt><dd>See something move</dd></div>
+              <div><dt>Recommended project</dt><dd>Hara Habitat</dd></div>
+              <div><dt>Why</dt><dd>It makes state, behaviour, capabilities, and live change visible together.</dd></div>
+              <div><dt>Working now</dt><dd>The visual-language interaction and browser animation in this study.</dd></div>
+              <div><dt>Not yet proven</dt><dd>Real Hara evaluation of this recipe in the browser.</dd></div>
+              <div><dt>First edit</dt><dd><code>[:rules :fear-radius] 42 → 70</code></dd></div>
+            </dl>
+            <footer>
+              <code>evidence → option → recommendation → run → mutation → receipt</code>
+            </footer>
+          </article>
+        </div>
+
+        <div class="start-lab-notes">
+          <article><b>No capability collage</b><p>The agent cannot combine unrelated experimental APIs into one convincing but unusable project.</p></article>
+          <article><b>Status is part of the answer</b><p>Working, experimental, and proposed are visible before the visitor commits to a project.</p></article>
+          <article><b>Verification survives the demo</b><p>The eventual catalogue should carry exact run and test commands rather than relying on prose memory.</p></article>
+        </div>
+      </section>
+
+      <section class="start-lab-section" id="choose" data-start-chooser>
+        <header class="start-lab-section-head">
+          <div>
+            <p class="hara-v2-kicker">Screen 03 · Choose by outcome</p>
+            <h2>What do you want to happen?</h2>
+          </div>
+          <p>The agent can infer technical depth later. The first choice should be experiential: movement, automation, inspection, transformation, or publication.</p>
+        </header>
+
+        <div class="start-intent-switcher" role="group" aria-label="Choose a Hara outcome">
+          <button type="button" aria-pressed="true" data-start-intent="move"><b>Move</b><span>worlds, animation, simulation</span></button>
+          <button type="button" aria-pressed="false" data-start-intent="automate"><b>Automate</b><span>steps, schedules, receipts</span></button>
+          <button type="button" aria-pressed="false" data-start-intent="inspect"><b>Inspect</b><span>state, sessions, schemas</span></button>
+          <button type="button" aria-pressed="false" data-start-intent="transform"><b>Transform</b><span>source, data, migrations</span></button>
+          <button type="button" aria-pressed="false" data-start-intent="publish"><b>Publish</b><span>packages, docs, demos</span></button>
+        </div>
+
+        <div class="start-recommendation-head">
+          <div><span>Your agent recommends</span><h3 data-recommendation-heading>Start with a visible system.</h3></div>
+          <p data-recommendation-summary>Movement creates the fastest feedback loop: a small rule produces an unmistakable consequence.</p>
+        </div>
+
+        <div class="start-recommendation-grid" data-recommendation-grid>
+          {Array.from({ length: 3 }, (_, index) => (
+            <article data-recommendation-card data-rank={index + 1} data-current={index === 0 ? "true" : "false"}>
+              <header><span data-card-rank>{index === 0 ? "Recommended" : `Option ${index + 1}`}</span><span class="hara-v2-badge" data-card-status data-tone={index === 0 ? "signal" : undefined}>{index === 0 ? "Interactive prototype" : "Catalogue candidate"}</span></header>
+              <h3 data-card-title>{["Hara Habitat", "Procedural motion rig", "Canvas data garden"][index]}</h3>
+              <p data-card-promise>{[
+                "Create and live-edit a small nocturnal ecosystem.",
+                "Drive a character from a compact behaviour graph.",
+                "Turn a changing data set into a living field."
+              ][index]}</p>
+              <dl>
+                <div><dt>Capabilities</dt><dd data-card-capabilities>{["canvas · clock · session", "canvas · clock · rig", "canvas · data · clock"][index]}</dd></div>
+                <div><dt>First edit</dt><dd><code data-card-edit>{[":fear-radius 42 → 70", ":stride 0.7 → 1.1", ":growth-rate 0.3 → 0.8"][index]}</code></dd></div>
+              </dl>
+              <footer data-card-why>{[
+                "Best first proof of visible, inspectable change.",
+                "Strong follow-on once animation providers are verified.",
+                "Useful for dashboards and generative visualisation."
+              ][index]}</footer>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <HabitatWorkbench />
+
+      <section class="start-lab-section" id="graduate">
+        <header class="start-lab-section-head">
+          <div>
+            <p class="hara-v2-kicker">Screen 05 · Graduate the project</p>
+            <h2>Turn the toy into a tool, one capability at a time.</h2>
+          </div>
+          <p>Habitat earns attention through motion, then teaches the deeper language story: explicit data, composable behaviour, live sessions, capability boundaries, durable work, and packages.</p>
+        </header>
+
+        <div class="start-graduation-grid">
+          <ol class="start-capability-ladder">
+            <li data-stage="current"><span>01</span><div><b>Change state</b><p>Mutate one rule and inspect the visible result.</p></div><small>prototype now</small></li>
+            <li><span>02</span><div><b>Attach files</b><p>Load the habitat and its rules from a real project.</p></div><small>integration</small></li>
+            <li><span>03</span><div><b>Schedule work</b><p>Advance weather, feeding, or snapshots through explicit steps.</p></div><small>integration</small></li>
+            <li><span>04</span><div><b>Record receipts</b><p>Keep exact source, generation, capability, and outcome evidence.</p></div><small>integration</small></li>
+            <li><span>05</span><div><b>Publish a package</b><p>Share the habitat as a verified starter rather than a screenshot.</p></div><small>product</small></li>
+          </ol>
+
+          <article class="start-project-receipt">
+            <header><div><span class="start-status-dot" data-state="warning"></span><b>Prototype handoff receipt</b></div><span>visual-language only</span></header>
+            <dl>
+              <div><dt>Project</dt><dd><code>hara/habitat</code></dd></div>
+              <div><dt>Visible contract</dt><dd>Agent brief, scan, chooser, workbench, mutation, receipt.</dd></div>
+              <div><dt>Attached here</dt><dd>DOM controls, Canvas 2D, animation clock.</dd></div>
+              <div><dt>Not attached</dt><dd>Hara evaluator, filesystem, persistence, work executor, package publication.</dd></div>
+              <div><dt>Next product slice</dt><dd>Replace the prototype host without changing the user-facing mutation contract.</dd></div>
+            </dl>
+            <textarea readonly data-next-prompt aria-label="Prompt for the next Hara product slice">{nextPrompt}</textarea>
+            <button class="hara-v2-button" data-variant="primary" type="button" data-copy-next-prompt>Copy the product handoff</button>
+          </article>
+        </div>
+      </section>
+
+      <footer class="v2-lab-footer">
+        <span>Agent-first Hara start · Experimental visual-language contract</span>
+        <span><a href={documentLab}>Document laboratory</a> · <a href={toolLab}>Tool workbenches</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script>
+      const copyText = async (text) => {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        const fallback = document.createElement("textarea");
+        fallback.value = text;
+        fallback.setAttribute("readonly", "");
+        fallback.style.position = "fixed";
+        fallback.style.opacity = "0";
+        document.body.append(fallback);
+        fallback.select();
+        document.execCommand("copy");
+        fallback.remove();
+      };
+
+      const agentPromptField = document.querySelector("[data-agent-prompt]");
+      const copyStatus = document.querySelector("[data-copy-agent-status]");
+      for (const button of document.querySelectorAll("[data-copy-agent-prompt]")) {
+        button.addEventListener("click", async () => {
+          if (!agentPromptField) return;
+          const original = button.textContent;
+          try {
+            await copyText(agentPromptField.value);
+            button.textContent = "Copied";
+            if (copyStatus) copyStatus.textContent = "Agent brief copied";
+          } catch {
+            button.textContent = "Select the brief below";
+            agentPromptField.focus();
+            agentPromptField.select();
+            if (copyStatus) copyStatus.textContent = "Clipboard unavailable; brief selected";
+          }
+          window.setTimeout(() => { button.textContent = original; }, 1800);
+        });
+      }
+
+      const catalog = {
+        move: {
+          heading: "Start with a visible system.",
+          summary: "Movement creates the fastest feedback loop: a small rule produces an unmistakable consequence.",
+          projects: [
+            ["Hara Habitat", "Interactive prototype", "Create and live-edit a small nocturnal ecosystem.", "canvas · clock · session", ":fear-radius 42 → 70", "Best first proof of visible, inspectable change."],
+            ["Procedural motion rig", "Catalogue candidate", "Drive a character from a compact behaviour graph.", "canvas · clock · rig", ":stride 0.7 → 1.1", "Strong follow-on once animation providers are verified."],
+            ["Canvas data garden", "Catalogue candidate", "Turn a changing data set into a living field.", "canvas · data · clock", ":growth-rate 0.3 → 0.8", "Useful for dashboards and generative visualisation."]
+          ]
+        },
+        automate: {
+          heading: "Start with work you can account for.",
+          summary: "Automation becomes compelling when every boundary is visible: input, step, result, retry, and receipt.",
+          projects: [
+            ["Work receipt runner", "Catalogue candidate", "Run a small multi-step job and inspect every completed boundary.", "work · store · executor", ":retry-limit 1 → 3", "Shows why Hara work is more than an opaque task queue."],
+            ["Repository caretaker", "Catalogue candidate", "Scan a project, propose a bounded change, validate it, and leave a receipt.", "files · process · work", ":scope :docs → :project", "A useful agent workflow with explicit capability limits."],
+            ["Scheduled observer", "Catalogue candidate", "Sample a source on a clock and emit only meaningful changes.", "clock · work · state", ":interval 60 → 10", "Introduces time through an explicit capability." ]
+          ]
+        },
+        inspect: {
+          heading: "Start with a system that explains itself.",
+          summary: "Inspection makes Hara's data, schema, session, and runtime boundaries concrete before the project grows.",
+          projects: [
+            ["Live state inspector", "Catalogue candidate", "Watch values, generations, and source revisions change together.", "session · state · schema", ":history 20 → 100", "Makes the live-system model directly observable."],
+            ["Session timeline", "Catalogue candidate", "Replay lifecycle events without confusing old and new generations.", "session · receipts · clock", ":window 30 → 120", "Demonstrates fencing and monotonic event order."],
+            ["Schema explorer", "Catalogue candidate", "Navigate a typed value from surface form to runtime evidence.", "schema · source · inspector", ":depth 2 → 5", "Connects Hara forms to structured validation." ]
+          ]
+        },
+        transform: {
+          heading: "Start with a transformation you can verify.",
+          summary: "A useful first compiler tool shows the input, intermediate decision, output, and exact validation result.",
+          projects: [
+            ["Migration ledger", "Catalogue candidate", "Rewrite a small namespace through an explicit migration plan.", "source · migrate · files", ":target :preview → :apply", "Pairs transformation with a deterministic ledger."],
+            ["Tiny DSL emitter", "Catalogue candidate", "Describe a form and inspect generated Hara plus a round-trip check.", "forms · grammar · emitter", ":format :compact → :readable", "Shows code-as-data without beginning with theory."],
+            ["Source audit", "Catalogue candidate", "Find one repeated pattern and propose evidence-backed replacements.", "source · query · report", ":confidence 0.8 → 0.95", "A practical repository-scale language-tool entry point." ]
+          ]
+        },
+        publish: {
+          heading: "Start with something another person can run.",
+          summary: "Publication should preserve the project, capability requirements, verification command, and first edit.",
+          projects: [
+            ["Verified package starter", "Catalogue candidate", "Create a minimal package with a runnable example and exact checks.", "package · files · verify", ":version 0.1.0 → 0.1.1", "Turns a personal experiment into a reusable Hara object."],
+            ["Executable documentation", "Catalogue candidate", "Publish an explanation whose examples remain runnable and fenced.", "docs · evaluator · receipts", ":example :basic → :live", "Combines learning and proof without hiding source."],
+            ["Browser demo capsule", "Catalogue candidate", "Package one visual program with explicit browser capabilities.", "canvas · session · package", ":size :small → :medium", "A clear bridge from local project to shareable experience." ]
+          ]
+        }
+      };
+
+      const chooser = document.querySelector("[data-start-chooser]");
+      const recommendationHeading = chooser?.querySelector("[data-recommendation-heading]");
+      const recommendationSummary = chooser?.querySelector("[data-recommendation-summary]");
+      const recommendationCards = chooser ? [...chooser.querySelectorAll("[data-recommendation-card]")] : [];
+
+      const renderIntent = (intent) => {
+        const entry = catalog[intent];
+        if (!entry) return;
+        if (recommendationHeading) recommendationHeading.textContent = entry.heading;
+        if (recommendationSummary) recommendationSummary.textContent = entry.summary;
+        recommendationCards.forEach((card, index) => {
+          const project = entry.projects[index];
+          card.dataset.current = index === 0 ? "true" : "false";
+          card.querySelector("[data-card-rank]").textContent = index === 0 ? "Recommended" : `Option ${index + 1}`;
+          const status = card.querySelector("[data-card-status]");
+          status.textContent = project[1];
+          status.dataset.tone = project[1] === "Interactive prototype" ? "signal" : "";
+          card.querySelector("[data-card-title]").textContent = project[0];
+          card.querySelector("[data-card-promise]").textContent = project[2];
+          card.querySelector("[data-card-capabilities]").textContent = project[3];
+          card.querySelector("[data-card-edit]").textContent = project[4];
+          card.querySelector("[data-card-why]").textContent = project[5];
+        });
+      };
+
+      for (const button of chooser?.querySelectorAll("[data-start-intent]") ?? []) {
+        button.addEventListener("click", () => {
+          for (const candidate of chooser.querySelectorAll("[data-start-intent]")) candidate.setAttribute("aria-pressed", candidate === button ? "true" : "false");
+          renderIntent(button.dataset.startIntent);
+        });
+      }
+
+      const nextPromptField = document.querySelector("[data-next-prompt]");
+      document.querySelector("[data-copy-next-prompt]")?.addEventListener("click", async (event) => {
+        if (!nextPromptField) return;
+        const button = event.currentTarget;
+        const original = button.textContent;
+        try {
+          await copyText(nextPromptField.value);
+          button.textContent = "Product handoff copied";
+        } catch {
+          nextPromptField.focus();
+          nextPromptField.select();
+          button.textContent = "Prompt selected";
+        }
+        window.setTimeout(() => { button.textContent = original; }, 1800);
+      });
+    </script>
+  </body>
+</html>
