@@ -1,0 +1,53 @@
+---
+import { catalogueHref, catalogueLinkIsExternal, catalogueRouteContext } from "../../lib/v2-catalogue.mjs";
+
+const { basePath, activePath } = Astro.props;
+const context = catalogueRouteContext(activePath);
+const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
+const catalogueHome = `${normalizedBasePath}v2/`;
+const itemHref = (item) => item.href || item.issue
+  ? catalogueHref(item, basePath)
+  : `${normalizedBasePath}${item.path.replace(/^\/+/, "")}`;
+---
+{context && (
+  <template data-catalogue-footer-template>
+    <footer class="v2-catalogue-page-footer" aria-label="Catalogue page navigation">
+      <div class="v2-catalogue-footer-neighbours">
+        {context.previous
+          ? <a
+              href={itemHref(context.previous)}
+              target={catalogueLinkIsExternal(context.previous) ? "_blank" : undefined}
+              rel={catalogueLinkIsExternal(context.previous) ? "noreferrer" : undefined}
+            ><small>Previous</small><strong>← {context.previous.tabLabel ?? context.previous.label}</strong></a>
+          : <span aria-hidden="true"></span>}
+        {context.next
+          ? <a
+              href={itemHref(context.next)}
+              target={catalogueLinkIsExternal(context.next) ? "_blank" : undefined}
+              rel={catalogueLinkIsExternal(context.next) ? "noreferrer" : undefined}
+            ><small>Next</small><strong>{context.next.tabLabel ?? context.next.label} →</strong></a>
+          : <span aria-hidden="true"></span>}
+      </div>
+      <div class="v2-catalogue-footer-home">
+        <a href={context.parent ? itemHref(context.parent) : catalogueHome}>
+          {context.parent ? `Back to ${context.parent.label}` : "Catalogue home"}
+        </a>
+        <a href={catalogueHome}>All catalogue routes</a>
+        <span>{context.statusLabel}</span>
+      </div>
+    </footer>
+  </template>
+)}
+
+<script>
+  const mountCatalogueFooter = () => {
+    const template = document.querySelector("[data-catalogue-footer-template]");
+    const main = document.querySelector("main");
+    if (!(template instanceof HTMLTemplateElement) || !(main instanceof HTMLElement)) return;
+    if (main.querySelector(":scope > .v2-catalogue-page-footer")) return;
+    main.append(template.content.cloneNode(true));
+  };
+
+  mountCatalogueFooter();
+  document.addEventListener("astro:page-load", mountCatalogueFooter);
+</script>

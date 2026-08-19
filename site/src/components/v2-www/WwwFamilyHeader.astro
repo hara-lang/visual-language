@@ -1,6 +1,7 @@
 ---
 import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
 import HaraMark from "../../../../src/astro/HaraMark.astro";
+import GlobalMasthead from "../v2-catalogue/GlobalMasthead.astro";
 import { familyRoutes, withBasePath } from "../../lib/v2-www.mjs";
 
 const {
@@ -11,7 +12,15 @@ const {
 } = Astro.props;
 
 const catalogueHref = withBasePath(basePath, "/v2/");
+const activeFamilyRoute = familyRoutes.find(({ id }) => id === activeRoute) ?? familyRoutes[0];
 ---
+<GlobalMasthead
+  basePath={basePath}
+  activePath={activeFamilyRoute.path}
+  label="Hara public language family"
+  autoSections={false}
+/>
+
 <header class="www-family-header" data-www-family-header>
   <div class="www-family-header__primary">
     <a class="www-family-brand" href={withBasePath(basePath, "/v2/www/")} aria-label="Hara public language site">
@@ -69,7 +78,7 @@ const catalogueHref = withBasePath(basePath, "/v2/");
   <div class="www-family-header__context">
     <span>Public Hara family</span>
     <span aria-hidden="true">/</span>
-    <strong>{familyRoutes.find(({ id }) => id === activeRoute)?.label ?? "Home"}</strong>
+    <strong>{activeFamilyRoute.label}</strong>
     <a href={catalogueHref}>Visual language catalogue</a>
   </div>
 </header>

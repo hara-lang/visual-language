@@ -1,0 +1,19 @@
+---
+const {
+  title = "Product specimen",
+  status = "Embedded prototype",
+  note = "Navigation inside this frame belongs to the demonstrated product, not the visual-language catalogue.",
+  density = "desktop"
+} = Astro.props;
+---
+<section class="v2-prototype-frame" data-prototype-frame data-density={density} aria-label={`${title} · ${status}`}>
+  <header class="v2-prototype-frame-header">
+    <div>
+      <small>{status}</small>
+      <strong>{title}</strong>
+    </div>
+    <p>{note}</p>
+    <div class="v2-prototype-frame-actions"><slot name="actions" /></div>
+  </header>
+  <div class="v2-prototype-frame-stage"><slot /></div>
+</section>

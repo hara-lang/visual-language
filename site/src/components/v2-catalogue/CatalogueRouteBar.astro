@@ -1,0 +1,67 @@
+---
+import {
+  catalogueHref,
+  catalogueLinkIsExternal,
+  catalogueRouteContext
+} from "../../lib/v2-catalogue.mjs";
+
+const { basePath, activePath } = Astro.props;
+const context = catalogueRouteContext(activePath);
+const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
+const withBase = (path) => {
+  const [pathname, fragment] = String(path).split("#", 2);
+  const href = `${normalizedBasePath}${pathname.replace(/^\/+/, "")}`;
+  return fragment ? `${href}#${fragment}` : href;
+};
+const itemHref = (item) => item.href || item.issue
+  ? catalogueHref(item, basePath)
+  : withBase(item.path);
+---
+{context && (
+  <section class="v2-catalogue-route-bar" aria-label="Current catalogue location" data-catalogue-route-bar>
+    <div class="v2-catalogue-route-row">
+      <nav class="v2-catalogue-breadcrumbs" aria-label="Breadcrumb">
+        {context.crumbs.map((crumb, index) => (
+          <Fragment>
+            {index > 0 && <span aria-hidden="true">/</span>}
+            {crumb.current
+              ? <strong aria-current="page">{crumb.label}</strong>
+              : <a href={withBase(crumb.path)}>{crumb.label}</a>}
+          </Fragment>
+        ))}
+      </nav>
+
+      <div class="v2-catalogue-route-state">
+        <span data-status={context.item.status} data-kind={context.item.kind ?? "current"}>{context.statusLabel}</span>
+        {context.isAlias && <small>Filed under {context.family.label}</small>}
+      </div>
+    </div>
+
+    <div class="v2-catalogue-family-row">
+      <a class="v2-catalogue-parent-link" href={itemHref(context.parentTarget)}>
+        <span aria-hidden="true">←</span>
+        <span>{context.parent ? `Back to ${context.parent.label}` : "Catalogue home"}</span>
+      </a>
+
+      <nav class="v2-catalogue-family-tabs" aria-label={`${context.family.label} routes`}>
+        {context.siblings.map((item) => {
+          const external = catalogueLinkIsExternal(item);
+          return (
+            <a
+              href={itemHref(item)}
+              aria-current={item.id === context.item.id ? "page" : undefined}
+              data-status={item.status}
+              data-kind={item.kind ?? "current"}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noreferrer" : undefined}
+            >
+              <span>{item.tabLabel ?? item.label}</span>
+              {item.kind === "historical" && <small>Historical</small>}
+              {item.status === "planned" && <small>Planned</small>}
+            </a>
+          );
+        })}
+      </nav>
+    </div>
+  </section>
+)}

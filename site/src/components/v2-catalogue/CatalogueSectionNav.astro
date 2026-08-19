@@ -1,0 +1,115 @@
+---
+const {
+  label = "Sections",
+  enabled = true
+} = Astro.props;
+---
+{enabled && (
+  <nav class="v2-catalogue-section-nav" aria-label={`${label} on this page`} hidden data-catalogue-section-nav>
+    <button
+      class="v2-catalogue-section-trigger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="v2-catalogue-section-links"
+      data-catalogue-section-trigger
+    >
+      <span>{label}</span>
+      <small data-catalogue-section-current>On this page</small>
+    </button>
+    <div class="v2-catalogue-section-links" id="v2-catalogue-section-links" data-catalogue-section-links></div>
+  </nav>
+)}
+
+<script>
+  const initialiseCatalogueSections = () => {
+    document.querySelectorAll("[data-catalogue-section-nav]").forEach((nav) => {
+      if (!(nav instanceof HTMLElement) || nav.dataset.ready === "true") return;
+      const main = document.querySelector("main");
+      const links = nav.querySelector("[data-catalogue-section-links]");
+      const trigger = nav.querySelector("[data-catalogue-section-trigger]");
+      const currentLabel = nav.querySelector("[data-catalogue-section-current]");
+      if (!(main instanceof HTMLElement) || !(links instanceof HTMLElement) || !(trigger instanceof HTMLButtonElement)) return;
+
+      const directSections = [...main.querySelectorAll(":scope > section[id], :scope > article[id]")];
+      const candidates = directSections.length > 1
+        ? directSections
+        : [...main.querySelectorAll("section[id], article[id]")]
+          .filter((section) => !section.closest("[data-prototype-frame]"))
+          .slice(0, 14);
+      const sections = candidates.filter((section) => section instanceof HTMLElement && section.id);
+      if (sections.length < 2) return;
+
+      nav.dataset.ready = "true";
+      links.replaceChildren();
+      const linkById = new Map();
+
+      const labelFor = (section) => {
+        const explicit = section.getAttribute("data-section-label");
+        if (explicit) return explicit;
+        const heading = section.querySelector(":scope > header h2, :scope > header h1, :scope > h2, :scope > h1");
+        if (heading?.textContent?.trim()) return heading.textContent.trim();
+        return section.id
+          .split("-")
+          .filter(Boolean)
+          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(" ");
+      };
+
+      const setCurrent = (id) => {
+        linkById.forEach((link, candidateId) => {
+          if (!(link instanceof HTMLAnchorElement)) return;
+          if (candidateId === id) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+        const active = linkById.get(id);
+        if (currentLabel instanceof HTMLElement && active instanceof HTMLAnchorElement) {
+          currentLabel.textContent = active.textContent || "On this page";
+        }
+      };
+
+      sections.forEach((section, index) => {
+        const anchor = document.createElement("a");
+        anchor.href = `#${section.id}`;
+        anchor.textContent = labelFor(section);
+        anchor.addEventListener("click", () => {
+          setCurrent(section.id);
+          nav.dataset.open = "false";
+          trigger.setAttribute("aria-expanded", "false");
+        });
+        links.append(anchor);
+        linkById.set(section.id, anchor);
+        if (index === 0) setCurrent(section.id);
+      });
+
+      nav.hidden = false;
+      nav.dataset.open = "false";
+      document.body.dataset.catalogueSectionReady = "true";
+
+      trigger.addEventListener("click", () => {
+        const open = nav.dataset.open !== "true";
+        nav.dataset.open = String(open);
+        trigger.setAttribute("aria-expanded", String(open));
+      });
+
+      const observer = "IntersectionObserver" in window
+        ? new IntersectionObserver((entries) => {
+            const visible = entries
+              .filter((entry) => entry.isIntersecting)
+              .sort((left, right) => left.boundingClientRect.top - right.boundingClientRect.top)[0];
+            if (visible?.target instanceof HTMLElement) setCurrent(visible.target.id);
+          }, { rootMargin: "-34% 0px -58% 0px", threshold: [0, .05, .25] })
+        : null;
+      sections.forEach((section) => observer?.observe(section));
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || nav.dataset.open !== "true") return;
+        nav.dataset.open = "false";
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.focus();
+      });
+    });
+  };
+
+  initialiseCatalogueSections();
+  document.addEventListener("astro:page-load", initialiseCatalogueSections);
+</script>
