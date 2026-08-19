@@ -7,43 +7,50 @@
         "id": "world",
         "label": "Hara World",
         "transport": "native",
-        "cadence": "event"
+        "cadence": "event",
+        "trust": 1
       },
       {
         "id": "github",
         "label": "GitHub",
         "transport": "webhook + API",
-        "cadence": "5m"
+        "cadence": "5m",
+        "trust": 0.98
       },
       {
         "id": "reddit",
         "label": "Reddit",
         "transport": "API",
-        "cadence": "15m"
+        "cadence": "15m",
+        "trust": 0.72
       },
       {
         "id": "x",
         "label": "X / Twitter",
         "transport": "API",
-        "cadence": "15m"
+        "cadence": "15m",
+        "trust": 0.7
       },
       {
         "id": "hacker-news",
         "label": "Hacker News",
         "transport": "API",
-        "cadence": "10m"
+        "cadence": "10m",
+        "trust": 0.82
       },
       {
         "id": "substack",
         "label": "Substack",
         "transport": "RSS",
-        "cadence": "30m"
+        "cadence": "30m",
+        "trust": 0.84
       },
       {
         "id": "rss",
         "label": "RSS / JSON Feed",
         "transport": "RSS + JSON Feed",
-        "cadence": "30m"
+        "cadence": "30m",
+        "trust": 0.76
       }
     ]
   },

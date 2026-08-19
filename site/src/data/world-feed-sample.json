@@ -1,6 +1,7 @@
 [
   {
     "id": "github-schema-release",
+    "clusterId": "schema-values",
     "source": "github",
     "sourceLabel": "GitHub",
     "kind": "hara-owned-release",
@@ -8,6 +9,7 @@
     "author": "hara-lang",
     "title": "Schema values move into the ordinary Hara runtime",
     "summary": "A release note with code examples, migration notes, and links to the implementation discussion.",
+    "topics": ["std.typed", "schema", "runtime"],
     "canonicalUrl": "https://example.invalid/hara/github/schema-release",
     "publishedAt": "2026-08-19T08:00:00Z",
     "signals": {
@@ -29,6 +31,7 @@
   },
   {
     "id": "x-work-algebra",
+    "clusterId": "work-algebra",
     "source": "x",
     "sourceLabel": "X / Twitter",
     "kind": "community-post",
@@ -36,6 +39,7 @@
     "author": "@mina_forms",
     "title": "What if a work runtime is just executor + store + capabilities?",
     "summary": "A compact thread comparing an algebraic work description with a conventional task runtime.",
+    "topics": ["work.*", "runtime", "capabilities"],
     "canonicalUrl": "https://example.invalid/hara/x/work-algebra",
     "publishedAt": "2026-08-19T07:30:00Z",
     "signals": {
@@ -57,6 +61,7 @@
   },
   {
     "id": "reddit-hara-first-program",
+    "clusterId": "first-graphics-program",
     "source": "reddit",
     "sourceLabel": "Reddit",
     "kind": "community-post",
@@ -64,6 +69,7 @@
     "author": "u/quietcompiler",
     "title": "I made my first small Hara graphics program",
     "summary": "A newcomer shares a runnable sketch and asks how namespaces and live sessions fit together.",
+    "topics": ["graphics", "playground", "sessions"],
     "canonicalUrl": "https://example.invalid/hara/reddit/first-program",
     "publishedAt": "2026-08-19T05:15:00Z",
     "signals": {
@@ -85,6 +91,7 @@
   },
   {
     "id": "hn-portable-runtime",
+    "clusterId": "portable-runtime",
     "source": "hacker-news",
     "sourceLabel": "Hacker News",
     "kind": "external-discussion",
@@ -92,6 +99,7 @@
     "author": "kernel_notes",
     "title": "Hara's portable runtime boundary is becoming easier to inspect",
     "summary": "A technical discussion about interpreter, bytecode, Wasm, and native session parity.",
+    "topics": ["runtime", "wasm", "bytecode"],
     "canonicalUrl": "https://example.invalid/hara/hn/portable-runtime",
     "publishedAt": "2026-08-18T23:40:00Z",
     "signals": {
@@ -113,6 +121,7 @@
   },
   {
     "id": "substack-language-tools",
+    "clusterId": "language-tools",
     "source": "substack",
     "sourceLabel": "Substack",
     "kind": "article",
@@ -120,6 +129,7 @@
     "author": "Small Language Systems",
     "title": "Language tooling without a second semantic universe",
     "summary": "An essay uses Hara's typed schemas and lint facts as one example of converging tools on runtime values.",
+    "topics": ["tooling", "std.typed", "lint"],
     "canonicalUrl": "https://example.invalid/hara/substack/language-tools",
     "publishedAt": "2026-08-18T20:00:00Z",
     "signals": {
@@ -141,6 +151,7 @@
   },
   {
     "id": "world-snippet-day",
+    "clusterId": "snippet-of-the-day",
     "source": "world",
     "sourceLabel": "Hara World",
     "kind": "scheduled-snippet-of-the-day",
@@ -148,6 +159,7 @@
     "author": "Hara Bot",
     "title": "Snippet of the day: thread a value through a small pipeline",
     "summary": "A runnable form with one explanation and links to the relevant language reference.",
+    "topics": ["language", "pipelines", "snippet-of-the-day"],
     "canonicalUrl": "https://example.invalid/hara/world/snippet-of-the-day",
     "publishedAt": "2026-08-19T09:00:00Z",
     "signals": {
@@ -169,6 +181,7 @@
   },
   {
     "id": "rss-audio-box",
+    "clusterId": "audio-box",
     "source": "rss",
     "sourceLabel": "RSS",
     "kind": "project-note",
@@ -176,6 +189,7 @@
     "author": "Ari K.",
     "title": "A programmable browser music box in Hara",
     "summary": "A project log covering deterministic timing, audio nodes, and a small form-based control surface.",
+    "topics": ["audio", "wasm", "timing"],
     "canonicalUrl": "https://example.invalid/hara/rss/audio-box",
     "publishedAt": "2026-08-18T16:30:00Z",
     "signals": {
@@ -197,6 +211,7 @@
   },
   {
     "id": "x-duplicate-schema",
+    "clusterId": "schema-values",
     "source": "x",
     "sourceLabel": "X / Twitter",
     "kind": "community-post",
@@ -204,6 +219,7 @@
     "author": "@link_relay",
     "title": "Schema values move into the ordinary Hara runtime",
     "summary": "A link-only repost of the release note already represented by its canonical GitHub item.",
+    "topics": ["std.typed", "schema", "runtime"],
     "canonicalUrl": "https://example.invalid/hara/github/schema-release",
     "publishedAt": "2026-08-19T08:20:00Z",
     "signals": {
