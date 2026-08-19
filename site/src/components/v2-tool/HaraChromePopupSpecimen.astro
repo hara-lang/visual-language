@@ -1,0 +1,55 @@
+---
+import CompactRuntimeShell from "../../../../src/astro/v2/tool/CompactRuntimeShell.astro";
+import ConnectionRow from "../../../../src/astro/v2/tool/ConnectionRow.astro";
+import StatusLamp from "../../../../src/astro/v2/tool/StatusLamp.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+---
+
+<section class="tool-lab-section hara-chrome-lab-section" id="toolbar-popup" data-hara-chrome-screen="popup">
+  <header class="tool-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Hara Chrome specimen 01 · Toolbar action</p>
+      <h2>Connection control</h2>
+    </div>
+    <p>A compact extension dropdown where switches describe requested state and lamps report actual browser, runtime, RESP, adapter, diagnostics, and download state.</p>
+  </header>
+
+  <div class="hara-chrome-popup-stage">
+    <CompactRuntimeShell
+      idPrefix="hara-chrome-popup"
+      label="Hara Chrome toolbar connection control"
+      title="Hara"
+      state="starting"
+      stateLabel="Connecting"
+      target="chatgpt.com · tab 73"
+      targetDetail="Exact bound browser target · ROOT"
+    >
+      <ConnectionRow slot="connections" id="popup-tab" label="Current tab" detail="chatgpt.com/c/visual-language" state="ready" stateLabel="Bound" desired />
+      <ConnectionRow slot="connections" id="popup-runtime" label="Hara runtime" detail="Shared offscreen host" state="starting" stateLabel="Starting" desired />
+      <ConnectionRow slot="connections" id="popup-resp" label="RESP" detail="127.0.0.1:7355 · ROOT" state="connecting" stateLabel="Connecting" desired />
+      <ConnectionRow slot="connections" id="popup-adapter" label="ChatGPT adapter" detail="Browser-only authentication" state="attention" stateLabel="Login required" desired />
+      <ConnectionRow slot="connections" id="popup-diagnostics" label="Diagnostics" detail="CDP Overlay · exact tab" state="off" stateLabel="Off" />
+
+      <div slot="status" class="hara-runtime-status-row">
+        <StatusLamp label="Ready" state="ready" iconOnly />
+        <span class="hara-runtime-connection-label">DOM service</span>
+        <output class="hara-runtime-connection-state">Ready</output>
+      </div>
+      <div slot="status" class="hara-runtime-status-row">
+        <StatusLamp label="Idle" state="off" iconOnly />
+        <span class="hara-runtime-connection-label">Downloads</span>
+        <output class="hara-runtime-connection-state">Idle</output>
+      </div>
+
+      <ToolButton slot="actions" label="Open REPL" density="dense" />
+      <ToolButton slot="actions" label="Reconnect" density="dense" />
+      <ToolButton slot="actions" label="Disconnect all" density="dense" />
+    </CompactRuntimeShell>
+
+    <aside class="hara-chrome-popup-notes" aria-label="Popup review states">
+      <article><span>Desired</span><strong>Switch position</strong><p>The user has requested a connection or capability.</p></article>
+      <article><span>Actual</span><strong>Lamp + text</strong><p>The browser reports off, transitioning, ready, attention, or error.</p></article>
+      <article><span>Authority</span><strong>Exact tab only</strong><p>Changing the active tab never transfers runtime or adapter authority.</p></article>
+    </aside>
+  </div>
+</section>

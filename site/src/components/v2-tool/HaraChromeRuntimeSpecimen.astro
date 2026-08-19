@@ -1,0 +1,108 @@
+---
+import FrontmatterGrid from "../../../../src/astro/v2/tool/FrontmatterGrid.astro";
+import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import ResourceList from "../../../../src/astro/v2/tool/ResourceList.astro";
+import RuntimeAppShell from "../../../../src/astro/v2/tool/RuntimeAppShell.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import StatusLamp from "../../../../src/astro/v2/tool/StatusLamp.astro";
+import TabStrip from "../../../../src/astro/v2/tool/TabStrip.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolGroup from "../../../../src/astro/v2/tool/ToolGroup.astro";
+import ToolSelect from "../../../../src/astro/v2/tool/ToolSelect.astro";
+import Toolbar from "../../../../src/astro/v2/tool/Toolbar.astro";
+
+const apps = [
+  { id: "runtime-app-runtime", label: "Runtime", active: true, controls: "runtime-surface" },
+  { id: "runtime-app-chatgpt", label: "ChatGPT", badge: 8, controls: "runtime-surface" },
+  { id: "runtime-app-tripo", label: "Tripo", badge: 18, controls: "runtime-surface" },
+  { id: "runtime-app-diagnostics", label: "Diagnostics", controls: "runtime-surface" }
+];
+
+const frontmatter = [
+  { label: "Target", value: "tab 73", detail: "chatgpt.com", status: "current" },
+  { label: "Kernel", value: "ROOT", detail: "shared offscreen host", status: "ready" },
+  { label: "Generation", value: "18", detail: "runtime instance 2", code: true },
+  { label: "Filesystem", value: "indexeddb:hara-chrome", detail: "browser owned", code: true },
+  { label: "RESP", value: "connected", detail: "127.0.0.1:7355", status: "ready" },
+  { label: "Publication", value: "local only", detail: "no automatic registry effect", status: "warning" }
+];
+
+const sessions = [
+  { id: "root", label: "ROOT", detail: "browser runtime · generation 18", status: "ready", meta: "current", current: true, action: true },
+  { id: "scratch", label: "scratch", detail: "isolated evaluator", status: "ready", meta: "idle", action: true },
+  { id: "preview", label: "preview-asset", detail: "Tripo receipt inspection", status: "busy", meta: "2 jobs", action: true }
+];
+
+const source = `(require [browser.dom :as dom]
+         [browser.diagnostics :as diag])
+
+(def save-button (dom/query "#save"))
+(diag/highlight save-button
+  {:show-info? true
+   :show-rulers? true})
+
+{:target (diag/status)
+ :button (dom/refresh save-button)}`;
+---
+
+<section class="tool-lab-section hara-chrome-lab-section" id="runtime-app" data-hara-chrome-screen="runtime">
+  <header class="tool-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Hara Chrome specimen 02 · Shared runtime</p>
+      <h2>Runtime workbench</h2>
+    </div>
+    <p>The offscreen Hara runtime remains persistent while toolbar and DevTools surfaces reconnect as clients. Runtime, target, session, filesystem, provider, and event state stay visible without turning the extension into a website.</p>
+  </header>
+
+  <RuntimeAppShell idPrefix="runtime-screen" label="Hara Chrome runtime" title="Runtime" activeApp="runtime" state="ready">
+    <StatusLamp slot="header-actions" label="Runtime ready" state="ready" detail="ROOT" live />
+    <TabStrip slot="navigation" tabs={apps} label="Hara Chrome applications" density="dense" />
+
+    <Toolbar slot="toolbar" label="Runtime commands" density="dense">
+      <ToolGroup label="Target">
+        <ToolSelect label="Browser target" value="tab-73" inline options={[
+          { value: "tab-73", label: "tab 73 · chatgpt.com" },
+          { value: "tab-91", label: "tab 91 · Tripo Studio" }
+        ]} />
+      </ToolGroup>
+      <ToolGroup label="Evaluation">
+        <ToolButton label="Eval form" active density="dense" />
+        <ToolButton label="Run file" density="dense" />
+        <ToolButton label="Interrupt" density="dense" />
+      </ToolGroup>
+    </Toolbar>
+
+    <div class="hara-chrome-editor" id="runtime-surface">
+      <header><span>src/browser/session.hal</span><span>Hara · balanced</span></header>
+      <pre><code>{source}</code></pre>
+      <div class="hara-chrome-result">
+        <span>value</span>
+        <code>{`{:target {:tab-id 73 :url "https://chatgpt.com/c/visual-language"}
+ :button {:tag "BUTTON" :text "Save" :disabled false}}`}</code>
+      </div>
+    </div>
+
+    <div slot="inspector" class="hara-chrome-inspector">
+      <InspectorSection title="Runtime frontmatter" open>
+        <FrontmatterGrid entries={frontmatter} label="Runtime frontmatter" />
+      </InspectorSection>
+      <InspectorSection title="Sessions" open>
+        <ResourceList items={sessions} label="Runtime sessions" density="dense" />
+      </InspectorSection>
+    </div>
+
+    <div slot="bottom" class="hara-chrome-event-log">
+      <header><strong>Runtime events</strong><span>bounded · 500 entries</span></header>
+      <ol>
+        <li><time>10:42:13.204</time><span data-state="ready">runtime/ready</span><code>ROOT · generation 18</code></li>
+        <li><time>10:42:14.017</time><span data-state="ready">resp/connected</span><code>127.0.0.1:7355</code></li>
+        <li><time>10:42:18.889</time><span data-state="current">target/bound</span><code>tab 73 · chatgpt.com</code></li>
+      </ol>
+    </div>
+
+    <StatusBar slot="status" label="Runtime application status">
+      <span>Runtime ready</span><span>ROOT</span><span>Generation 18</span>
+      <span slot="secondary">RESP connected · tab 73</span>
+    </StatusBar>
+  </RuntimeAppShell>
+</section>

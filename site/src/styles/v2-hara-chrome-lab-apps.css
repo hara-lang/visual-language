@@ -1,0 +1,366 @@
+.hara-chrome-site-app {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(230px, 34%) minmax(0, 1fr);
+  background: var(--hara-tool-bg-recessed);
+}
+
+.hara-chrome-site-list {
+  min-width: 0;
+  border-inline-end: 1px solid var(--hara-tool-edge);
+  background: var(--hara-tool-bg);
+}
+
+.hara-chrome-search {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border-block-end: 1px solid var(--hara-tool-edge);
+  color: var(--hara-tool-muted);
+  font: 650 9px/1 var(--hara-v2-font-body);
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.hara-chrome-search input {
+  width: 100%;
+  min-height: var(--hara-tool-control);
+  border: 1px solid var(--hara-tool-edge);
+  border-radius: 6px;
+  padding: 0 9px;
+  color: var(--hara-tool-ink);
+  background: var(--hara-tool-bg-recessed);
+  box-shadow: var(--hara-tool-shadow-inset);
+  font: 550 11px/1 var(--hara-v2-font-code);
+}
+
+.hara-chrome-list-items,
+.hara-chrome-asset-grid {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+}
+
+.hara-chrome-list-items button,
+.hara-chrome-asset-grid button,
+.hara-chrome-format-list button {
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: var(--hara-tool-ink);
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+}
+
+.hara-chrome-list-items button:hover,
+.hara-chrome-list-items button:focus-visible,
+.hara-chrome-list-items button[data-current="true"],
+.hara-chrome-asset-grid button:hover,
+.hara-chrome-asset-grid button:focus-visible,
+.hara-chrome-asset-grid button[data-current="true"],
+.hara-chrome-format-list button:hover:not(:disabled),
+.hara-chrome-format-list button:focus-visible:not(:disabled) {
+  border-color: var(--hara-tool-edge);
+  background: var(--hara-tool-highlight);
+}
+
+.hara-chrome-list-items button[data-current="true"],
+.hara-chrome-asset-grid button[data-current="true"] {
+  box-shadow: inset 2px 0 0 var(--hara-tool-signal);
+}
+
+.hara-chrome-list-items :where(small, span),
+.hara-chrome-asset-grid :where(small, b),
+.hara-chrome-format-list :where(span, b) {
+  color: var(--hara-tool-muted);
+  font: 500 10px/1.3 var(--hara-v2-font-body);
+}
+
+.hara-chrome-list-items small,
+.hara-chrome-format-list b {
+  font-family: var(--hara-v2-font-code);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.hara-chrome-list-items strong,
+.hara-chrome-asset-grid strong,
+.hara-chrome-format-list strong {
+  font: 650 12px/1.25 var(--hara-v2-font-body);
+}
+
+.hara-chrome-site-detail {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.hara-chrome-site-detail > header {
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border-block-end: 1px solid var(--hara-tool-edge);
+  background: var(--hara-tool-bg-raised);
+}
+
+.hara-chrome-site-detail > header span,
+.hara-chrome-site-detail h4 {
+  color: var(--hara-tool-muted);
+  font: 650 9px/1 var(--hara-v2-font-code);
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.hara-chrome-site-detail h3 {
+  margin: 5px 0 0;
+  font: 650 18px/1.15 var(--hara-v2-font-heading);
+}
+
+.hara-chrome-site-detail > footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 9px 12px;
+  border-block-start: 1px solid var(--hara-tool-edge);
+  background: var(--hara-tool-bg-raised);
+}
+
+.hara-chrome-chat-transcript {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: clamp(18px, 4vw, 38px);
+  overflow: auto;
+}
+
+.hara-chrome-chat-transcript p {
+  max-width: 680px;
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 13px 15px;
+  border: 1px solid var(--hara-tool-edge);
+  border-radius: 9px;
+  background: var(--hara-tool-bg-raised);
+  font: 500 12px/1.55 var(--hara-v2-font-body);
+}
+
+.hara-chrome-chat-transcript p[data-speaker="assistant"] {
+  margin-inline-start: clamp(12px, 9vw, 90px);
+  background: color-mix(in srgb, var(--hara-tool-highlight) 42%, var(--hara-tool-bg-raised));
+}
+
+.hara-chrome-chat-transcript p span {
+  color: var(--hara-tool-muted);
+  font: 650 9px/1 var(--hara-v2-font-code);
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.hara-chrome-state-strip {
+  display: grid;
+  gap: 7px;
+}
+
+.hara-chrome-state-strip article {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 3px 9px;
+  padding: 9px;
+  border: 1px solid var(--hara-tool-edge);
+  border-radius: 7px;
+  background: var(--hara-tool-bg-recessed);
+}
+
+.hara-chrome-state-strip article > span {
+  grid-row: 1 / 3;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid var(--hara-tool-edge-strong);
+  border-radius: 50%;
+  color: var(--hara-tool-muted);
+  font: 650 9px/1 var(--hara-v2-font-code);
+}
+
+.hara-chrome-state-strip article[data-state="ready"] > span {
+  border-color: var(--hara-tool-success);
+  color: var(--hara-tool-success);
+}
+
+.hara-chrome-state-strip article[data-state="attention"] > span {
+  border-color: var(--hara-tool-warning);
+  color: var(--hara-tool-warning);
+}
+
+.hara-chrome-state-strip strong {
+  font: 650 11px/1.2 var(--hara-v2-font-body);
+}
+
+.hara-chrome-state-strip small {
+  color: var(--hara-tool-muted);
+  font: 500 9px/1.25 var(--hara-v2-font-body);
+}
+
+.hara-chrome-definition-list,
+.hara-chrome-download-receipt dl {
+  display: grid;
+  gap: 0;
+}
+
+.hara-chrome-definition-list > div,
+.hara-chrome-download-receipt dl > div {
+  display: grid;
+  grid-template-columns: minmax(92px, auto) minmax(0, 1fr);
+  gap: 10px;
+  padding: 7px 0;
+  border-block-start: 1px solid color-mix(in srgb, var(--hara-tool-edge) 62%, transparent);
+}
+
+.hara-chrome-definition-list > div:first-child,
+.hara-chrome-download-receipt dl > div:first-child {
+  border-block-start: 0;
+}
+
+.hara-chrome-definition-list :where(dt, dd),
+.hara-chrome-download-receipt :where(dt, dd) {
+  min-width: 0;
+  margin: 0;
+  font: 550 10px/1.35 var(--hara-v2-font-code);
+  overflow-wrap: anywhere;
+}
+
+.hara-chrome-definition-list dt,
+.hara-chrome-download-receipt dt {
+  color: var(--hara-tool-muted);
+}
+
+.hara-chrome-receipts > header,
+.hara-chrome-download-receipt > header {
+  border-block-end: 1px solid var(--hara-tool-edge);
+}
+
+.hara-chrome-list-heading {
+  border-block-end: 1px solid var(--hara-tool-edge);
+}
+
+.hara-chrome-asset-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.hara-chrome-asset-grid button {
+  grid-template-columns: 46px minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+}
+
+.hara-chrome-asset-preview {
+  grid-row: 1 / 4;
+  width: 46px;
+  aspect-ratio: 1;
+  border: 1px solid var(--hara-tool-edge);
+  border-radius: 7px;
+  background:
+    linear-gradient(135deg, transparent 0 45%, color-mix(in srgb, var(--hara-tool-signal) 28%, transparent) 45% 55%, transparent 55%),
+    radial-gradient(circle at 58% 38%, color-mix(in srgb, var(--hara-tool-signal) 27%, transparent), transparent 33%),
+    var(--hara-tool-bg-recessed);
+  box-shadow: var(--hara-tool-shadow-inset);
+}
+
+.hara-chrome-export-detail > section {
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+}
+
+.hara-chrome-export-detail h4 {
+  margin: 0 0 10px;
+}
+
+.hara-chrome-format-list {
+  display: grid;
+  gap: 7px;
+}
+
+.hara-chrome-format-list button {
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  border-color: var(--hara-tool-edge);
+  background: var(--hara-tool-bg-raised);
+}
+
+.hara-chrome-format-list button[data-state="ready"] b {
+  color: var(--hara-tool-success);
+}
+
+.hara-chrome-format-list button[data-state="disabled"] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.hara-chrome-boundary-list,
+.hara-chrome-error-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hara-chrome-boundary-list li {
+  position: relative;
+  padding: 7px 9px 7px 25px;
+  border: 1px solid var(--hara-tool-edge);
+  border-radius: 6px;
+  background: var(--hara-tool-bg-recessed);
+  font: 550 10px/1.25 var(--hara-v2-font-body);
+}
+
+.hara-chrome-boundary-list li::before {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 9px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--hara-tool-edge-strong);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.hara-chrome-boundary-list li[data-state="ready"]::before {
+  border-color: var(--hara-tool-success);
+  background: var(--hara-tool-success);
+}
+
+.hara-chrome-boundary-list li[data-state="disabled"] {
+  color: var(--hara-tool-muted);
+}
+
+.hara-chrome-download-receipt {
+  padding-bottom: 10px;
+}
+
+.hara-chrome-download-receipt dl {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 12px 0;
+}
+
+.hara-chrome-download-receipt dl > div {
+  grid-template-columns: 1fr;
+  gap: 4px;
+  border: 1px solid var(--hara-tool-edge);
+  border-radius: 6px;
+  padding: 9px;
+  background: var(--hara-tool-bg-recessed);
+}
+
