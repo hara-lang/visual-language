@@ -72,16 +72,18 @@ test("every implemented laboratory advertised by the manifest exists", async () 
   ]) await access(new URL(path, import.meta.url));
 });
 
-test("the shared header renders grouped disclosures from the manifest", async () => {
+test("the shared header renders grouped button disclosures from the manifest", async () => {
   const component = await read("../site/src/components/v2-catalogue/CatalogueHeader.astro");
 
   assert.match(component, /catalogueGroups\.map/);
-  assert.match(component, /<details class="v2-catalogue-group"/);
-  assert.match(component, /<summary>/);
+  assert.match(component, /data-catalogue-group-trigger/);
+  assert.match(component, /aria-controls={`v2-catalogue-panel-\$\{group\.id\}`}/);
+  assert.match(component, /aria-expanded="false"/);
   assert.match(component, /data-catalogue-menu-button/);
   assert.match(component, /aria-controls="v2-catalogue-navigation"/);
   assert.match(component, /catalogueHref\(item, basePath\)/);
   assert.match(component, /catalogueHref\(child, basePath\)/);
+  assert.match(component, /<noscript>/);
   assert.match(component, /event\.key !== "Escape"/);
   assert.match(component, /header\.contains\(event\.target\)/);
   assert.match(component, /document\.addEventListener\("astro:page-load"/);
@@ -111,20 +113,26 @@ test("the catalogue home is manifest-driven and preserves the existing reference
 });
 
 test("catalogue styling includes focus, mobile disclosure, and reduced-motion contracts without protected token overrides", async () => {
-  const css = await read("../site/src/styles/v2-catalogue.css");
+  const [css, disclosure] = await Promise.all([
+    read("../site/src/styles/v2-catalogue.css"),
+    read("../site/src/styles/v2-catalogue-disclosure.css")
+  ]);
+  const combined = `${css}\n${disclosure}`;
 
   for (const selector of [
     ".v2-catalogue-header",
     ".v2-catalogue-menu-button",
+    ".v2-catalogue-group-trigger",
     ".v2-catalogue-panel",
     ".v2-catalogue-card-grid",
     ".v2-catalogue-children"
-  ]) assert.match(css, new RegExp(selector.replace(".", "\\.")));
+  ]) assert.match(combined, new RegExp(selector.replace(".", "\\.")));
 
-  assert.match(css, /:focus-visible/);
-  assert.match(css, /data-menu-open="false"/);
-  assert.match(css, /@media \(max-width: 840px\)/);
-  assert.match(css, /@media \(max-width: 560px\)/);
-  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
-  assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/);
+  assert.match(combined, /:focus-visible/);
+  assert.match(combined, /data-menu-open="false"/);
+  assert.match(combined, /data-open="true"/);
+  assert.match(combined, /@media \(max-width: 840px\)/);
+  assert.match(combined, /@media \(max-width: 560px\)/);
+  assert.match(combined, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.doesNotMatch(combined, /--hara-[A-Za-z0-9_-]+\s*:/);
 });
