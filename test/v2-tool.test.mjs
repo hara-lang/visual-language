@@ -64,6 +64,8 @@ test("toolbar and tool-widget components are exported with semantic state", asyn
   ]);
   assert.match(toolbar, /role="toolbar"/);
   assert.match(button, /aria-label=\{iconOnly/);
+  assert.match(button, /title=\{title\}/);
+  assert.doesNotMatch(button, /iconOnly\s*\?\s*label/);
   assert.match(toggle, /aria-pressed=/);
   assert.match(tabs, /role="tablist"/);
   assert.match(tabs, /aria-selected=/);
@@ -82,6 +84,15 @@ test("tool control CSS covers density, orientation, pressed, selected, and disab
   assert.match(css, /aria-pressed="true"/);
   assert.match(css, /aria-selected="true"/);
   assert.match(css, /:disabled/);
+});
+
+test("toolbars contain horizontal density instead of letting controls escape the workbench", async () => {
+  const css = await read("../src/v2/tool-controls.css");
+
+  assert.match(css, /\.hara-tool-toolbar\s*\{[\s\S]*min-width:\s*0;[\s\S]*max-width:\s*100%;[\s\S]*flex-wrap:\s*nowrap;[\s\S]*overflow-x:\s*auto;[\s\S]*overflow-y:\s*hidden;/);
+  assert.match(css, /\.hara-tool-group\s*\{[\s\S]*flex:\s*0 0 auto;[\s\S]*min-width:\s*max-content;/);
+  assert.match(css, /\[data-density="dense"\][\s\S]*\[data-icon-only="true"\][\s\S]*width:\s*var\(--hara-tool-control-dense\);/);
+  assert.match(css, /\.hara-tool-control-label,[\s\S]*\.hara-tool-command-hint\s*\{[\s\S]*white-space:\s*nowrap;/);
 });
 
 test("workbench structure exports explicit dock, overlay, inspector, and shell semantics", async () => {
