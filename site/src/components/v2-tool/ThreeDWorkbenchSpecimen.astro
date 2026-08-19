@@ -1,0 +1,157 @@
+---
+import WorkbenchShell from "../../../../src/astro/v2/tool/WorkbenchShell.astro";
+import Toolbar from "../../../../src/astro/v2/tool/Toolbar.astro";
+import ToolGroup from "../../../../src/astro/v2/tool/ToolGroup.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolToggle from "../../../../src/astro/v2/tool/ToolToggle.astro";
+import ToolSelect from "../../../../src/astro/v2/tool/ToolSelect.astro";
+import ToolNumberField from "../../../../src/astro/v2/tool/ToolNumberField.astro";
+import IconRail from "../../../../src/astro/v2/tool/IconRail.astro";
+import DockPanel from "../../../../src/astro/v2/tool/DockPanel.astro";
+import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import PanelHeader from "../../../../src/astro/v2/tool/PanelHeader.astro";
+import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+
+const modes = [
+  { value: "solid", label: "Solid" },
+  { value: "wire", label: "Wireframe" },
+  { value: "render", label: "Rendered" }
+];
+
+const scene = [
+  { name: "Command aperture", type: "mesh", active: true },
+  { name: "Signal mast", type: "mesh" },
+  { name: "Deck lights", type: "group" },
+  { name: "Camera / 01", type: "camera" },
+  { name: "Key light", type: "light" }
+];
+---
+<section class="tool-lab-section" id="three-d" data-tool-layout="3d">
+  <header class="tool-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Workbench specimen 01 · Spatial tooling</p>
+      <h2>3D editor</h2>
+    </div>
+    <p>A dense command frame for object selection, scene hierarchy, viewport work, property inspection, and persistent runtime status. Chrome remains structural while the viewport carries the visual weight.</p>
+  </header>
+
+  <WorkbenchShell label="Hara 3D editor specimen" minHeight="720px">
+    <Toolbar slot="top" label="3D editor commands" density="dense">
+      <ToolGroup label="File commands">
+        <ToolButton label="Open" command="Ctrl+O" />
+        <ToolButton label="Save" command="Ctrl+S" />
+      </ToolGroup>
+      <ToolGroup label="Transform mode">
+        <ToolToggle label="Move" pressed iconOnly>
+          <svg slot="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v14M1 8h14M8 1l-2 2m2-2 2 2M15 8l-2-2m2 2-2 2" fill="none" stroke="currentColor" /></svg>
+        </ToolToggle>
+        <ToolToggle label="Rotate" iconOnly>
+          <svg slot="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.8 5.5A5.5 5.5 0 1 0 13 10M12.8 5.5V2m0 3.5H9.3" fill="none" stroke="currentColor" /></svg>
+        </ToolToggle>
+        <ToolToggle label="Scale" iconOnly>
+          <svg slot="icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 10v4h4m8-8V2h-4M6 10l4-4" fill="none" stroke="currentColor" /></svg>
+        </ToolToggle>
+      </ToolGroup>
+      <ToolGroup label="Viewport settings">
+        <ToolSelect label="Shading" value="solid" options={modes} inline />
+        <ToolToggle label="Grid" pressed />
+        <ToolToggle label="Gizmos" pressed />
+      </ToolGroup>
+      <ToolGroup label="Run controls">
+        <ToolButton label="Preview" active command="Space" />
+      </ToolGroup>
+    </Toolbar>
+
+    <div slot="left" class="tool-lab-left-stack">
+      <IconRail label="Transform tools">
+        <ToolButton label="Select" active iconOnly><span slot="icon">↖</span></ToolButton>
+        <ToolButton label="Move" iconOnly><span slot="icon">✣</span></ToolButton>
+        <ToolButton label="Rotate" iconOnly><span slot="icon">◌</span></ToolButton>
+        <ToolButton label="Scale" iconOnly><span slot="icon">◇</span></ToolButton>
+        <ToolButton label="Measure" iconOnly><span slot="icon">⌁</span></ToolButton>
+      </IconRail>
+      <DockPanel label="Scene outliner" position="left" size="narrow" selected>
+        <PanelHeader title="Scene" eyebrow="Outliner" compact>
+          <span slot="metadata">05</span>
+          <ToolButton label="Add object" iconOnly density="dense"><span slot="icon">+</span></ToolButton>
+        </PanelHeader>
+        <ol class="tool-lab-tree">
+          {scene.map((item) => (
+            <li data-active={item.active ? "true" : "false"}>
+              <span class="tool-lab-tree-disclosure">›</span>
+              <span class="tool-lab-tree-kind">{item.type.slice(0, 1).toUpperCase()}</span>
+              <span>{item.name}</span>
+              <span class="tool-lab-tree-state">●</span>
+            </li>
+          ))}
+        </ol>
+      </DockPanel>
+    </div>
+
+    <div slot="viewport" class="tool-lab-viewport tool-lab-viewport--3d" aria-label="Perspective viewport mockup">
+      <div class="tool-lab-horizon"></div>
+      <div class="tool-lab-grid-plane"></div>
+      <div class="tool-lab-object" aria-hidden="true">
+        <div class="tool-lab-object-core"></div>
+        <div class="tool-lab-object-ring tool-lab-object-ring--one"></div>
+        <div class="tool-lab-object-ring tool-lab-object-ring--two"></div>
+        <div class="tool-lab-object-selection"></div>
+      </div>
+      <div class="tool-lab-axis" aria-hidden="true"><i data-axis="x">X</i><i data-axis="y">Y</i><i data-axis="z">Z</i></div>
+    </div>
+
+    <DockPanel slot="right" label="Object inspector" position="right" size="regular">
+      <PanelHeader title="Command aperture" eyebrow="Object / Mesh" compact>
+        <span slot="metadata">#A-104</span>
+        <ToolButton label="Panel options" iconOnly density="dense"><span slot="icon">•••</span></ToolButton>
+      </PanelHeader>
+      <InspectorSection title="Transform" open>
+        <span slot="meta">Local</span>
+        <div class="tool-lab-vector-row"><b>Position</b><ToolNumberField label="X" value="0" step="0.1" unit="m" inline /><ToolNumberField label="Y" value="1.4" step="0.1" unit="m" inline /><ToolNumberField label="Z" value="-2.8" step="0.1" unit="m" inline /></div>
+        <div class="tool-lab-vector-row"><b>Rotation</b><ToolNumberField label="X" value="0" unit="°" inline /><ToolNumberField label="Y" value="32" unit="°" inline /><ToolNumberField label="Z" value="0" unit="°" inline /></div>
+        <div class="tool-lab-vector-row"><b>Scale</b><ToolNumberField label="X" value="1" step="0.01" inline /><ToolNumberField label="Y" value="1" step="0.01" inline /><ToolNumberField label="Z" value="1" step="0.01" inline /></div>
+      </InspectorSection>
+      <InspectorSection title="Surface" open>
+        <span slot="meta">PBR</span>
+        <ToolSelect label="Material" value="steel" options={[{ value: "steel", label: "Pale command steel" }, { value: "graphite", label: "Graphite hull" }]} />
+        <ToolNumberField label="Roughness" value="0.72" min={0} max={1} step="0.01" />
+        <ToolNumberField label="Emission" value="0.08" min={0} max={1} step="0.01" />
+      </InspectorSection>
+      <InspectorSection title="Visibility" open={false}><p class="tool-lab-panel-note">Viewport and render visibility channels.</p></InspectorSection>
+    </DockPanel>
+
+    <DockPanel slot="bottom" label="Asset shelf" position="bottom">
+      <PanelHeader title="Asset shelf" eyebrow="Project / Materials" compact>
+        <span slot="metadata">12 items</span>
+        <ToolButton label="Filter assets" iconOnly density="dense"><span slot="icon">≡</span></ToolButton>
+      </PanelHeader>
+      <div class="tool-lab-asset-strip">
+        {[
+          ["Hull 01", "H1"], ["Aperture", "AP"], ["Signal", "SG"], ["Rack", "RK"], ["Glass", "GL"], ["Grid", "GR"]
+        ].map(([name, code], index) => (
+          <button type="button" data-active={index === 1 ? "true" : "false"}>
+            <span>{code}</span><b>{name}</b><small>Material</small>
+          </button>
+        ))}
+      </div>
+    </DockPanel>
+
+    <div slot="overlay">
+      <ViewportOverlay placement="top-left"><b>Perspective</b><span>Local · 1 m</span></ViewportOverlay>
+      <ViewportOverlay placement="top-right"><span>24.0 fps</span><span>GPU 38%</span></ViewportOverlay>
+      <ViewportOverlay placement="bottom-right"><span>Verts 18,240</span><span>Faces 17,908</span></ViewportOverlay>
+    </div>
+
+    <StatusBar slot="status">
+      <span>Command aperture selected</span><span>Collection / Deck A</span>
+      <span slot="secondary">Autosave 00:18</span><span slot="secondary">Hara scene 0.8</span>
+    </StatusBar>
+  </WorkbenchShell>
+
+  <div class="tool-lab-notes">
+    <article><b>Material hierarchy</b><p>Raised command rails, recessed data entry, and selected seams communicate state without turning the frame into thick simulated hardware.</p></article>
+    <article><b>Viewport first</b><p>The property inspector disappears before the outliner; both disappear before the asset shelf so the working field remains primary.</p></article>
+    <article><b>Shared grammar</b><p>Toolbar, dock, inspector, overlay, and status components are package primitives rather than specimen-specific containers.</p></article>
+  </div>
+</section>

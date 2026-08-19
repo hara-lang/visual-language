@@ -1,0 +1,86 @@
+---
+import ThemeToggle from "../../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../../src/astro/HaraMark.astro";
+import ThreeDWorkbenchSpecimen from "../../../components/v2-tool/ThreeDWorkbenchSpecimen.astro";
+import NodeWorkbenchSpecimen from "../../../components/v2-tool/NodeWorkbenchSpecimen.astro";
+import AnimationWorkbenchSpecimen from "../../../components/v2-tool/AnimationWorkbenchSpecimen.astro";
+import "../../../../../src/v2-tool.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-lab.css";
+import "../../../styles/v2-tool-lab.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/tool/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const documentLab = `${basePath}v2/`;
+const sections = [
+  { href: "#three-d", label: "3D" },
+  { href: "#node", label: "Node" },
+  { href: "#animation", label: "Animation" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Hara v2 tool chrome: shared toolbar, dock, inspector, viewport, timeline, and workbench primitives." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara v2 tool workbench laboratory" />
+    <meta property="og:description" content="3D, node/material, and animation workbenches built from one robust Hara tool language." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara v2 tool workbench laboratory" />
+    <meta name="twitter:description" content="Robust command surfaces for Hara editors and workbenches." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara v2 tool workbench laboratory</title>
+  </head>
+  <body class="hara-v2 hara-v2-tool">
+    <header class="v2-lab-header">
+      <a class="v2-lab-brand" href={documentLab}>
+        <HaraMark size={28} />
+        <b>Hara visual language</b>
+        <small>V2 tool field test</small>
+      </a>
+      <nav aria-label="Workbench specimens">
+        {sections.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+      <ThemeToggle />
+    </header>
+
+    <main class="v2-lab-main">
+      <section class="tool-lab-hero">
+        <div>
+          <p class="hara-v2-kicker">Experimental workbench layer · Version 2</p>
+          <h1>Precision tools, one frame.</h1>
+          <p>The document shell remains calm and flat. Editor surfaces add only the depth needed for command hierarchy: machined seams, recessed inputs, selected rails, docked inspectors, viewport telemetry, and compact status.</p>
+          <p><a class="tool-lab-back-link" href={documentLab}>← Return to WWW, Docs, Specs, Benchmarks, and World</a></p>
+        </div>
+        <div class="tool-lab-hero-frame" aria-hidden="true">
+          <div class="tool-lab-hero-core">H<i></i></div>
+          <div class="tool-lab-hero-telemetry"><span>WORKBENCH / 02</span><span>LIGHT + DARK</span><span>STATE / READY</span></div>
+        </div>
+      </section>
+
+      <nav class="tool-lab-index" aria-label="Tool layout catalogue">
+        <a href="#three-d"><strong>3D editor</strong><span>Toolbar, transform rail, outliner, viewport, property inspector, assets, and runtime status.</span><code>spatial / docked</code></a>
+        <a href="#node"><strong>Node / material</strong><span>Graph canvas, command tabs, catalogue, floating palette, properties, and surface assets.</span><code>graph / palette</code></a>
+        <a href="#animation"><strong>Scene / animation</strong><span>Transport, rig hierarchy, viewport, animation properties, timeline, and motion receipt.</span><code>temporal / timeline</code></a>
+      </nav>
+
+      <ThreeDWorkbenchSpecimen />
+      <NodeWorkbenchSpecimen />
+      <AnimationWorkbenchSpecimen />
+
+      <footer class="v2-lab-footer">
+        <span>Experimental v2 tool contract · Hara visual language</span>
+        <span><a href={documentLab}>Document laboratory</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+  </body>
+</html>

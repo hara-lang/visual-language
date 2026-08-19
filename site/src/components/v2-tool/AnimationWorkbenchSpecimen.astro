@@ -1,0 +1,110 @@
+---
+import WorkbenchShell from "../../../../src/astro/v2/tool/WorkbenchShell.astro";
+import Toolbar from "../../../../src/astro/v2/tool/Toolbar.astro";
+import ToolGroup from "../../../../src/astro/v2/tool/ToolGroup.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolToggle from "../../../../src/astro/v2/tool/ToolToggle.astro";
+import ToolSelect from "../../../../src/astro/v2/tool/ToolSelect.astro";
+import ToolNumberField from "../../../../src/astro/v2/tool/ToolNumberField.astro";
+import IconRail from "../../../../src/astro/v2/tool/IconRail.astro";
+import DockPanel from "../../../../src/astro/v2/tool/DockPanel.astro";
+import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import PanelHeader from "../../../../src/astro/v2/tool/PanelHeader.astro";
+import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+
+const tracks = [
+  { name: "Root", keys: [4, 18, 36, 58, 82] },
+  { name: "Spine / 02", keys: [8, 24, 48, 72, 90] },
+  { name: "Arm.L", keys: [12, 31, 51, 68, 88] },
+  { name: "Arm.R", keys: [12, 31, 51, 68, 88] },
+  { name: "Signal", keys: [20, 44, 65, 92] }
+];
+---
+<section class="tool-lab-section" id="animation" data-tool-layout="animation">
+  <header class="tool-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Workbench specimen 03 · Temporal tooling</p>
+      <h2>Scene / animation editor</h2>
+    </div>
+    <p>A transport-led scene editor with a persistent timeline, rig hierarchy, viewport overlays, and compact animation properties. It tests horizontal density without losing the same shared command language.</p>
+  </header>
+
+  <WorkbenchShell label="Hara scene and animation editor specimen" minHeight="730px">
+    <Toolbar slot="top" label="Animation controls" density="dense">
+      <ToolGroup label="Transport">
+        <ToolButton label="First frame" iconOnly><span slot="icon">|◀</span></ToolButton>
+        <ToolButton label="Previous frame" iconOnly><span slot="icon">◀</span></ToolButton>
+        <ToolToggle label="Play" pressed iconOnly><span slot="icon">▶</span></ToolToggle>
+        <ToolButton label="Next frame" iconOnly><span slot="icon">▶</span></ToolButton>
+        <ToolButton label="Last frame" iconOnly><span slot="icon">▶|</span></ToolButton>
+      </ToolGroup>
+      <ToolGroup label="Frame range"><ToolNumberField label="Frame" value="48" min={1} max={120} inline /><ToolNumberField label="End" value="120" min={1} inline /></ToolGroup>
+      <ToolGroup label="Playback"><ToolSelect label="Rate" value="24" options={[{ value: "24", label: "24 fps" }, { value: "30", label: "30 fps" }, { value: "60", label: "60 fps" }]} inline /><ToolToggle label="Loop" pressed /></ToolGroup>
+      <ToolGroup label="Recording"><ToolToggle label="Auto key" pressed /><ToolButton label="Bake" /></ToolGroup>
+    </Toolbar>
+
+    <div slot="left" class="tool-lab-left-stack">
+      <IconRail label="Animation tools">
+        <ToolButton label="Select" active iconOnly><span slot="icon">↖</span></ToolButton>
+        <ToolButton label="Pose" iconOnly><span slot="icon">⚯</span></ToolButton>
+        <ToolButton label="Curve" iconOnly><span slot="icon">⌁</span></ToolButton>
+        <ToolButton label="Marker" iconOnly><span slot="icon">◆</span></ToolButton>
+      </IconRail>
+      <DockPanel label="Rig outliner" position="left" size="narrow">
+        <PanelHeader title="Rig / Sentinel" eyebrow="Armature" compact><span slot="metadata">18 bones</span></PanelHeader>
+        <ol class="tool-lab-tree tool-lab-tree--rig">
+          {[
+            ["Root", 0], ["Pelvis", 1], ["Spine / 01", 2], ["Spine / 02", 3], ["Neck", 4], ["Head", 5], ["Arm.L", 3], ["Arm.R", 3]
+          ].map(([name, depth], index) => (
+            <li data-active={index === 3 ? "true" : "false"} style={`--depth:${depth}`}><span class="tool-lab-tree-disclosure">›</span><span class="tool-lab-tree-kind">B</span><span>{name}</span></li>
+          ))}
+        </ol>
+      </DockPanel>
+    </div>
+
+    <div slot="viewport" class="tool-lab-viewport tool-lab-viewport--animation" aria-label="Character animation viewport mockup">
+      <div class="tool-lab-stage-ring"></div>
+      <div class="tool-lab-rig" aria-hidden="true">
+        <i data-bone="head"></i><i data-bone="spine-a"></i><i data-bone="spine-b"></i><i data-bone="arm-left"></i><i data-bone="arm-right"></i><i data-bone="leg-left"></i><i data-bone="leg-right"></i>
+        <span data-joint="head"></span><span data-joint="chest"></span><span data-joint="pelvis"></span><span data-joint="left-hand"></span><span data-joint="right-hand"></span><span data-joint="left-foot"></span><span data-joint="right-foot"></span>
+      </div>
+      <div class="tool-lab-motion-arc tool-lab-motion-arc--left"></div><div class="tool-lab-motion-arc tool-lab-motion-arc--right"></div>
+    </div>
+
+    <DockPanel slot="right" label="Animation inspector" position="right" size="regular">
+      <PanelHeader title="Spine / 02" eyebrow="Pose bone" compact><span slot="metadata">F48</span></PanelHeader>
+      <InspectorSection title="Pose transform" open>
+        <div class="tool-lab-vector-row"><b>Rotation</b><ToolNumberField label="X" value="-8" unit="°" inline /><ToolNumberField label="Y" value="2" unit="°" inline /><ToolNumberField label="Z" value="14" unit="°" inline /></div>
+        <ToolSelect label="Rotation mode" value="euler" options={[{ value: "euler", label: "XYZ Euler" }, { value: "quaternion", label: "Quaternion" }]} />
+      </InspectorSection>
+      <InspectorSection title="Interpolation" open><ToolSelect label="Curve" value="bezier" options={[{ value: "bezier", label: "Bezier" }, { value: "linear", label: "Linear" }, { value: "constant", label: "Constant" }]} /><ToolToggle label="Clamp handles" pressed /></InspectorSection>
+      <InspectorSection title="Constraints" open><span slot="meta">02</span><div class="tool-lab-constraint"><b>Maintain volume</b><span>0.84</span></div><div class="tool-lab-constraint"><b>Chest aim</b><span>0.32</span></div></InspectorSection>
+      <InspectorSection title="Motion receipt" open={false}><p class="tool-lab-panel-note">Authored by pose-agent/07 · verified 8D2A.</p></InspectorSection>
+    </DockPanel>
+
+    <DockPanel slot="bottom" label="Animation timeline" position="bottom">
+      <PanelHeader title="Timeline" eyebrow="Action / Sentinel turn" compact><span slot="metadata">1–120 · 24 fps</span><ToolButton label="Timeline options" iconOnly density="dense"><span slot="icon">•••</span></ToolButton></PanelHeader>
+      <div class="tool-lab-timeline">
+        <div class="tool-lab-timeline-ruler"><span>1</span><span>24</span><span>48</span><span>72</span><span>96</span><span>120</span></div>
+        <div class="tool-lab-playhead" style="--frame:40%"><span>48</span></div>
+        {tracks.map((track, index) => (
+          <div class="tool-lab-track" data-active={index === 1 ? "true" : "false"}>
+            <b>{track.name}</b>
+            <div>{track.keys.map((key) => <i style={`--key:${key}%`}></i>)}</div>
+          </div>
+        ))}
+      </div>
+    </DockPanel>
+
+    <div slot="overlay"><ViewportOverlay placement="top-left"><b>Camera / 01</b><span>50 mm</span></ViewportOverlay><ViewportOverlay placement="top-right"><span>Pose mode</span><span>Frame 48</span></ViewportOverlay></div>
+
+    <StatusBar slot="status"><span>Sentinel turn · Spine / 02</span><span>Keyed at F48</span><span slot="secondary">Playback 24 fps</span><span slot="secondary">Receipt 8D2A</span></StatusBar>
+  </WorkbenchShell>
+
+  <div class="tool-lab-notes">
+    <article><b>Horizontal density</b><p>The shared bottom dock supports timeline rulers, tracks, keys, and a playhead without creating a separate visual system.</p></article>
+    <article><b>Operational state</b><p>Pressed transport controls, active bones, keyed tracks, and frame telemetry use selection and state rather than decorative colour.</p></article>
+    <article><b>Receipted workflow</b><p>Inspector and status regions leave room for Hara-native provenance, agent authorship, and deterministic motion receipts.</p></article>
+  </div>
+</section>

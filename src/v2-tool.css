@@ -1,6 +1,8 @@
 @import "./v2.css";
 @import "./v2/tool-tokens.css";
 @import "./v2/tool-surfaces.css";
+@import "./v2/tool-controls.css";
+@import "./v2/tool-shell.css";
 
 /*
  * Hara interface language v2: tool and workbench layer.
