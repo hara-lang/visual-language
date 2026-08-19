@@ -103,7 +103,8 @@ test("identity specimens preserve the exact block-H and single-signal contract",
 
   assert.match(mark, /d="M10 8h13v18h18V8h13v48H41V38H23v18H10z"/);
   assert.match(mark, /fill="var\(--hara-signal\)" d="M27 8h10v10H27z"/);
-  assert.match(page, /Primary · \{item\.size\}px/);
+  assert.match(page, /label: "Primary"/);
+  assert.match(page, /\{item\.label\} · \{item\.size\}px/);
   assert.match(page, /Minimum · 24px|Smallest supported interface mark/);
   assert.match(page, /Clear space/);
   assert.match(page, /Avoid · stretch/);
