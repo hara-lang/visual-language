@@ -16,6 +16,21 @@ export const DEFAULT_PENALTIES = Object.freeze({
   sameSourceSaturation: 0.20
 });
 
+/**
+ * Adapt the shared World fixture/source envelope to the data-driven feed laboratory.
+ * Provider-owned facts remain unchanged; UI conveniences are derived rather than
+ * creating a second incompatible source schema.
+ *
+ * @param {Record<string, any>} item
+ */
+export const normaliseFeedItem = (item = {}) => ({
+  ...item,
+  owned: item.owned === true || item.ownership === "hara",
+  excerpt: item.excerpt ?? item.summary ?? "",
+  topics: Array.isArray(item.topics) ? [...item.topics] : [],
+  clusterId: item.clusterId ?? item.canonicalUrl ?? item.id
+});
+
 export const scoreFeedItem = (item, ranking = {}) => {
   const weights = { ...DEFAULT_WEIGHTS, ...(ranking.weights ?? {}) };
   const penalties = { ...DEFAULT_PENALTIES, ...(ranking.penalties ?? {}) };
@@ -41,6 +56,7 @@ const publishedTime = (item) => {
 
 export const rankFeedItems = (items, ranking = {}) =>
   [...(Array.isArray(items) ? items : [])]
+    .map((item) => normaliseFeedItem(item))
     .map((item) => ({ ...item, score: scoreFeedItem(item, ranking) }))
     .sort((left, right) =>
       right.score - left.score ||
@@ -52,7 +68,7 @@ export const groupConversations = (items, ranking = {}) => {
   const groups = new Map();
 
   for (const item of rankFeedItems(items, ranking)) {
-    const key = item.clusterId || item.id;
+    const key = item.clusterId || item.canonicalUrl || item.id;
     const group = groups.get(key) ?? {
       id: key,
       title: item.title,
@@ -63,7 +79,8 @@ export const groupConversations = (items, ranking = {}) => {
 
     group.score = Math.max(group.score, item.score);
     group.items.push(item);
-    if (!group.sources.includes(item.sourceLabel)) group.sources.push(item.sourceLabel);
+    const source = item.sourceLabel ?? item.source;
+    if (source && !group.sources.includes(source)) group.sources.push(source);
     groups.set(key, group);
   }
 
@@ -73,22 +90,23 @@ export const groupConversations = (items, ranking = {}) => {
 };
 
 export const relayDecision = (item, relay = {}) => {
+  const source = normaliseFeedItem(item);
   const required = relay.required ?? [];
   const missing = [];
 
-  if (required.includes("canonical-url") && !item?.canonicalUrl) missing.push("canonical-url");
-  if (required.includes("source-author") && !item?.author) missing.push("source-author");
-  if (required.includes("source-platform") && !item?.source) missing.push("source-platform");
+  if (required.includes("canonical-url") && !source.canonicalUrl) missing.push("canonical-url");
+  if (required.includes("source-author") && !source.author) missing.push("source-author");
+  if (required.includes("source-platform") && !source.source) missing.push("source-platform");
 
   const neverAutomate = new Set(relay.neverAutomate ?? []);
-  if (neverAutomate.has(item?.kind)) {
+  if (neverAutomate.has(source.kind)) {
     return { state: "blocked", reason: "content-kind", missing };
   }
 
   if (missing.length > 0) return { state: "blocked", reason: "missing-attribution", missing };
 
   const autoEligible = new Set(relay.autoEligible ?? []);
-  if (item?.owned === true && autoEligible.has(item?.kind)) {
+  if (source.owned && autoEligible.has(source.kind)) {
     return { state: "auto-eligible", reason: "trusted-owned-event", missing };
   }
 

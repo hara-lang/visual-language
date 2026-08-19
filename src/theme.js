@@ -40,6 +40,12 @@ export function setThemePreference(preference) {
   return applyTheme(safe, true);
 }
 
+export function toggleTheme() {
+  const next = resolvedTheme() === "dark" ? "light" : "dark";
+  setThemePreference(next);
+  return next;
+}
+
 export function cycleTheme() {
   const order = ["system", "light", "dark"];
   const current = getThemePreference();

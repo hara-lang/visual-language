@@ -22,14 +22,16 @@ const cssFiles = [
   "responsive"
 ];
 
-test("Around Hara is linked from both the v2 review surface and World specimen", async () => {
-  const [index, world] = await Promise.all([
+test("Around Hara is linked from the v2 review surface and guided World specimen", async () => {
+  const [index, learn, world] = await Promise.all([
     read("../site/src/pages/v2/index.astro"),
+    read("../site/src/pages/v2/learn/index.astro"),
     read("../site/src/components/v2/WorldSpecimen.astro")
   ]);
 
   assert.match(index, /const worldAroundLab = `\$\{basePath\}v2\/world\/around\/`/);
-  assert.match(index, /Open the Around Hara feed explorer/);
+  assert.match(index, /Around Hara feed explorer/);
+  assert.match(learn, /const worldAroundLab = `\$\{basePath\}v2\/world\/around\/`/);
   assert.match(world, /label: "Around Hara"/);
   assert.match(world, /External signal · Hacker News/);
   assert.match(world, /Open signal radar/);
