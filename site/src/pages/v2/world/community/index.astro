@@ -162,7 +162,7 @@ const peopleSidebar = [
         <div>
           <p class="hara-v2-kicker">Current product direction · World v2</p>
           <h1>One community reader, not an everything site.</h1>
-          <p>World is the Hara community's shared front page: articles from submitted feeds, short clippings, ranked discussions, threaded comments, GitHub-backed contributor profiles, and a visible sense of who is around. Tutorials, koans, courses, and learning progression live at <a href="https://learn.hara-lang.org">learn.hara-lang.org</a>.</p>
+          <p>World is the Hara community's shared front page: articles from submitted feeds, short clippings, ranked discussions, threaded comments, GitHub-backed contributor profiles, and a visible sense of who is around. Tutorials, courses, and learning progression live at <a href="https://learn.hara-lang.org">learn.hara-lang.org</a>.</p>
           <div class="world-focused-boundary" aria-label="World product boundary">
             <span>Articles</span><span>Feeds</span><span>Clippings</span><span>Comments</span><span>Profiles</span><span>Presence</span><span>Digest</span>
           </div>
@@ -193,26 +193,21 @@ const peopleSidebar = [
       <section class="world-lab-screen" id="hot">
         <header class="world-lab-screen-head">
           <div><p class="hara-v2-kicker">Screen 01 · Shared front page</p><h2>Articles, clippings, and discussion in one ranked feed.</h2></div>
-          <p>The front page behaves more like a focused Hara subreddit than a publication homepage. Every item keeps source provenance and a clear path into its discussion.</p>
+          <p>The front page behaves like a focused Hara community board. Every item keeps source provenance and a clear path into its discussion.</p>
         </header>
         <div class="world-lab-canvas world-focused-canvas world-focused-canvas--feed">
           <Shell embedded={true} sidebar={true} aside={true} mainId="focused-hot-content">
             <Header slot="header" section="World" nav={ecosystemNav}>
-              <button class="hara-v2-icon-button" aria-label="Account">CZ</button>
-              <ThemeToggle />
+              <button class="hara-v2-icon-button" aria-label="Account">CZ</button><ThemeToggle />
             </Header>
             <ContextNav slot="context" items={worldNav("hot")}>
-              <a class="hara-v2-button" href="#feeds">Submit feed</a>
-              <a class="hara-v2-button" data-variant="primary" href="#hot">Post clipping</a>
+              <a class="hara-v2-button" href="#feeds">Submit feed</a><a class="hara-v2-button" data-variant="primary" href="#hot">Post clipping</a>
             </ContextNav>
             <Sidebar slot="sidebar" title="World" groups={feedSidebar}>
               <span>Learning material has moved to <a href="https://learn.hara-lang.org">learn.hara-lang.org</a>.</span>
             </Sidebar>
 
-            <div class="world-focused-page-heading">
-              <div><p class="hara-v2-kicker">Hara community</p><h1>Hot right now.</h1></div>
-              <span class="hara-v2-badge" data-tone="success">11 online</span>
-            </div>
+            <div class="world-focused-page-heading"><div><p class="hara-v2-kicker">Hara community</p><h1>Hot right now.</h1></div><span class="hara-v2-badge" data-tone="success">11 online</span></div>
             <div class="hara-v2-tabs world-focused-sort" role="tablist" aria-label="Feed ranking">
               <button class="hara-v2-tab" role="tab" aria-selected="true" data-feed-sort="hot">Hot</button>
               <button class="hara-v2-tab" role="tab" aria-selected="false" data-feed-sort="new">New</button>
@@ -266,31 +261,12 @@ const peopleSidebar = [
             </div>
 
             <div slot="aside" class="world-aside-stack">
-              <section class="hara-v2-panel world-online-mini">
-                <header class="hara-v2-panel-header"><h2>Who's online</h2><a href="#online">Open map</a></header>
-                <div class="hara-v2-panel-body">
-                  <div class="world-online-orbit-mini" aria-label="11 people online">
-                    <a href="#profile" class="online-dot online-dot--one" title="@mina reading work.*">MN</a>
-                    <a href="#profile" class="online-dot online-dot--two" title="@alex commenting">AX</a>
-                    <a href="#profile" class="online-dot online-dot--three" title="@cora maintaining std.typed">CO</a>
-                    <a href="#profile" class="online-dot online-dot--four" title="@jo reading snippets">JO</a>
-                    <span class="online-dot online-dot--bot" title="@mina/build-bot · owner online">B</span>
-                  </div>
-                  <p><b>11 people</b> and <b>4 owned bots</b> are active. Presence is optional.</p>
-                </div>
-              </section>
-              <section class="hara-v2-panel world-digest-mini">
-                <header class="hara-v2-panel-header"><h2>What's new / what's hot</h2></header>
-                <div class="hara-v2-panel-body"><p>A short public digest of posts, package releases, namespace changes, and active discussions.</p><label>Email <input class="hara-v2-field" type="email" placeholder="you@example.com" /></label><button class="hara-v2-button" data-variant="primary" type="button">Join mailing list</button><a href="#whats-new">Preview the digest →</a></div>
-              </section>
+              <section class="hara-v2-panel world-online-mini"><header class="hara-v2-panel-header"><h2>Who's online</h2><a href="#online">Open map</a></header><div class="hara-v2-panel-body"><div class="world-online-orbit-mini" aria-label="11 people online"><a href="#profile" class="online-dot online-dot--one">MN</a><a href="#profile" class="online-dot online-dot--two">AX</a><a href="#profile" class="online-dot online-dot--three">CO</a><a href="#profile" class="online-dot online-dot--four">JO</a><span class="online-dot online-dot--bot">B</span></div><p><b>11 people</b> and <b>4 owned bots</b> are active. Presence is optional.</p></div></section>
+              <section class="hara-v2-panel world-digest-mini"><header class="hara-v2-panel-header"><h2>What's new / what's hot</h2></header><div class="hara-v2-panel-body"><p>A public digest of posts, package releases, namespace changes, and active discussions.</p><label>Email <input class="hara-v2-field" type="email" placeholder="you@example.com" /></label><button class="hara-v2-button" data-variant="primary" type="button">Join mailing list</button><a href="#whats-new">Preview the digest →</a></div></section>
             </div>
           </Shell>
         </div>
-        <div class="world-lab-notes">
-          <article><b>Focused objects</b><p>World ranks articles, clippings, package releases, and one daily snippet. It does not host courses, games, or progression.</p></article>
-          <article><b>Source stays visible</b><p>Syndicated articles retain their canonical publisher, submitter, and source link.</p></article>
-          <article><b>Discussion is primary</b><p>Every object leads into a thread rather than a separate social feature.</p></article>
-        </div>
+        <div class="world-lab-notes"><article><b>Focused objects</b><p>World ranks articles, clippings, package releases, and one daily snippet.</p></article><article><b>Source stays visible</b><p>Syndicated articles retain their canonical publisher, submitter, and source link.</p></article><article><b>Discussion is primary</b><p>Every object leads into a thread rather than a separate social feature.</p></article></div>
       </section>
 
       <section class="world-lab-screen" id="thread">
@@ -300,12 +276,8 @@ const peopleSidebar = [
         </header>
         <div class="world-lab-canvas world-focused-canvas world-focused-canvas--thread">
           <Shell embedded={true} sidebar={true} aside={true} mainId="focused-thread-content">
-            <Header slot="header" section="World" nav={ecosystemNav}>
-              <button class="hara-v2-icon-button" aria-label="Account">CZ</button><ThemeToggle />
-            </Header>
-            <ContextNav slot="context" items={worldNav("hot")}>
-              <a class="hara-v2-button" href="#hot">Back to Hot</a><a class="hara-v2-button" data-variant="primary" href="#thread">Add comment</a>
-            </ContextNav>
+            <Header slot="header" section="World" nav={ecosystemNav}><button class="hara-v2-icon-button" aria-label="Account">CZ</button><ThemeToggle /></Header>
+            <ContextNav slot="context" items={worldNav("hot")}><a class="hara-v2-button" href="#hot">Back to Hot</a><a class="hara-v2-button" data-variant="primary" href="#thread">Add comment</a></ContextNav>
             <Sidebar slot="sidebar" title="Discussion" groups={threadSidebar}><span>42 comments · 7 participants online</span></Sidebar>
 
             <article class="world-thread-article">
@@ -313,9 +285,9 @@ const peopleSidebar = [
               <h1>Why work programs are becoming ordinary data</h1>
               <p class="world-thread-deck">The useful boundary is becoming surprisingly small: an algebra describing what should happen, an executor, a store, and a map of capabilities.</p>
               <div class="world-thread-author"><div class="hara-v2-avatar">MN</div><div><a href="#profile"><b>Mina N.</b> <span class="world-presence-dot"></span></a><small>@mina · namespace maintainer</small></div><time>Published 2 hours ago</time></div>
-              <div class="world-thread-excerpt"><p>Once the runtime stops carrying identity of its own, the same work value can move between an ephemeral executor, a durable executor, and a browser evaluator without changing its public form.</p><pre><code>{:op :step
- :id :code/list
- :fn list-code-units}</code></pre><p>The discussion below is about whether anything important is lost when runtime becomes ordinary data.</p></div>
+              <div class="world-thread-excerpt"><p>Once the runtime stops carrying identity of its own, the same work value can move between an ephemeral executor, a durable executor, and a browser evaluator without changing its public form.</p><pre><code>step :code/list
+function list-code-units
+boundary checkpointed</code></pre><p>The discussion below is about whether anything important is lost when runtime becomes ordinary data.</p></div>
               <footer><button type="button">↑ 86</button><button type="button">save</button><button type="button">clip passage</button><a href="#feeds">open canonical article ↗</a></footer>
             </article>
 
@@ -325,40 +297,22 @@ const peopleSidebar = [
             </section>
 
             <section class="world-comment-thread" aria-label="Threaded comments">
-              <article class="world-comment" data-depth="0">
-                <div class="world-comment-rail"><button type="button" data-thread-toggle aria-label="Collapse comment">−</button></div>
-                <div class="world-comment-body"><header><a href="#profile"><b>@alex</b></a><span class="world-presence-dot"></span><span>namespace contributor</span><time>1h</time></header><p>I like the smaller public boundary. The remaining question is whether capability lookup should be part of the executor protocol or remain a plain map lookup before dispatch.</p><footer><button type="button">↑ 24</button><button type="button">reply</button><button type="button">save</button></footer></div>
-              </article>
-
-              <article class="world-comment world-comment--bot" data-depth="1">
-                <div class="world-comment-rail"><button type="button" data-thread-toggle aria-label="Collapse comment">−</button></div>
-                <div class="world-comment-body"><header><a href="#profile"><b>@mina/build-bot</b></a><span class="hara-v2-badge" data-tone="signal">Bot</span><span>bot by <a href="#profile">@mina</a></span><span class="world-presence-dot"></span><span>owner online</span><time>48m</time></header><p>I checked the current implementations. Three executors read capability keys before dispatch; two still retain a runtime wrapper. I linked the exact namespaces below.</p><div class="world-bot-receipt"><span>Owned bot</span><a href="#profile">Owner: @mina</a><a href="#profile">Namespaces: work.ephemeral, work.sqlite</a></div><footer><button type="button">↑ 19</button><button type="button">reply</button><button type="button">inspect bot</button></footer></div>
-              </article>
-
-              <article class="world-comment" data-depth="2">
-                <div class="world-comment-rail"><button type="button" data-thread-toggle aria-label="Collapse comment">−</button></div>
-                <div class="world-comment-body"><header><a href="#profile"><b>@cora</b></a><span>package publisher</span><time>31m</time></header><p>That inventory makes the migration concrete. I would keep capability resolution outside `IWorkExecutor`; the executor should receive the resolved operation boundary.</p><footer><button type="button">↑ 12</button><button type="button">reply</button></footer></div>
-              </article>
-
-              <article class="world-comment world-comment--bot" data-depth="0">
-                <div class="world-comment-rail"><button type="button" data-thread-toggle aria-label="Collapse comment">−</button></div>
-                <div class="world-comment-body"><header><a href="#profile"><b>@jo/release-relay</b></a><span class="hara-v2-badge">Bot</span><span>bot by <a href="#profile">@jo</a></span><span class="world-presence-dot world-presence-dot--away"></span><span>owner away</span><time>18m</time></header><p>Related package release: `std.work 0.4.2` includes the first executor/store split and migration notes.</p><footer><button type="button">↑ 8</button><button type="button">reply</button></footer></div>
-              </article>
+              <article class="world-comment" data-depth="0"><div class="world-comment-rail"><button type="button" data-thread-toggle aria-label="Collapse comment">−</button></div><div class="world-comment-body"><header><a href="#profile"><b>@alex</b></a><span class="world-presence-dot"></span><span>namespace contributor</span><time>1h</time></header><p>I like the smaller public boundary. Should capability lookup remain a plain map lookup before executor dispatch?</p><footer><button type="button">↑ 24</button><button type="button">reply</button><button type="button">save</button></footer></div></article>
+              <article class="world-comment world-comment--bot" data-depth="1"><div class="world-comment-rail"><button type="button" data-thread-toggle aria-label="Collapse comment">−</button></div><div class="world-comment-body"><header><a href="#profile"><b>@mina/build-bot</b></a><span class="hara-v2-badge" data-tone="signal">Bot</span><span>bot by <a href="#profile">@mina</a></span><span class="world-presence-dot"></span><span>owner online</span><time>48m</time></header><p>I checked the current implementations. Three executors read capability keys before dispatch; two retain a runtime wrapper.</p><div class="world-bot-receipt"><span>Owned bot</span><a href="#profile">Owner: @mina</a><a href="#profile">Namespaces: work.ephemeral, work.sqlite</a></div><footer><button type="button">↑ 19</button><button type="button">reply</button><button type="button">inspect bot</button></footer></div></article>
+              <article class="world-comment" data-depth="2"><div class="world-comment-rail"><button type="button" data-thread-toggle aria-label="Collapse comment">−</button></div><div class="world-comment-body"><header><a href="#profile"><b>@cora</b></a><span>package publisher</span><time>31m</time></header><p>That inventory makes the migration concrete. I would keep capability resolution outside IWorkExecutor.</p><footer><button type="button">↑ 12</button><button type="button">reply</button></footer></div></article>
+              <article class="world-comment world-comment--bot" data-depth="0"><div class="world-comment-rail"><button type="button" data-thread-toggle aria-label="Collapse comment">−</button></div><div class="world-comment-body"><header><a href="#profile"><b>@jo/release-relay</b></a><span class="hara-v2-badge">Bot</span><span>bot by <a href="#profile">@jo</a></span><span class="world-presence-dot world-presence-dot--away"></span><span>owner away</span><time>18m</time></header><p>Related package release: std.work 0.4.2 includes the first executor/store split and migration notes.</p><footer><button type="button">↑ 8</button><button type="button">reply</button></footer></div></article>
             </section>
 
-            <div slot="aside" class="world-aside-stack">
-              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>In this thread</h2></header><div class="hara-v2-panel-body"><div class="world-thread-presence-list"><a href="#profile"><span class="world-presence-dot"></span>@mina</a><a href="#profile"><span class="world-presence-dot"></span>@alex</a><a href="#profile"><span class="world-presence-dot"></span>@chris</a><a href="#profile"><span class="world-presence-dot world-presence-dot--away"></span>@jo</a></div><a href="#online">See everyone online →</a></div></section>
-              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Bot boundary</h2></header><div class="hara-v2-panel-body"><p>Bots never appear as anonymous community members. Every bot comment links to an accountable GitHub owner, registered purpose, and current owner presence.</p></div></section>
-            </div>
+            <div slot="aside" class="world-aside-stack"><section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>In this thread</h2></header><div class="hara-v2-panel-body"><div class="world-thread-presence-list"><a href="#profile"><span class="world-presence-dot"></span>@mina</a><a href="#profile"><span class="world-presence-dot"></span>@alex</a><a href="#profile"><span class="world-presence-dot"></span>@chris</a><a href="#profile"><span class="world-presence-dot world-presence-dot--away"></span>@jo</a></div><a href="#online">See everyone online →</a></div></section><section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Bot boundary</h2></header><div class="hara-v2-panel-body"><p>Every bot comment links to an accountable GitHub owner, registered purpose, and current owner presence.</p></div></section></div>
           </Shell>
         </div>
-        <div class="world-lab-notes"><article><b>Linked identity</b><p>Usernames, maintainer roles, and bot owners all resolve to a contributor profile.</p></article><article><b>Nested but readable</b><p>Thread depth is visible without turning the page into a narrow staircase.</p></article><article><b>Bot accountability</b><p>Bot attribution is part of the comment header and receipt, not hidden in a tooltip.</p></article></div>
+        <div class="world-lab-notes"><article><b>Linked identity</b><p>Usernames, maintainer roles, and bot owners resolve to a contributor profile.</p></article><article><b>Nested but readable</b><p>Thread depth is visible without becoming a narrow staircase.</p></article><article><b>Bot accountability</b><p>Bot attribution is part of the comment header and receipt.</p></article></div>
       </section>
 
       <section class="world-lab-screen" id="whats-new">
         <header class="world-lab-screen-head">
           <div><p class="hara-v2-kicker">Screen 03 · Public digest</p><h2>What's new and what's hot, on the web or by email.</h2></div>
-          <p>Anyone can subscribe without creating a World profile. The digest combines community posts with package and namespace activity, while preserving links to every source.</p>
+          <p>Anyone can subscribe without creating a World profile. The digest combines community posts with package and namespace activity.</p>
         </header>
         <div class="world-lab-canvas world-focused-canvas world-focused-canvas--digest">
           <Shell embedded={true} sidebar={true} aside={true} mainId="focused-digest-content">
@@ -381,9 +335,9 @@ const peopleSidebar = [
               </div>
 
               <aside class="world-mailing-signup">
-                <p class="hara-v2-kicker">Mailing list</p><h2>Receive what's useful.</h2><p>Choose a digest. No World account is required, and every item links back to its original article or discussion.</p>
+                <p class="hara-v2-kicker">Mailing list</p><h2>Receive what's useful.</h2><p>No World account is required. Choose a digest and every item links to its original article or discussion.</p>
                 <label>Email address<input class="hara-v2-field" type="email" placeholder="you@example.com" /></label>
-                <fieldset><legend>Digest</legend><label><input type="checkbox" checked /> What's new</label><label><input type="checkbox" /> What's hot</label><label><input type="checkbox" /> Package releases</label></fieldset>
+                <fieldset><legend>Digest</legend><label><input type="checkbox" checked /> What's new</label><label><input type="checkbox" /> What's hot</label><label><input type="checkbox" /> Package releases</label><label><input type="checkbox" /> Namespace changes</label></fieldset>
                 <fieldset><legend>Frequency</legend><label><input type="radio" name="frequency" /> Daily</label><label><input type="radio" name="frequency" checked /> Weekly</label></fieldset>
                 <button class="hara-v2-button" data-variant="primary" type="button">Join the mailing list</button><small>Unsubscribe at any time. Public archive and RSS remain available.</small>
               </aside>
@@ -392,7 +346,7 @@ const peopleSidebar = [
             <div slot="aside" class="world-aside-stack"><section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>What's hot</h2></header><div class="hara-v2-panel-body"><ol class="world-hot-list"><li><a href="#thread">Executor/store boundary</a><span>42 comments</span></li><li><a href="#thread">Schema values in core</a><span>31 comments</span></li><li><a href="#thread">Rust/Java session parity</a><span>24 comments</span></li></ol></div></section><section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Open formats</h2></header><div class="hara-v2-panel-body"><a href="#feeds">RSS</a> · <a href="#feeds">JSON Feed</a> · <a href="#feeds">OPML</a></div></section></div>
           </Shell>
         </div>
-        <div class="world-lab-notes"><article><b>No account wall</b><p>An email address is sufficient for a digest subscription.</p></article><article><b>Two editorial lenses</b><p>What's new is chronological; what's hot reflects active discussion and votes.</p></article><article><b>Broader than articles</b><p>Package releases and namespace stewardship can appear without becoming separate products.</p></article></div>
+        <div class="world-lab-notes"><article><b>No account wall</b><p>An email address is sufficient for a digest subscription.</p></article><article><b>Two editorial lenses</b><p>What's new is chronological; what's hot reflects active discussion and votes.</p></article><article><b>Broader than articles</b><p>Package releases and namespace stewardship appear without becoming separate World products.</p></article></div>
       </section>
 
       <section class="world-lab-screen" id="feeds">
@@ -414,7 +368,7 @@ const peopleSidebar = [
             </div>
 
             <section class="world-feed-submit">
-              <div><p class="hara-v2-kicker">Submit a publication</p><h2>Add your RSS or Atom feed.</h2><p>The source remains yours. World stores the reviewed registration, imports eligible entries, and always links readers to the canonical article.</p>
+              <div><p class="hara-v2-kicker">Submit a publication</p><h2>Add your RSS or Atom feed.</h2><p>The source remains yours. World stores the reviewed registration and always links readers to the canonical article.</p>
                 <label>Feed URL<input class="hara-v2-field" type="url" value="https://notes.example.org/feed.xml" /></label>
                 <div class="world-feed-submit-row"><label>Topics<input class="hara-v2-field" value="graphics, wasm, animation" /></label><label>Permission basis<select class="hara-v2-select"><option>I own this publication</option><option>I have permission to submit it</option></select></label></div>
                 <label>Correction or removal contact<input class="hara-v2-field" type="email" value="editor@example.org" /></label>
@@ -432,7 +386,7 @@ const peopleSidebar = [
       <section class="world-lab-screen" id="profile">
         <header class="world-lab-screen-head">
           <div><p class="hara-v2-kicker">Screen 05 · GitHub contributor profile</p><h2>Identity is grounded in packages, namespaces, and reviewed work.</h2></div>
-          <p>Profiles are GitHub-based and useful to readers: they explain what a person publishes, which namespaces they maintain, what they contributed, and which bots they own.</p>
+          <p>Profiles explain what a person publishes, which namespaces they maintain, what they contributed, and which bots they own.</p>
         </header>
         <div class="world-lab-canvas world-focused-canvas world-focused-canvas--profile">
           <Shell embedded={true} sidebar={true} aside={true} mainId="focused-profile-content">
@@ -440,34 +394,29 @@ const peopleSidebar = [
             <ContextNav slot="context" items={worldNav("people")}><a class="hara-v2-button" href="#online">Who's online</a><a class="hara-v2-button" data-variant="primary" href="#profile">Follow contributions</a></ContextNav>
             <Sidebar slot="sidebar" title="@mina" groups={profileSidebar}><span>GitHub identity · reviewed World profile</span></Sidebar>
 
-            <header class="world-profile-header">
-              <div class="world-profile-avatar">MN<span class="world-presence-dot"></span></div>
-              <div><p class="hara-v2-kicker">GitHub contributor</p><h1>Mina N.</h1><p>@mina · Melbourne · online now</p><p>Maintaining work execution, portable storage, and the community build bot.</p><div class="world-profile-links"><a href="#profile">GitHub ↗</a><a href="#feeds">Personal feed</a><a href="#thread">Recent comments</a></div></div>
-              <div class="world-profile-trust"><span class="hara-v2-badge" data-tone="success">GitHub verified</span><small>Joined World in 2026</small></div>
-            </header>
+            <header class="world-profile-header"><div class="world-profile-avatar">MN<span class="world-presence-dot"></span></div><div><p class="hara-v2-kicker">GitHub contributor</p><h1>Mina N.</h1><p>@mina · Melbourne · online now</p><p>Maintaining work execution, portable storage, and the community build bot.</p><div class="world-profile-links"><a href="#profile">GitHub ↗</a><a href="#feeds">Personal feed</a><a href="#thread">Recent comments</a></div></div><div class="world-profile-trust"><span class="hara-v2-badge" data-tone="success">GitHub verified</span><small>Joined World in 2026</small></div></header>
 
             <div class="world-profile-stats"><article><strong>4</strong><span>packages deployed</span></article><article><strong>7</strong><span>namespaces maintained</span></article><article><strong>86</strong><span>merged contributions</span></article><article><strong>144</strong><span>helpful comments</span></article></div>
 
             <div class="world-profile-columns">
-              <section class="world-profile-section"><header><h2>Deployed packages</h2><a href="#profile">View registry</a></header><div class="world-package-list"><article><div><b>std.work</b><span>0.4.2</span></div><p>Work algebra, executor, and store interfaces.</p><footer><span>publisher</span><span>released 2d ago</span></footer></article><article><div><b>std.work.sqlite</b><span>0.2.0</span></div><p>Durable SQLite work store and receipt ledger.</p><footer><span>publisher</span><span>released 8d ago</span></footer></article><article><div><b>tool.work</b><span>0.3.1</span></div><p>Inspection and debugging tools for work programs.</p><footer><span>co-maintainer</span><span>updated 1w ago</span></footer></article></div></section>
-
+              <section class="world-profile-section"><header><h2>Deployed packages</h2><a href="#profile">View registry</a></header><div class="world-package-list"><article><div><b>std.work</b><span>0.4.2</span></div><p>Work algebra, executor, and store interfaces.</p><footer><span>publisher</span><span>released 2d ago</span></footer></article><article><div><b>std.work.sqlite</b><span>0.2.0</span></div><p>Durable SQLite work store and receipt ledger.</p><footer><span>publisher</span><span>released 8d ago</span></footer></article><article><div><b>tool.work</b><span>0.3.1</span></div><p>Inspection tools for work programs.</p><footer><span>co-maintainer</span><span>updated 1w ago</span></footer></article></div></section>
               <section class="world-profile-section"><header><h2>Maintained namespaces</h2><a href="#profile">Contribution history</a></header><div class="world-namespace-list"><a href="#profile"><b>work.core</b><span>primary maintainer</span></a><a href="#profile"><b>work.executor</b><span>primary maintainer</span></a><a href="#profile"><b>work.store</b><span>primary maintainer</span></a><a href="#profile"><b>work.ephemeral</b><span>co-maintainer</span></a><a href="#profile"><b>work.sqlite</b><span>co-maintainer</span></a><a href="#profile"><b>tool.work</b><span>reviewer</span></a><a href="#profile"><b>std.lib.fs</b><span>contributor</span></a></div></section>
             </div>
 
-            <section class="world-profile-badges"><header><h2>Contribution badges</h2><p>Badges are attached to reviewed contribution facts, not arbitrary engagement points.</p></header><div><article><span>PKG</span><b>Package publisher</b><p>Published and maintains a signed package release.</p></article><article><span>NS</span><b>Namespace maintainer</b><p>Maintains at least one reviewed public namespace.</p></article><article><span>REV</span><b>Helpful reviewer</b><p>Substantive reviews accepted across multiple changes.</p></article><article><span>FEED</span><b>Feed curator</b><p>Submitted and maintains a reviewed community source.</p></article></div></section>
+            <section class="world-profile-badges"><header><h2>Contribution badges</h2><p>Badges attach to reviewed contribution facts, not arbitrary engagement points.</p></header><div><article><span>PKG</span><b>Package publisher</b><p>Publishes and maintains a package release.</p></article><article><span>NS</span><b>Namespace maintainer</b><p>Maintains a reviewed public namespace.</p></article><article><span>REV</span><b>Helpful reviewer</b><p>Substantive reviews accepted across changes.</p></article><article><span>FEED</span><b>Feed curator</b><p>Submitted and maintains a community source.</p></article></div></section>
 
-            <section class="world-profile-bots"><header><h2>Owned bots</h2><p>Every bot comment links back to this owner profile.</p></header><article><div class="hara-v2-avatar">B</div><div><b>@mina/build-bot</b><p>Posts repository inventories and build observations when explicitly invoked.</p></div><span class="hara-v2-badge" data-tone="success">owner online</span></article><article><div class="hara-v2-avatar">R</div><div><b>@mina/release-notes</b><p>Posts reviewed package-release summaries.</p></div><span class="hara-v2-badge">idle</span></article></section>
+            <section class="world-profile-bots"><header><h2>Owned bots</h2><p>Every bot comment links back to this owner profile.</p></header><article><div class="hara-v2-avatar">B</div><div><b>@mina/build-bot</b><p>Posts repository inventories and build observations when invoked.</p></div><span class="hara-v2-badge" data-tone="success">owner online</span></article><article><div class="hara-v2-avatar">R</div><div><b>@mina/release-notes</b><p>Posts reviewed package-release summaries.</p></div><span class="hara-v2-badge">idle</span></article></section>
 
             <div slot="aside" class="world-aside-stack"><section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Recent contribution</h2></header><div class="hara-v2-panel-body"><b>Split IWorkExecutor and IWorkStore</b><p>12 files · merged yesterday</p><a href="#thread">Open discussion →</a></div></section><section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Profile provenance</h2></header><div class="hara-v2-panel-body"><p>GitHub subject, reviewed profile record, package registry, namespace ledger, and merged contribution facts.</p></div></section></div>
           </Shell>
         </div>
-        <div class="world-lab-notes"><article><b>Useful identity</b><p>Profiles answer what somebody maintains and publishes, not merely who they are.</p></article><article><b>Badges are receipts</b><p>Each badge maps to reviewed contribution or registry facts.</p></article><article><b>Owned automation</b><p>Registered bots inherit visibility and accountability from a GitHub owner.</p></article></div>
+        <div class="world-lab-notes"><article><b>Useful identity</b><p>Profiles answer what somebody maintains and publishes.</p></article><article><b>Badges are receipts</b><p>Each badge maps to reviewed contribution or registry facts.</p></article><article><b>Owned automation</b><p>Registered bots inherit visibility and accountability from a GitHub owner.</p></article></div>
       </section>
 
       <section class="world-lab-screen" id="online">
         <header class="world-lab-screen-head">
           <div><p class="hara-v2-kicker">Screen 06 · Presence</p><h2>See who is around without turning World into chat.</h2></div>
-          <p>Presence gives the community a sense of life. It shows optional activity context—reading, commenting, or maintaining—without introducing direct messages or another real-time social product.</p>
+          <p>Presence shows optional, coarse activity context—reading, commenting, or maintaining—without adding messages or another real-time social product.</p>
         </header>
         <div class="world-lab-canvas world-focused-canvas world-focused-canvas--online">
           <Shell embedded={true} sidebar={true} aside={true} mainId="focused-online-content">
@@ -488,7 +437,6 @@ const peopleSidebar = [
                 <button type="button" class="world-presence-node world-presence-node--bot node-build-bot" data-presence-person="build-bot" data-name="Build Bot" data-handle="@mina/build-bot" data-activity="Observing linked repository checks" data-detail="Bot by @mina · owner online">B</button>
                 <button type="button" class="world-presence-node world-presence-node--bot node-relay" data-presence-person="relay" data-name="Release Relay" data-handle="@jo/release-relay" data-activity="Idle" data-detail="Bot by @jo · owner away">R</button>
               </div>
-
               <aside class="world-presence-detail" data-presence-detail><span class="hara-v2-badge" data-tone="success">Online</span><div class="world-profile-avatar world-profile-avatar--small" data-presence-avatar>MN</div><h2 data-presence-name>Mina N.</h2><a href="#profile" data-presence-handle>@mina</a><p data-presence-activity>Reading work.* threads</p><small data-presence-extra>Maintains 7 namespaces · owner of 2 bots</small><a class="hara-v2-button" href="#profile">Open profile</a></aside>
             </div>
 
@@ -497,7 +445,7 @@ const peopleSidebar = [
             <div slot="aside" class="world-aside-stack"><section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Presence controls</h2></header><div class="hara-v2-panel-body"><label><input type="radio" name="presence" checked /> Online with coarse activity</label><label><input type="radio" name="presence" /> Online without activity</label><label><input type="radio" name="presence" /> Hidden</label></div></section><section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Ownership key</h2></header><div class="hara-v2-panel-body"><p><span class="world-presence-dot"></span> Person online</p><p><span class="world-presence-dot world-presence-dot--away"></span> Owner away</p><p><span class="world-presence-bot-key">B</span> Owned bot</p></div></section></div>
           </Shell>
         </div>
-        <div class="world-lab-notes"><article><b>Presence, not chat</b><p>The map creates ambient community awareness without introducing messaging.</p></article><article><b>Coarse context</b><p>Activity is grouped into reading, commenting, and maintaining rather than exposing exact navigation.</p></article><article><b>Bots remain attached</b><p>Bot nodes always display their owner and owner presence.</p></article></div>
+        <div class="world-lab-notes"><article><b>Presence, not chat</b><p>The map creates ambient community awareness without introducing messaging.</p></article><article><b>Coarse context</b><p>Activity is grouped into reading, commenting, and maintaining.</p></article><article><b>Bots remain attached</b><p>Bot nodes always display their owner and owner presence.</p></article></div>
       </section>
 
       <footer class="v2-lab-footer"><span>Focused World study · Articles, feeds, clippings, comments, profiles, presence, and digest</span><span><a href={worldLab}>Earlier World exploration</a> · <a href="https://learn.hara-lang.org">Learn lives separately ↗</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span></footer>
@@ -560,7 +508,10 @@ const peopleSidebar = [
           button.setAttribute("data-selected", "true");
           const root = document.querySelector("[data-presence-detail]");
           if (!root) return;
-          const setText = (selector, value) => { const node = root.querySelector(selector); if (node) node.textContent = value || ""; };
+          const setText = (selector, value) => {
+            const node = root.querySelector(selector);
+            if (node) node.textContent = value || "";
+          };
           setText("[data-presence-avatar]", button.textContent.trim());
           setText("[data-presence-name]", button.getAttribute("data-name"));
           setText("[data-presence-handle]", button.getAttribute("data-handle"));
