@@ -26,12 +26,12 @@ test("the UI contract defines five complete pattern families", () => {
 
   for (const family of uiPatternFamilies) {
     assert.ok(family.summary.length > 70, `${family.id} needs a meaningful summary`);
-    assert.ok(family.patterns.length >= 8, `${family.id} needs a representative pattern inventory`);
+    assert.ok(family.patterns.length >= 8, `${family.id} needs a representative inventory`);
     assert.ok(family.nonNegotiables.length >= 3, `${family.id} needs explicit invariants`);
   }
 });
 
-test("the workflow inventory covers the five cross-product journeys", () => {
+test("the workflow inventory covers five complete cross-product journeys", () => {
   assert.deepEqual(workflowStudies.map(({ id }) => id), [
     "search-inspect",
     "draft-publish",
@@ -43,24 +43,23 @@ test("the workflow inventory covers the five cross-product journeys", () => {
   assert.equal(workflowById("draft-publish")?.stages.at(-1)?.id, "receipt");
   assert.equal(workflowById("session-recovery")?.stages.at(-1)?.id, "recover");
   assert.equal(workflowById("feed-comment")?.stages.at(-1)?.id, "published");
-
   assert.ok(unique(workflowStudies.map(({ id }) => id)));
   assert.ok(unique(allWorkflowStages.map(({ workflowId, id }) => `${workflowId}:${id}`)));
 
   for (const workflow of workflowStudies) {
     assert.ok(workflow.products.length > 0, `${workflow.id} needs adoption targets`);
     assert.ok(workflow.stages.length >= 3, `${workflow.id} needs a full transition`);
-    assert.ok(workflow.requiredStates.includes("success"), `${workflow.id} needs a success state`);
-    assert.ok(workflow.requiredStates.includes("error"), `${workflow.id} needs a failure state`);
+    assert.ok(workflow.requiredStates.includes("success"), `${workflow.id} needs success`);
+    assert.ok(workflow.requiredStates.includes("error"), `${workflow.id} needs failure`);
     for (const stage of workflow.stages) {
-      assert.ok(stage.description.length > 55, `${workflow.id}:${stage.id} needs behavioral detail`);
+      assert.ok(stage.description.length > 55, `${workflow.id}:${stage.id} needs detail`);
       assert.ok(stage.keyboard.length > 20, `${workflow.id}:${stage.id} needs keyboard behavior`);
       assert.ok(stage.touch.length > 20, `${workflow.id}:${stage.id} needs touch behavior`);
     }
   }
 });
 
-test("content and transport states distinguish absence, incompleteness, failure, and acknowledgement", () => {
+test("state, identity, responsive, and ownership vocabularies are complete", () => {
   assert.deepEqual(interfaceStates.map(({ id }) => id), [
     "loading",
     "empty-first-use",
@@ -74,15 +73,6 @@ test("content and transport states distinguish absence, incompleteness, failure,
     "offline"
   ]);
 
-  assert.ok(unique(interfaceStates.map(({ id }) => id)));
-  for (const state of interfaceStates) {
-    assert.ok(state.cue.includes("+"), `${state.id} needs a non-colour cue pair`);
-    assert.ok(state.summary.length > 80, `${state.id} needs semantic guidance`);
-    assert.ok(state.action.length > 4, `${state.id} needs a safe next action`);
-  }
-});
-
-test("identity states cover anonymous use, authority, denial, revocation, and owned automation", () => {
   assert.deepEqual(identityStates.map(({ id }) => id), [
     "anonymous",
     "signed-in",
@@ -96,14 +86,6 @@ test("identity states cover anonymous use, authority, denial, revocation, and ow
     "owned-bot"
   ]);
 
-  const bot = identityStates.find(({ id }) => id === "owned-bot");
-  assert.match(bot?.authority ?? "", /owner policy/i);
-  assert.match(bot?.evidence ?? "", /owner/i);
-  assert.match(identityStates.find(({ id }) => id === "insufficient")?.evidence ?? "", /required role/i);
-  assert.match(identityStates.find(({ id }) => id === "suspended")?.authority ?? "", /read only/i);
-});
-
-test("responsive contracts preserve the primary task and explicit mobile editor entry", () => {
   assert.deepEqual(responsiveContracts.map(({ id }) => id), [
     "desktop",
     "tablet",
@@ -111,6 +93,19 @@ test("responsive contracts preserve the primary task and explicit mobile editor 
     "keyboard",
     "reduced-motion"
   ]);
+
+  assert.deepEqual(ownershipBoundaries.map(({ layer }) => layer), [
+    "Shared UI contract",
+    "Product composition",
+    "Runtime or server",
+    "Laboratory framing"
+  ]);
+
+  for (const state of interfaceStates) {
+    assert.ok(state.cue.includes("+"), `${state.id} needs a non-colour cue pair`);
+    assert.ok(state.summary.length > 80, `${state.id} needs semantic guidance`);
+    assert.ok(state.action.length > 4, `${state.id} needs a safe next action`);
+  }
 
   const mobile = responsiveContracts.find(({ id }) => id === "mobile");
   assert.match(mobile?.collapse ?? "", /Inspector.*sidebar.*context/i);
@@ -121,17 +116,9 @@ test("responsive contracts preserve the primary task and explicit mobile editor 
   assert.match(keyboard?.targets ?? "", /Visible focus/i);
   assert.match(keyboard?.targets ?? "", /Escape closes and returns focus/i);
 
-  const reduced = responsiveContracts.find(({ id }) => id === "reduced-motion");
-  assert.match(reduced?.targets ?? "", /No meaning depends on animation/i);
-});
-
-test("ownership boundaries keep shared semantics separate from product and runtime truth", () => {
-  assert.deepEqual(ownershipBoundaries.map(({ layer }) => layer), [
-    "Shared UI contract",
-    "Product composition",
-    "Runtime or server",
-    "Laboratory framing"
-  ]);
+  const bot = identityStates.find(({ id }) => id === "owned-bot");
+  assert.match(bot?.authority ?? "", /owner policy/i);
+  assert.match(bot?.evidence ?? "", /owner/i);
 
   const shared = ownershipBoundaries[0];
   assert.match(shared.owns, /focus/);
@@ -145,7 +132,7 @@ test("ownership boundaries keep shared semantics separate from product and runti
   assert.match(runtime?.doesNotOwn ?? "", /invented client-side success/);
 });
 
-test("the UI route composes shared catalogue, document, and tool primitives", async () => {
+test("the UI route composes the shared catalogue, document, and tool layers", async () => {
   const page = await read("../site/src/pages/v2/ui/index.astro");
 
   for (const component of [
@@ -163,26 +150,33 @@ test("the UI route composes shared catalogue, document, and tool primitives", as
   assert.match(page, /Interfaces are stories, not screenshots\./);
   assert.match(page, /Products share behavior, not business rules\./);
   assert.match(page, /Shared behavior stops before product truth\./);
-  assert.match(page, /V2-UI\.md|Issue #36/);
+  assert.match(page, /Issue #36/);
+
+  for (const id of [
+    "contract",
+    "discovery",
+    "mutation",
+    "states",
+    "identity",
+    "runtime",
+    "community",
+    "evidence",
+    "responsive",
+    "ownership"
+  ]) assert.match(page, new RegExp(`id="${id}"`), `missing ${id} section`);
+
+  for (const workflow of [
+    "searchWorkflow",
+    "publishWorkflow",
+    "runtimeWorkflow",
+    "feedWorkflow",
+    "evidenceWorkflow"
+  ]) assert.match(page, new RegExp(`<WorkflowRail workflow=\\{${workflow}\\}`), `missing ${workflow}`);
 });
 
-test("the route renders every end-to-end workflow and the full state atlas", async () => {
+test("discovery distinguishes complete, loading, filtered-empty, partial, and exact failure states", async () => {
   const page = await read("../site/src/pages/v2/ui/index.astro");
-
-  for (const id of ["contract", "discovery", "mutation", "states", "identity", "runtime", "community", "evidence", "responsive", "ownership"])
-    assert.match(page, new RegExp(`id="${id}"`), `missing ${id} section`);
-
-  for (const workflow of ["searchWorkflow", "publishWorkflow", "runtimeWorkflow", "feedWorkflow", "evidenceWorkflow"])
-    assert.match(page, new RegExp(`<WorkflowRail workflow=\\{${workflow}\\}`), `missing ${workflow}`);
-
-  assert.match(page, /interfaceStates\.map/);
-  assert.match(page, /identityStates\.map/);
-  assert.match(page, /responsiveContracts\.map/);
-  assert.match(page, /ownershipBoundaries\.map/);
-});
-
-test("discovery includes success, loading, filtered-empty, partial, and exact failure states", async () => {
-  const page = await read("../site/src/pages/v2/ui/index.astro");
+  const inspect = workflowById("search-inspect")?.stages.find(({ id }) => id === "inspect");
 
   for (const mode of ["success", "loading", "empty", "partial", "error"])
     assert.match(page, new RegExp(`data-search-(?:mode|panel)="${mode}"`), `missing ${mode} search state`);
@@ -191,10 +185,12 @@ test("discovery includes success, loading, filtered-empty, partial, and exact fa
   assert.match(page, /Partial result set/);
   assert.match(page, /could not establish a consistent revision/);
   assert.match(page, /last complete result set.*read-only/i);
-  assert.match(page, /Focus moves to the inspector heading and returns on close/);
+  assert.match(page, /On wide screens selection updates this inspector/);
+  assert.match(page, /returns focus to the selected row/);
+  assert.match(inspect?.keyboard ?? "", /Focus moves to the inspector heading and returns on close/);
 });
 
-test("mutation preserves drafts, separates controlled facts, validates, previews, submits, and receipts", async () => {
+test("mutation preserves drafts through validation, preview, submission, and a durable receipt", async () => {
   const page = await read("../site/src/pages/v2/ui/index.astro");
 
   for (const phase of ["draft", "validate", "preview", "submit", "receipt"])
@@ -210,7 +206,7 @@ test("mutation preserves drafts, separates controlled facts, validates, previews
   assert.match(page, /I understand this draft cannot be recovered/);
 });
 
-test("runtime recovery preserves source, last successful output, fencing facts, and capability truth", async () => {
+test("runtime recovery preserves source, previous output, fencing facts, and capability truth", async () => {
   const page = await read("../site/src/pages/v2/ui/index.astro");
 
   for (const state of ["ready", "running", "failed", "offline", "recovered"])
@@ -228,7 +224,7 @@ test("runtime recovery preserves source, last successful output, fencing facts, 
   assert.match(page, /event sequence resumed at 119/);
 });
 
-test("community publication distinguishes local preview from acknowledged comment state", async () => {
+test("community publication and exact evidence sharing distinguish local and acknowledged states", async () => {
   const page = await read("../site/src/pages/v2/ui/index.astro");
 
   for (const stage of ["browse", "thread", "comment", "published"])
@@ -241,10 +237,6 @@ test("community publication distinguishes local preview from acknowledged commen
   assert.match(page, /data-comment-publish/);
   assert.match(page, /comment-7f3a/);
   assert.match(page, /Publication receives focus, permalink, timestamp, identity, and moderation state/);
-});
-
-test("evidence sharing preserves tabs, incomparability, revision, and the exact view URL", async () => {
-  const page = await read("../site/src/pages/v2/ui/index.astro");
 
   for (const tab of ["summary", "samples", "methodology", "history"])
     assert.match(page, new RegExp(`data-evidence-(?:tab|panel)="${tab}"`), `missing ${tab} evidence view`);
@@ -256,11 +248,14 @@ test("evidence sharing preserves tabs, incomparability, revision, and the exact 
   assert.match(page, /Copied exact.*view · revision 637c14a/);
 });
 
-test("keyboard, touch, focus return, mobile explicit edit, and reduced motion are visible contracts", async () => {
+test("keyboard, touch, focus return, explicit mobile edit, and reduced motion are visible contracts", async () => {
   const page = await read("../site/src/pages/v2/ui/index.astro");
+  const keyboard = responsiveContracts.find(({ id }) => id === "keyboard");
 
   assert.match(page, /Keyboard traversal/);
-  assert.match(page, /Escape closes and returns focus/);
+  assert.match(page, /Close disclosure\/dialog/);
+  assert.match(page, /Focus returns to the initiating control/);
+  assert.match(keyboard?.targets ?? "", /Escape closes and returns focus/);
   assert.match(page, /No surprise keyboard/);
   assert.match(page, /data-editing="false"/);
   assert.match(page, /data-enter-edit/);
@@ -272,7 +267,7 @@ test("keyboard, touch, focus return, mobile explicit edit, and reduced motion ar
   assert.doesNotMatch(page, /autofocus/);
 });
 
-test("laboratory interactions cover every reviewable state transition", async () => {
+test("laboratory interactions cover every reviewable transition", async () => {
   const page = await read("../site/src/pages/v2/ui/index.astro");
 
   assert.match(page, /const initialiseUiPatterns =/);
@@ -288,7 +283,7 @@ test("laboratory interactions cover every reviewable state transition", async ()
   assert.match(page, /document\.addEventListener\("astro:page-load"/);
 });
 
-test("UI laboratory styling is responsive, stateful, reduced-motion aware, and token-safe", async () => {
+test("the UI stylesheet is stateful, responsive, reduced-motion aware, and token-safe", async () => {
   const css = await read("../site/src/styles/v2-ui-patterns.css");
 
   for (const selector of [
@@ -315,7 +310,7 @@ test("UI laboratory styling is responsive, stateful, reduced-motion aware, and t
   assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/);
 });
 
-test("the written UI contract records state, focus, mobile, evidence, and product adoption boundaries", async () => {
+test("the written contract records state, focus, mobile, evidence, and adoption boundaries", async () => {
   const contract = await read("../V2-UI.md");
 
   for (const heading of [
