@@ -10,6 +10,7 @@ import {
   catalogueStatusLabels
 } from "../../lib/v2-catalogue.mjs";
 import "../../styles/v2-catalogue.css";
+import "../../styles/v2-catalogue-disclosure.css";
 
 const {
   basePath,
@@ -35,6 +36,7 @@ const menuGroups = catalogueGroups.map((group) => ({
     }))
   }))
 }));
+const fallbackItems = menuGroups.flatMap((group) => group.items.flatMap((item) => [item, ...item.children]));
 ---
 <header class="v2-catalogue-header" data-catalogue-header data-menu-open="false">
   <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
@@ -58,12 +60,18 @@ const menuGroups = catalogueGroups.map((group) => ({
 
   <nav class="v2-catalogue-nav" id="v2-catalogue-navigation" aria-label="Visual language catalogue" data-catalogue-navigation>
     {menuGroups.map((group) => (
-      <details class="v2-catalogue-group" data-catalogue-group data-current={group.current ? "true" : "false"}>
-        <summary>
+      <div class="v2-catalogue-group" data-catalogue-group data-current={group.current ? "true" : "false"} data-open="false">
+        <button
+          class="v2-catalogue-group-trigger"
+          type="button"
+          aria-expanded="false"
+          aria-controls={`v2-catalogue-panel-${group.id}`}
+          data-catalogue-group-trigger
+        >
           <span>{group.label}</span>
           <small>{group.items.length}</small>
-        </summary>
-        <div class="v2-catalogue-panel">
+        </button>
+        <div class="v2-catalogue-panel" id={`v2-catalogue-panel-${group.id}`}>
           <header>
             <p class="hara-v2-kicker">Catalogue group</p>
             <h2>{group.label}</h2>
@@ -105,9 +113,21 @@ const menuGroups = catalogueGroups.map((group) => ({
             ))}
           </div>
         </div>
-      </details>
+      </div>
     ))}
   </nav>
+
+  <noscript>
+    <nav class="v2-catalogue-noscript" aria-label="Visual language catalogue without JavaScript">
+      {fallbackItems.map((item) => (
+        <a
+          href={item.resolvedHref}
+          target={item.external ? "_blank" : undefined}
+          rel={item.external ? "noreferrer" : undefined}
+        >{item.label}</a>
+      ))}
+    </nav>
+  </noscript>
 
   <div class="v2-catalogue-actions">
     <a href={sourceHref}>Source</a>
@@ -135,11 +155,20 @@ const menuGroups = catalogueGroups.map((group) => ({
         }
       };
 
+      const setGroupOpen = (group, open, restoreFocus = false) => {
+        if (!(group instanceof HTMLElement)) return;
+        group.dataset.open = String(open);
+        const trigger = group.querySelector("[data-catalogue-group-trigger]");
+        if (trigger instanceof HTMLButtonElement) {
+          trigger.setAttribute("aria-expanded", String(open));
+          if (restoreFocus) trigger.focus();
+        }
+      };
+
       const closeGroups = (except = null, restoreFocus = false) => {
         groups.forEach((group) => {
-          if (!(group instanceof HTMLDetailsElement) || group === except || !group.open) return;
-          group.open = false;
-          if (restoreFocus) group.querySelector("summary")?.focus();
+          if (group === except || !(group instanceof HTMLElement) || group.dataset.open !== "true") return;
+          setGroupOpen(group, false, restoreFocus);
         });
       };
 
@@ -153,9 +182,13 @@ const menuGroups = catalogueGroups.map((group) => ({
       }
 
       groups.forEach((group) => {
-        if (!(group instanceof HTMLDetailsElement)) return;
-        group.addEventListener("toggle", () => {
-          if (group.open) closeGroups(group);
+        if (!(group instanceof HTMLElement)) return;
+        const trigger = group.querySelector("[data-catalogue-group-trigger]");
+        if (!(trigger instanceof HTMLButtonElement)) return;
+        trigger.addEventListener("click", () => {
+          const open = group.dataset.open !== "true";
+          closeGroups(group);
+          setGroupOpen(group, open);
         });
       });
 
@@ -168,10 +201,9 @@ const menuGroups = catalogueGroups.map((group) => ({
 
       document.addEventListener("keydown", (event) => {
         if (event.key !== "Escape") return;
-        const openGroup = groups.find((group) => group instanceof HTMLDetailsElement && group.open);
-        if (openGroup instanceof HTMLDetailsElement) {
-          openGroup.open = false;
-          openGroup.querySelector("summary")?.focus();
+        const openGroup = groups.find((group) => group instanceof HTMLElement && group.dataset.open === "true");
+        if (openGroup instanceof HTMLElement) {
+          setGroupOpen(openGroup, false, true);
           return;
         }
         if (header.dataset.menuOpen === "true") closeMenu(true);
