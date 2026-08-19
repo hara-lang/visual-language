@@ -1,0 +1,25 @@
+---
+const {
+  id,
+  label,
+  tone = "neutral",
+  cue,
+  summary,
+  action,
+  compact = false
+} = Astro.props;
+
+const hasVisual = Astro.slots.has("default");
+---
+<article class="ui-state-card" data-state={id} data-tone={tone} data-compact={compact ? "true" : "false"}>
+  <header>
+    <span class="ui-state-marker" aria-hidden="true"></span>
+    <div>
+      <p>{label}</p>
+      {cue && <small>{cue}</small>}
+    </div>
+  </header>
+  {hasVisual && <div class="ui-state-visual"><slot /></div>}
+  {summary && <p class="ui-state-summary">{summary}</p>}
+  {action && <button class="hara-v2-button" type="button">{action}</button>}
+</article>
