@@ -106,7 +106,7 @@ test("the shared shell keeps the global catalogue inside one app launcher", asyn
   assert.match(header, /CatalogueRouteBar/);
   assert.match(header, /CatalogueSectionNav/);
   assert.match(header, /CataloguePageFooter/);
-  assert.match(header, /slot="route-actions"/);
+  assert.match(header, /slot name="route-actions"/);
   assert.doesNotMatch(header, /CatalogueGroup/);
 
   assert.match(masthead, /data-catalogue-launcher-trigger/);
