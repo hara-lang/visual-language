@@ -1,8 +1,13 @@
 # Hara interface language v2
 
-Version 2 is an opt-in interface layer for Hara's public sites and tools. It
-keeps the existing identity and theme machinery while changing the spatial
-language from soft material cards to flat fleet-command surfaces.
+Version 2 is the opt-in document and product interface layer for Hara's public
+sites and content-heavy applications. It keeps the existing identity and theme
+machinery while changing the spatial language from soft generic cards to flat,
+command-aware fleet surfaces.
+
+For toolbars, docks, inspectors, palettes, viewports, timelines, consoles, and
+editor workbenches, use the additive [`V2-TOOL.md`](./V2-TOOL.md) contract.
+`v2-tool.css` imports this document layer rather than creating a separate theme.
 
 The reference mood is military space opera seen through an illustrator's
 technical notebook: matte hull panels, command rails, sparse telemetry, and
@@ -19,14 +24,16 @@ than reproduce any franchise symbol, ship, type treatment, or control panel.
 - Light and dark modes are equal products. Light mode is pale steel and paper,
   not a washed-out dark mode.
 - Structure comes from one-pixel seams, compact rails, and clipped corners.
-  Shadows are ambient only; controls do not imitate thick physical hardware.
+  Shadows are ambient only; document controls do not imitate thick hardware.
 - Hand-drawn character is a quiet second line, grid drift, and original
   technical illustration. It must never reduce text contrast or data density.
+- The tool extension may add raised and recessed operational surfaces, but it
+  may not replace this identity, typography, state, or theme contract.
 
 ## Public contract
 
-Import the v2 layer after the shared theme and place `hara-v2` at the interface
-root. The exported Astro shell already adds the class.
+Import the document layer and place `hara-v2` at the interface root. The
+exported Astro `Shell` already adds the class.
 
 ```astro
 ---
@@ -41,7 +48,7 @@ import "@hara-lang/visual-language/v2.css";
 </Shell>
 ```
 
-The initial component contract is deliberately small:
+The document component contract is deliberately small:
 
 - `Shell` owns header, context, rail, main, inspector, and footer slots.
 - `Header` owns the persistent Hara identity and ecosystem navigation.
@@ -54,6 +61,23 @@ The initial component contract is deliberately small:
 Everything else is a class-level primitive in `v2.css`. This lets Starlight,
 Astro pages, and framework-free surfaces use the same geometry without forcing
 one component model on every repository.
+
+The command-surface retune strengthens headers, context rows, side rails,
+buttons, fields, panels, tabs, tables, matrices, feeds, profiles, callouts, and
+code frames with existing v2 tokens. It intentionally does not import
+`--hara-tool-*` tokens: prose and editorial reading surfaces remain calm.
+
+## Choosing the document or tool layer
+
+Use `v2.css` when the primary task is reading, browsing, publishing, comparing,
+or completing a conventional product workflow. Use `v2-tool.css` when the
+primary task is repeatedly manipulating a viewport, graph, timeline, console,
+or dense property model. A Docs page with one embedded REPL can keep the page on
+`v2.css` and scope `hara-v2-tool` to the embedded workbench.
+
+Do not turn document cards into editor panels merely to make them feel more
+technical. Command hierarchy should follow task frequency and state, not act as
+decoration.
 
 ## Layout families
 
@@ -103,13 +127,32 @@ while reading surfaces keep the paper-like lightness of the theme.
 5. At phone widths, keep controls at least 34px high and make primary page
    actions full-width.
 
+The tool extension has its own viewport-first collapse order in
+[`V2-TOOL.md`](./V2-TOOL.md#responsive-contract).
+
+## Accessibility contract
+
+- Preserve visible keyboard focus and never encode selection by colour alone.
+- Maintain source order when rails or inspectors collapse.
+- Give icon-only controls accessible names.
+- Keep state colours functional and contrast-safe in both themes.
+- Respect reduced motion and do not require animation to understand state.
+- Treat scrollable context rows, tables, matrices, and code surfaces as keyboard
+  reachable content rather than hidden overflow.
+
 ## Adoption sequence
 
-1. Ship the opt-in package contract and the five-layout laboratory.
+1. Import the opt-in package contract without changing v1 tokens or motifs.
 2. Move `hara-www` onto the header, page-header, proof, card, and code primitives.
 3. Map Starlight variables and documentation rails to v2 without changing REPL
    behaviour.
 4. Move Specs and Benchmarks, which exercise tables, tabs, badges, and inspectors.
-5. Move World last, after feed, profile, form, and account states are covered.
-6. Promote v2 from experimental only after screenshots, keyboard navigation,
-   reduced-motion behaviour, and both themes are verified across all five sites.
+5. Move World after feed, profile, form, and account states are covered.
+6. Adopt `v2-tool.css` only for embedded or full workbenches that meet the
+   separate tool contract.
+7. Promote v2 from experimental only after screenshots, keyboard navigation,
+   reduced-motion behaviour, and both themes are verified across all families.
+
+See the [five-layout document laboratory](https://hara-lang.github.io/visual-language/v2/)
+and the [tool workbench laboratory](https://hara-lang.github.io/visual-language/v2/tool/)
+for the executable reference compositions.
