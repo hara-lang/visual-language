@@ -1,0 +1,102 @@
+---
+import {
+  contributorProfile,
+  ownedBot
+} from "../../lib/v2-world.mjs";
+---
+<div class="world-screen world-profile-screen" data-world-screen="profile">
+  <header class="world-app-bar world-app-bar--compact">
+    <a class="world-back-link" href="#front-page">← People</a>
+    <nav class="world-thread-nav" aria-label="Contributor profile sections">
+      <a href="#profile" aria-current="page">Overview</a>
+      <a href="#profile-contributions">Contributions</a>
+      <a href="#profile-packages">Packages</a>
+      <a href="#profile-bots">Bots</a>
+    </nav>
+    <div class="world-app-actions"><button class="hara-v2-button">Copy profile link</button><button class="hara-v2-button" data-variant="primary">Follow</button></div>
+  </header>
+
+  <section class="world-profile-hero">
+    <span class="world-avatar world-avatar--profile">{contributorProfile.identity.avatar}</span>
+    <div>
+      <div class="world-profile-title"><h3>{contributorProfile.identity.name}</h3><span class="hara-v2-badge" data-tone="success">GitHub verified</span></div>
+      <p class="world-profile-handle">{contributorProfile.identity.handle} · github.com/{contributorProfile.identity.github}</p>
+      <p>{contributorProfile.identity.bio}</p>
+      <div class="world-profile-identity-ledger">
+        <span><b>Stable subject</b> {contributorProfile.identity.githubId}</span>
+        <span><b>Joined</b> {contributorProfile.identity.joined}</span>
+        <span title={contributorProfile.identity.profileReceipt}><b>Profile receipt</b> {contributorProfile.identity.profileReceipt}</span>
+      </div>
+    </div>
+    <div class="world-profile-presence"><i data-presence="away"></i><b>Away</b><small>last active 12 min ago</small><a href="#presence">Presence settings</a></div>
+  </section>
+
+  <section class="world-profile-stats" aria-label="Contribution summary">
+    {contributorProfile.contributionSummary.map((item) => <div><strong>{item.value}</strong><span>{item.label}</span></div>)}
+  </section>
+
+  <div class="world-profile-layout">
+    <main>
+      <section class="hara-v2-panel" id="profile-packages">
+        <header class="hara-v2-panel-header"><div><p class="hara-v2-kicker">Registry projections</p><h3>Packages and namespaces</h3></div><span>Evidence, not self-description</span></header>
+        <div class="hara-v2-panel-body world-profile-registry-grid">
+          <div>
+            <h4>Packages</h4>
+            {contributorProfile.packages.map((item) => (
+              <article>
+                <div><b>{item.name}</b><span class="hara-v2-badge">{item.role}</span></div>
+                <p>{item.version} · evidence: {item.evidence}</p>
+                <code>{item.receipt}</code>
+              </article>
+            ))}
+          </div>
+          <div>
+            <h4>Namespace stewardship</h4>
+            {contributorProfile.namespaces.map((item) => (
+              <article>
+                <div><b>{item.name}</b><span class="hara-v2-badge" data-tone="signal">{item.role}</span></div>
+                <p>{item.scope}</p>
+                <code>{item.receipt}</code>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="hara-v2-panel" id="profile-contributions">
+        <header class="hara-v2-panel-header"><div><p class="hara-v2-kicker">Recent public record</p><h3>Contributions</h3></div><button class="hara-v2-button">Filter</button></header>
+        <div class="hara-v2-panel-body world-profile-activity">
+          {contributorProfile.activity.map((item) => (
+            <article><span>{item.kind}</span><div><b>{item.title}</b><small>{item.age} ago</small></div><code>{item.receipt}</code></article>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <aside>
+      <section class="hara-v2-panel">
+        <header class="hara-v2-panel-header"><h3>Evidence-backed badges</h3><span class="hara-v2-badge">3</span></header>
+        <div class="hara-v2-panel-body world-profile-badges">
+          {contributorProfile.badges.map((badge) => (
+            <article><span aria-hidden="true">✦</span><p><b>{badge.label}</b><small>{badge.evidence}</small><code>{badge.receipt}</code></p></article>
+          ))}
+        </div>
+      </section>
+
+      <section class="hara-v2-panel" id="profile-bots">
+        <header class="hara-v2-panel-header"><h3>Owned automation</h3><span class="hara-v2-badge" data-tone="signal">1 BOT</span></header>
+        <div class="hara-v2-panel-body world-profile-bot">
+          <div><span class="world-avatar world-avatar--bot">HI</span><p><b>{ownedBot.name}</b><small>{ownedBot.handle}</small></p></div>
+          <p>{ownedBot.purpose}</p>
+          <dl><div><dt>Owner</dt><dd>{ownedBot.owner.name}</dd></div><div><dt>Reply mode</dt><dd>{ownedBot.policy.mode}</dd></div><div><dt>Policy</dt><dd>{ownedBot.policy.id}</dd></div></dl>
+          <a class="hara-v2-button" href="#article-thread">Inspect bot comment</a>
+        </div>
+      </section>
+
+      <section class="hara-v2-panel" data-state="identity-unavailable">
+        <header class="hara-v2-panel-header"><h3>{contributorProfile.unavailableState.label}</h3><span class="hara-v2-badge" data-tone="warning">Degraded</span></header>
+        <div class="hara-v2-panel-body"><p>{contributorProfile.unavailableState.detail}</p><button class="hara-v2-button">View last reviewed profile</button></div>
+      </section>
+    </aside>
+  </div>
+</div>

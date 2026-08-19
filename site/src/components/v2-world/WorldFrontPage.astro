@@ -1,0 +1,118 @@
+---
+import {
+  frontPageStories,
+  snippetOfTheDay,
+  worldPrimaryNavigation
+} from "../../lib/v2-world.mjs";
+
+const sourceTone = (contentType) => ({
+  "world.article": "signal",
+  "world.clipping": "warning",
+  "world.feed": "success"
+}[contentType] ?? "neutral");
+---
+<div class="world-screen world-front-page" data-world-screen="front-page">
+  <header class="world-app-bar">
+    <div class="world-app-identity">
+      <span class="world-app-mark" aria-hidden="true">H<i></i></span>
+      <div><b>Hara World</b><small>Community reader</small></div>
+    </div>
+    <nav class="world-primary-nav" data-world-primary-nav aria-label="World feed views">
+      {worldPrimaryNavigation.map((item, index) => (
+        <a href={`#front-page-${item.id}`} aria-current={index === 0 ? "page" : undefined}>
+          {item.label}<span>{item.count}</span>
+        </a>
+      ))}
+    </nav>
+    <div class="world-app-actions">
+      <button class="hara-v2-icon-button" aria-label="Search World">⌕</button>
+      <button class="hara-v2-button">Sign in with GitHub</button>
+      <button class="hara-v2-button" data-variant="primary">Submit</button>
+    </div>
+  </header>
+
+  <div class="world-front-layout">
+    <main class="world-stream" id="front-page-hot">
+      <header class="world-stream-head">
+        <div><p class="hara-v2-kicker">Hot · Updated now</p><h3>What the Hara community is reading and discussing.</h3></div>
+        <button class="hara-v2-button" aria-label="Open feed filters">Filter · All sources</button>
+      </header>
+
+      <ol class="world-story-list">
+        {frontPageStories.map((story, index) => (
+          <li class:list={["world-story-row", `world-story-row--${story.state}`]} data-content-type={story.contentType}>
+            <div class="world-story-rank" aria-label={`${story.score} points`}>
+              <button aria-label={`Upvote ${story.title}`}>⌃</button>
+              <strong>{story.score}</strong>
+              <small>{String(index + 1).padStart(2, "0")}</small>
+            </div>
+            <article>
+              <div class="world-story-source-line">
+                <span class="hara-v2-badge" data-tone={sourceTone(story.contentType)}>{story.sourceType}</span>
+                <span>canonical · {story.canonicalUrl}</span>
+              </div>
+              <h4><a href="#article-thread">{story.title}</a></h4>
+              <p>{story.summary}</p>
+              <div class="world-story-attribution">
+                <span><b>Original author</b> {story.author.name} · {story.author.handle}</span>
+                <span><b>Submitted by</b> {story.submitter.name} · {story.submitter.handle}</span>
+              </div>
+              <div class="world-story-evidence">
+                {story.evidence.map((item) => (
+                  <span title={item.receipt}><i aria-hidden="true"></i>{item.kind}: {item.label}</span>
+                ))}
+                {story.evidence.length === 0 && <span data-state="partial"><i aria-hidden="true"></i>Contribution evidence still resolving</span>}
+              </div>
+              <footer>
+                <a href="#article-thread">{story.comments} comments</a>
+                <span>{story.age} ago</span>
+                <span>{story.provenance}</span>
+                {story.tags.map((tag) => <a href="#front-page-hot">#{tag}</a>)}
+              </footer>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </main>
+
+    <aside class="world-front-aside" aria-label="World front page supporting modules">
+      <section class="hara-v2-panel world-snippet-card">
+        <header class="hara-v2-panel-header">
+          <div><p class="hara-v2-kicker">Daily</p><h3>Snippet of the Day</h3></div>
+          <span class="hara-v2-badge" data-tone="success">{snippetOfTheDay.state}</span>
+        </header>
+        <div class="hara-v2-panel-body">
+          <h4>{snippetOfTheDay.title}</h4>
+          <pre><code>{snippetOfTheDay.code}</code></pre>
+          <p>By {snippetOfTheDay.author} · <span title={snippetOfTheDay.receipt}>receipt {snippetOfTheDay.receipt}</span></p>
+          <a class="hara-v2-button" href={snippetOfTheDay.canonicalUrl}>Open canonical snippet</a>
+        </div>
+      </section>
+
+      <section class="hara-v2-panel">
+        <header class="hara-v2-panel-header"><h3>Reviewed sources</h3><a href="#feeds">Directory</a></header>
+        <div class="hara-v2-panel-body world-source-mini-list">
+          <div><span data-source-health="healthy"></span><p><b>Package releases</b><small>18 entries · healthy</small></p></div>
+          <div><span data-source-health="stale"></span><p><b>Kernel Notes · Atom</b><small>last fetched 3 d ago</small></p></div>
+          <div><span data-source-health="failing"></span><p><b>Compiler Field Log</b><small>paused · TLS validation</small></p></div>
+        </div>
+      </section>
+
+      <section class="hara-v2-panel world-digest-mini">
+        <header class="hara-v2-panel-header"><h3>What’s New</h3><span class="hara-v2-badge">Weekly</span></header>
+        <div class="hara-v2-panel-body">
+          <p>One reviewed edition across World articles, package releases, discussions, and clippings.</p>
+          <a class="hara-v2-button" data-variant="primary" href="#digest">Preview this week</a>
+          <small>Web · email · RSS · each with a delivery receipt</small>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="world-inline-state-grid" aria-label="Front page state specimens">
+    <article data-state="empty"><span>Empty following</span><b>Follow people, packages, or feeds to build this view.</b><button>Browse directory</button></article>
+    <article data-state="stale"><span>Stale source</span><b>Last reviewed entries remain visible with their fetch time.</b><button>Inspect source</button></article>
+    <article data-state="partial"><span>Partial evidence</span><b>The story is readable while package evidence is resolving.</b><button>View known facts</button></article>
+    <article data-state="moderated"><span>Moderated item</span><b>A reason and receipt replace the hidden revision.</b><button>Read decision</button></article>
+  </div>
+</div>

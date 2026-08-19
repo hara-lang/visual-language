@@ -1,0 +1,64 @@
+---
+import {
+  ownedBot,
+  ownedBotReply,
+  presenceModel
+} from "../../lib/v2-world.mjs";
+---
+<div class="world-screen world-presence-screen" data-world-screen="presence">
+  <header class="world-app-bar world-app-bar--compact">
+    <div class="world-app-identity"><span class="world-app-mark" aria-hidden="true">H<i></i></span><div><b>Presence</b><small>Optional awareness, not contribution evidence</small></div></div>
+    <nav class="world-thread-nav" aria-label="Presence views"><a href="#presence" aria-current="page">Online now</a><a href="#presence-settings">Settings</a><a href="#presence-privacy">Privacy</a></nav>
+    <div class="world-app-actions"><span class="hara-v2-badge" data-tone="success">Service healthy</span><button class="hara-v2-button">Hide me now</button></div>
+  </header>
+
+  <div class="world-presence-layout">
+    <main class="hara-v2-panel">
+      <header class="hara-v2-panel-header"><div><p class="hara-v2-kicker">Current room · Work algebra thread</p><h3>People here now</h3></div><span>{presenceModel.people.length} visible states</span></header>
+      <div class="hara-v2-panel-body world-presence-roster">
+        {presenceModel.people.map((person) => (
+          <article data-presence-state={person.state}>
+            <div class="world-presence-avatar"><span class="world-avatar">{person.avatar}</span><i data-presence={person.state}></i></div>
+            <div><b>{person.name}</b><span>{person.handle}</span></div>
+            <p><strong>{person.label}</strong><small>{person.detail}</small></p>
+            <span class="hara-v2-badge">{person.sharesActivity ? "activity shared" : "activity private"}</span>
+          </article>
+        ))}
+      </div>
+    </main>
+
+    <aside class="hara-v2-panel" id="presence-settings">
+      <header class="hara-v2-panel-header"><div><p class="hara-v2-kicker">Private by default</p><h3>Your presence settings</h3></div><span class="hara-v2-badge">default · {presenceModel.default}</span></header>
+      <div class="hara-v2-panel-body world-presence-settings">
+        {presenceModel.settings.map((setting) => (
+          <label>
+            <span><b>{setting.label}</b><small>Account-scoped preference</small></span>
+            <select aria-label={setting.label}><option selected>{setting.value}</option><option>Hidden</option></select>
+          </label>
+        ))}
+        <p id="presence-privacy">{presenceModel.privacy}</p>
+        <button class="hara-v2-button" data-variant="primary">Save privacy settings</button>
+      </div>
+    </aside>
+  </div>
+
+  <section class="world-presence-bot-contract">
+    <div>
+      <p class="hara-v2-kicker">Owner-presence boundary</p>
+      <h3>Bots cannot appear more available than their owners.</h3>
+      <p>{ownedBot.name} may attach prepared registry evidence, but live replies require {ownedBot.owner.name} to be visibly online under policy {ownedBot.policy.id}.</p>
+    </div>
+    <article data-bot-reply-state={ownedBotReply.id}>
+      <span class="world-avatar world-avatar--bot">HI</span>
+      <div><b>{ownedBot.name} <span class="hara-v2-badge" data-tone="signal">BOT</span></b><small>Owned by {ownedBot.owner.name} · {ownedBot.owner.presenceLabel}</small></div>
+      <button class="hara-v2-button" disabled={!ownedBotReply.canReply}>{ownedBotReply.label}</button>
+      <p>{ownedBotReply.reason}</p>
+    </article>
+  </section>
+
+  <section class="world-degraded-banner" data-state="service-unavailable">
+    <span aria-hidden="true">◌</span>
+    <div><b>{presenceModel.degraded.label}</b><p>{presenceModel.degraded.detail}</p></div>
+    <button class="hara-v2-button">Read service receipt</button>
+  </section>
+</div>

@@ -5,175 +5,302 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
-  clusterByCanonicalUrl,
-  rankItems,
-  scoreItem,
-  scoreReceipt
-} from "../scripts/world-feed-rank.mjs";
-import {
-  buildRelayEnvelope,
-  publicationReceipt,
-  relayDraft,
-  relayMode
-} from "../scripts/world-feed-relay.mjs";
+  articleThread,
+  botReplyState,
+  clippingProvenance,
+  clippingWorkflow,
+  contributorProfile,
+  createClippingProvenance,
+  feedDirectory,
+  haraWorldAdoption,
+  historicalWorldStudies,
+  ownedBot,
+  ownedBotReply,
+  presenceModel,
+  worldContentContract,
+  worldDigest,
+  worldInventory,
+  worldPrimaryNavigation,
+  worldProductBoundary,
+  worldSections,
+  worldStateCoverage,
+  worldTypeIds
+} from "../site/src/lib/v2-world.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
-const readJson = (path) => read(path).then(JSON.parse);
 
 const pagePath = "site/src/pages/v2/world/index.astro";
-const componentPaths = [
-  "site/src/pages/v2/world/_components/FeedExplorer.astro",
-  "site/src/pages/v2/world/_components/SourceManager.astro",
-  "site/src/pages/v2/world/_components/ConversationCluster.astro",
-  "site/src/pages/v2/world/_components/RelayConsole.astro"
-];
 const stylePaths = [
-  "site/src/styles/v2-world-feed.css",
-  "site/src/styles/v2-world-feed-explorer.css",
-  "site/src/styles/v2-world-feed-sources.css",
-  "site/src/styles/v2-world-feed-conversation.css",
-  "site/src/styles/v2-world-feed-relay.css",
-  "site/src/styles/v2-world-feed-responsive.css"
+  "site/src/styles/v2-world-application.css",
+  "site/src/styles/v2-world-application-shell.css",
+  "site/src/styles/v2-world-application-reader.css",
+  "site/src/styles/v2-world-application-workflows.css",
+  "site/src/styles/v2-world-application-presence-digest.css",
+  "site/src/styles/v2-world-application-governance.css"
 ];
+const readStyles = () => Promise.all(stylePaths.map(read)).then((parts) => parts.join("\n"));
+const componentPaths = {
+  WorldFrontPage: "site/src/components/v2-world/WorldFrontPage.astro",
+  WorldThread: "site/src/components/v2-world/WorldThread.astro",
+  WorldBotComment: "site/src/components/v2-world/WorldBotComment.astro",
+  WorldClipping: "site/src/components/v2-world/WorldClipping.astro",
+  WorldFeedDirectory: "site/src/components/v2-world/WorldFeedDirectory.astro",
+  WorldProfile: "site/src/components/v2-world/WorldProfile.astro",
+  WorldPresence: "site/src/components/v2-world/WorldPresence.astro",
+  WorldDigest: "site/src/components/v2-world/WorldDigest.astro"
+};
 
-test("World is presented as a four-surface cross-source feed explorer", async () => {
+test("World consumes the shared hara.world 2.0.0 content contract", () => {
+  assert.equal(worldContentContract.schemaNamespace, "hara.world");
+  assert.equal(worldContentContract.schemaVersion, "2.0.0");
+  assert.equal(worldContentContract.registryOwner, "World content and source registries");
+  assert.deepEqual(worldTypeIds, [
+    "world.article",
+    "world.clipping",
+    "world.feed",
+    "world.profile",
+    "world.bot"
+  ]);
+  assert.equal(worldInventory.contentTypes, 5);
+});
+
+test("the primary World route is the seven-screen application acceptance surface", async () => {
   const page = await read(pagePath);
 
-  for (const component of ["FeedExplorer", "SourceManager", "ConversationCluster", "RelayConsole"]) {
+  assert.match(page, /import CatalogueHeader/);
+  assert.match(page, /activePath="\/v2\/world\/"/);
+  assert.match(page, /v2-world-application\.css/);
+  assert.match(page, /worldContentContract/);
+
+  for (const [component, path] of Object.entries(componentPaths)) {
+    if (component === "WorldBotComment") continue;
     assert.match(page, new RegExp(`import ${component} from`));
-    assert.match(page, new RegExp(`<${component}\\s*/>`));
+    assert.match(page, new RegExp(`<${component}\\s*\\/>`));
+    assert.ok((await read(path)).length > 1_000, `${component} should be a detailed specimen`);
   }
 
-  for (const id of ["feed-explorer", "sources", "conversation", "relay"]) {
-    assert.match(page, new RegExp(`id=\\"${id}\\"`));
+  assert.deepEqual(worldSections.map(({ id }) => id), [
+    "front-page",
+    "article-thread",
+    "clipping",
+    "feeds",
+    "profile",
+    "presence",
+    "digest"
+  ]);
+
+  for (const { id } of worldSections) assert.match(page, new RegExp(`id=\\"${id}\\"`));
+  assert.match(page, /The comment body can disappear\. Its state and receipt cannot\./);
+  assert.match(page, /One reviewed edition, three portable projections\./);
+});
+
+test("World navigation stays focused and routes structured teaching to Learn", async () => {
+  assert.deepEqual(worldPrimaryNavigation.map(({ label }) => label), ["Hot", "New", "Following", "Clippings"]);
+  assert.doesNotMatch(worldPrimaryNavigation.map(({ label }) => label).join(" "), /Learn|Lessons|Exercises/);
+  assert.equal(worldProductBoundary.excludes.find(({ owner }) => owner === "Learn")?.destination, "/v2/learn/");
+
+  const frontPage = await read(componentPaths.WorldFrontPage);
+  assert.match(frontPage, /data-world-primary-nav/);
+  assert.doesNotMatch(frontPage, />\s*Learn\s*</);
+  assert.doesNotMatch(frontPage, /New programmer journey/);
+});
+
+test("front page attribution distinguishes source, original author, submitter, score, comments, age, and evidence", async () => {
+  const frontPage = await read(componentPaths.WorldFrontPage);
+
+  for (const phrase of [
+    "Original author",
+    "Submitted by",
+    "canonical",
+    "comments",
+    "ago",
+    "Contribution evidence still resolving",
+    "Snippet of the Day",
+    "Reviewed sources",
+    "What’s New"
+  ]) assert.match(frontPage, new RegExp(phrase.replace(/[’*+?^${}()|[\]\\]/g, "\\$&")));
+
+  assert.match(frontPage, /data-content-type=\{story\.contentType\}/);
+  assert.match(frontPage, /title=\{item\.receipt\}/);
+  assert.match(frontPage, /data-state="empty"/);
+  assert.match(frontPage, /data-state="stale"/);
+  assert.match(frontPage, /data-state="partial"/);
+  assert.match(frontPage, /data-state="moderated"/);
+});
+
+test("thread covers durable comment states and full bot accountability", async () => {
+  const [thread, botComponent] = await Promise.all([
+    read(componentPaths.WorldThread),
+    read(componentPaths.WorldBotComment)
+  ]);
+
+  assert.deepEqual(articleThread.comments.map(({ state }) => state), [
+    "published",
+    "collapsed",
+    "moderated",
+    "deleted"
+  ]);
+  assert.match(thread, /data-state="offline-composer"/);
+  assert.match(thread, /<details>/);
+  assert.match(thread, /Read moderation decision/);
+  assert.match(thread, /preserved reply/);
+  assert.match(thread, /<WorldBotComment bot=\{ownedBot\} reply=\{ownedBotReply\}/);
+
+  assert.equal(ownedBot.label, "BOT");
+  assert.match(botComponent, /\{bot\.label\}/);
+  for (const phrase of ["Owner", "Presence", "Purpose", "Sources", "Policy", "receipt"])
+    assert.match(botComponent, new RegExp(phrase));
+
+  assert.match(botComponent, /disabled=\{!reply\.canReply\}/);
+  assert.match(botComponent, /data-bot-owner=\{bot\.owner\.handle\}/);
+  assert.equal(ownedBot.owner.presence, "away");
+  assert.equal(ownedBotReply.id, "paused-owner-absent");
+  assert.equal(ownedBotReply.canReply, false);
+});
+
+test("bot replies require both active policy and an online accountable owner", () => {
+  assert.deepEqual(botReplyState({ ownerPresence: "online" }), {
+    id: "ready",
+    canReply: true,
+    label: "Reply with owner present",
+    reason: "The owner is online and the active bot policy permits a reviewed reply."
+  });
+  assert.equal(botReplyState({ ownerPresence: "away" }).id, "paused-owner-absent");
+  assert.equal(botReplyState({ ownerPresence: "online", policyState: "paused" }).id, "paused-policy");
+});
+
+test("clipping provenance fences canonical source facts while keeping authored context separate", async () => {
+  const clipping = await read(componentPaths.WorldClipping);
+
+  assert.equal(clippingWorkflow.contentType, "world.clipping");
+  assert.deepEqual(clippingProvenance.controlled, ["canonicalUrl", "sourceDigest", "importReceipt"]);
+  assert.deepEqual(clippingProvenance.editable, ["context"]);
+  assert.equal(clippingProvenance.context, clippingWorkflow.context.note);
+
+  const record = createClippingProvenance({
+    canonicalUrl: "https://example.org/post/42",
+    sourceDigest: "sha256:abc123",
+    importReceipt: "import:42",
+    context: "World context"
+  });
+  assert.equal(record.canonicalUrl, "https://example.org/post/42");
+  assert.throws(() => createClippingProvenance({
+    canonicalUrl: "http://example.org/post/42",
+    sourceDigest: "sha256:abc123",
+    importReceipt: "import:42"
+  }), /HTTPS canonical source/);
+  assert.throws(() => createClippingProvenance({
+    canonicalUrl: "https://example.org/post/42",
+    sourceDigest: "md5:abc123",
+    importReceipt: "import:42"
+  }), /sha256 source digest/);
+
+  for (const phrase of ["Source-controlled facts", "Browser editable", "Provenance ledger"])
+    assert.match(clipping, new RegExp(phrase));
+  assert.deepEqual(clippingWorkflow.failureStates.map(({ label }) => label), [
+    "Possible duplicate", "Source unavailable", "Permission unclear"
+  ]);
+});
+
+test("feed, profile, presence, and digest specimens expose their controlled lifecycle and degraded states", async () => {
+  const [feeds, profile, presence, digest] = await Promise.all([
+    read(componentPaths.WorldFeedDirectory),
+    read(componentPaths.WorldProfile),
+    read(componentPaths.WorldPresence),
+    read(componentPaths.WorldDigest)
+  ]);
+
+  assert.deepEqual(feedDirectory.states.map(({ id }) => id), ["empty", "stale", "failing", "paused"]);
+  assert.match(feeds, /Review receipt/);
+  assert.match(feeds, /Submit a feed you control/);
+  assert.match(feeds, /Export OPML/);
+
+  assert.equal(contributorProfile.contentType, "world.profile");
+  assert.ok(contributorProfile.packages.every(({ receipt }) => receipt));
+  assert.ok(contributorProfile.namespaces.every(({ receipt }) => receipt));
+  assert.ok(contributorProfile.badges.every(({ receipt, evidence }) => receipt && evidence));
+  assert.match(profile, /Evidence, not self-description/);
+  assert.match(profile, /Stable subject/);
+  assert.match(profile, /Owned automation/);
+
+  assert.equal(presenceModel.default, "hidden");
+  assert.match(presenceModel.privacy, /never written into article front matter/);
+  assert.match(presence, /Bots cannot appear more available than their owners/);
+  assert.equal(presenceModel.degraded.label, "Presence service unavailable");
+  assert.match(presence, /presenceModel\.degraded\.label/);
+
+  assert.deepEqual(worldDigest.outputs.map(({ id }) => id), ["web", "email", "rss"]);
+  assert.deepEqual(worldDigest.states.map(({ id }) => id), [
+    "empty", "draft", "scheduled", "published", "delivery-failure"
+  ]);
+  assert.match(digest, /Projection receipts/);
+  assert.match(digest, /Snippet of the Day/);
+  assert.match(digest, /consentReceipt/);
+});
+
+test("every required World state family is explicit and not colour-only", async () => {
+  assert.deepEqual(Object.keys(worldStateCoverage), [
+    "frontPage", "thread", "clipping", "feeds", "profile", "presence", "digest"
+  ]);
+  assert.equal(worldInventory.stateVariants, 37);
+
+  for (const states of Object.values(worldStateCoverage)) {
+    assert.ok(states.length >= 5);
+    assert.ok(states.every((state) => typeof state === "string" && state.length > 2));
   }
 
-  assert.doesNotMatch(page, /label:\s*"Play"/);
-  assert.doesNotMatch(page, /label:\s*"Agents"/);
-  assert.doesNotMatch(page, /label:\s*"Learn"/);
+  const [page, css] = await Promise.all([read(pagePath), readStyles()]);
+  assert.match(page, /stateEntries\.map/);
+  assert.match(page, /states\.join\(" · "\)/);
+  assert.match(css, /:focus-visible/);
+  assert.match(css, /@media \(max-width: 720px\)/);
+  assert.match(css, /@media \(max-width: 430px\)/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
-test("World uses modular product CSS and no component embeds a style block", async () => {
-  const page = await read(pagePath);
-  for (const path of stylePaths) {
-    assert.match(page, new RegExp(path.split("/").at(-1).replaceAll(".", "\\.")));
-    const css = await read(path);
-    assert.ok(css.length > 500, `${path} should contain a substantive style layer`);
-    assert.doesNotMatch(css, /--hara-v2-[\w-]+\s*:/, `${path} must consume, not redefine, shared Hara v2 tokens`);
+test("World uses shared v2 tokens and components without embedded style blocks", async () => {
+  const [page, css, ...components] = await Promise.all([
+    read(pagePath),
+    readStyles(),
+    ...Object.values(componentPaths).map(read)
+  ]);
+
+  assert.match(page, /src\/v2\.css/);
+  assert.ok(css.length > 25_000, "World should have a substantive application presentation layer");
+  assert.doesNotMatch(css, /--hara-v2-[\w-]+\s*:/, "World CSS must consume shared v2 tokens");
+  assert.match(css, /var\(--hara-v2-panel\)/);
+  assert.match(css, /var\(--hara-v2-line\)/);
+  assert.match(css, /var\(--hara-v2-signal\)/);
+  assert.doesNotMatch(page, /<style(?:\s|>)/i);
+  for (const component of components) {
+    assert.doesNotMatch(component, /<style(?:\s|>)/i);
+    assert.match(component, /hara-v2-(?:panel|button|badge)/);
   }
-
-  for (const path of [pagePath, ...componentPaths]) {
-    assert.doesNotMatch(await read(path), /<style(?:\s|>)/i, `${path} must not embed a style block`);
-  }
 });
 
-test("source policy covers native, repository, social, discussion, newsletter, and open-feed inputs", async () => {
-  const policy = await readJson("site/src/data/world-feed-policy.json");
-  const sourceIds = policy.ingestion.sources.map(({ id }) => id);
+test("historical studies remain reachable while the primary route targets hara-world adoption", async () => {
+  const [page, adoption] = await Promise.all([read(pagePath), read("V2-WORLD.md")]);
 
-  assert.deepEqual(sourceIds, [
-    "world",
-    "github",
-    "reddit",
-    "x",
-    "hacker-news",
-    "substack",
-    "rss"
+  assert.deepEqual(historicalWorldStudies.map(({ path }) => path), [
+    "/v2/world/discussion/",
+    "/v2/world/around/",
+    "/v2/world/feed/",
+    "/v2/world/community/",
+    "/v2/world/onboarding/"
   ]);
-  assert.equal(policy.ingestion.sources.find(({ id }) => id === "substack").transport, "RSS");
-  assert.match(await read(pagePath), /Reddit, X, Hacker News, Substack, RSS/);
-});
+  assert.match(page, /historicalWorldStudies\.map/);
+  assert.match(page, /Earlier studies remain reachable without redefining the product/);
+  assert.equal(haraWorldAdoption.length, 7);
 
-test("relay policy is review-first and limits automatic publication to narrow Hara-owned facts", async () => {
-  const policy = await readJson("site/src/data/world-feed-policy.json");
-  const destinations = Object.fromEntries(policy.relay.destinations.map((destination) => [destination.id, destination.mode]));
-
-  assert.equal(policy.relay.defaultMode, "review");
-  assert.equal(destinations.x, "review");
-  assert.equal(destinations.reddit, "review");
-  assert.equal(destinations.channels, "review");
-  assert.equal(destinations.newsletter, "review");
-  assert.equal(destinations["world-hot"], "auto");
-  assert.deepEqual(policy.relay.autoEligible, [
-    "hara-owned-release",
-    "security-advisory",
-    "scheduled-snippet-of-the-day"
-  ]);
-  assert.ok(policy.relay.neverAutomate.includes("quote-without-canonical-link"));
-  assert.equal(policy.relay.cooldownHours, 72);
-});
-
-test("ranking is deterministic, inspectable, and strongly penalizes canonical duplicates", async () => {
-  const [items, policy] = await Promise.all([
-    readJson("site/src/data/world-feed-sample.json"),
-    readJson("site/src/data/world-feed-policy.json")
-  ]);
-
-  const first = rankItems(items, policy);
-  const second = rankItems(items, policy);
-  assert.deepEqual(first, second);
-  assert.equal(first[0].id, "github-schema-release");
-
-  const canonical = items.find(({ id }) => id === "github-schema-release");
-  const duplicate = items.find(({ id }) => id === "x-duplicate-schema");
-  assert.ok(scoreItem(canonical, policy) > scoreItem(duplicate, policy) + 0.5);
-
-  const receipt = scoreReceipt(canonical, policy);
-  assert.equal(receipt.itemId, canonical.id);
-  assert.equal(receipt.score, scoreItem(canonical, policy));
-  assert.deepEqual(Object.keys(receipt.positive), Object.keys(policy.ranking.weights));
-  assert.deepEqual(Object.keys(receipt.penalties), Object.keys(policy.ranking.penalties));
-});
-
-test("canonical clustering folds cross-posts without discarding their source members", async () => {
-  const items = await readJson("site/src/data/world-feed-sample.json");
-  const clusters = clusterByCanonicalUrl(items);
-  const releaseCluster = clusters.find(({ canonicalUrl }) => canonicalUrl === "https://example.invalid/hara/github/schema-release");
-
-  assert.ok(releaseCluster);
-  assert.equal(releaseCluster.members.length, 2);
-  assert.equal(releaseCluster.sourceCount, 2);
-  assert.deepEqual(releaseCluster.members.map(({ id }) => id), [
-    "github-schema-release",
-    "x-duplicate-schema"
-  ]);
-});
-
-test("Hara-owned facts may auto-enter World hot while external relays and community items stay reviewed", async () => {
-  const [items, policy] = await Promise.all([
-    readJson("site/src/data/world-feed-sample.json"),
-    readJson("site/src/data/world-feed-policy.json")
-  ]);
-  const ranked = rankItems(items, policy);
-  const release = ranked.find(({ id }) => id === "github-schema-release");
-  const community = ranked.find(({ id }) => id === "x-work-algebra");
-
-  assert.equal(relayMode(release, "world-hot", policy), "auto");
-  assert.equal(relayMode(release, "x", policy), "review");
-  assert.equal(relayMode(community, "world-hot", policy), "review");
-  assert.equal(relayMode(community, "reddit", policy), "review");
-});
-
-test("relay envelopes retain attribution and stable publication receipts while blocking prohibited material", async () => {
-  const [items, policy] = await Promise.all([
-    readJson("site/src/data/world-feed-sample.json"),
-    readJson("site/src/data/world-feed-policy.json")
-  ]);
-  const item = rankItems(items, policy).find(({ id }) => id === "x-work-algebra");
-  const envelope = buildRelayEnvelope(item, "x", policy);
-
-  assert.equal(envelope.status, "awaiting-review");
-  assert.equal(envelope.canonicalUrl, item.canonicalUrl);
-  assert.equal(envelope.sourceAuthor, item.author);
-  assert.equal(envelope.sourcePlatform, item.source);
-  assert.match(envelope.draft, /@mina_forms · X \/ Twitter/);
-  assert.match(envelope.draft, /https:\/\/example\.invalid\/hara\/x\/work-algebra/);
-  assert.equal(envelope.publicationReceipt, publicationReceipt(item, item.rankScore, "x"));
-  assert.equal(relayDraft(item, "x").length <= 280, true);
-
-  const blocked = buildRelayEnvelope({ ...item, flags: ["private-content"] }, "x", policy);
-  assert.equal(blocked.mode, "blocked");
-  assert.equal(blocked.publicationReceipt, null);
-  assert.equal(blocked.draft, null);
+  for (const target of [
+    "hara-lang/hara-world",
+    "content/articles/community/",
+    "registry/sources.json",
+    "scripts/sync-feeds.mjs",
+    "release algebra",
+    "provider outbox",
+    "durable discussion",
+    "Presence service"
+  ]) assert.match(adoption, new RegExp(target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
 });

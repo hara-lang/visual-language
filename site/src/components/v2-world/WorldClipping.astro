@@ -1,0 +1,97 @@
+---
+import {
+  clippingProvenance,
+  clippingWorkflow
+} from "../../lib/v2-world.mjs";
+---
+<div class="world-screen world-clipping-screen" data-world-screen="clipping">
+  <header class="world-app-bar world-app-bar--compact">
+    <div class="world-app-identity"><span class="world-app-mark" aria-hidden="true">H<i></i></span><div><b>New clipping</b><small>{clippingWorkflow.contentType}</small></div></div>
+    <ol class="world-step-nav" aria-label="Clipping workflow">
+      {clippingWorkflow.lifecycle.map((step, index) => <li data-state={step.state}><span>{index + 1}</span>{step.label}</li>)}
+    </ol>
+    <div class="world-app-actions"><button class="hara-v2-button">Save draft</button><button class="hara-v2-button" data-variant="primary">Publish reviewed clipping</button></div>
+  </header>
+
+  <div class="world-clipping-layout">
+    <section class="world-clipping-source hara-v2-panel">
+      <header class="hara-v2-panel-header">
+        <div><p class="hara-v2-kicker">Source-controlled facts</p><h3>Canonical capture</h3></div>
+        <span class="hara-v2-badge" data-tone="success">Validated</span>
+      </header>
+      <div class="hara-v2-panel-body">
+        <dl class="world-definition-list">
+          <div><dt>Title</dt><dd>{clippingWorkflow.source.title}</dd></div>
+          <div><dt>Original author</dt><dd>{clippingWorkflow.source.author}</dd></div>
+          <div><dt>Provider / type</dt><dd>{clippingWorkflow.source.provider} · {clippingWorkflow.source.sourceType}</dd></div>
+          <div><dt>Canonical URL</dt><dd><a href={clippingWorkflow.source.canonicalUrl}>{clippingWorkflow.source.canonicalUrl}</a></dd></div>
+          <div><dt>Published</dt><dd>{clippingWorkflow.source.publishedAt}</dd></div>
+          <div><dt>Retrieved</dt><dd>{clippingWorkflow.source.retrievedAt}</dd></div>
+          <div><dt>Source digest</dt><dd><code>{clippingWorkflow.source.sourceDigest}</code></dd></div>
+          <div><dt>Permission</dt><dd>{clippingWorkflow.source.permission}</dd></div>
+        </dl>
+        <aside class="world-source-lock"><span aria-hidden="true">⌁</span><p><b>Locked after capture</b><small>The author can add context, but cannot replace source identity, digest, retrieval time, provider, or canonical URL.</small></p></aside>
+      </div>
+    </section>
+
+    <section class="world-clipping-context hara-v2-panel">
+      <header class="hara-v2-panel-header">
+        <div><p class="hara-v2-kicker">Browser editable</p><h3>Add World context</h3></div>
+        <span class="hara-v2-badge">Draft saved</span>
+      </header>
+      <div class="hara-v2-panel-body world-clipping-form">
+        <label>World title<input value={clippingWorkflow.context.title} /></label>
+        <label>Why this matters<textarea rows="7">{clippingWorkflow.context.note}</textarea></label>
+        <fieldset><legend>Topics</legend><div>{clippingWorkflow.context.tags.map((tag) => <button type="button" class="hara-v2-badge">#{tag} ×</button>)}<button type="button" class="hara-v2-button">Add topic</button></div></fieldset>
+        <label>Discussion prompt<textarea rows="3" placeholder="Optional question for the durable thread"></textarea></label>
+        <div class="world-form-boundary">
+          <span><b>Editable</b> context, tags, discussion prompt</span>
+          <span><b>Controlled</b> source, provenance, syndication, moderation</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="world-clipping-preview hara-v2-panel">
+      <header class="hara-v2-panel-header"><div><p class="hara-v2-kicker">Feed preview</p><h3>Reviewed clipping</h3></div><span class="hara-v2-badge" data-tone="warning">Clipping</span></header>
+      <div class="hara-v2-panel-body">
+        <article class="world-clipping-card-preview">
+          <span>GitHub · Pull request</span>
+          <h4>{clippingWorkflow.context.title}</h4>
+          <p>{clippingWorkflow.context.note}</p>
+          <footer><b>Original: {clippingWorkflow.source.author}</b><span>clipped by @aya_codes</span><span>canonical source ↗</span></footer>
+        </article>
+        <div class="world-provenance-ledger">
+          <h4>Provenance ledger</h4>
+          <dl>
+            <div><dt>Canonical URL</dt><dd>{clippingProvenance.canonicalUrl}</dd></div>
+            <div><dt>Source digest</dt><dd>{clippingProvenance.sourceDigest}</dd></div>
+            <div><dt>Import receipt</dt><dd>{clippingProvenance.importReceipt}</dd></div>
+            <div><dt>Transformation</dt><dd>{clippingWorkflow.transformation.method} · {clippingWorkflow.transformation.transformer}</dd></div>
+            <div><dt>Excerpt digest</dt><dd>{clippingWorkflow.transformation.excerptDigest}</dd></div>
+            <div><dt>Publication</dt><dd>{clippingWorkflow.publicationReceipt}</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="world-lifecycle-ledger" aria-label="Clipping lifecycle">
+    {clippingWorkflow.lifecycle.map((step, index) => (
+      <article data-state={step.state}>
+        <span>{String(index + 1).padStart(2, "0")}</span>
+        <div><b>{step.label}</b><p>{step.detail}</p></div>
+      </article>
+    ))}
+  </section>
+
+  <section class="world-failure-grid" aria-label="Clipping failure states">
+    {clippingWorkflow.failureStates.map((state) => (
+      <article data-state={state.id}>
+        <span class="hara-v2-badge" data-tone="warning">{state.id}</span>
+        <h4>{state.label}</h4>
+        <p>{state.detail}</p>
+        <button class="hara-v2-button">{state.action}</button>
+      </article>
+    ))}
+  </section>
+</div>
