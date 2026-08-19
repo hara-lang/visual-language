@@ -20,6 +20,7 @@
     "V2-ENVIRONMENT.md",
     "V2-RUNTIME.md",
     "V2-GRAPHICS.md",
+    "V2-FRONTMATTER.md",
     "V2-PLAYGROUND.md",
     "V2-WWW.md",
     "LICENSE"
@@ -32,6 +33,7 @@
     "./v2.css": "./src/v2.css",
     "./v2-tool.css": "./src/v2-tool.css",
     "./v2-graphics.css": "./src/v2/graphics.css",
+    "./v2/frontmatter.js": "./src/v2/frontmatter.mjs",
     "./theme.js": "./src/theme.js",
     "./astro/ThemeToggle.astro": "./src/astro/ThemeToggle.astro",
     "./astro/HaraMark.astro": "./src/astro/HaraMark.astro",
