@@ -1,0 +1,29 @@
+---
+import AroundScreen from "./AroundScreen.astro";
+import MatchReason from "./MatchReason.astro";
+import SourceBadge from "./SourceBadge.astro";
+import { sidebars } from "./data";
+
+interface Props { home: string; world: string; }
+const { home, world } = Astro.props;
+---
+<section class="world-lab-screen" id="signal">
+        <header class="world-lab-screen-head"><div><p class="hara-v2-kicker">Screen 03 · External signal</p><h2>Inspect before you amplify.</h2></div><p>The original preview, author state, platform metrics, match evidence, related Hara entities, availability, and local discussion are visible before clipping.</p></header>
+        <div class="world-lab-canvas around-lab-canvas">
+          <AroundScreen current="signal" mainId="around-signal-content" sidebarTitle="External signal" sidebarGroups={sidebars.signal} sidebarNote="The original platform retains the post, engagement, deletion state, and external comments." home={home} world={world}>
+            <Fragment slot="actions"><a class="hara-v2-button" href="#story">← Story</a><a class="hara-v2-button" href="#moderation">Review match</a><a class="hara-v2-button" data-variant="primary" href="#clip">Clip to World ↗</a></Fragment>
+            <div class="around-heading"><div><p class="hara-v2-kicker">Signal detail</p><h1>Protocol, not merely a browser REPL.</h1></div><SourceBadge source="x" /></div>
+            <div class="around-detail-grid">
+              <section class="around-panel around-original"><header><SourceBadge source="x" /><span>External signal · available</span><a href="#signal">Open original ↗</a></header><div class="around-author"><span>CN</span><p><b>@compiler_notes</b><small>External identity · not yet claimed</small></p><button>View identity</button></div><blockquote>Hara’s LiveSession boundary reads like a protocol: stale-command fencing, monotonic events, explicit capabilities, and one lifecycle for interpreted or compiled execution.</blockquote><div class="around-link-card"><span>hara-lang.org</span><b>Unified browser LiveSession contract</b><small>Revision-fenced execution across interpreter and HBC hosts.</small></div><footer><span>42 reposts</span><span>11 replies</span><span>96 likes</span><time>18 min</time></footer></section>
+              <section class="around-panel around-evidence"><header class="around-section-head"><div><p class="hara-v2-kicker">Why this appeared</p><h2>Match evidence</h2></div><span class="hara-v2-badge" data-tone="success">Confidence 1.00</span></header><div class="around-evidence-stack"><MatchReason title="Exact Hara domain" detail="hara-lang.org · 1.00" /><MatchReason title="Known repository" detail="hara-wasm-core · 1.00" /><MatchReason title="Programming context" detail="session · protocol · compiled" /></div><h3>Related Hara records</h3><div class="around-record-list"><a href="#story"><span>Component</span><b>LiveSession</b></a><a href="#story"><span>Repository</span><b>hara-wasm-core</b></a><a href="#story"><span>Pull request</span><b>#767</b></a></div></section>
+            </div>
+            <section class="around-panel around-thread around-local"><header class="around-section-head"><div><p class="hara-v2-kicker">Hara World discussion</p><h2>Six local comments about this signal.</h2></div><span>Separate from 11 X replies</span></header><article><span class="hara-v2-avatar">SV</span><div><header><b>Sara V.</b><time>9 min</time></header><p>The revision fence gives embedded tools a reusable way to reject stale UI intent.</p></div></article><div class="around-comment"><textarea placeholder="Add context for Hara readers…"></textarea><button class="hara-v2-button" data-variant="primary">Discuss</button></div></section>
+            <Fragment slot="aside">
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Signal status</h2></header><div class="hara-v2-panel-body around-kv"><div><span>Availability</span><b>live</b></div><div><span>Refreshed</span><b>2 min</b></div><div><span>Cluster</span><b>LiveSession</b></div><div><span>Clips</span><b>3</b></div></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Identity claim</h2><span class="hara-v2-badge">Unclaimed</span></header><div class="hara-v2-panel-body around-stack"><p>A GitHub-based Hara profile can prove control of this X account. Matching names never merge identities.</p><button class="hara-v2-button">Start verification</button></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Data contract</h2></header><div class="hara-v2-panel-body"><p class="world-aside-copy">Deletion, protection, and source edits update this record. World does not preserve an unavailable post body as live content.</p></div></section>
+            </Fragment>
+          </AroundScreen>
+        </div>
+        <div class="world-lab-notes"><article><b>Inspectability</b><p>Ranking and matching evidence sit beside the original preview.</p></article><article><b>Identity separation</b><p>An external handle is not automatically a Hara profile.</p></article><article><b>Availability-aware</b><p>Deletion and protection are visible states.</p></article></div>
+      </section>

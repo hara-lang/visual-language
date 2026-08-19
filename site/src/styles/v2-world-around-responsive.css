@@ -1,0 +1,56 @@
+@media (max-width: 1180px) {
+  .around-lab-index { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .around-source-types { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .around-policy { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 980px) {
+  .around-lab-hero { grid-template-columns: 1fr; }
+  .around-radar-art { width: min(440px, 88vw); justify-self: center; }
+  .around-story-grid,
+  .around-detail-grid,
+  .around-composer,
+  .around-source-grid,
+  .around-review-grid,
+  .around-relay-grid { grid-template-columns: 1fr; }
+  .around-stat-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .around-audit > ol { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .around-lab-header nav { display: none; }
+  .around-lab-index,
+  .around-signal-list,
+  .around-form-grid,
+  .around-options,
+  .around-match-preview > div { grid-template-columns: 1fr; }
+  .around-lab-index a { min-height: 138px; }
+  .around-heading,
+  .around-toolbar,
+  .around-feature > footer,
+  .around-section-head { align-items: flex-start; flex-direction: column; }
+  .around-toolbar > div { width: 100%; padding-bottom: .4rem; }
+  .around-rule { grid-template-columns: 1fr; }
+  .around-rule > span { display: none; }
+  .around-profile { grid-template-columns: 52px minmax(0, 1fr); }
+  .around-profile-mark { width: 50px; height: 50px; }
+  .around-profile > button { grid-column: 1 / -1; justify-self: start; }
+  .around-stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .around-comment { grid-template-columns: 1fr; }
+  .around-comment .hara-v2-button { justify-self: end; }
+  .around-draft > footer { flex-wrap: wrap; justify-content: flex-start; }
+}
+@media (max-width: 680px) {
+  .around-radar-art { width: min(360px, 90vw); }
+  .around-radar-art > b { width: 70px; height: 70px; font-size: 2rem; }
+  .around-radar-art > b em { top: 14px; right: 14px; }
+  .around-radar-art > span { width: 38px; height: 38px; }
+  .around-lab-canvas { min-height: 680px; height: 86vh; border-radius: 8px; }
+  .around-source-types,
+  .around-stat-row,
+  .around-policy { grid-template-columns: 1fr; }
+  .around-author { grid-template-columns: 34px minmax(0, 1fr); }
+  .around-author button { grid-column: 1 / -1; justify-self: start; }
+  .around-original > footer time { margin-left: 0; }
+  .around-evidence-table > div { grid-template-columns: 70px minmax(0, 1fr); }
+  .around-evidence-table strong { grid-column: 2; }
+  .around-conclusion > div:last-child { justify-content: flex-start; }
+}

@@ -1,0 +1,15 @@
+---
+interface Props {
+  title: string;
+  detail?: string;
+}
+
+const { title, detail } = Astro.props;
+---
+<span class="around-match-reason">
+  <i aria-hidden="true"></i>
+  <span>
+    <b>{title}</b>
+    {detail && <small>{detail}</small>}
+  </span>
+</span>

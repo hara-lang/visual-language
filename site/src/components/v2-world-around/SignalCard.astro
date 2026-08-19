@@ -1,0 +1,57 @@
+---
+import MatchReason from "./MatchReason.astro";
+import SourceBadge from "./SourceBadge.astro";
+
+interface Props {
+  source: "x" | "reddit" | "hacker-news" | "substack" | "github" | "world";
+  author: string;
+  time: string;
+  title: string;
+  excerpt: string;
+  percentile: string;
+  related: string;
+  reactions: string;
+  comments: string;
+  match: string;
+  featured?: boolean;
+  compact?: boolean;
+}
+
+const {
+  source,
+  author,
+  time,
+  title,
+  excerpt,
+  percentile,
+  related,
+  reactions,
+  comments,
+  match,
+  featured = false,
+  compact = false
+} = Astro.props;
+---
+<article class:list={["around-signal-card", { "is-featured": featured, "is-compact": compact }]}>
+  <header>
+    <div>
+      <SourceBadge source={source} />
+      <span class="around-signal-kind">External signal</span>
+    </div>
+    <time>{time}</time>
+  </header>
+  <div class="around-signal-author">{author}</div>
+  <h3>{title}</h3>
+  <p>{excerpt}</p>
+  <MatchReason title={match} detail={related} />
+  <div class="around-signal-metrics">
+    <strong>{percentile}</strong>
+    <span>{reactions}</span>
+    <span>{comments}</span>
+  </div>
+  <footer>
+    <a href="#signal">Open original ↗</a>
+    <button type="button">Clip</button>
+    <a href="#signal">Discuss</a>
+  </footer>
+</article>
