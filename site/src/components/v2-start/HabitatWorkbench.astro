@@ -1,0 +1,477 @@
+---
+import EnvironmentWorkbench from "../../../../src/astro/v2/tool/EnvironmentWorkbench.astro";
+import FrontmatterGrid from "../../../../src/astro/v2/tool/FrontmatterGrid.astro";
+import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import ResourceList from "../../../../src/astro/v2/tool/ResourceList.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
+
+const frontmatter = [
+  { id: "habitat-frontmatter-recipe", label: "Recipe", value: "hara/habitat", detail: "agent-first starter", code: true, status: "current" },
+  { id: "habitat-frontmatter-runtime", label: "Runtime", value: "Visual prototype host", detail: "Hara evaluator not attached", status: "warning" },
+  { id: "habitat-frontmatter-capabilities", label: "Capabilities", value: "canvas · clock", detail: "browser-owned in this study", code: true, status: "ready" },
+  { id: "habitat-frontmatter-generation", label: "Generation", value: "1", detail: "source revision 1", code: true },
+  { id: "habitat-frontmatter-publish", label: "Published", value: "No", detail: "visual-language field test", status: "warning" }
+];
+
+const sessions = [
+  { id: "habitat-live", label: "Nocturnal garden", detail: "simulated · generation 1", status: "ready", meta: "rev 1", current: true, action: true },
+  { id: "habitat-agent", label: "Agent plan", detail: "recommendation + first mutation", status: "current", meta: "3 steps", action: true }
+];
+
+const files = [
+  { id: "habitat-main", label: "main.hal", detail: "illustrative habitat source", status: "current", meta: "1.8 KB", current: true, action: true },
+  { id: "habitat-recipe", label: "recipe.edn", detail: "target catalogue entry", status: "warning", meta: "proposed", action: true },
+  { id: "habitat-readme", label: "README.md", detail: "outcome, run, verify, first edit", status: "ready", meta: "contract", action: true }
+];
+
+const codeSample = `(def habitat
+  {:light {:position [0.52 0.44]
+           :strength 0.84}
+
+   :rules {:attraction 0.16
+           :separation 18
+           :fear-radius 42
+           :night-speed 1.20}
+
+   :creatures {:moths 18
+               :bats 1}})
+
+(defn frame [world clock]
+  (-> world
+      (habitat/attract-to-light clock)
+      (habitat/separate)
+      (habitat/avoid-bats)))`;
+---
+<section class="start-lab-section" id="habitat">
+  <header class="start-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Screen 04 · Killer-app specimen</p>
+      <h2>Hara Habitat: change a living rule.</h2>
+    </div>
+    <p>The first memorable act is not evaluating a number. It is changing one rule in a visible system, seeing the result immediately, and receiving a precise account of what changed.</p>
+  </header>
+
+  <div class="start-prototype-fence" role="note">
+    <span class="hara-v2-badge" data-tone="signal">Honest prototype</span>
+    <p>The interface, controls, canvas animation, and receipts below are functional. The animation is implemented by this visual-language prototype; the displayed Hara source and session lifecycle are illustrative until a Hara browser host is attached.</p>
+  </div>
+
+  <div class="start-habitat-shell" data-habitat-demo>
+    <EnvironmentWorkbench
+      label="Hara Habitat agent-first workbench"
+      activeSection="graphics"
+      activeControlGroup="canvas"
+      idPrefix="habitat-environment"
+      minHeight="720px"
+      sectionBadges={{ nav: 4, frontmatter: 5, code: 22 }}
+      capabilityBadges={{ sessions: 2, files: 3 }}
+      class="habitat-environment"
+    >
+      <nav slot="nav" class="habitat-project-nav" aria-label="Habitat project navigation">
+        <div class="habitat-nav-heading"><span>Project</span><b>hara/habitat</b></div>
+        <button type="button" aria-current="page" data-jump="habitat"><strong>Overview</strong><small>Living system + first mutation</small></button>
+        <button type="button" data-jump="habitat"><strong>Behaviour</strong><small>Attraction, separation, avoidance</small></button>
+        <button type="button" data-jump="habitat"><strong>Receipts</strong><small>Generation and source revision</small></button>
+        <button type="button" data-jump="graduate"><strong>Graduate</strong><small>Files, work, persistence, package</small></button>
+        <div class="habitat-nav-boundary"><b>Not attached</b><span>3D, audio, network, persistence</span></div>
+      </nav>
+
+      <FrontmatterGrid slot="frontmatter" entries={frontmatter} label="Habitat recipe frontmatter" />
+
+      <div slot="graphics" class="habitat-graphics" aria-label="Animated nocturnal habitat prototype">
+        <canvas data-habitat-canvas role="img" aria-label="Moths gathering around a light while avoiding a bat">Animated moths gather around a light while avoiding a bat.</canvas>
+        <div class="habitat-graphics-vignette" aria-hidden="true"></div>
+        <div class="habitat-world-label">
+          <span>NOCTURNAL GARDEN / 01</span>
+          <b>fear radius <output data-habitat-fear-output>42</output></b>
+        </div>
+        <div class="habitat-agent-presence">
+          <span class="start-status-dot" data-state="ready" aria-hidden="true"></span>
+          <div><b>Agent is watching the session</b><small data-habitat-agent-state>Ready for a meaningful change</small></div>
+        </div>
+        <article class="habitat-receipt" data-habitat-receipt aria-live="polite">
+          <header><span>Live mutation receipt</span><b data-habitat-receipt-state>Initial state</b></header>
+          <dl>
+            <div><dt>Request</dt><dd data-habitat-receipt-request>Start the nocturnal habitat</dd></div>
+            <div><dt>Patch</dt><dd><code data-habitat-receipt-patch>[:rules :fear-radius] = 42</code></dd></div>
+            <div><dt>Effect</dt><dd data-habitat-receipt-effect>Moths avoid the bat inside a 42 px radius.</dd></div>
+            <div><dt>Fence</dt><dd><code data-habitat-receipt-fence>generation 1 · revision 1</code></dd></div>
+          </dl>
+        </article>
+      </div>
+
+      <div slot="code" class="habitat-code-panel">
+        <header>
+          <div><span>src/main.hal</span><small>Illustrative source · Hara evaluator not attached</small></div>
+          <span class="hara-v2-badge">Prototype</span>
+        </header>
+        <textarea spellcheck="false" data-habitat-source aria-label="Illustrative Hara habitat source">{codeSample}</textarea>
+        <footer>
+          <span>Edit <code>:fear-radius</code>, then apply the source.</span>
+          <button class="hara-v2-button" data-variant="primary" type="button" data-habitat-apply-source>Apply source</button>
+        </footer>
+      </div>
+
+      <div slot="commands" class="habitat-command-bar" aria-label="Habitat transport">
+        <button class="hara-v2-button" data-variant="primary" type="button" data-habitat-run>Run</button>
+        <button class="hara-v2-button" type="button" data-habitat-pause>Pause</button>
+        <button class="hara-v2-button" type="button" data-habitat-reset>Reset</button>
+      </div>
+
+      <ResourceList slot="sessions" items={sessions} label="Habitat sessions" density="dense" class="habitat-session-list" />
+      <ResourceList slot="files" items={files} label="Habitat files" density="dense" />
+
+      <div slot="canvas" class="habitat-controls">
+        <InspectorSection title="Behaviour" open>
+          <label class="habitat-number-field">
+            <span>Fear radius</span>
+            <span><input type="number" min="12" max="96" value="42" step="1" data-habitat-fear-number /> px</span>
+          </label>
+          <label class="habitat-range-field">
+            <span>Direct manipulation</span>
+            <input type="range" min="12" max="96" value="42" step="1" data-habitat-fear-range aria-label="Fear radius slider" />
+          </label>
+          <div class="habitat-preset-grid">
+            <button type="button" data-habitat-preset="24" data-request="Make the moths braver">Make them braver</button>
+            <button type="button" data-habitat-preset="70" data-request="Make the moths more cautious">Make them cautious</button>
+          </div>
+        </InspectorSection>
+        <InspectorSection title="Prototype execution" open>
+          <dl class="habitat-control-facts">
+            <div><dt>Host</dt><dd>Browser canvas</dd></div>
+            <div><dt>Clock</dt><dd>requestAnimationFrame</dd></div>
+            <div><dt>Hara evaluation</dt><dd>Not connected</dd></div>
+            <div><dt>Session fence</dt><dd data-habitat-control-fence>gen 1 / rev 1</dd></div>
+          </dl>
+        </InspectorSection>
+        <InspectorSection title="Ask the agent" open>
+          <div class="habitat-agent-commands">
+            <button type="button" data-habitat-preset="30" data-request="Make the moths braver, but keep some avoidance">Make them braver</button>
+            <button type="button" data-habitat-preset="82" data-request="Increase the bat's influence across the garden">Increase bat influence</button>
+            <button type="button" data-habitat-explain>Explain the last turn</button>
+          </div>
+        </InspectorSection>
+      </div>
+
+      <div slot="overlay">
+        <ViewportOverlay placement="top-left">Visual prototype · canvas/clock</ViewportOverlay>
+        <ViewportOverlay placement="top-right"><span data-habitat-run-state>running</span> · 1.0×</ViewportOverlay>
+      </div>
+
+      <StatusBar slot="status" label="Habitat prototype status" live>
+        <span>Prototype host connected</span>
+        <span data-habitat-status-generation>Generation 1</span>
+        <span data-habitat-status-revision>Revision 1</span>
+        <span slot="secondary">Hara evaluator: not attached</span>
+      </StatusBar>
+    </EnvironmentWorkbench>
+  </div>
+
+  <div class="start-lab-notes start-habitat-notes">
+    <article><b>Visible consequence</b><p>The fear radius is not a decorative setting. It changes how early moths begin evading the bat.</p></article>
+    <article><b>Source + state + receipt</b><p>The same mutation is reflected in the illustrative source, live controls, generation fence, and human-readable effect.</p></article>
+    <article><b>Capability honesty</b><p>Canvas and clock are attached to this prototype. Hara evaluation, 3D, audio, network, and persistence remain explicitly absent.</p></article>
+  </div>
+</section>
+
+<script>
+  const habitatRoot = document.querySelector("[data-habitat-demo]");
+
+  if (habitatRoot instanceof HTMLElement) {
+    const canvas = habitatRoot.querySelector("[data-habitat-canvas]");
+    const context = canvas instanceof HTMLCanvasElement ? canvas.getContext("2d") : null;
+    const source = habitatRoot.querySelector("[data-habitat-source]");
+    const numberInput = habitatRoot.querySelector("[data-habitat-fear-number]");
+    const rangeInput = habitatRoot.querySelector("[data-habitat-fear-range]");
+    const fearOutput = habitatRoot.querySelector("[data-habitat-fear-output]");
+    const runState = habitatRoot.querySelector("[data-habitat-run-state]");
+    const agentState = habitatRoot.querySelector("[data-habitat-agent-state]");
+    const receiptState = habitatRoot.querySelector("[data-habitat-receipt-state]");
+    const receiptRequest = habitatRoot.querySelector("[data-habitat-receipt-request]");
+    const receiptPatch = habitatRoot.querySelector("[data-habitat-receipt-patch]");
+    const receiptEffect = habitatRoot.querySelector("[data-habitat-receipt-effect]");
+    const receiptFence = habitatRoot.querySelector("[data-habitat-receipt-fence]");
+    const controlFence = habitatRoot.querySelector("[data-habitat-control-fence]");
+    const statusGeneration = habitatRoot.querySelector("[data-habitat-status-generation]");
+    const statusRevision = habitatRoot.querySelector("[data-habitat-status-revision]");
+    const generationEntry = habitatRoot.querySelector("#habitat-frontmatter-generation dd");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const world = {
+      fearRadius: 42,
+      generation: 1,
+      revision: 1,
+      running: !prefersReducedMotion,
+      elapsed: 0,
+      width: 0,
+      height: 0,
+      moths: [],
+      bat: { x: 0, y: 0 }
+    };
+
+    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+    const setText = (node, value) => {
+      if (node) node.textContent = value;
+    };
+
+    const syncSource = () => {
+      if (!(source instanceof HTMLTextAreaElement)) return;
+      source.value = source.value.replace(/:fear-radius\s+\d+/, `:fear-radius ${world.fearRadius}`);
+    };
+
+    const syncFence = () => {
+      setText(receiptFence, `generation ${world.generation} · revision ${world.revision}`);
+      setText(controlFence, `gen ${world.generation} / rev ${world.revision}`);
+      setText(statusGeneration, `Generation ${world.generation}`);
+      setText(statusRevision, `Revision ${world.revision}`);
+      if (generationEntry) generationEntry.textContent = `${world.generation}`;
+    };
+
+    const syncFear = () => {
+      if (numberInput instanceof HTMLInputElement) numberInput.value = `${world.fearRadius}`;
+      if (rangeInput instanceof HTMLInputElement) rangeInput.value = `${world.fearRadius}`;
+      setText(fearOutput, `${world.fearRadius}`);
+      syncSource();
+      syncFence();
+    };
+
+    const describeEffect = (value) => value < 35
+      ? "Moths hold their course longer before evading the bat."
+      : value > 65
+        ? "Moths begin evasive movement farther from the bat."
+        : `Moths avoid the bat inside a ${value} px radius.`;
+
+    const setFearRadius = (value, request = "Change the fear radius", increment = true) => {
+      const next = clamp(Math.round(Number(value) || 42), 12, 96);
+      if (next === world.fearRadius && increment) {
+        setText(receiptState, "No change");
+        setText(agentState, "The requested value already matches the live state");
+        return;
+      }
+      world.fearRadius = next;
+      if (increment) world.revision += 1;
+      syncFear();
+      setText(receiptState, "Applied");
+      setText(receiptRequest, request);
+      setText(receiptPatch, `[:rules :fear-radius] ${next}`);
+      setText(receiptEffect, describeEffect(next));
+      setText(agentState, `Applied revision ${world.revision}`);
+    };
+
+    const setRunning = (running) => {
+      world.running = running;
+      setText(runState, running ? "running" : "paused");
+      setText(agentState, running ? "Session running" : "Session paused");
+    };
+
+    for (const control of [numberInput, rangeInput]) {
+      control?.addEventListener("change", () => {
+        if (control instanceof HTMLInputElement) setFearRadius(control.value, "Directly edit the fear radius");
+      });
+    }
+
+    habitatRoot.querySelectorAll("[data-habitat-preset]").forEach((button) => {
+      button.addEventListener("click", () => {
+        if (!(button instanceof HTMLElement)) return;
+        setFearRadius(button.dataset.habitatPreset, button.dataset.request || "Ask the agent to change the rule");
+      });
+    });
+
+    habitatRoot.querySelector("[data-habitat-apply-source]")?.addEventListener("click", () => {
+      if (!(source instanceof HTMLTextAreaElement)) return;
+      const match = source.value.match(/:fear-radius\s+(\d+)/);
+      setFearRadius(match?.[1] ?? world.fearRadius, "Apply the edited Hara source");
+    });
+
+    habitatRoot.querySelector("[data-habitat-run]")?.addEventListener("click", () => setRunning(true));
+    habitatRoot.querySelector("[data-habitat-pause]")?.addEventListener("click", () => setRunning(false));
+    habitatRoot.querySelector("[data-habitat-reset]")?.addEventListener("click", () => {
+      world.generation += 1;
+      world.revision = 1;
+      world.fearRadius = 42;
+      seedMoths();
+      syncFear();
+      setText(receiptState, "New generation");
+      setText(receiptRequest, "Reset the habitat to its initial recipe");
+      setText(receiptPatch, "[:rules :fear-radius] 42");
+      setText(receiptEffect, "A new generation started from the default habitat recipe.");
+      setRunning(true);
+    });
+
+    habitatRoot.querySelector("[data-habitat-explain]")?.addEventListener("click", () => {
+      setText(receiptState, "Explained");
+      setText(receiptRequest, "Explain the last visible turn");
+      setText(receiptEffect, describeEffect(world.fearRadius));
+      habitatRoot.querySelector("[data-habitat-receipt]")?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest" });
+    });
+
+    habitatRoot.querySelectorAll("[data-jump]").forEach((button) => {
+      button.addEventListener("click", () => document.getElementById(button.getAttribute("data-jump") || "")?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" }));
+    });
+
+    const seedMoths = () => {
+      const width = Math.max(world.width, 640);
+      const height = Math.max(world.height, 420);
+      world.moths = Array.from({ length: 18 }, (_, index) => {
+        const angle = index * 2.399963229728653;
+        const radius = 70 + (index % 6) * 23;
+        return {
+          x: width * 0.52 + Math.cos(angle) * radius,
+          y: height * 0.44 + Math.sin(angle) * radius * 0.68,
+          vx: Math.cos(angle + 1.3) * 18,
+          vy: Math.sin(angle + 1.3) * 18,
+          phase: index * 0.71,
+          size: 2.6 + (index % 4) * 0.45
+        };
+      });
+    };
+
+    const resizeCanvas = () => {
+      if (!(canvas instanceof HTMLCanvasElement) || !context) return;
+      const rect = canvas.getBoundingClientRect();
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+      canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      const changed = world.width !== rect.width || world.height !== rect.height;
+      world.width = rect.width;
+      world.height = rect.height;
+      if (changed || world.moths.length === 0) seedMoths();
+    };
+
+    const updateWorld = (delta) => {
+      const width = world.width;
+      const height = world.height;
+      if (!width || !height) return;
+      world.elapsed += delta;
+      const light = { x: width * 0.52, y: height * 0.44 };
+      world.bat.x = width * 0.52 + Math.cos(world.elapsed * 0.47) * width * 0.28;
+      world.bat.y = height * 0.42 + Math.sin(world.elapsed * 0.73) * height * 0.22;
+
+      world.moths.forEach((moth, index) => {
+        let ax = (light.x - moth.x) * 0.052;
+        let ay = (light.y - moth.y) * 0.052;
+        const batDx = moth.x - world.bat.x;
+        const batDy = moth.y - world.bat.y;
+        const batDistance = Math.hypot(batDx, batDy) || 1;
+        if (batDistance < world.fearRadius) {
+          const force = (world.fearRadius - batDistance) * 2.9;
+          ax += (batDx / batDistance) * force;
+          ay += (batDy / batDistance) * force;
+        }
+        for (let otherIndex = 0; otherIndex < world.moths.length; otherIndex += 1) {
+          if (otherIndex === index) continue;
+          const other = world.moths[otherIndex];
+          const dx = moth.x - other.x;
+          const dy = moth.y - other.y;
+          const distance = Math.hypot(dx, dy) || 1;
+          if (distance < 18) {
+            ax += (dx / distance) * (18 - distance) * 0.45;
+            ay += (dy / distance) * (18 - distance) * 0.45;
+          }
+        }
+        ax += Math.cos(world.elapsed * 2.2 + moth.phase) * 5.2;
+        ay += Math.sin(world.elapsed * 2.8 + moth.phase) * 5.2;
+        moth.vx = (moth.vx + ax * delta) * 0.986;
+        moth.vy = (moth.vy + ay * delta) * 0.986;
+        const speed = Math.hypot(moth.vx, moth.vy) || 1;
+        if (speed > 72) {
+          moth.vx = (moth.vx / speed) * 72;
+          moth.vy = (moth.vy / speed) * 72;
+        }
+        moth.x = clamp(moth.x + moth.vx * delta, 12, width - 12);
+        moth.y = clamp(moth.y + moth.vy * delta, 12, height - 12);
+      });
+    };
+
+    const drawWorld = () => {
+      if (!(canvas instanceof HTMLCanvasElement) || !context) return;
+      const width = world.width;
+      const height = world.height;
+      context.clearRect(0, 0, width, height);
+      const computed = getComputedStyle(habitatRoot);
+      const ink = computed.getPropertyValue("--hara-tool-ink").trim() || "#e7edf2";
+      const muted = computed.getPropertyValue("--hara-tool-muted").trim() || "#8b98a5";
+      const signal = computed.getPropertyValue("--hara-tool-signal").trim() || "#f1a43c";
+      const lightX = width * 0.52;
+      const lightY = height * 0.44;
+      const glow = context.createRadialGradient(lightX, lightY, 0, lightX, lightY, Math.min(width, height) * 0.31);
+      glow.addColorStop(0, "rgba(255,213,127,.26)");
+      glow.addColorStop(.25, "rgba(245,177,68,.11)");
+      glow.addColorStop(1, "rgba(245,177,68,0)");
+      context.fillStyle = glow;
+      context.fillRect(0, 0, width, height);
+
+      context.save();
+      context.strokeStyle = signal;
+      context.globalAlpha = .2;
+      context.setLineDash([5, 8]);
+      context.beginPath();
+      context.arc(world.bat.x, world.bat.y, world.fearRadius, 0, Math.PI * 2);
+      context.stroke();
+      context.restore();
+
+      context.save();
+      context.translate(lightX, lightY);
+      context.fillStyle = signal;
+      context.globalAlpha = .9;
+      context.beginPath();
+      context.arc(0, 0, 4.5, 0, Math.PI * 2);
+      context.fill();
+      context.restore();
+
+      context.save();
+      context.translate(world.bat.x, world.bat.y);
+      context.rotate(Math.atan2(Math.cos(world.elapsed * .73), -Math.sin(world.elapsed * .47)));
+      context.fillStyle = ink;
+      context.globalAlpha = .82;
+      context.beginPath();
+      context.moveTo(0, -5);
+      context.quadraticCurveTo(-10, -13, -18, -3);
+      context.quadraticCurveTo(-9, -5, -4, 5);
+      context.lineTo(0, 9);
+      context.lineTo(4, 5);
+      context.quadraticCurveTo(9, -5, 18, -3);
+      context.quadraticCurveTo(10, -13, 0, -5);
+      context.fill();
+      context.restore();
+
+      world.moths.forEach((moth) => {
+        const angle = Math.atan2(moth.vy, moth.vx);
+        const flap = Math.sin(world.elapsed * 9 + moth.phase) * .8;
+        context.save();
+        context.translate(moth.x, moth.y);
+        context.rotate(angle);
+        context.fillStyle = signal;
+        context.globalAlpha = .76;
+        context.beginPath();
+        context.ellipse(-moth.size, flap, moth.size * 1.25, moth.size * .62, -.45, 0, Math.PI * 2);
+        context.ellipse(moth.size, -flap, moth.size * 1.25, moth.size * .62, .45, 0, Math.PI * 2);
+        context.fill();
+        context.globalAlpha = .95;
+        context.fillStyle = muted;
+        context.fillRect(-.8, -2.4, 1.6, 4.8);
+        context.restore();
+      });
+    };
+
+    let previousTime = performance.now();
+    const frame = (time) => {
+      const delta = Math.min((time - previousTime) / 1000, .04);
+      previousTime = time;
+      if (world.running) updateWorld(delta);
+      drawWorld();
+      requestAnimationFrame(frame);
+    };
+
+    if ("ResizeObserver" in window && canvas instanceof HTMLCanvasElement) new ResizeObserver(resizeCanvas).observe(canvas);
+    else window.addEventListener("resize", resizeCanvas);
+
+    resizeCanvas();
+    syncFear();
+    setRunning(world.running);
+    requestAnimationFrame(frame);
+  }
+</script>
