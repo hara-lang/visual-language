@@ -43,6 +43,15 @@ export const catalogueGroups = [
         eyebrow: "Shared language"
       },
       {
+        id: "graphics",
+        label: "Graphics",
+        path: "/v2/graphics/",
+        href: "/v2/graphics/",
+        summary: "Cinematic material atmospheres, adaptive fields, repeatable textures, and progressive WebGL shader surfaces.",
+        status: "active",
+        eyebrow: "Imagery and shaders"
+      },
+      {
         id: "frontmatter",
         label: "Front matter",
         path: "/v2/frontmatter/",
