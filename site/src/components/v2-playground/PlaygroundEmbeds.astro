@@ -1,0 +1,149 @@
+---
+import EnvironmentWorkbench from "../../../../src/astro/v2/tool/EnvironmentWorkbench.astro";
+import ResourceList from "../../../../src/astro/v2/tool/ResourceList.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import Toolbar from "../../../../src/astro/v2/tool/Toolbar.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolGroup from "../../../../src/astro/v2/tool/ToolGroup.astro";
+
+interface Props {
+  source: string;
+  playgroundUrl: string;
+}
+
+const { source, playgroundUrl } = Astro.props;
+const embedSessions = [
+  { id: "embed-session", label: "Inline example", detail: "session:embed-2b10 · generation 2", meta: "seq 37", status: "ready", marker: "●", current: true },
+  { id: "embed-replacement", label: "Replacement pending", detail: "new source revision requested", meta: "fenced", status: "pending", marker: "◌" }
+];
+const embedFiles = [
+  { id: "embed-main", label: "example.hara", detail: "editable embed source", meta: "1.2 KB", status: "clean", marker: "H", current: true },
+  { id: "embed-readme", label: "context.md", detail: "documentation-owned context", meta: "read only", status: "controlled", marker: "M", disabled: true }
+];
+---
+<section class="playground-embed-studies" aria-labelledby="playground-embed-title">
+  <header class="playground-section-heading">
+    <div>
+      <p class="hara-v2-kicker">Documentation and product embeds</p>
+      <h2 id="playground-embed-title">The same live-example contract at two useful scales.</h2>
+    </div>
+    <p>Inline examples keep the document primary. Expanded embeds can reveal files and sessions, but Canvas and 3D remain absent unless the exact example advertises them.</p>
+  </header>
+
+  <div class="playground-embed-grid">
+    <article class="playground-inline-embed" data-inline-embed data-runtime-state="idle">
+      <header>
+        <div>
+          <span class="playground-contract-chip">docs.live-example</span>
+          <strong>Transform one value</strong>
+          <small>documentation-sized · editable</small>
+        </div>
+        <a href={playgroundUrl}>Open in Playground ↗</a>
+      </header>
+      <pre aria-label="Embedded Hara source"><code>{source.split("\n").slice(0, 8).join("\n")}</code></pre>
+      <div class="playground-inline-actions">
+        <button type="button" data-embed-run>Run</button>
+        <button type="button" data-embed-cancel disabled>Cancel</button>
+        <button type="button" data-embed-restart>Restart</button>
+        <button type="button" data-copy-value={source}>Copy source</button>
+        <button type="button" data-copy-value={playgroundUrl}>Share exact view</button>
+      </div>
+      <div class="playground-inline-result" role="status" aria-live="polite">
+        <span data-embed-state><i></i>Idle</span>
+        <pre data-embed-result>{`{:status :idle
+ :result nil}`}</pre>
+      </div>
+      <footer>
+        <code>session:embed-inline</code>
+        <code>generation:1</code>
+        <code>source:9f3c2ab7</code>
+        <code>backend:interpreter</code>
+      </footer>
+    </article>
+
+    <article class="playground-embed-capability-state">
+      <span>Capabilities unavailable</span>
+      <h3>Run remains useful without a fabricated control pane.</h3>
+      <p>This documentation example advertises evaluation, cancellation, and structured values. It does not advertise Canvas, 3D, filesystem mutation, or package publication.</p>
+      <dl>
+        <div><dt>eval.form</dt><dd data-state="ready">available</dd></div>
+        <div><dt>session.cancel</dt><dd data-state="ready">available</dd></div>
+        <div><dt>canvas.controls</dt><dd data-state="off">unavailable</dd></div>
+        <div><dt>three-d.scene</dt><dd data-state="off">unavailable</dd></div>
+      </dl>
+    </article>
+  </div>
+
+  <article class="playground-expanded-embed" data-expanded-embed>
+    <header>
+      <div>
+        <span class="playground-contract-chip">Expanded embed</span>
+        <h3>Editable project example with optional live controls.</h3>
+      </div>
+      <div>
+        <a href={playgroundUrl}>Open in Playground</a>
+        <button type="button" data-copy-value={playgroundUrl}>Copy link</button>
+      </div>
+    </header>
+
+    <EnvironmentWorkbench
+      label="Expanded documentation embed"
+      activeSection="code"
+      activeControlGroup="sessions"
+      idPrefix="playground-expanded-embed"
+      minHeight="520px"
+      controlPaneCollapsed={true}
+      sectionLabels={{ code: "Example source" }}
+      capabilityBadges={{ sessions: 2, files: 2 }}
+      class="playground-embed-workbench"
+    >
+      <div slot="commands">
+        <Toolbar label="Embedded example controls" density="dense">
+          <ToolGroup label="Execution">
+            <ToolButton label="Run" command="Meta+Enter" class="playground-embed-workbench-run">
+              <span slot="icon" aria-hidden="true">▶</span>
+            </ToolButton>
+            <ToolButton label="Cancel" command="Escape" class="playground-embed-workbench-cancel" disabled>
+              <span slot="icon" aria-hidden="true">■</span>
+            </ToolButton>
+            <ToolButton label="Restart" class="playground-embed-workbench-restart">
+              <span slot="icon" aria-hidden="true">↻</span>
+            </ToolButton>
+          </ToolGroup>
+          <ToolGroup label="Embed display">
+            <ToolButton label="Toggle live controls" class="playground-embed-pane-toggle">
+              <span slot="icon" aria-hidden="true">▥</span>
+            </ToolButton>
+          </ToolGroup>
+        </Toolbar>
+      </div>
+
+      <section slot="code" class="playground-expanded-code">
+        <div>
+          <header><strong>example.hara</strong><span>editable · source revision 9f3c2ab7</span></header>
+          <textarea aria-label="Expanded embedded Hara source" spellcheck="false">{source}</textarea>
+        </div>
+        <aside aria-label="Embedded output">
+          <header><strong>Result</strong><span data-expanded-embed-state>ready</span></header>
+          <pre>{`{:status :ready
+ :value {:ribbons 12}
+ :receipt "runtime:embed-0037"}`}</pre>
+          <p>The document owns surrounding explanation. Playground owns editor composition. Runtime owns lifecycle facts and receipts.</p>
+        </aside>
+      </section>
+
+      <div slot="sessions" class="playground-control-group">
+        <ResourceList items={embedSessions} label="Embedded sessions" density="dense" />
+      </div>
+      <div slot="files" class="playground-control-group">
+        <ResourceList items={embedFiles} label="Embedded files" density="dense" />
+      </div>
+      <StatusBar slot="status" label="Expanded embed status" live>
+        <span data-state="ready"><i></i><b>Ready</b></span>
+        <span>session <code>embed-2b10</code></span>
+        <span>generation <code>2</code></span>
+        <span slot="secondary">source <code>9f3c2ab7</code> · sequence <code>37</code></span>
+      </StatusBar>
+    </EnvironmentWorkbench>
+  </article>
+</section>

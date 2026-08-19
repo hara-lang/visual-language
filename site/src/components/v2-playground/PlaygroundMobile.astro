@@ -1,0 +1,80 @@
+---
+interface Props {
+  source: string;
+}
+
+const { source } = Astro.props;
+const mobileSource = source.split("\n").slice(0, 9).join("\n");
+---
+<section class="playground-mobile-study" aria-labelledby="playground-mobile-title">
+  <header class="playground-section-heading">
+    <div>
+      <p class="hara-v2-kicker">Mobile and touch</p>
+      <h2 id="playground-mobile-title">Run first. Edit only when requested.</h2>
+    </div>
+    <p>The initial Run action keeps the software keyboard closed. Text input focus is granted only by the explicit Edit control.</p>
+  </header>
+
+  <div class="playground-mobile-layout">
+    <article class="playground-phone" data-mobile-playground data-mobile-state="ready">
+      <header class="playground-phone-header">
+        <a href="#arrival" aria-label="Back to samples">‹</a>
+        <div><strong>Ribbon field</strong><small>interpreter · ready</small></div>
+        <button type="button" aria-label="More session options">•••</button>
+      </header>
+      <div class="playground-phone-meta">
+        <span>main.hara</span><code>rev 9f3c2ab7</code><code>gen 4</code>
+      </div>
+      <div class="playground-phone-editor" data-mobile-editor-shell>
+        <textarea data-mobile-editor aria-label="Mobile Hara source" readonly spellcheck="false">{mobileSource}</textarea>
+        <span data-mobile-readonly>Read-only until Edit</span>
+      </div>
+      <div class="playground-phone-transport" role="toolbar" aria-label="Mobile execution controls">
+        <button type="button" data-mobile-run><span aria-hidden="true">▶</span> Run</button>
+        <button type="button" data-mobile-cancel disabled><span aria-hidden="true">■</span> Cancel</button>
+        <button type="button" data-mobile-edit><span aria-hidden="true">✎</span> Edit</button>
+      </div>
+      <section class="playground-phone-result" aria-label="Mobile result and diagnostics">
+        <header><strong>Result</strong><span data-mobile-runtime-state>Ready</span></header>
+        <pre data-mobile-result>{`{:ribbons 12
+ :frames 2814
+ :status :ready}`}</pre>
+        <details>
+          <summary>1 diagnostic · inspect without page overflow</summary>
+          <p><code>main.hara:18:7</code> Trail width was clamped to the supported preview range.</p>
+        </details>
+      </section>
+      <footer>
+        <span><i></i> session pg-7a91</span>
+        <span>seq <b data-mobile-sequence>148</b></span>
+      </footer>
+    </article>
+
+    <div class="playground-mobile-contracts">
+      <article>
+        <span>Initial action</span>
+        <h3>Run does not focus the editor.</h3>
+        <p>Execution updates the result and status region while preserving the current viewport and closed keyboard.</p>
+      </article>
+      <article>
+        <span>Explicit input</span>
+        <h3>Edit unlocks and focuses source.</h3>
+        <p>The focus transition is intentional, user-triggered, and reversible by leaving edit mode.</p>
+      </article>
+      <article>
+        <span>Collapse order</span>
+        <ol>
+          <li>Optional Canvas and 3D controls disappear first.</li>
+          <li>Files and Sessions move into a bottom sheet.</li>
+          <li>Result follows the editor in document order.</li>
+          <li>Diagnostics remain scrollable inside their own region.</li>
+        </ol>
+      </article>
+      <article>
+        <span>Touch contract</span>
+        <h3>Transport remains one-thumb operable.</h3>
+        <p>Run, Cancel, Edit, and disclosure controls retain at least 44px touch height without forcing horizontal page overflow.</p>
+      </article>
+    </div>
+  </div>
+</section>

@@ -135,8 +135,9 @@ export const catalogueGroups = [
         id: "playground",
         label: "Playground",
         path: "/v2/playground/",
+        href: "/v2/playground/",
         summary: "Samples, studio editor, live sessions, optional control panes, embeds, sharing, and mobile execution.",
-        status: "planned",
+        status: "active",
         issue: 39,
         eyebrow: "Executable workspace"
       },
