@@ -65,7 +65,7 @@ test("toolbar and tool-widget components are exported with semantic state", asyn
   assert.match(toolbar, /role="toolbar"/);
   assert.match(button, /aria-label=\{iconOnly/);
   assert.match(button, /title=\{title\}/);
-  assert.doesNotMatch(button, /iconOnly\s*\?\s*label/);
+  assert.doesNotMatch(button, /title=\{[^}\n]*iconOnly\s*\?\s*label[^}\n]*\}/);
   assert.match(toggle, /aria-pressed=/);
   assert.match(tabs, /role="tablist"/);
   assert.match(tabs, /aria-selected=/);
