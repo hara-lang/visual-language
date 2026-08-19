@@ -22,6 +22,7 @@ const { label = "Theme" } = Astro.props;
 </button>
 <script>
   import { getThemePreference, resolvedTheme, toggleTheme } from "../theme.js";
+  import { initialiseCatalogueBridges } from "../v2/catalogue-bridge.js";
 
   const syncThemeToggle = (button) => {
     if (!(button instanceof HTMLButtonElement)) return;
@@ -46,6 +47,7 @@ const { label = "Theme" } = Astro.props;
       button.addEventListener("click", () => toggleTheme());
       syncThemeToggle(button);
     });
+    initialiseCatalogueBridges();
   };
 
   initialiseThemeToggles();
