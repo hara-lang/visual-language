@@ -55,7 +55,7 @@ strong material effects are reserved for rare identity moments.
 | Entry point | Use it for | Contract |
 | --- | --- | --- |
 | `v2.css` | WWW, Docs, Specs, Benchmarks, World, data products, and content-heavy application shells | [`V2-THEME.md`](./V2-THEME.md) |
-| `v2-tool.css` | Toolbars, docks, inspectors, palettes, viewports, timelines, consoles, and editor workbenches | [`V2-TOOL.md`](./V2-TOOL.md) |
+| `v2-tool.css` | Toolbars, docks, inspectors, palettes, viewports, timelines, consoles, editor workbenches, and compact browser-runtime chrome | [`V2-TOOL.md`](./V2-TOOL.md), [`V2-RUNTIME.md`](./V2-RUNTIME.md) |
 
 `v2-tool.css` imports `v2.css`, so a workbench consumer imports only the tool
 entry point and places both `hara-v2` and `hara-v2-tool` on its interface root.
@@ -87,7 +87,7 @@ unchanged, so sites can migrate layout family by layout family. See
 [`V2-THEME.md`](./V2-THEME.md) for identity invariants, surface rhythm, site
 anatomy, responsive behaviour, and adoption order.
 
-### Tool, editor, and live-environment workbenches
+### Tool, editor, live-environment, and browser-runtime workbenches
 
 **[Open the environment, 3D, node, and animation workbench laboratory](https://hara-lang.github.io/visual-language/v2/tool/)**
 
@@ -117,20 +117,27 @@ import "@hara-lang/visual-language/v2-tool.css";
 </div>
 ```
 
-The package exports twenty-one stateless Astro primitives and composites:
+The package exports twenty-six stateless Astro primitives and composites:
 
 - controls: `Toolbar`, `ToolGroup`, `ToolButton`, `ToolToggle`, `ToolSelect`,
   `ToolNumberField`, `TabStrip`, `IconRail`, and `StatusBar`;
 - structure: `WorkbenchShell`, `DockPanel`, `FloatingPalette`,
   `ViewportOverlay`, `InspectorSection`, and `PanelHeader`;
 - environment: `SectionNavigator`, `EnvironmentSection`, `FrontmatterGrid`,
-  `ResourceList`, `CapabilityPane`, and `EnvironmentWorkbench`.
+  `ResourceList`, `CapabilityPane`, and `EnvironmentWorkbench`;
+- browser runtime: `StatusLamp`, `RuntimeSwitch`, `ConnectionRow`,
+  `CompactRuntimeShell`, and `RuntimeAppShell`.
 
 The environment layer supplies the standard **Nav / Frontmatter / Graphics /
 Code** content series and capability-aware **Sessions / Files / Canvas / 3D**
 control pane. Only slots supplied by the host are rendered. See
 [`V2-ENVIRONMENT.md`](./V2-ENVIRONMENT.md) for the complete composition, slot,
 state, responsive, and adoption contract.
+
+The browser-runtime layer separates requested switch state from actual runtime
+state and adds compact popup and application-shell geometry for extension
+toolbars, REPL hosts, diagnostics, and site-specific browser tools. It contains
+no browser APIs or product behaviour. See [`V2-RUNTIME.md`](./V2-RUNTIME.md).
 
 All v2 tool components provide geometry, theme, semantic roles, and initial
 state markers. Applications still own event handling, focus movement,

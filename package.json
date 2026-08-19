@@ -18,6 +18,7 @@
     "V2-THEME.md",
     "V2-TOOL.md",
     "V2-ENVIRONMENT.md",
+    "V2-RUNTIME.md",
     "LICENSE"
   ],
   "exports": {
@@ -60,6 +61,11 @@
     "./astro/v2/tool/ResourceList.astro": "./src/astro/v2/tool/ResourceList.astro",
     "./astro/v2/tool/CapabilityPane.astro": "./src/astro/v2/tool/CapabilityPane.astro",
     "./astro/v2/tool/EnvironmentWorkbench.astro": "./src/astro/v2/tool/EnvironmentWorkbench.astro",
+    "./astro/v2/tool/StatusLamp.astro": "./src/astro/v2/tool/StatusLamp.astro",
+    "./astro/v2/tool/RuntimeSwitch.astro": "./src/astro/v2/tool/RuntimeSwitch.astro",
+    "./astro/v2/tool/ConnectionRow.astro": "./src/astro/v2/tool/ConnectionRow.astro",
+    "./astro/v2/tool/CompactRuntimeShell.astro": "./src/astro/v2/tool/CompactRuntimeShell.astro",
+    "./astro/v2/tool/RuntimeAppShell.astro": "./src/astro/v2/tool/RuntimeAppShell.astro",
     "./assets/*": "./assets/*"
   },
   "scripts": {
