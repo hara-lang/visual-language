@@ -1,0 +1,575 @@
+---
+import ThemeToggle from "../../../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../../../src/astro/HaraMark.astro";
+import Shell from "../../../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../../../src/astro/v2/ContextNav.astro";
+import Sidebar from "../../../../../../src/astro/v2/Sidebar.astro";
+import feedItems from "../../../../data/world-feed-sample.json";
+import policy from "../../../../data/world-feed-policy.json";
+import { groupConversations, rankFeedItems, relayDecision } from "../../../../lib/world-feed-ranking.mjs";
+import "../../../../../../src/v2.css";
+import "../../../../../../src/theme.js";
+import "../../../../styles/v2-lab.css";
+import "../../../../styles/v2-calm-lab.css";
+import "../../../../styles/v2-world-feed.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/world/feed/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const documentLab = `${basePath}v2/`;
+const worldLab = `${basePath}v2/world/`;
+const onboardingLab = `${basePath}v2/world/onboarding/`;
+
+const rankedItems = rankFeedItems(feedItems, policy.ranking);
+const conversations = groupConversations(feedItems, policy.ranking);
+const leadConversation = conversations.find((conversation) => conversation.id === "schema-values") ?? conversations[0];
+const relayQueue = rankedItems.slice(0, 5).map((item) => ({
+  ...item,
+  relay: relayDecision(item, policy.relay)
+}));
+
+const ecosystemNav = [
+  { href: documentLab, label: "Home" },
+  { href: worldLab, label: "World", current: true },
+  { href: "#sources", label: "Sources" },
+  { href: "#relay", label: "Hara Bot" },
+  { href: onboardingLab, label: "Onboarding" }
+];
+
+const worldNav = (current) => [
+  { href: "#feed", label: "Feed", current: current === "feed" },
+  { href: "#conversations", label: "Conversations", current: current === "conversations" },
+  { href: "#sources", label: "Sources", current: current === "sources" },
+  { href: "#relay", label: "Relay", current: current === "relay" }
+];
+
+const feedSidebar = [
+  { label: "Discover", items: [
+    { href: "#feed", label: "What's hot", current: true, badge: rankedItems.length },
+    { href: "#feed", label: "New" },
+    { href: "#feed", label: "Rising" },
+    { href: "#conversations", label: "Conversations", badge: conversations.length }
+  ] },
+  { label: "From", items: [
+    { href: "#feed", label: "Hara World" },
+    { href: "#feed", label: "GitHub" },
+    { href: "#feed", label: "Reddit" },
+    { href: "#feed", label: "X / Twitter" },
+    { href: "#feed", label: "Hacker News" },
+    { href: "#feed", label: "Substack + RSS" }
+  ] }
+];
+
+const conversationSidebar = [
+  { label: "Conversations", items: [
+    { href: "#conversations", label: "All clusters", current: true, badge: conversations.length },
+    { href: "#conversations", label: "Deep discussion" },
+    { href: "#conversations", label: "Project launches" },
+    { href: "#conversations", label: "Questions" }
+  ] },
+  { label: "View", items: [
+    { href: "#conversations", label: "By relevance" },
+    { href: "#conversations", label: "By first post" },
+    { href: "#conversations", label: "By latest reply" }
+  ] }
+];
+
+const sourceSidebar = [
+  { label: "Source registry", items: [
+    { href: "#sources", label: "All sources", current: true, badge: policy.ingestion.sources.length },
+    { href: "#sources", label: "First-party" },
+    { href: "#sources", label: "Community" },
+    { href: "#sources", label: "Needs attention", badge: 1 }
+  ] },
+  { label: "Manage", items: [
+    { href: "#sources", label: "Submitted feeds" },
+    { href: "#sources", label: "Search terms" },
+    { href: "#sources", label: "Blocked domains" },
+    { href: "#sources", label: "Import OPML" }
+  ] }
+];
+
+const relaySidebar = [
+  { label: "Hara Bot relay", items: [
+    { href: "#relay", label: "Review queue", current: true, badge: relayQueue.filter((item) => item.relay.state === "review").length },
+    { href: "#relay", label: "Auto-eligible", badge: relayQueue.filter((item) => item.relay.state === "auto-eligible").length },
+    { href: "#relay", label: "Scheduled" },
+    { href: "#relay", label: "Receipts" }
+  ] },
+  { label: "Destinations", items: policy.relay.destinations.map((destination) => ({
+    href: "#relay",
+    label: destination.label.replace("Hara Bot on ", "").replace("Hara-owned ", "")
+  })) }
+];
+
+const sourceMark = {
+  world: "H",
+  github: "GH",
+  reddit: "R",
+  x: "X",
+  "hacker-news": "HN",
+  substack: "S",
+  rss: "RSS"
+};
+
+const topicCounts = rankedItems
+  .flatMap((item) => item.topics)
+  .reduce((counts, topic) => ({ ...counts, [topic]: (counts[topic] ?? 0) + 1 }), {});
+const movingTopics = Object.entries(topicCounts)
+  .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
+  .slice(0, 6);
+
+const sourceHealth = {
+  world: "live",
+  github: "live",
+  reddit: "live",
+  x: "delayed",
+  "hacker-news": "live",
+  substack: "live",
+  rss: "live"
+};
+
+const scorePercent = (score) => `${Math.round(score * 100)}%`;
+const scoreLabel = (score) => Math.round(score * 100);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="A Hara World v2 feed explorer for finding, clustering, ranking, and safely relaying Hara conversations from World, GitHub, Reddit, X, Hacker News, Substack, and open feeds." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara World feed explorer" />
+    <meta property="og:description" content="Cross-source discovery, conversation clustering, source controls, and a receipt-backed Hara Bot relay." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara World feed explorer" />
+    <meta name="twitter:description" content="Find the Hara conversation across World, GitHub, Reddit, X, Hacker News, Substack, and RSS." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara World feed explorer</title>
+  </head>
+  <body class="hara-v2">
+    <header class="v2-lab-header">
+      <a class="v2-lab-brand" href={documentLab}>
+        <HaraMark size={28} />
+        <b>Hara visual language</b>
+        <small>World feed field test</small>
+      </a>
+      <nav aria-label="World feed prototype screens">
+        <a href="#feed">Feed</a>
+        <a href="#conversations">Conversations</a>
+        <a href="#sources">Sources</a>
+        <a href="#relay">Relay</a>
+      </nav>
+      <ThemeToggle />
+    </header>
+
+    <main class="v2-lab-main world-feed-lab-main">
+      <section class="world-feed-hero">
+        <div class="world-feed-hero-copy">
+          <p class="hara-v2-kicker">World discovery study · Cross-source feed</p>
+          <h1>See what the Hara world is talking about.</h1>
+          <p>World becomes the front door to the programming language: one calm reading surface for Hara posts, repositories, discussions, essays, releases, and runnable snippets—without pretending the original sources belong to World.</p>
+          <div class="world-feed-hero-actions">
+            <a class="hara-v2-button" data-variant="primary" href="#feed">Open what’s hot</a>
+            <a class="hara-v2-button" href="#sources">Explore sources</a>
+            <a class="hara-v2-button" href="#relay">Inspect Hara Bot</a>
+            <a class="world-feed-back-link" href={worldLab}>← Existing World study</a>
+          </div>
+        </div>
+
+        <div class="world-feed-radar" aria-label="Hara World source map">
+          <div class="world-feed-radar-core"><div><strong>World</strong><small>rank · cluster · attribute</small></div></div>
+          <span class="world-feed-radar-source" data-source="github"><i></i>GitHub</span>
+          <span class="world-feed-radar-source" data-source="reddit"><i></i>Reddit</span>
+          <span class="world-feed-radar-source" data-source="x"><i></i>X / Twitter</span>
+          <span class="world-feed-radar-source" data-source="hacker-news"><i></i>Hacker News</span>
+          <span class="world-feed-radar-source" data-source="substack"><i></i>Substack</span>
+          <span class="world-feed-radar-source" data-source="rss"><i></i>RSS / JSON Feed</span>
+          <div class="world-feed-radar-status"><span>7 source families</span><span>canonical links retained</span></div>
+        </div>
+      </section>
+
+      <nav class="world-feed-index" aria-label="World feed screen catalogue">
+        <a href="#feed"><strong>Feed explorer</strong><span>Hot, new, rising, source, and topic views with visible ranking reasons.</span><code>discover / rank / save</code></a>
+        <a href="#conversations"><strong>Conversation clusters</strong><span>Connect the release, tweet, Reddit thread, HN discussion, and essay without duplicating them.</span><code>cluster / compare / follow</code></a>
+        <a href="#sources"><strong>Source registry</strong><span>Queries, cadence, provenance, trust, submitted feeds, and open-feed import.</span><code>ingest / attribute / control</code></a>
+        <a href="#relay"><strong>Hara Bot relay</strong><span>A review-first publication queue with canonical attribution, cooldowns, and receipts.</span><code>review / relay / receipt</code></a>
+      </nav>
+
+      <section class="world-feed-screen" id="feed">
+        <header class="world-feed-screen-head">
+          <div><p class="hara-v2-kicker">Screen 01 · Incoming user home</p><h2>The language conversation, immediately.</h2></div>
+          <p>An incoming visitor should not have to understand the Hara organisation chart. They can scan what is interesting now, open the original source, and progressively discover repositories, people, topics, and runnable work.</p>
+        </header>
+
+        <div class="world-feed-canvas">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-feed-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Search">⌕</button>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("feed")}>
+              <a class="hara-v2-button" href="#sources">Submit a feed</a>
+              <a class="hara-v2-button" data-variant="primary" href="#feed">Get What’s New</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="World" groups={feedSidebar}>
+              <span>Every item keeps its source author, source platform, publication time, and canonical link.</span>
+            </Sidebar>
+
+            <div class="world-feed-heading">
+              <div><p class="hara-v2-kicker">What’s hot · Last 24 hours</p><h1>The Hara conversation.</h1></div>
+              <span class="hara-v2-badge" data-tone="success">{rankedItems.length} ranked items</span>
+            </div>
+
+            <div class="world-feed-mode-row" data-filter-group="feed-mode" aria-label="Feed ranking mode">
+              <button aria-pressed="true">Hot</button>
+              <button aria-pressed="false">New</button>
+              <button aria-pressed="false">Rising</button>
+              <button aria-pressed="false">Following</button>
+              <button aria-pressed="false">Repositories</button>
+              <button aria-pressed="false">Articles</button>
+              <button aria-pressed="false">Runnable</button>
+            </div>
+
+            <div class="world-feed-list" data-world-feed>
+              {rankedItems.slice(0, 7).map((item, index) => (
+                <article class="world-feed-item" data-source={item.source}>
+                  <div class="world-feed-rank"><span>#{index + 1}</span><strong>{sourceMark[item.source] ?? "•"}</strong></div>
+                  <div class="world-feed-item-main">
+                    <div class="world-feed-item-byline">
+                      <span class="world-source-chip">{item.sourceLabel}</span>
+                      <b>{item.author}</b>
+                      <span>{item.kind.replaceAll("-", " ")}</span>
+                      {item.owned && <span class="hara-v2-badge" data-tone="success">Hara-owned</span>}
+                    </div>
+                    <h2><a href={item.canonicalUrl}>{item.title}</a></h2>
+                    <p>{item.excerpt}</p>
+                    <div class="world-feed-item-meta">
+                      <span>{item.metrics.reactions} reactions</span>
+                      <span>{item.metrics.comments} comments</span>
+                      <span>{item.metrics.shares} shares</span>
+                      <span>{item.topics.join(" · ")}</span>
+                    </div>
+                  </div>
+                  <div class="world-feed-score">
+                    <span>Hara score</span>
+                    <strong>{scoreLabel(item.score)}</strong>
+                    <i style={`--score:${scorePercent(item.score)}`}></i>
+                    <div class="world-feed-actions"><button>Save</button><button aria-label={`Open ${item.title}`}>↗</button></div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div slot="aside" class="world-feed-aside">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Topics moving</h2><a href="#conversations">All</a></header>
+                <div class="hara-v2-panel-body world-feed-mini-list">
+                  {movingTopics.map(([topic, count]) => <a href="#feed"><span>{topic}</span><b>{count} items</b></a>)}
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Source health</h2><a href="#sources">Manage</a></header>
+                <div class="hara-v2-panel-body">
+                  {policy.ingestion.sources.map((source) => (
+                    <div class="world-source-health-row" data-health={sourceHealth[source.id]}>
+                      <span><i></i>{source.label}</span><b>{sourceHealth[source.id] === "delayed" ? "delayed" : source.cadence}</b>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Why this is hot</h2></header>
+                <div class="hara-v2-panel-body">
+                  <p class="world-feed-explainer">The rank combines Hara relevance, engagement velocity, source trust, freshness, conversation depth, and novelty. Duplicate and saturation penalties keep one account or platform from occupying the whole page.</p>
+                  <a class="hara-v2-button" href="#relay">Inspect ranking + relay</a>
+                </div>
+              </section>
+            </div>
+          </Shell>
+        </div>
+
+        <div class="world-feed-notes">
+          <article><b>Source-first trust</b><p>World does not rewrite ownership. The original author, platform, time, URL, and engagement context remain visible.</p></article>
+          <article><b>Explainable ranking</b><p>A visible Hara score makes relevance reviewable. It is not a universal popularity score and cannot hide source diversity penalties.</p></article>
+          <article><b>Useful before sign-in</b><p>Reading, opening sources, filtering, and exploring conversations work before an incoming user creates a profile.</p></article>
+        </div>
+      </section>
+
+      <section class="world-feed-screen" id="conversations">
+        <header class="world-feed-screen-head">
+          <div><p class="hara-v2-kicker">Screen 02 · Cross-platform conversation</p><h2>One subject, several public rooms.</h2></div>
+          <p>Clustering prevents a release note, tweet, discussion, and follow-up essay from appearing as unrelated duplicates. Each object remains independently attributable and linkable.</p>
+        </header>
+
+        <div class="world-feed-canvas">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-conversation-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Search">⌕</button>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("conversations")}>
+              <a class="hara-v2-button" href="#feed">← Feed</a>
+              <a class="hara-v2-button" data-variant="primary" href="#conversations">Follow conversation</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Conversations" groups={conversationSidebar}>
+              <span>Clustering proposes a relationship. It never merges, edits, or republishes the source objects.</span>
+            </Sidebar>
+
+            <div class="world-conversation-heading">
+              <div><p class="hara-v2-kicker">Conversation cluster · {leadConversation.id}</p><h1>How one Hara change travels.</h1></div>
+              <span class="hara-v2-badge" data-tone="signal">{leadConversation.sources.length} sources</span>
+            </div>
+
+            <div class="world-conversation-mode-row" data-filter-group="conversation-mode">
+              <button aria-pressed="true">Chronology</button>
+              <button aria-pressed="false">Best discussion</button>
+              <button aria-pressed="false">Source map</button>
+            </div>
+
+            <section class="world-conversation-hero">
+              <div><span class="world-source-chip">Cluster summary</span><h2>{leadConversation.title}</h2><p>World connects the canonical repository change with independent reactions and explanations. The summary is a navigation aid; opening an item always goes to its source.</p></div>
+              <div class="world-conversation-source-count"><strong>{leadConversation.items.length}</strong><span>public objects</span><small>score {scoreLabel(leadConversation.score)}</small></div>
+            </section>
+
+            <div class="world-conversation-stream">
+              {leadConversation.items.map((item) => (
+                <article class="world-conversation-post">
+                  <header><span><span class="world-source-chip">{item.sourceLabel}</span> <b>{item.author}</b></span><time>{item.publishedAt.slice(0, 16).replace("T", " · ")}</time></header>
+                  <h3><a href={item.canonicalUrl}>{item.title}</a></h3>
+                  <p>{item.excerpt}</p>
+                  <footer><span>{item.metrics.reactions} reactions</span><span>{item.metrics.comments} replies</span><span>canonical ↗</span></footer>
+                </article>
+              ))}
+            </div>
+
+            <div slot="aside" class="world-feed-aside">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Conversation map</h2><span>{conversations.length}</span></header>
+                <div class="hara-v2-panel-body world-conversation-map">
+                  {conversations.slice(0, 5).map((conversation) => (
+                    <a href="#conversations"><span>{conversation.sources.length}</span><span><b>{conversation.title}</b><small>{conversation.sources.join(" · ")}</small></span><code>{scoreLabel(conversation.score)}</code></a>
+                  ))}
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Cluster evidence</h2></header>
+                <div class="hara-v2-panel-body world-receipt-list">
+                  <div><span>topic</span><b>std.typed / schema</b><code>match</code></div>
+                  <div><span>links</span><b>canonical repository</b><code>match</code></div>
+                  <div><span>time</span><b>19 minute window</b><code>near</code></div>
+                  <div><span>review</span><b>human override</b><code>open</code></div>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Discussion boundary</h2></header>
+                <div class="hara-v2-panel-body"><p class="world-feed-explainer">World comments may refer to a source item, but do not masquerade as Reddit, X, HN, or GitHub replies. Cross-posting a response requires an explicit destination action.</p></div>
+              </section>
+            </div>
+          </Shell>
+        </div>
+
+        <div class="world-feed-notes">
+          <article><b>Cluster, do not copy</b><p>World stores source facts and relationships, not a synthetic replacement for the original discussion.</p></article>
+          <article><b>Disagreement remains visible</b><p>Independent reactions can disagree. The cluster orders them; it does not flatten them into one official interpretation.</p></article>
+          <article><b>Human correction</b><p>Maintainers can split a mistaken cluster or link an omitted source, with the correction retained as a moderation receipt.</p></article>
+        </div>
+      </section>
+
+      <section class="world-feed-screen" id="sources">
+        <header class="world-feed-screen-head">
+          <div><p class="hara-v2-kicker">Screen 03 · Source registry</p><h2>Aggregation with controls and provenance.</h2></div>
+          <p>The source manager makes ingestion inspectable: what is queried, how often, through which transport, with what trust level, and who may change the rule.</p>
+        </header>
+
+        <div class="world-feed-canvas">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-source-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Search">⌕</button>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("sources")}>
+              <a class="hara-v2-button" href="#sources">Import OPML</a>
+              <a class="hara-v2-button" data-variant="primary" href="#sources">Add source</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Sources" groups={sourceSidebar}>
+              <span>Community feed submissions enter review before they affect the public discovery feed.</span>
+            </Sidebar>
+
+            <div class="world-source-heading">
+              <div><p class="hara-v2-kicker">Source registry</p><h1>Where World listens.</h1></div>
+              <span class="hara-v2-badge" data-tone="success">6 live · 1 delayed</span>
+            </div>
+
+            <div class="world-source-filter" data-filter-group="source-mode">
+              <button aria-pressed="true">All</button>
+              <button aria-pressed="false">First-party</button>
+              <button aria-pressed="false">Community</button>
+              <button aria-pressed="false">Open feeds</button>
+              <button aria-pressed="false">Attention</button>
+            </div>
+
+            <div class="world-source-grid">
+              {policy.ingestion.sources.map((source) => (
+                <article class="world-source-card">
+                  <header><div><h2>{source.label}</h2><p>{source.id}</p></div><span class="world-source-state"><i></i>{sourceHealth[source.id] === "delayed" ? "delayed" : "healthy"}</span></header>
+                  <dl><div><dt>Transport</dt><dd>{source.transport}</dd></div><div><dt>Cadence</dt><dd>{source.cadence}</dd></div><div><dt>Trust</dt><dd>{Math.round(source.trust * 100)} / 100</dd></div></dl>
+                  <div class="world-source-query"><b>match</b> “hara-lang” OR canonical links to hara-lang.org, packages, repositories, World objects, and approved project feeds</div>
+                  <footer><span>canonical URL + source metadata required</span><button class="hara-v2-button">Configure</button></footer>
+                </article>
+              ))}
+            </div>
+
+            <div slot="aside" class="world-feed-aside">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Ingestion contract</h2></header>
+                <div class="hara-v2-panel-body world-receipt-list">
+                  <div><span>fetch</span><b>provider adapter</b><code>bounded</code></div>
+                  <div><span>normalise</span><b>source envelope</b><code>required</code></div>
+                  <div><span>dedupe</span><b>canonical + content hash</b><code>required</code></div>
+                  <div><span>rank</span><b>deterministic policy</b><code>versioned</code></div>
+                  <div><span>publish</span><b>World index</b><code>receipt</code></div>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Submitted feeds</h2><span class="hara-v2-badge" data-tone="warning">3 review</span></header>
+                <div class="hara-v2-panel-body world-feed-mini-list"><a href="#sources"><span>Hara audio experiments</span><b>RSS</b></a><a href="#sources"><span>Procedural rig notes</span><b>JSON Feed</b></a><a href="#sources"><span>Agent work log</span><b>RSS</b></a></div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Open feed principle</h2></header>
+                <div class="hara-v2-panel-body"><p class="world-feed-explainer">RSS, JSON Feed, and OPML remain first-class so a project can participate without granting a platform account or using a proprietary social API.</p></div>
+              </section>
+            </div>
+          </Shell>
+        </div>
+
+        <div class="world-feed-notes">
+          <article><b>Provider-shaped ingestion</b><p>Each platform adapter emits one source envelope. Ranking and relay policy do not depend on a platform-specific response object.</p></article>
+          <article><b>Versioned policy</b><p>Query, trust, dedupe, and ranking changes are reviewable data with a policy version rather than invisible algorithm tweaks.</p></article>
+          <article><b>Removal is durable</b><p>Deleted, private, blocked, or opted-out source content leaves the public index and cannot remain eligible for relay.</p></article>
+        </div>
+      </section>
+
+      <section class="world-feed-screen" id="relay">
+        <header class="world-feed-screen-head">
+          <div><p class="hara-v2-kicker">Screen 04 · Hara Bot relay</p><h2>Amplification without becoming a spam bot.</h2></div>
+          <p>High-performing Hara work can be prepared for X, Reddit, community channels, World’s hot list, and the newsletter. Community content is review-gated; narrow first-party facts can be auto-eligible.</p>
+        </header>
+
+        <div class="world-feed-canvas">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-relay-content">
+            <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Search">⌕</button>
+              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("relay")}>
+              <a class="hara-v2-button" href="#relay">Pause relay</a>
+              <a class="hara-v2-button" data-variant="primary" href="#relay">Review next</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Hara Bot" groups={relaySidebar}>
+              <span>No autonomous replies, quote-post arguments, comment generation, or unattributed reposting.</span>
+            </Sidebar>
+
+            <div class="world-relay-heading">
+              <div><p class="hara-v2-kicker">Relay queue · Review mode</p><h1>What Hara Bot may amplify.</h1></div>
+              <span class="hara-v2-badge" data-tone="warning">Human gate active</span>
+            </div>
+
+            <div class="world-relay-summary">
+              <div><strong>{relayQueue.length}</strong><span>candidates</span></div>
+              <div><strong>{relayQueue.filter((item) => item.relay.state === "review").length}</strong><span>need review</span></div>
+              <div><strong>{relayQueue.filter((item) => item.relay.state === "auto-eligible").length}</strong><span>auto-eligible</span></div>
+              <div><strong>{policy.relay.cooldownHours}h</strong><span>repeat cooldown</span></div>
+            </div>
+
+            <div class="world-relay-queue">
+              {relayQueue.map((item) => (
+                <article class="world-relay-item">
+                  <div>
+                    <header><span class="world-source-chip">{item.sourceLabel}</span><b>{item.author}</b><span>score {scoreLabel(item.score)}</span><span class="hara-v2-badge" data-tone={item.relay.state === "auto-eligible" ? "success" : "warning"}>{item.relay.state}</span></header>
+                    <h2>{item.title}</h2>
+                    <p>{item.excerpt}</p>
+                    <div class="world-relay-destinations"><span>World · Hot</span><span>X / Twitter</span><span>Reddit</span><span>Matrix / Discord</span><span>Newsletter</span></div>
+                  </div>
+                  <div class="world-relay-controls">
+                    <dl><div><dt>Reason</dt><dd>{item.relay.reason}</dd></div><div><dt>Canonical</dt><dd>present</dd></div><div><dt>Attribution</dt><dd>present</dd></div><div><dt>Cooldown</dt><dd>clear</dd></div></dl>
+                    <div class="world-relay-control-row"><button class="hara-v2-button">Preview</button><button class="hara-v2-button" data-variant="primary">{item.relay.state === "auto-eligible" ? "Schedule" : "Review"}</button></div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div slot="aside" class="world-feed-aside">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Relay policy</h2><span>v{policy.version}</span></header>
+                <div class="hara-v2-panel-body world-relay-policy-list">
+                  <article><header><h3>Community work</h3><span class="hara-v2-badge" data-tone="warning">Review</span></header><p>Draft an attributed link post. A maintainer chooses destination, wording, and schedule.</p></article>
+                  <article><header><h3>Hara-owned release facts</h3><span class="hara-v2-badge" data-tone="success">Auto-eligible</span></header><p>May enter a schedule only after canonical release metadata, dedupe, and cooldown checks pass.</p></article>
+                  <article><header><h3>Replies and comments</h3><span class="hara-v2-badge" data-tone="danger">Never auto</span></header><p>Conversation requires context and consent. Hara Bot does not manufacture engagement.</p></article>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Recent receipts</h2><a href="#relay">All</a></header>
+                <div class="hara-v2-panel-body world-receipt-list">
+                  <div><span>10:08</span><b>World · Hot</b><code>published</code></div>
+                  <div><span>09:30</span><b>X · release link</b><code>reviewed</code></div>
+                  <div><span>Yesterday</span><b>Newsletter digest</b><code>sent</code></div>
+                </div>
+              </section>
+
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Publication receipt</h2></header>
+                <div class="hara-v2-panel-body"><p class="world-feed-explainer">Every relay records source object, source author, canonical URL, policy version, reviewer or trusted automation rule, destination, final text hash, external object ID, and outcome.</p></div>
+              </section>
+            </div>
+          </Shell>
+        </div>
+
+        <div class="world-feed-notes">
+          <article><b>Review-first default</b><p>Popularity is only a candidate signal. Community work cannot jump from a score directly to an external Hara account.</p></article>
+          <article><b>Narrow automation</b><p>Auto-eligibility is limited to owned release facts, security advisories, and scheduled snippet-of-the-day objects.</p></article>
+          <article><b>Receipts over engagement tricks</b><p>Each outbound effect is attributable, deduplicated, fenced by policy, and recorded. No automated replies or synthetic conversations.</p></article>
+        </div>
+      </section>
+
+      <section class="world-feed-conclusion">
+        <div><p class="hara-v2-kicker">Proposed World discovery grammar</p><h2>Find · Cluster · Attribute · Follow · Relay</h2><p>World becomes a useful front page for the programming language while remaining an open reading layer over public work. The production system can later bind these screens to provider adapters and durable work receipts without changing the interaction model.</p></div>
+        <a class="hara-v2-button" href={worldLab}>Return to World study</a>
+      </section>
+
+      <footer class="v2-lab-footer">
+        <span>Experimental World feed and Hara Bot relay study · Hara visual language v2</span>
+        <span><a href={documentLab}>Document laboratory</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script is:inline>
+      document.querySelectorAll('[data-filter-group]').forEach((group) => {
+        group.querySelectorAll('button').forEach((button) => {
+          button.addEventListener('click', () => {
+            group.querySelectorAll('button').forEach((candidate) => candidate.setAttribute('aria-pressed', 'false'));
+            button.setAttribute('aria-pressed', 'true');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
