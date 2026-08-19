@@ -1,0 +1,34 @@
+{
+  "name": "Hara cinematic material fields",
+  "version": 1,
+  "canvas": "4096 x 2304",
+  "format": "adaptive SVG",
+  "direction": "original monumental painterly-industrial technology",
+  "themes": [
+    { "id": "monolith", "label": "Monolith", "character": "graphite mass, hard thresholds, isolated signal" },
+    { "id": "silica", "label": "Silica", "character": "dry mineral light, long horizons, optical heat" },
+    { "id": "foundry", "label": "Foundry", "character": "inked carbon, rough process, machined containment" },
+    { "id": "nocturne", "label": "Nocturne", "character": "operational night, structural ribs, sparse telemetry" },
+    { "id": "reliquary", "label": "Reliquary", "character": "pale ceramic armour, archival seams, protected core" },
+    { "id": "storm", "label": "Storm", "character": "directional pressure, vault geometry, charged atmosphere" }
+  ],
+  "textures": [
+    "etched-copper", "silt-grain", "circuit-weave", "glass-fissure",
+    "ritual-grid", "dust-field", "prism-noise", "archival-paper"
+  ],
+  "shaders": ["strata", "ink", "monolith", "lattice", "shimmer", "field"],
+  "assets": [
+    { "id": "monolith-gate", "theme": "monolith", "use": "runtime boundary and launch" },
+    { "id": "silica-drift", "theme": "silica", "use": "roadmap and distributed work" },
+    { "id": "ink-foundry", "theme": "foundry", "use": "compiler and technical editorial" },
+    { "id": "signal-canyon", "theme": "monolith", "use": "workflow and dataflow" },
+    { "id": "vault-storm", "theme": "storm", "use": "network operations and status" },
+    { "id": "machine-sun", "theme": "reliquary", "use": "VM, WASM, and native runtime" },
+    { "id": "fracture-vault", "theme": "foundry", "use": "schema boundaries and migration" },
+    { "id": "conduit-horizon", "theme": "silica", "use": "deployment and package delivery" },
+    { "id": "carbon-ridge", "theme": "monolith", "use": "benchmarks and historical depth" },
+    { "id": "phase-loom", "theme": "nocturne", "use": "code, events, and live sessions" },
+    { "id": "pressure-well", "theme": "foundry", "use": "durable work, queues, and checkpoints" },
+    { "id": "night-aperture", "theme": "nocturne", "use": "identity and inspection" }
+  ]
+}
