@@ -20,10 +20,10 @@
 .graphics-lab-section-head>p { max-width:760px; margin:0; color:var(--hara-v2-muted); line-height:1.68; }
 .graphics-lab-atmospheres { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; padding:1px; background:var(--hara-v2-line); }
 .graphics-lab-atmospheres article { position:relative; min-height:430px; overflow:hidden; background:var(--hara-v2-panel-recess); }
-.graphics-lab-atmospheres img { width:100%; height:100%; min-height:430px; object-fit:cover; transition:transform 600ms cubic-bezier(.2,.8,.2,1); }
+.graphics-lab-atmospheres img { display:block; width:100%; height:100%; min-height:430px; object-fit:cover; transition:transform 600ms cubic-bezier(.2,.8,.2,1); }
 .graphics-lab-atmospheres article:hover img { transform:scale(1.018); }
 .graphics-lab-atmospheres article>div { position:absolute; inset:auto 0 0; padding:4rem 1.25rem 1.2rem; color:#f4f6f8; background:linear-gradient(transparent,rgba(5,6,8,.88)); }
-.graphics-lab-atmospheres span,.graphics-lab-gallery figcaption span,.graphics-lab-contract dt { display:block; color:#9eabb8; font:700 .55rem/1 var(--hara-v2-font-code); letter-spacing:.08em; text-transform:uppercase; }
+.graphics-lab-atmospheres span,.graphics-lab-gallery figcaption span,.graphics-lab-textures figcaption span,.graphics-lab-contract dt { display:block; color:#9eabb8; font:700 .55rem/1 var(--hara-v2-font-code); letter-spacing:.08em; text-transform:uppercase; }
 .graphics-lab-atmospheres h3 { margin:.48rem 0 .35rem; font-size:1.45rem; letter-spacing:-.04em; }.graphics-lab-atmospheres p { max-width:520px; margin:0; color:#cbd2d9; font-size:.72rem; line-height:1.52; }
 .graphics-lab-gallery { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; padding:1px; background:var(--hara-v2-line); }
 .graphics-lab-gallery figure { min-width:0; margin:0; background:var(--hara-v2-panel); }
@@ -31,10 +31,14 @@
 .graphics-lab-gallery img { display:block; width:100%; height:100%; object-fit:cover; transition:transform 420ms cubic-bezier(.2,.8,.2,1),filter 180ms ease; }
 .graphics-lab-gallery a:hover img { transform:scale(1.025); filter:contrast(1.025); }
 .graphics-lab-gallery figcaption { min-height:122px; padding:.88rem .95rem 1rem; border-top:1px solid var(--hara-v2-line); }
-.graphics-lab-gallery figcaption span { color:var(--hara-v2-faint); }.graphics-lab-gallery strong { display:block; margin-top:.45rem; font-size:.78rem; text-transform:capitalize; }.graphics-lab-gallery p { margin:.38rem 0 0; color:var(--hara-v2-muted); font-size:.64rem; line-height:1.48; }
+.graphics-lab-gallery figcaption span { color:var(--hara-v2-faint); }.graphics-lab-gallery strong { display:block; margin-top:.45rem; font-size:.78rem; }.graphics-lab-gallery p { margin:.38rem 0 0; color:var(--hara-v2-muted); font-size:.64rem; line-height:1.48; }
 .graphics-lab-textures { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; padding:1px; background:var(--hara-v2-line); }
-.graphics-lab-textures article { display:grid; align-content:end; gap:.42rem; min-height:230px; padding:1rem; border:0; box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--hara-v2-ink) 12%,transparent); }
-.graphics-lab-textures span { color:var(--hara-v2-faint); font:700 .55rem/1 var(--hara-v2-font-code); }.graphics-lab-textures strong { font-size:.8rem; text-transform:capitalize; }.graphics-lab-textures a { width:max-content; color:var(--hara-v2-signal); font-size:.6rem; font-weight:700; }
+.graphics-lab-textures figure { min-width:0; margin:0; background:var(--hara-v2-panel); }
+.graphics-lab-textures figure>a { display:block; aspect-ratio:1; overflow:hidden; background:var(--hara-v2-panel-recess); }
+.graphics-lab-textures img { display:block; width:100%; height:100%; object-fit:cover; transition:transform 420ms cubic-bezier(.2,.8,.2,1),filter 180ms ease; }
+.graphics-lab-textures a:hover img { transform:scale(1.025); filter:contrast(1.035); }
+.graphics-lab-textures figcaption { min-height:128px; padding:.88rem .95rem 1rem; border-top:1px solid var(--hara-v2-line); }
+.graphics-lab-textures figcaption span { color:var(--hara-v2-faint); }.graphics-lab-textures strong { display:block; margin-top:.45rem; font-size:.8rem; }.graphics-lab-textures p { margin:.38rem 0 0; color:var(--hara-v2-muted); font-size:.64rem; line-height:1.48; }
 .graphics-lab-shaders { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; padding:1px; background:var(--hara-v2-line); }
 .graphics-lab-shaders article { min-width:0; padding:.8rem; background:var(--hara-v2-panel); }.graphics-lab-shaders .hara-v2-shader-field { min-height:clamp(300px,29vw,440px); }
 .graphics-lab-shaders article>div:last-child { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:.38rem 1rem; align-items:start; padding:.9rem .2rem .2rem; }.graphics-lab-shaders h3 { margin:0; font-size:.88rem; }.graphics-lab-shaders p { grid-column:1/-1; max-width:650px; margin:0; color:var(--hara-v2-muted); font-size:.68rem; line-height:1.52; }.graphics-lab-shaders code { color:var(--hara-v2-signal); font-size:.55rem; }
