@@ -5,7 +5,10 @@ import test from "node:test";
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("Learn owns runnable onboarding and guided World examples", async () => {
-  const page = await read("../site/src/pages/v2/learn/index.astro");
+  const [page, specimen] = await Promise.all([
+    read("../site/src/pages/v2/learn/index.astro"),
+    read("../site/src/components/v2/WorldSpecimen.astro")
+  ]);
 
   assert.match(page, /Application buildout · Learn/);
   assert.match(page, /Learn by running something real/);
@@ -15,6 +18,13 @@ test("Learn owns runnable onboarding and guided World examples", async () => {
   assert.match(page, /Programmer onboarding/);
   assert.match(page, /Community reader study/);
   assert.match(page, /<WorldSpecimen\s*\/>/);
+
+  assert.match(specimen, /section="Learn"/);
+  assert.match(specimen, /label: "Learn", current: true/);
+  assert.match(specimen, /const worldDiscussionLab = `\$\{basePath\}v2\/world\/discussion\/`/);
+  assert.match(specimen, /Learn owns the explanation/);
+  assert.match(specimen, /Return to Learn/);
+  assert.doesNotMatch(specimen, /section="World"/);
 });
 
 test("the shared theme control is a direct light-dark switch with a readable mobile label", async () => {
