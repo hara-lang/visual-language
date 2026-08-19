@@ -1,12 +1,18 @@
 ---
-import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
-import HaraMark from "../../../../src/astro/HaraMark.astro";
+import CatalogueHeader from "../../components/v2-catalogue/CatalogueHeader.astro";
 import FleetField from "../../../../src/astro/v2/FleetField.astro";
 import WwwSpecimen from "../../components/v2/WwwSpecimen.astro";
 import DocsSpecimen from "../../components/v2/DocsSpecimen.astro";
 import SpecsSpecimen from "../../components/v2/SpecsSpecimen.astro";
 import BenchmarksSpecimen from "../../components/v2/BenchmarksSpecimen.astro";
 import WorldSpecimen from "../../components/v2/WorldSpecimen.astro";
+import {
+  catalogueGroups,
+  catalogueHref,
+  catalogueItems,
+  catalogueLinkIsExternal,
+  catalogueStatusLabels
+} from "../../lib/v2-catalogue.mjs";
 import "../../../../src/v2.css";
 import "../../../../src/theme.js";
 import "../../styles/v2-lab.css";
@@ -23,81 +29,139 @@ const worldFocusedLab = `${basePath}v2/world/community/`;
 const worldOnboardingLab = `${basePath}v2/world/onboarding/`;
 const worldDiscussionLab = `${basePath}v2/world/discussion/`;
 const worldAroundLab = `${basePath}v2/world/around/`;
-const ecosystem = [
-  { href: "#www", label: "WWW" },
-  { href: "#docs", label: "Docs" },
-  { href: "#specs", label: "Specs" },
-  { href: "#benchmarks", label: "Benchmarks" },
-  { href: "#world", label: "World" },
-  { href: toolLab, label: "Tools" }
-];
+const topLevelItems = catalogueGroups.flatMap((group) => group.items);
+const plannedCount = catalogueItems.filter((item) => item.status === "planned").length;
+const currentCount = catalogueItems.filter((item) => item.href).length;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hara interface language v2: calm, continuous command surfaces for WWW, Docs, Specs, Benchmarks, and World." />
+    <meta name="description" content="Hara interface language v2: a scalable catalogue of foundations, components, UI patterns, front matter, tools, and detailed product laboratories." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara interface language v2" />
-    <meta property="og:description" content="Five interface families shaped by continuous surfaces, quiet hierarchy, and the existing Hara identity." />
+    <meta property="og:title" content="Hara interface language v2 catalogue" />
+    <meta property="og:description" content="One shared interface language, organized into Foundations, Library, and detailed Application buildouts." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara interface language v2" />
-    <meta name="twitter:description" content="Calm command surfaces for the Hara ecosystem." />
+    <meta name="twitter:title" content="Hara interface language v2 catalogue" />
+    <meta name="twitter:description" content="Foundations, components, UI patterns, tools, and focused product laboratories." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara interface language v2</title>
+    <title>Hara interface language v2 catalogue</title>
   </head>
   <body class="hara-v2">
-    <header class="v2-lab-header">
-      <a class="v2-lab-brand" href={basePath}>
-        <HaraMark size={28} />
-        <b>Hara visual language</b>
-        <small>V2 field test</small>
-      </a>
-      <nav aria-label="Layout families">
-        {ecosystem.map((item) => <a href={item.href}>{item.label}</a>)}
-      </nav>
-      <ThemeToggle />
-    </header>
+    <CatalogueHeader basePath={basePath} activePath="/v2/" />
 
     <main class="v2-lab-main">
       <section class="v2-lab-hero">
         <div>
-          <p class="hara-v2-kicker">Refined interface layer · Version 2</p>
-          <h1>Precision, with room to breathe.</h1>
-          <p>Hara's mark and type remain fixed. Around them, the interface now uses continuous steel and paper surfaces, quieter seams, comfortable controls, and one functional signal. Structure stays exact without making every edge compete for attention.</p>
+          <p class="hara-v2-kicker">Interface catalogue · Version 2</p>
+          <h1>One language. Many product grammars.</h1>
+          <p>The visual language now has room to grow beyond one specimen page. Shared foundations and reusable interface contracts sit beside detailed, independent buildouts for WWW, Playground, Specs, Packages, World, and Learn.</p>
           <div class="v2-lab-principles">
-            <div><b>Continuous surfaces</b><span>Related regions flow together instead of becoming a stack of framed boxes.</span></div>
-            <div><b>Quiet hierarchy</b><span>State is clear through tone, spacing, and one signal rather than heavy chrome.</span></div>
-            <div><b>Gentle rhythm</b><span>Roomier controls, restrained rounding, and smoother transitions support long sessions.</span></div>
-            <div><b>Same identity</b><span>The block H, signal dot, heading family, and light/dark contract do not move.</span></div>
+            <div><b>One manifest</b><span>Every current and planned route belongs to one typed catalogue instead of a page-local menu array.</span></div>
+            <div><b>Grouped navigation</b><span>Foundations, Library, and Applications can expand without crowding the permanent header row.</span></div>
+            <div><b>Detailed buildouts</b><span>Applications own realistic screens and full states rather than sharing one generic product layout.</span></div>
+            <div><b>Stable contract</b><span>The block H, signal, themes, shared primitives, and protected tokens remain fixed.</span></div>
           </div>
-          <p><a href={worldDiscussionLab}>Open the focused World community →</a> · <a href={worldAroundLab}>Open the Around Hara feed explorer →</a> · <a href={worldLab}>Earlier World community laboratory →</a> · <a href={worldOnboardingLab}>Programmer onboarding study →</a> · <a href={toolLab}>Tool workbench laboratory →</a></p>
+          <p><a href="https://github.com/hara-lang/visual-language/issues/32">Open the catalogue epic →</a> · <a href={worldDiscussionLab}>Focused World discussion laboratory →</a> · <a href={worldAroundLab}>Open the Around Hara feed explorer →</a> · <a href={toolLab}>Tool workbench laboratory →</a></p>
         </div>
-        <div class="v2-lab-hero-art"><FleetField title="Hara calm command visual field" /></div>
+        <div class="v2-lab-hero-art"><FleetField title="Hara scalable interface catalogue field" /></div>
       </section>
 
-      <nav class="v2-lab-index" aria-label="V2 layout catalogue">
-        <a href="#www"><strong>WWW</strong><span>Public narrative, proof bands, capability decks, and executable demos.</span><code>single-column / illustrated</code></a>
-        <a href="#docs"><strong>Docs</strong><span>Persistent rail, prose column, outline, search, and live code surfaces.</span><code>rail / prose / inspector</code></a>
-        <a href="#specs"><strong>Specs</strong><span>Registry, checker, publishing workflow, status, and digest inspection.</span><code>workflow / table / inspector</code></a>
-        <a href="#benchmarks"><strong>Benchmarks</strong><span>Evidence tabs, metric strips, dense matrices, and selected-result detail.</span><code>data board / compact</code></a>
-        <a href={worldDiscussionLab}><strong>World</strong><span>A focused community front page for articles, clippings, comments, feeds, profiles, presence, and digest, with packages, accountable bots, and a dedicated Around Hara external-signal explorer.</span><code>feeds / comments / presence</code></a>
-      </nav>
+      <section class="v2-catalogue-home-intro">
+        <div>
+          <p class="hara-v2-kicker">Catalogue architecture</p>
+          <h2>Shared foundations first. Product detail where it belongs.</h2>
+        </div>
+        <p>The catalogue separates what every Hara interface shares from what each product needs to communicate and do. Planned routes lead to their implementation issue until a real laboratory exists, avoiding dead placeholder pages.</p>
+      </section>
+
+      <div class="v2-catalogue-summary" aria-label="Catalogue status summary">
+        <article><strong>{catalogueGroups.length}</strong><span>catalogue groups</span></article>
+        <article><strong>{topLevelItems.length}</strong><span>top-level buildouts</span></article>
+        <article><strong>{plannedCount}</strong><span>planned routes and subroutes</span></article>
+        <article><strong>{currentCount}</strong><span>current laboratory routes</span></article>
+      </div>
+
+      {catalogueGroups.map((group) => (
+        <section class="v2-catalogue-family" id={`catalogue-${group.id}`}>
+          <header class="v2-catalogue-family-head">
+            <div><p class="hara-v2-kicker">Catalogue family</p><h2>{group.label}</h2></div>
+            <p>{group.summary}</p>
+          </header>
+          <div class="v2-catalogue-card-grid">
+            {group.items.map((item) => {
+              const external = catalogueLinkIsExternal(item);
+              return (
+                <article class="v2-catalogue-card" data-status={item.status}>
+                  <a
+                    href={catalogueHref(item, basePath)}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noreferrer" : undefined}
+                  >
+                    <span>{item.eyebrow ?? group.label}</span>
+                    <h3>{item.label}</h3>
+                    <p>{item.summary}</p>
+                    <span class="v2-catalogue-status" data-status={item.status}>
+                      {catalogueStatusLabels[item.status]}
+                      {external && item.issue ? ` · issue #${item.issue}` : ""}
+                    </span>
+                  </a>
+                  {item.children && item.children.length > 0 && (
+                    <nav class="v2-catalogue-children" aria-label={`${item.label} catalogue routes`}>
+                      {item.children.map((child) => {
+                        const childExternal = catalogueLinkIsExternal(child);
+                        return (
+                          <a
+                            href={catalogueHref(child, basePath)}
+                            target={childExternal ? "_blank" : undefined}
+                            rel={childExternal ? "noreferrer" : undefined}
+                          >
+                            <span>{child.label}</span>
+                            <small data-status={child.status}>{catalogueStatusLabels[child.status]}</small>
+                          </a>
+                        );
+                      })}
+                    </nav>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+
+      <section class="v2-catalogue-legacy-head">
+        <div>
+          <p class="hara-v2-kicker">Existing reference material</p>
+          <h2>The original five-layout field test remains reviewable.</h2>
+        </div>
+        <p>These compact WWW, Docs, Specs, Benchmarks, and World compositions established the shared v2 shell. The new application issues will replace each compact study with detailed route families while preserving this historical comparison surface.</p>
+      </section>
+
+      <div class="v2-lab-index" aria-label="Historical and focused World studies">
+        <a href={worldDiscussionLab}><strong>Focused World discussion laboratory</strong><span>Articles, feeds, clippings, comments, profiles, presence, and accountable bots.</span><code>current focused study</code></a>
+        <a href={worldAroundLab}><strong>Open the Around Hara feed explorer</strong><span>External signal discovery, source provenance, curation, moderation, and review-first relay workflows.</span><code>current signal study</code></a>
+        <a href={worldFocusedLab}><strong>Open the focused World community</strong><span>Articles, clippings, comments, feeds, profiles, presence, and digest.</span><code>earlier focused study</code></a>
+        <a href={worldLab}><strong>World community laboratory</strong><span>The current cross-source feed explorer route and earlier product studies.</span><code>active product route</code></a>
+        <a href={worldOnboardingLab}><strong>Open programmer onboarding journey</strong><span>Executable-feed and first-session acquisition study.</span><code>historical study</code></a>
+        <a href={toolLab}><strong>Tool workbenches</strong><span>3D, node/material, and animation editor compositions.</span><code>settled tool contract</code></a>
+      </div>
 
       <WwwSpecimen />
       <DocsSpecimen />
       <SpecsSpecimen />
       <BenchmarksSpecimen />
       <WorldSpecimen />
+
       <footer class="v2-lab-footer">
-        <span>Experimental v2 interface contract · Hara visual language</span>
-        <span><a href={worldDiscussionLab}>Focused World discussion laboratory</a> · <a href={worldAroundLab}>Around Hara feed explorer</a> · <a href={worldLab}>Earlier World community laboratory</a> · <a href={worldOnboardingLab}>Programmer onboarding study</a> · <a href={toolLab}>Tool workbench laboratory</a> · <a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+        <span>Hara interface catalogue · Epic <a href="https://github.com/hara-lang/visual-language/issues/32">#32</a></span>
+        <span><a href="https://github.com/hara-lang/visual-language/issues/33">Catalogue navigation issue</a> · <a href={worldAroundLab}>Around Hara</a> · <a href={toolLab}>Tool workbenches</a> · <a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>
   </body>

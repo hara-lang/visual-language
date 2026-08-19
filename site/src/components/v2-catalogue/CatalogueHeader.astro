@@ -1,0 +1,185 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../src/astro/HaraMark.astro";
+import {
+  catalogueGroups,
+  catalogueGroupIsCurrent,
+  catalogueHref,
+  catalogueItemIsCurrent,
+  catalogueLinkIsExternal,
+  catalogueStatusLabels
+} from "../../lib/v2-catalogue.mjs";
+import "../../styles/v2-catalogue.css";
+
+const {
+  basePath,
+  activePath = "/v2/",
+  label = "Hara visual language catalogue",
+  sourceHref = "https://github.com/hara-lang/visual-language"
+} = Astro.props;
+
+const catalogueHome = `${basePath.endsWith("/") ? basePath : `${basePath}/`}v2/`;
+---
+<header class="v2-catalogue-header" data-catalogue-header data-menu-open="false">
+  <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
+    <HaraMark size={28} />
+    <span>
+      <b>Hara visual language</b>
+      <small>Interface catalogue · V2</small>
+    </span>
+  </a>
+
+  <button
+    class="v2-catalogue-menu-button"
+    type="button"
+    aria-expanded="false"
+    aria-controls="v2-catalogue-navigation"
+    data-catalogue-menu-button
+  >
+    <span>Browse catalogue</span>
+    <small>Foundations · Library · Applications</small>
+  </button>
+
+  <nav class="v2-catalogue-nav" id="v2-catalogue-navigation" aria-label="Visual language catalogue" data-catalogue-navigation>
+    {catalogueGroups.map((group) => {
+      const groupCurrent = catalogueGroupIsCurrent(group, activePath);
+      return (
+        <details class="v2-catalogue-group" data-catalogue-group data-current={groupCurrent ? "true" : "false"}>
+          <summary>
+            <span>{group.label}</span>
+            <small>{group.items.length}</small>
+          </summary>
+          <div class="v2-catalogue-panel">
+            <header>
+              <p class="hara-v2-kicker">Catalogue group</p>
+              <h2>{group.label}</h2>
+              <p>{group.summary}</p>
+            </header>
+            <div class="v2-catalogue-panel-grid">
+              {group.items.map((item) => {
+                const external = catalogueLinkIsExternal(item);
+                const current = catalogueItemIsCurrent(item, activePath);
+                return (
+                  <article class="v2-catalogue-menu-item" data-status={item.status} data-current={current ? "true" : "false"}>
+                    <a
+                      href={catalogueHref(item, basePath)}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noreferrer" : undefined}
+                      aria-current={current ? "page" : undefined}
+                    >
+                      <span class="v2-catalogue-menu-eyebrow">{item.eyebrow ?? group.label}</span>
+                      <b>{item.label}</b>
+                      <p>{item.summary}</p>
+                      <span class="v2-catalogue-status" data-status={item.status}>
+                        {catalogueStatusLabels[item.status]}
+                        {external && item.issue ? ` · #${item.issue}` : ""}
+                      </span>
+                    </a>
+                    {item.children && item.children.length > 0 && (
+                      <nav aria-label={`${item.label} routes`} class="v2-catalogue-children">
+                        {item.children.map((child) => {
+                          const childExternal = catalogueLinkIsExternal(child);
+                          const childCurrent = catalogueItemIsCurrent(child, activePath);
+                          return (
+                            <a
+                              href={catalogueHref(child, basePath)}
+                              target={childExternal ? "_blank" : undefined}
+                              rel={childExternal ? "noreferrer" : undefined}
+                              aria-current={childCurrent ? "page" : undefined}
+                            >
+                              <span>{child.label}</span>
+                              <small data-status={child.status}>{catalogueStatusLabels[child.status]}</small>
+                            </a>
+                          );
+                        })}
+                      </nav>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </details>
+      );
+    })}
+  </nav>
+
+  <div class="v2-catalogue-actions">
+    <a href={sourceHref}>Source</a>
+    <ThemeToggle />
+  </div>
+</header>
+
+<script>
+  const initialiseCatalogueHeader = () => {
+    document.querySelectorAll("[data-catalogue-header]").forEach((header) => {
+      if (!(header instanceof HTMLElement) || header.dataset.ready === "true") return;
+      header.dataset.ready = "true";
+      header.dataset.enhanced = "true";
+      header.dataset.menuOpen = "false";
+
+      const menuButton = header.querySelector("[data-catalogue-menu-button]");
+      const navigation = header.querySelector("[data-catalogue-navigation]");
+      const groups = [...header.querySelectorAll("[data-catalogue-group]")];
+
+      const closeMenu = (restoreFocus = false) => {
+        header.dataset.menuOpen = "false";
+        if (menuButton instanceof HTMLButtonElement) {
+          menuButton.setAttribute("aria-expanded", "false");
+          if (restoreFocus) menuButton.focus();
+        }
+      };
+
+      const closeGroups = (except = null, restoreFocus = false) => {
+        groups.forEach((group) => {
+          if (!(group instanceof HTMLDetailsElement) || group === except || !group.open) return;
+          group.open = false;
+          if (restoreFocus) group.querySelector("summary")?.focus();
+        });
+      };
+
+      if (menuButton instanceof HTMLButtonElement && navigation instanceof HTMLElement) {
+        menuButton.addEventListener("click", () => {
+          const open = header.dataset.menuOpen !== "true";
+          header.dataset.menuOpen = String(open);
+          menuButton.setAttribute("aria-expanded", String(open));
+          if (!open) closeGroups();
+        });
+      }
+
+      groups.forEach((group) => {
+        if (!(group instanceof HTMLDetailsElement)) return;
+        group.addEventListener("toggle", () => {
+          if (group.open) closeGroups(group);
+        });
+      });
+
+      header.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          closeGroups();
+          closeMenu();
+        });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        const openGroup = groups.find((group) => group instanceof HTMLDetailsElement && group.open);
+        if (openGroup instanceof HTMLDetailsElement) {
+          openGroup.open = false;
+          openGroup.querySelector("summary")?.focus();
+          return;
+        }
+        if (header.dataset.menuOpen === "true") closeMenu(true);
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Node) || header.contains(event.target)) return;
+        closeGroups();
+        closeMenu();
+      });
+    });
+  };
+
+  initialiseCatalogueHeader();
+  document.addEventListener("astro:page-load", initialiseCatalogueHeader);
+</script>
