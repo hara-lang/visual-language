@@ -1,0 +1,226 @@
+[
+  {
+    "id": "github-schema-release",
+    "source": "github",
+    "sourceLabel": "GitHub",
+    "kind": "hara-owned-release",
+    "ownership": "hara",
+    "author": "hara-lang",
+    "title": "Schema values move into the ordinary Hara runtime",
+    "summary": "A release note with code examples, migration notes, and links to the implementation discussion.",
+    "canonicalUrl": "https://example.invalid/hara/github/schema-release",
+    "publishedAt": "2026-08-19T08:00:00Z",
+    "signals": {
+      "haraRelevance": 1,
+      "engagementVelocity": 0.78,
+      "sourceTrust": 1,
+      "freshness": 0.95,
+      "conversationDepth": 0.62,
+      "novelty": 0.72,
+      "duplicate": 0,
+      "sameAuthorSaturation": 0.1,
+      "sameSourceSaturation": 0.15
+    },
+    "metrics": {
+      "reactions": 42,
+      "comments": 11,
+      "shares": 9
+    }
+  },
+  {
+    "id": "x-work-algebra",
+    "source": "x",
+    "sourceLabel": "X / Twitter",
+    "kind": "community-post",
+    "ownership": "community",
+    "author": "@mina_forms",
+    "title": "What if a work runtime is just executor + store + capabilities?",
+    "summary": "A compact thread comparing an algebraic work description with a conventional task runtime.",
+    "canonicalUrl": "https://example.invalid/hara/x/work-algebra",
+    "publishedAt": "2026-08-19T07:30:00Z",
+    "signals": {
+      "haraRelevance": 0.96,
+      "engagementVelocity": 0.92,
+      "sourceTrust": 0.72,
+      "freshness": 0.97,
+      "conversationDepth": 0.76,
+      "novelty": 0.84,
+      "duplicate": 0.05,
+      "sameAuthorSaturation": 0.1,
+      "sameSourceSaturation": 0.2
+    },
+    "metrics": {
+      "reactions": 86,
+      "comments": 18,
+      "shares": 21
+    }
+  },
+  {
+    "id": "reddit-hara-first-program",
+    "source": "reddit",
+    "sourceLabel": "Reddit",
+    "kind": "community-post",
+    "ownership": "community",
+    "author": "u/quietcompiler",
+    "title": "I made my first small Hara graphics program",
+    "summary": "A newcomer shares a runnable sketch and asks how namespaces and live sessions fit together.",
+    "canonicalUrl": "https://example.invalid/hara/reddit/first-program",
+    "publishedAt": "2026-08-19T05:15:00Z",
+    "signals": {
+      "haraRelevance": 0.94,
+      "engagementVelocity": 0.73,
+      "sourceTrust": 0.7,
+      "freshness": 0.88,
+      "conversationDepth": 0.9,
+      "novelty": 0.68,
+      "duplicate": 0,
+      "sameAuthorSaturation": 0,
+      "sameSourceSaturation": 0.1
+    },
+    "metrics": {
+      "reactions": 64,
+      "comments": 29,
+      "shares": 4
+    }
+  },
+  {
+    "id": "hn-portable-runtime",
+    "source": "hacker-news",
+    "sourceLabel": "Hacker News",
+    "kind": "external-discussion",
+    "ownership": "community",
+    "author": "kernel_notes",
+    "title": "Hara's portable runtime boundary is becoming easier to inspect",
+    "summary": "A technical discussion about interpreter, bytecode, Wasm, and native session parity.",
+    "canonicalUrl": "https://example.invalid/hara/hn/portable-runtime",
+    "publishedAt": "2026-08-18T23:40:00Z",
+    "signals": {
+      "haraRelevance": 0.91,
+      "engagementVelocity": 0.82,
+      "sourceTrust": 0.82,
+      "freshness": 0.74,
+      "conversationDepth": 0.88,
+      "novelty": 0.7,
+      "duplicate": 0.15,
+      "sameAuthorSaturation": 0,
+      "sameSourceSaturation": 0.1
+    },
+    "metrics": {
+      "reactions": 53,
+      "comments": 36,
+      "shares": 8
+    }
+  },
+  {
+    "id": "substack-language-tools",
+    "source": "substack",
+    "sourceLabel": "Substack",
+    "kind": "article",
+    "ownership": "community",
+    "author": "Small Language Systems",
+    "title": "Language tooling without a second semantic universe",
+    "summary": "An essay uses Hara's typed schemas and lint facts as one example of converging tools on runtime values.",
+    "canonicalUrl": "https://example.invalid/hara/substack/language-tools",
+    "publishedAt": "2026-08-18T20:00:00Z",
+    "signals": {
+      "haraRelevance": 0.86,
+      "engagementVelocity": 0.61,
+      "sourceTrust": 0.84,
+      "freshness": 0.68,
+      "conversationDepth": 0.64,
+      "novelty": 0.82,
+      "duplicate": 0.1,
+      "sameAuthorSaturation": 0,
+      "sameSourceSaturation": 0
+    },
+    "metrics": {
+      "reactions": 31,
+      "comments": 7,
+      "shares": 14
+    }
+  },
+  {
+    "id": "world-snippet-day",
+    "source": "world",
+    "sourceLabel": "Hara World",
+    "kind": "scheduled-snippet-of-the-day",
+    "ownership": "hara",
+    "author": "Hara Bot",
+    "title": "Snippet of the day: thread a value through a small pipeline",
+    "summary": "A runnable form with one explanation and links to the relevant language reference.",
+    "canonicalUrl": "https://example.invalid/hara/world/snippet-of-the-day",
+    "publishedAt": "2026-08-19T09:00:00Z",
+    "signals": {
+      "haraRelevance": 1,
+      "engagementVelocity": 0.58,
+      "sourceTrust": 1,
+      "freshness": 1,
+      "conversationDepth": 0.42,
+      "novelty": 0.55,
+      "duplicate": 0,
+      "sameAuthorSaturation": 0.2,
+      "sameSourceSaturation": 0.1
+    },
+    "metrics": {
+      "reactions": 25,
+      "comments": 5,
+      "shares": 6
+    }
+  },
+  {
+    "id": "rss-audio-box",
+    "source": "rss",
+    "sourceLabel": "RSS",
+    "kind": "project-note",
+    "ownership": "community",
+    "author": "Ari K.",
+    "title": "A programmable browser music box in Hara",
+    "summary": "A project log covering deterministic timing, audio nodes, and a small form-based control surface.",
+    "canonicalUrl": "https://example.invalid/hara/rss/audio-box",
+    "publishedAt": "2026-08-18T16:30:00Z",
+    "signals": {
+      "haraRelevance": 0.92,
+      "engagementVelocity": 0.55,
+      "sourceTrust": 0.76,
+      "freshness": 0.58,
+      "conversationDepth": 0.52,
+      "novelty": 0.9,
+      "duplicate": 0,
+      "sameAuthorSaturation": 0,
+      "sameSourceSaturation": 0
+    },
+    "metrics": {
+      "reactions": 22,
+      "comments": 6,
+      "shares": 10
+    }
+  },
+  {
+    "id": "x-duplicate-schema",
+    "source": "x",
+    "sourceLabel": "X / Twitter",
+    "kind": "community-post",
+    "ownership": "community",
+    "author": "@link_relay",
+    "title": "Schema values move into the ordinary Hara runtime",
+    "summary": "A link-only repost of the release note already represented by its canonical GitHub item.",
+    "canonicalUrl": "https://example.invalid/hara/github/schema-release",
+    "publishedAt": "2026-08-19T08:20:00Z",
+    "signals": {
+      "haraRelevance": 0.98,
+      "engagementVelocity": 0.48,
+      "sourceTrust": 0.64,
+      "freshness": 0.96,
+      "conversationDepth": 0.18,
+      "novelty": 0.05,
+      "duplicate": 1,
+      "sameAuthorSaturation": 0,
+      "sameSourceSaturation": 0.25
+    },
+    "metrics": {
+      "reactions": 19,
+      "comments": 1,
+      "shares": 3
+    }
+  }
+]

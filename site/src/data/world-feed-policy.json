@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "mode": "review",
+  "ingestion": {
+    "sources": [
+      {
+        "id": "world",
+        "label": "Hara World",
+        "transport": "native",
+        "cadence": "event"
+      },
+      {
+        "id": "github",
+        "label": "GitHub",
+        "transport": "webhook + API",
+        "cadence": "5m"
+      },
+      {
+        "id": "reddit",
+        "label": "Reddit",
+        "transport": "API",
+        "cadence": "15m"
+      },
+      {
+        "id": "x",
+        "label": "X / Twitter",
+        "transport": "API",
+        "cadence": "15m"
+      },
+      {
+        "id": "hacker-news",
+        "label": "Hacker News",
+        "transport": "API",
+        "cadence": "10m"
+      },
+      {
+        "id": "substack",
+        "label": "Substack",
+        "transport": "RSS",
+        "cadence": "30m"
+      },
+      {
+        "id": "rss",
+        "label": "RSS / JSON Feed",
+        "transport": "RSS + JSON Feed",
+        "cadence": "30m"
+      }
+    ]
+  },
+  "ranking": {
+    "windowHours": 24,
+    "weights": {
+      "haraRelevance": 0.35,
+      "engagementVelocity": 0.2,
+      "sourceTrust": 0.15,
+      "freshness": 0.15,
+      "conversationDepth": 0.1,
+      "novelty": 0.05
+    },
+    "penalties": {
+      "duplicate": 0.5,
+      "sameAuthorSaturation": 0.25,
+      "sameSourceSaturation": 0.2
+    }
+  },
+  "relay": {
+    "defaultMode": "review",
+    "cooldownHours": 72,
+    "destinations": [
+      {
+        "id": "x",
+        "label": "Hara Bot on X / Twitter",
+        "mode": "review"
+      },
+      {
+        "id": "reddit",
+        "label": "Hara-owned Reddit communities",
+        "mode": "review"
+      },
+      {
+        "id": "world-hot",
+        "label": "World · What's hot",
+        "mode": "auto"
+      },
+      {
+        "id": "channels",
+        "label": "Matrix / Discord channels",
+        "mode": "review"
+      },
+      {
+        "id": "newsletter",
+        "label": "What's new newsletter",
+        "mode": "review"
+      }
+    ],
+    "autoEligible": [
+      "hara-owned-release",
+      "security-advisory",
+      "scheduled-snippet-of-the-day"
+    ],
+    "neverAutomate": [
+      "replies",
+      "comments",
+      "private-content",
+      "deleted-content",
+      "quote-without-canonical-link"
+    ],
+    "required": [
+      "canonical-url",
+      "source-author",
+      "source-platform",
+      "publication-receipt"
+    ]
+  }
+}

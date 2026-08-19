@@ -5,88 +5,101 @@ import Shell from "../../../../../src/astro/v2/Shell.astro";
 import Header from "../../../../../src/astro/v2/Header.astro";
 import ContextNav from "../../../../../src/astro/v2/ContextNav.astro";
 import Sidebar from "../../../../../src/astro/v2/Sidebar.astro";
+import FeedExplorer from "./_components/FeedExplorer.astro";
+import SourceManager from "./_components/SourceManager.astro";
+import ConversationCluster from "./_components/ConversationCluster.astro";
+import RelayConsole from "./_components/RelayConsole.astro";
 import "../../../../../src/v2.css";
 import "../../../../../src/theme.js";
 import "../../../styles/v2-lab.css";
 import "../../../styles/v2-calm-lab.css";
-import "../../../styles/v2-world-lab.css";
+import "../../../styles/v2-world-feed.css";
+import "../../../styles/v2-world-feed-explorer.css";
+import "../../../styles/v2-world-feed-sources.css";
+import "../../../styles/v2-world-feed-conversation.css";
+import "../../../styles/v2-world-feed-relay.css";
+import "../../../styles/v2-world-feed-responsive.css";
 
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
 const pageUrl = new URL(`${basePath}v2/world/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
 const documentLab = `${basePath}v2/`;
+const onboardingLab = `${basePath}v2/world/onboarding/`;
 
 const ecosystemNav = [
-  { href: "#feed", label: "Home" },
-  { href: "#feed", label: "World", current: true },
-  { href: "#feed", label: "Specs" },
-  { href: "#feed", label: "Packages" },
-  { href: "#feed", label: "Identity" }
+  { href: "#feed-explorer", label: "Home" },
+  { href: "#feed-explorer", label: "World", current: true },
+  { href: "#feed-explorer", label: "Specs" },
+  { href: "#feed-explorer", label: "Packages" },
+  { href: "#feed-explorer", label: "Identity" }
 ];
 
 const worldNav = (current) => [
-  { href: "#feed", label: "Feed", current: current === "feed" },
-  { href: "#play", label: "Play", current: current === "play" || current === "challenge" },
-  { href: "#community", label: "People", current: current === "people" },
-  { href: "#community", label: "Agents", current: current === "agents" },
-  { href: "#play", label: "Learn", current: current === "learn" },
-  { href: "#feed", label: "Sources", current: current === "sources" }
+  { href: "#feed-explorer", label: "Feed", current: current === "feed" },
+  { href: "#feed-explorer", label: "What’s new", current: current === "new" },
+  { href: "#conversation", label: "Conversations", current: current === "conversation" },
+  { href: "#conversation", label: "People", current: current === "people" },
+  { href: "#sources", label: "Sources", current: current === "sources" }
 ];
 
 const feedSidebar = [
-  { label: "Feed", items: [
-    { href: "#feed", label: "All posts", current: true, badge: 24 },
-    { href: "#feed", label: "Following", badge: 8 },
-    { href: "#feed", label: "Questions", badge: 5 },
-    { href: "#feed", label: "Showcase", badge: 6 }
-  ] },
   { label: "Explore", items: [
-    { href: "#play", label: "Daily challenge" },
-    { href: "#community", label: "People" },
-    { href: "#community", label: "Agents" },
-    { href: "#feed", label: "Topics" }
+    { href: "#feed-explorer", label: "Hot", current: true, badge: 42 },
+    { href: "#feed-explorer", label: "New", badge: 18 },
+    { href: "#feed-explorer", label: "Following", badge: 9 },
+    { href: "#feed-explorer", label: "Releases", badge: 6 },
+    { href: "#feed-explorer", label: "Snippet of the day" }
+  ] },
+  { label: "Sources", items: [
+    { href: "#sources", label: "Hara World", badge: 8 },
+    { href: "#sources", label: "GitHub", badge: 11 },
+    { href: "#sources", label: "Reddit", badge: 6 },
+    { href: "#sources", label: "X / Twitter", badge: 9 },
+    { href: "#sources", label: "Hacker News", badge: 3 },
+    { href: "#sources", label: "Substack", badge: 5 }
   ] }
 ];
 
-const playSidebar = [
-  { label: "Play", items: [
-    { href: "#play", label: "Daily", current: true, badge: "1" },
-    { href: "#challenge", label: "Koans", badge: 12 },
-    { href: "#challenge", label: "Fix the form", badge: 6 },
-    { href: "#challenge", label: "Code golf", badge: 4 },
-    { href: "#challenge", label: "Macro match", badge: 5 }
+const sourceSidebar = [
+  { label: "Source control", items: [
+    { href: "#sources", label: "Providers", current: true, badge: 7 },
+    { href: "#sources", label: "Search rules", badge: 12 },
+    { href: "#sources", label: "Feeds", badge: 12 },
+    { href: "#sources", label: "Review queue", badge: 4 }
   ] },
-  { label: "Your activity", items: [
-    { href: "#play", label: "Solved", badge: 19 },
-    { href: "#play", label: "Saved" },
-    { href: "#play", label: "Peer solutions" }
+  { label: "Portability", items: [
+    { href: "#sources", label: "Import OPML" },
+    { href: "#sources", label: "Export OPML" },
+    { href: "#sources", label: "JSON Feed" }
   ] }
 ];
 
-const challengeSidebar = [
-  { label: "Today's challenge", items: [
-    { href: "#challenge", label: "01 · Read", current: true },
-    { href: "#challenge", label: "02 · Solve" },
-    { href: "#challenge", label: "03 · Run checks" },
-    { href: "#challenge", label: "04 · Compare" }
+const conversationSidebar = [
+  { label: "Conversation", items: [
+    { href: "#conversation", label: "Canonical story", current: true },
+    { href: "#conversation", label: "All discussion", badge: 69 },
+    { href: "#conversation", label: "World context", badge: 4 },
+    { href: "#conversation", label: "Related Hara work", badge: 4 }
   ] },
-  { label: "More", items: [
-    { href: "#play", label: "Back to Play" },
-    { href: "#challenge", label: "Next challenge" }
+  { label: "Sources", items: [
+    { href: "#conversation", label: "X / Twitter", badge: 18 },
+    { href: "#conversation", label: "Hacker News", badge: 36 },
+    { href: "#conversation", label: "Reddit", badge: 11 }
   ] }
 ];
 
-const communitySidebar = [
-  { label: "Directory", items: [
-    { href: "#community", label: "People", current: true, badge: 46 },
-    { href: "#community", label: "Agents", badge: 19 },
-    { href: "#community", label: "Projects", badge: 14 },
-    { href: "#community", label: "Topics", badge: 31 }
+const relaySidebar = [
+  { label: "Hara Bot", items: [
+    { href: "#relay", label: "Review queue", current: true, badge: 6 },
+    { href: "#relay", label: "Scheduled", badge: 2 },
+    { href: "#relay", label: "Published", badge: 128 },
+    { href: "#relay", label: "Blocked", badge: 3 }
   ] },
-  { label: "Your network", items: [
-    { href: "#community", label: "Following", badge: 8 },
-    { href: "#community", label: "New this week", badge: 7 }
+  { label: "Control", items: [
+    { href: "#relay", label: "Destinations", badge: 5 },
+    { href: "#relay", label: "Ranking policy" },
+    { href: "#relay", label: "Delivery receipts" }
   ] }
 ];
 ---
@@ -95,293 +108,223 @@ const communitySidebar = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Expanded Hara World v2 community laboratory covering the feed, Play, challenges, people, agents, and lightweight social loops." />
+    <meta name="description" content="Hara World v2 feed explorer: an attributed reading layer across Hara World, GitHub, Reddit, X, Hacker News, Substack, RSS, and review-gated Hara Bot relays." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara World v2 community laboratory" />
-    <meta property="og:description" content="A feed-first, playable Hara community surface built from the calm v2 interface language." />
+    <meta property="og:title" content="Hara World v2 feed explorer" />
+    <meta property="og:description" content="Cross-source Hara discovery, canonical conversations, source management, and receipt-backed relay review." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara World v2 community laboratory" />
-    <meta name="twitter:description" content="Feed, Play, people, agents, challenges, and community discovery in Hara v2." />
+    <meta name="twitter:title" content="Hara World v2 feed explorer" />
+    <meta name="twitter:description" content="A focused reader for Hara posts, repositories, discussions, and independent writing." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara World v2 community laboratory</title>
+    <title>Hara World v2 feed explorer</title>
   </head>
-  <body class="hara-v2">
+  <body class="hara-v2 world-feed-lab">
     <header class="v2-lab-header">
       <a class="v2-lab-brand" href={documentLab}>
         <HaraMark size={28} />
         <b>Hara visual language</b>
-        <small>World field test</small>
+        <small>World feed field test</small>
       </a>
-      <nav aria-label="World prototype screens">
-        <a href="#feed">Feed</a>
-        <a href="#play">Play</a>
-        <a href="#challenge">Challenge</a>
-        <a href="#community">Community</a>
+      <nav aria-label="World feed prototype screens">
+        <a href="#feed-explorer">Feed</a>
+        <a href="#sources">Sources</a>
+        <a href="#conversation">Conversation</a>
+        <a href="#relay">Hara Bot</a>
       </nav>
       <ThemeToggle />
     </header>
 
-    <main class="v2-lab-main world-lab-main">
-      <section class="world-lab-hero">
+    <main class="v2-lab-main world-feed-lab-main">
+      <section class="world-feed-lab-hero">
         <div>
-          <p class="hara-v2-kicker">World community study · Version 2</p>
-          <h1>A place to read, play, and make things together.</h1>
-          <p>World keeps the calm Hara v2 shell, but its language is deliberately human. The community feed stays primary; small programming games, people, agents, projects, and learning activity create reasons to return without turning the site into a noisy social dashboard.</p>
-          <div class="world-lab-hero-actions">
-            <a class="hara-v2-button" data-variant="primary" href="#feed">Open the feed</a>
-            <a class="hara-v2-button" href="#play">Explore Play</a>
-            <a class="world-lab-back-link" href={documentLab}>← Back to the five-layout laboratory</a>
+          <p class="hara-v2-kicker">World feed explorer · Version 2</p>
+          <h1>Hara World listens to the open web.</h1>
+          <p>Incoming users should be able to see what people are building, saying, releasing, and asking about Hara without knowing which repository, subreddit, account, newsletter, or feed to follow first. World gathers those public trails into one attributed, inspectable reading surface.</p>
+          <div class="world-feed-lab-hero-actions">
+            <a class="hara-v2-button" data-variant="primary" href="#feed-explorer">Explore what’s hot</a>
+            <a class="hara-v2-button" href="#sources">See the sources</a>
+            <a class="hara-v2-button" href={onboardingLab}>New programmer journey</a>
+            <a class="world-feed-lab-back-link" href={documentLab}>← Back to the v2 laboratory</a>
           </div>
         </div>
-        <div class="world-lab-orbit" aria-hidden="true">
-          <div class="world-lab-orbit-mark">H<i></i></div>
-          <span class="orbit-node orbit-node--feed">Feed</span>
-          <span class="orbit-node orbit-node--play">Play</span>
-          <span class="orbit-node orbit-node--people">People</span>
-          <span class="orbit-node orbit-node--agents">Agents</span>
-          <span class="orbit-node orbit-node--learn">Learn</span>
+        <div class="world-feed-radar" aria-label="Hara World collecting seven public source types">
+          <div class="world-feed-radar-core"><strong>World</strong><small>31 clusters</small></div>
+          <span class="world-feed-radar-node world-feed-radar-node--github" data-source="github"><i></i>GitHub · 11</span>
+          <span class="world-feed-radar-node world-feed-radar-node--reddit" data-source="reddit"><i></i>Reddit · 6</span>
+          <span class="world-feed-radar-node world-feed-radar-node--x" data-source="x"><i></i>X · 9</span>
+          <span class="world-feed-radar-node world-feed-radar-node--hn" data-source="hacker-news"><i></i>Hacker News · 3</span>
+          <span class="world-feed-radar-node world-feed-radar-node--substack" data-source="substack"><i></i>Substack · 5</span>
+          <span class="world-feed-radar-node world-feed-radar-node--rss" data-source="rss"><i></i>RSS · 12 feeds</span>
+          <div class="world-feed-radar-pulse"><strong>42</strong><span>incoming today</span></div>
         </div>
       </section>
 
-      <nav class="world-lab-index" aria-label="World screen catalogue">
-        <a href="#feed"><strong>Community feed</strong><span>Chronological posts, following, prompts, daily challenge, and quiet community context.</span><code>read / discover / post</code></a>
-        <a href="#play"><strong>Play hub</strong><span>Small Hara games built around the existing safe browser execution model.</span><code>daily / koans / games</code></a>
-        <a href="#challenge"><strong>Challenge workspace</strong><span>A focused solve-test-compare loop that keeps execution local and capability-free.</span><code>code / checks / peers</code></a>
-        <a href="#community"><strong>Community graph</strong><span>People, agents, projects, topics, and lightweight following without a closed social silo.</span><code>people / projects / follow</code></a>
+      <nav class="world-feed-lab-index" aria-label="World feed screen catalogue">
+        <a href="#feed-explorer"><strong>Feed explorer</strong><span>A calm Reddit-like front page across Hara World, repositories, social posts, discussions, and independent feeds.</span><code>hot / new / following / releases</code></a>
+        <a href="#sources"><strong>Source manager</strong><span>Provider health, relevance rules, review queues, RSS, JSON Feed, and OPML portability.</span><code>listen / normalize / review</code></a>
+        <a href="#conversation"><strong>Canonical conversation</strong><span>Cluster one story across platforms while preserving every original author, link, and discussion context.</span><code>source / cluster / discuss</code></a>
+        <a href="#relay"><strong>Hara Bot relay</strong><span>Ranked candidates, attributed drafts, human review, cooldowns, deduplication, and delivery receipts.</span><code>rank / review / receipt</code></a>
       </nav>
 
-      <section class="world-lab-screen" id="feed">
-        <header class="world-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 01 · Community home</p><h2>Feed first, explanation second.</h2></div>
-          <p>The landing page drops the large introductory pitch. Posts are immediately readable, while participation and discovery stay visible at the edges.</p>
+      <section class="world-feed-lab-screen" id="feed-explorer">
+        <header class="world-feed-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 01 · Incoming users</p><h2>A front page for the Hara conversation.</h2></div>
+          <p>World should become useful before somebody creates an account. The first view answers “what is happening around Hara?” and keeps every external source visible rather than flattening the web into anonymous cards.</p>
         </header>
-        <div class="world-lab-canvas world-lab-canvas--feed">
+        <div class="world-feed-lab-canvas">
           <Shell embedded={true} sidebar={true} aside={true} mainId="world-feed-content">
             <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Search">⌕</button>
               <button class="hara-v2-icon-button" aria-label="Account">◎</button>
               <ThemeToggle />
             </Header>
             <ContextNav slot="context" items={worldNav("feed")}>
-              <a class="hara-v2-button" href="#feed">Add a feed</a>
-              <a class="hara-v2-button" data-variant="primary" href="#feed">Post ↗</a>
+              <a class="hara-v2-button" href="#sources">Add a source</a>
+              <a class="hara-v2-button" data-variant="primary" href="#feed-explorer">Submit a link ↗</a>
             </ContextNav>
             <Sidebar slot="sidebar" title="World" groups={feedSidebar}>
-              <span>Open RSS, JSON Feed, and OPML remain first-class.</span>
+              <span>Open RSS, JSON Feed, and OPML remain first-class. Structured learning lives on Learn.</span>
             </Sidebar>
 
-            <div class="world-feed-heading">
-              <div><p class="hara-v2-kicker">Community feed</p><h1>What people are making with Hara.</h1></div>
-              <span class="hara-v2-badge" data-tone="success">24 new</span>
-            </div>
-            <div class="hara-v2-tabs world-feed-tabs" role="tablist" aria-label="Feed filters">
-              <button class="hara-v2-tab" role="tab" aria-selected="true">All</button>
-              <button class="hara-v2-tab" role="tab">Following</button>
-              <button class="hara-v2-tab" role="tab">Questions</button>
-              <button class="hara-v2-tab" role="tab">Showcase</button>
-              <button class="hara-v2-tab" role="tab">Releases</button>
-              <button class="hara-v2-tab" role="tab">Lessons</button>
-            </div>
-            <div class="hara-v2-feed world-feed-list">
-              <article class="hara-v2-story world-story">
-                <div class="hara-v2-avatar">CZ</div>
-                <div><div class="world-story-byline"><b>Chris Zheng</b><span>field note</span><span>std.typed</span></div><h3>Schema values are starting to make the type system feel ordinary</h3><p>A short note on what changed once schemas stopped being special metadata and became values the rest of Hara could inspect.</p><div class="hara-v2-story-meta"><span>12 reactions</span><span>3 responses</span><span>6 min read</span></div></div>
-                <time>07:12</time>
-              </article>
-              <article class="hara-v2-story world-story world-story--question">
-                <div class="hara-v2-avatar">MN</div>
-                <div><div class="world-story-byline"><b>Mina N.</b><span>question</span><span>work.*</span></div><h3>Should a bare work program need a runtime object at all?</h3><p>I keep arriving at executor + store + a map of capabilities. Is there anything important that gets lost if runtime becomes ordinary data?</p><div class="hara-v2-story-meta"><span>8 reactions</span><span>7 responses</span><span>Following</span></div></div>
-                <time>06:51</time>
-              </article>
-              <article class="hara-v2-story world-story">
-                <div class="hara-v2-avatar">HP</div>
-                <div><div class="world-story-byline"><b>Hoplite</b><span>release</span><span>web</span></div><h3>Raw host interfaces now cover more of the request lifecycle</h3><p>The web server is becoming a first-class Hara surface rather than a collection of escape hatches.</p><div class="hara-v2-story-meta"><span>5 reactions</span><span>2 responses</span><span>8 min read</span></div></div>
-                <time>Yesterday</time>
-              </article>
-              <article class="hara-v2-story world-story world-story--prompt">
-                <div class="hara-v2-avatar">+</div>
-                <div><div class="world-story-byline"><b>Community prompt</b><span>open invitation</span></div><h3>What did you simplify this week?</h3><p>Share a tiny refactor, a removed abstraction, a package you finally understood, or a tool you made less annoying.</p><div class="hara-v2-story-meta"><span>Small posts welcome</span><span>Markdown reviewed through GitHub</span></div></div>
-                <time>Today</time>
-              </article>
-            </div>
+            <FeedExplorer />
 
-            <div slot="aside" class="world-aside-stack">
-              <section class="hara-v2-panel world-daily-card">
-                <header class="hara-v2-panel-header"><h2>Daily challenge</h2><span class="hara-v2-badge" data-tone="signal">3 min</span></header>
-                <div class="hara-v2-panel-body"><p class="world-daily-type">Eval sprint · sequence</p><h3>What does this form return?</h3><pre><code>(-&gt;&gt; [1 2 3 4]
-     (filter odd?)
-     (map #(* % %)))</code></pre><div class="world-choice-row"><button>3</button><button>[1 9]</button><button>[1 3]</button></div><a class="hara-v2-button" data-variant="primary" href="#challenge">Play today →</a></div>
-              </section>
+            <div slot="aside" class="world-feed-aside-stack">
               <section class="hara-v2-panel">
-                <header class="hara-v2-panel-header"><h2>New people</h2><a href="#community">View all</a></header>
-                <div class="hara-v2-panel-body world-mini-people">
-                  <div><span class="hara-v2-avatar">AK</span><p><b>Ari K.</b><small>compilers · audio</small></p><button>Follow</button></div>
-                  <div><span class="hara-v2-avatar">NL</span><p><b>Noah L.</b><small>agents · tooling</small></p><button>Follow</button></div>
-                  <div><span class="hara-v2-avatar">SV</span><p><b>Sara V.</b><small>graphics · wasm</small></p><button>Follow</button></div>
+                <header class="hara-v2-panel-header"><h2>Top conversations</h2><a href="#conversation">View all</a></header>
+                <div class="hara-v2-panel-body world-feed-aside-list">
+                  <a href="#conversation"><b>Schema becomes a runtime value</b><span>4 sources</span><small>69 responses · active 8 min ago</small></a>
+                  <a href="#conversation"><b>What is bare-metal work?</b><span>3 sources</span><small>41 responses · active 21 min ago</small></a>
+                  <a href="#conversation"><b>Browser sessions and Wasm</b><span>2 sources</span><small>28 responses · active 1 h ago</small></a>
                 </div>
               </section>
-              <section class="hara-v2-panel world-pulse">
-                <header class="hara-v2-panel-header"><h2>Community pulse</h2></header>
-                <div class="hara-v2-panel-body"><dl><div><dt>Posts today</dt><dd>12</dd></div><div><dt>Playing now</dt><dd>18</dd></div><div><dt>People</dt><dd>46</dd></div><div><dt>Agents</dt><dd>19</dd></div></dl></div>
-              </section>
-            </div>
-          </Shell>
-        </div>
-        <div class="world-lab-notes"><article><b>Primary behaviour</b><p>Reading begins immediately. The introductory statement becomes one quiet heading instead of a hero wall.</p></article><article><b>Social density</b><p>Reactions and responses are metadata, not giant engagement controls. Posting stays the one strong command.</p></article><article><b>Daily return loop</b><p>The game module is useful but secondary; it should never push the feed out of view.</p></article></div>
-      </section>
-
-      <section class="world-lab-screen" id="play">
-        <header class="world-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 02 · Play hub</p><h2>Programming games that feel native to World.</h2></div>
-          <p>Play reuses the same community shell and browser execution model as Koans. The first version is cooperative and personal: solve, learn, compare approaches, and share what you discovered.</p>
-        </header>
-        <div class="world-lab-canvas world-lab-canvas--play">
-          <Shell embedded={true} sidebar={true} aside={true} mainId="world-play-content">
-            <Header slot="header" section="World" nav={ecosystemNav}>
-              <button class="hara-v2-icon-button" aria-label="Account">◎</button>
-              <ThemeToggle />
-            </Header>
-            <ContextNav slot="context" items={worldNav("play")}>
-              <a class="hara-v2-button" href="#play">How Play works</a>
-              <a class="hara-v2-button" data-variant="primary" href="#challenge">Play today ↗</a>
-            </ContextNav>
-            <Sidebar slot="sidebar" title="Play" groups={playSidebar}>
-              <span>Your progress is private by default. Successful solutions can be shared when you choose.</span>
-            </Sidebar>
-
-            <div class="world-play-heading"><div><p class="hara-v2-kicker">Play</p><h1>Small problems. Real Hara.</h1><p>Short challenges for learning the language, comparing ideas, and discovering how other people think.</p></div><div class="world-streak"><strong>6</strong><span>day streak</span></div></div>
-
-            <section class="world-play-feature">
-              <div class="world-play-feature-copy"><span class="hara-v2-badge" data-tone="signal">Today · Eval sprint</span><h2>Trace the pipeline</h2><p>Read a threaded form, predict the result, then explain why. No setup and no sign-in required to play locally.</p><div class="world-play-feature-meta"><span>3 minutes</span><span>sequence</span><span>214 solves</span></div><a class="hara-v2-button" data-variant="primary" href="#challenge">Start challenge →</a></div>
-              <div class="world-play-feature-code"><pre><code>(-&gt;&gt; [1 2 3 4]
-     (filter odd?)
-     (map #(* % %)))</code></pre><div><span>read</span><span>predict</span><span>run</span><span>compare</span></div></div>
-            </section>
-
-            <div class="world-game-grid">
-              <article><div class="world-game-icon">λ</div><span class="hara-v2-badge">12 levels</span><h3>Koans</h3><p>Fill the smallest missing expression and make every deterministic check pass.</p><footer><span>7 solved</span><a href="#challenge">Continue →</a></footer></article>
-              <article><div class="world-game-icon">≠</div><span class="hara-v2-badge" data-tone="warning">6 puzzles</span><h3>Fix the form</h3><p>Find the broken assumption in a tiny program and repair it without rewriting everything.</p><footer><span>2 solved</span><a href="#challenge">Play →</a></footer></article>
-              <article><div class="world-game-icon">↘</div><span class="hara-v2-badge" data-tone="success">Weekly</span><h3>Code golf</h3><p>Solve the same tests with fewer forms, then compare readable and minimal approaches.</p><footer><span>opens Friday</span><a href="#challenge">Preview →</a></footer></article>
-              <article><div class="world-game-icon">ƒ</div><span class="hara-v2-badge">5 puzzles</span><h3>Macro match</h3><p>Predict expansion shape before running it. Learn macros by seeing the structure they produce.</p><footer><span>new</span><a href="#challenge">Play →</a></footer></article>
-            </div>
-
-            <section class="world-activity-strip"><div><p class="hara-v2-kicker">Recently solved by people you follow</p><strong>Mina solved “Map without map”</strong><span>with a 31-character solution</span></div><div><strong>Ari completed Koan 008</strong><span>and shared a recursive approach</span></div><a href="#community">See activity →</a></section>
-
-            <div slot="aside" class="world-aside-stack">
               <section class="hara-v2-panel">
-                <header class="hara-v2-panel-header"><h2>Your progress</h2><span>19 solved</span></header>
-                <div class="hara-v2-panel-body world-progress"><div><span>Koans</span><b>7 / 12</b><i style="--progress:58%"></i></div><div><span>Fix the form</span><b>2 / 6</b><i style="--progress:33%"></i></div><div><span>Macro match</span><b>4 / 5</b><i style="--progress:80%"></i></div></div>
+                <header class="hara-v2-panel-header"><h2>New to Hara?</h2></header>
+                <div class="hara-v2-panel-body">
+                  <p>Start with one runnable form, then follow the people and projects around it. No account is required for the first run.</p>
+                  <a class="hara-v2-button" data-variant="primary" href={onboardingLab}>Open newcomer path</a>
+                  <a class="hara-v2-button" href="#feed-explorer">See Snippet of the Day</a>
+                </div>
               </section>
-              <section class="hara-v2-panel world-weekly-quest">
-                <header class="hara-v2-panel-header"><h2>Weekly quest</h2><span class="hara-v2-badge" data-tone="success">Open</span></header>
-                <div class="hara-v2-panel-body"><p class="world-daily-type">Community challenge</p><h3>Build a tiny event reducer.</h3><p>One shared prompt, many approaches. Post a short note about the trade-off you chose.</p><a class="hara-v2-button" href="#challenge">View quest</a></div>
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>What’s New</h2><span class="hara-v2-badge">Weekly</span></header>
+                <div class="hara-v2-panel-body">
+                  <p>A portable digest of releases, discussions, projects, and community posts selected from the same attributed feed.</p>
+                  <button class="hara-v2-button">Join the mailing list</button>
+                </div>
               </section>
-              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Principle</h2></header><div class="hara-v2-panel-body"><p class="world-aside-copy">Play should reward understanding and explanation before competition. Ranked leaderboards can wait for server-verifiable result receipts.</p></div></section>
             </div>
           </Shell>
         </div>
-        <div class="world-lab-notes"><article><b>One runtime</b><p>Koans and games should share one safe challenge contract instead of growing separate evaluators.</p></article><article><b>No fake competition</b><p>Personal progress and peer comparison are honest with browser verification; ranked scoring waits for trusted verification.</p></article><article><b>Community connection</b><p>Activity links games back to people and posts so Play strengthens the community rather than becoming a detached arcade.</p></article></div>
+        <div class="world-feed-lab-notes"><article><b>Read before joining</b><p>The public feed is immediately useful. Sign-in appears for saving, following, submitting, or adding World context.</p></article><article><b>Source stays visible</b><p>Reddit, X, Hacker News, Substack, GitHub, and open feeds retain their own authorship and engagement context.</p></article><article><b>Inspectable heat</b><p>Every rank can expose a score receipt. Popularity is a discovery signal, not an endorsement or hidden authority.</p></article></div>
       </section>
 
-      <section class="world-lab-screen" id="challenge">
-        <header class="world-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 03 · Challenge workspace</p><h2>Solve without leaving the community surface.</h2></div>
-          <p>The workspace is intentionally quieter than a full IDE. A prompt, one code surface, deterministic checks, and peer solutions after completion are enough for the first generation of games.</p>
+      <section class="world-feed-lab-screen" id="sources">
+        <header class="world-feed-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 02 · Source control</p><h2>Open feeds with deliberate relevance.</h2></div>
+          <p>“Hara” is an overloaded word. The source layer needs explicit context, provider health, reviewable exclusions, and portable subscriptions rather than one opaque keyword search.</p>
         </header>
-        <div class="world-lab-canvas world-lab-canvas--challenge">
-          <Shell embedded={true} sidebar={true} aside={true} mainId="world-challenge-content">
+        <div class="world-feed-lab-canvas">
+          <Shell embedded={true} sidebar={true} aside={true} mainId="world-source-content">
             <Header slot="header" section="World" nav={ecosystemNav}>
               <button class="hara-v2-icon-button" aria-label="Account">◎</button>
               <ThemeToggle />
             </Header>
-            <ContextNav slot="context" items={worldNav("challenge")}>
-              <a class="hara-v2-button" href="#play">← Play</a>
-              <a class="hara-v2-button" href="#challenge">Save for later</a>
+            <ContextNav slot="context" items={worldNav("sources")}>
+              <a class="hara-v2-button" href="#sources">Import OPML</a>
+              <a class="hara-v2-button" data-variant="primary" href="#sources">Add source ↗</a>
             </ContextNav>
-            <Sidebar slot="sidebar" title="Eval sprint 041" groups={challengeSidebar}>
-              <span>Local execution · no capabilities · solution saved only after a passing run.</span>
+            <Sidebar slot="sidebar" title="Sources" groups={sourceSidebar}>
+              <span>Provider payloads remain auditable. Ranking consumes one normalized, attributed item envelope.</span>
             </Sidebar>
 
-            <div class="world-challenge-heading"><div><p class="hara-v2-kicker">Daily challenge · 041</p><h1>Trace the pipeline.</h1><p>Write the value produced by the expression. Then run the checks and compare how other people reasoned about it.</p></div><div class="world-challenge-meta"><span class="hara-v2-badge" data-tone="signal">Sequence</span><span>3 min</span><span>214 solves</span></div></div>
+            <SourceManager />
 
-            <section class="world-challenge-workspace">
-              <div class="world-editor">
-                <header><div><span class="world-editor-dot"></span><b>answer.hal</b></div><span>capability-free browser session</span></header>
-                <div class="world-prompt-code"><span class="world-line-no">1</span><code>(-&gt;&gt; [1 2 3 4]</code><span class="world-line-no">2</span><code>     (filter odd?)</code><span class="world-line-no">3</span><code>     (map #(* % %)))</code></div>
-                <label for="world-answer">Your answer</label>
-                <textarea id="world-answer" spellcheck="false">[1 9]</textarea>
-                <footer><div class="world-run-state"><span></span>kernel ready locally</div><div><button class="hara-v2-button">Reset</button><button class="hara-v2-button" data-variant="primary">Run checks ▶</button></div></footer>
-              </div>
-              <aside class="world-checks">
-                <header><h2>Checks</h2><span>3 / 3</span></header>
-                <ol><li class="is-passed"><span>✓</span><div><b>Shape</b><code>vector?</code></div></li><li class="is-passed"><span>✓</span><div><b>Count</b><code>(= 2 (count __))</code></div></li><li class="is-passed"><span>✓</span><div><b>Value</b><code>(= [1 9] __)</code></div></li></ol>
-                <div class="world-pass-card"><span class="hara-v2-badge" data-tone="success">Passed</span><h3>Nice. Now compare approaches.</h3><p>Your successful expression can sync to World when signed in.</p><button class="hara-v2-button" data-variant="primary">Reveal peer solutions</button></div>
-              </aside>
-            </section>
-
-            <section class="world-after-solve"><header><div><p class="hara-v2-kicker">After solving</p><h2>How other people saw it.</h2></div><a href="#feed">Post what you learned →</a></header><div class="world-peer-grid"><article><div><span class="hara-v2-avatar">MN</span><p><b>Mina N.</b><small>reasoned from the threaded value</small></p></div><pre><code>[1 9]</code></pre><p>“I read each step as a narrowing of the sequence rather than expanding the macro first.”</p></article><article><div><span class="hara-v2-avatar">AK</span><p><b>Ari K.</b><small>expanded the pipeline mentally</small></p></div><pre><code>[1 9]</code></pre><p>“The useful trick was remembering that -&gt;&gt; inserts the collection last.”</p></article></div></section>
-
-            <div slot="aside" class="world-aside-stack">
-              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Challenge receipt</h2></header><div class="hara-v2-panel-body world-receipt"><dl><div><dt>Execution</dt><dd>browser</dd></div><div><dt>Capabilities</dt><dd>none</dd></div><div><dt>Verification</dt><dd>local</dd></div><div><dt>Progress</dt><dd>syncable</dd></div></dl></div></section>
-              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Next</h2></header><div class="hara-v2-panel-body"><p class="world-aside-copy">Try “Fix the form: accidental eager map” or return to the feed and write a short explanation.</p><div class="hara-v2-stack"><a class="hara-v2-button" href="#challenge">Next puzzle</a><a class="hara-v2-button" href="#feed">Write a post</a></div></div></section>
+            <div slot="aside" class="world-feed-aside-stack">
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Normalization</h2></header>
+                <div class="hara-v2-panel-body world-feed-aside-list">
+                  <div><b>Identity</b><span>required</span><small>source, author, canonical URL, published time</small></div>
+                  <div><b>Content</b><span>required</span><small>title, summary, kind, public state</small></div>
+                  <div><b>Signals</b><span>derived</span><small>relevance, velocity, trust, freshness, depth, novelty</small></div>
+                  <div><b>Receipt</b><span>retained</span><small>provider snapshot and normalization version</small></div>
+                </div>
+              </section>
+              <section class="hara-v2-panel">
+                <header class="hara-v2-panel-header"><h2>Source principle</h2></header>
+                <div class="hara-v2-panel-body"><p>World links outward. It does not make a permanent unattributed copy of somebody else’s post, comments, or newsletter.</p></div>
+              </section>
             </div>
           </Shell>
         </div>
-        <div class="world-lab-notes"><article><b>Focused surface</b><p>The challenge view borrows v2's editor precision without importing the full Studio workbench.</p></article><article><b>Transparent trust</b><p>The UI says where verification occurred and does not imply that a browser-reported result is a competitive score.</p></article><article><b>Knowledge loop</b><p>Solving unlocks explanations, then provides a direct path into a community post.</p></article></div>
+        <div class="world-feed-lab-notes"><article><b>Provider boundary</b><p>Each API or feed adapter only fetches and normalizes. It does not own ranking, clustering, or publication decisions.</p></article><article><b>False-positive review</b><p>Weak “Hara” keyword matches cannot trend automatically. Strong language and repository evidence can enter normally.</p></article><article><b>Portable follows</b><p>RSS, JSON Feed, and OPML let community subscriptions outlive a World account or implementation.</p></article></div>
       </section>
 
-      <section class="world-lab-screen" id="community">
-        <header class="world-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 04 · Community graph</p><h2>Discover people by what they make.</h2></div>
-          <p>The directory should feel less like a member database and more like a living map of projects, topics, agents, and recent work. Following is lightweight account state; public work remains portable.</p>
+      <section class="world-feed-lab-screen" id="conversation">
+        <header class="world-feed-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 03 · Cross-platform discussion</p><h2>One story, many original conversations.</h2></div>
+          <p>A release can be linked from X, submitted to Hacker News, discussed on Reddit, and annotated in World. Clustering should reduce duplicate feed noise without erasing those distinct communities.</p>
         </header>
-        <div class="world-lab-canvas world-lab-canvas--community">
-          <Shell embedded={true} sidebar={true} aside={true} mainId="world-community-content">
+        <div class="world-feed-lab-canvas">
+          <Shell embedded={true} sidebar={true} aside={false} mainId="world-conversation-content">
             <Header slot="header" section="World" nav={ecosystemNav}>
+              <button class="hara-v2-icon-button" aria-label="Search">⌕</button>
               <button class="hara-v2-icon-button" aria-label="Account">◎</button>
               <ThemeToggle />
             </Header>
-            <ContextNav slot="context" items={worldNav("people")}>
-              <a class="hara-v2-button" href="#community">Add your profile</a>
-              <a class="hara-v2-button" data-variant="primary" href="#feed">Post ↗</a>
+            <ContextNav slot="context" items={worldNav("conversation")}>
+              <a class="hara-v2-button" href="#feed-explorer">← Feed</a>
+              <a class="hara-v2-button" href="#conversation">Report cluster</a>
+              <a class="hara-v2-button" data-variant="primary" href="#conversation">Add World context ↗</a>
             </ContextNav>
-            <Sidebar slot="sidebar" title="Community" groups={communitySidebar}>
-              <span>Profiles describe identity. Projects and posts show what somebody is actually doing.</span>
+            <Sidebar slot="sidebar" title="Conversation" groups={conversationSidebar}>
+              <span>World comments add ecosystem context; they do not replace discussion on the canonical source.</span>
             </Sidebar>
 
-            <div class="world-community-heading"><div><p class="hara-v2-kicker">People</p><h1>Who’s using Hara?</h1><p>Find people through the work, tools, experiments, and agents they have chosen to make public.</p></div><div class="world-search"><input class="hara-v2-field" aria-label="Search community" placeholder="Search people, projects, topics…" /><button class="hara-v2-button">Search</button></div></div>
-
-            <div class="world-community-filters"><button aria-pressed="true">All</button><button>Compilers</button><button>Agents</button><button>Graphics</button><button>Audio</button><button>Web</button><button>Learning</button></div>
-
-            <section class="world-people-grid">
-              <article><header><span class="hara-v2-avatar">MN</span><button>Following</button></header><h2>Mina N.</h2><p>Exploring durable work, language tooling, and ways to keep execution models small.</p><div class="world-topic-row"><span>work.*</span><span>tooling</span><span>runtime</span></div><footer><div><b>Recent</b><a href="#feed">Should runtime just be data?</a></div><span>2 agents · 6 posts</span></footer></article>
-              <article><header><span class="hara-v2-avatar">AK</span><button>Follow</button></header><h2>Ari K.</h2><p>Building procedural audio tools and small visual systems around the Hara browser runtime.</p><div class="world-topic-row"><span>audio</span><span>wasm</span><span>graphics</span></div><footer><div><b>Project</b><a href="#feed">Pocket sequencer</a></div><span>1 agent · 3 posts</span></footer></article>
-              <article><header><span class="hara-v2-avatar">SV</span><button>Follow</button></header><h2>Sara V.</h2><p>Experimenting with rigging, movement DSLs, and portable scene descriptions.</p><div class="world-topic-row"><span>3d</span><span>motion</span><span>dsl</span></div><footer><div><b>Recent</b><a href="#feed">A tiny rig grammar</a></div><span>4 projects · 5 posts</span></footer></article>
-              <article><header><span class="hara-v2-avatar">JL</span><button>Follow</button></header><h2>Jon L.</h2><p>Working on web service composition and making host capabilities easier to inspect.</p><div class="world-topic-row"><span>hoplite</span><span>web</span><span>services</span></div><footer><div><b>Project</b><a href="#feed">Hoplite adapters</a></div><span>1 agent · 8 posts</span></footer></article>
-            </section>
-
-            <section class="world-projects-section"><header><div><p class="hara-v2-kicker">Projects and agents</p><h2>Things people are running.</h2></div><a href="#community">View agent directory →</a></header><div class="world-project-grid"><article><span class="hara-v2-badge" data-tone="success">Active agent</span><h3>World Relay</h3><p>Tracks selected ecosystem releases and posts narrow, attributed summaries.</p><footer><span>operated by Mina N.</span><span>feeds · GitHub</span></footer></article><article><span class="hara-v2-badge">Project</span><h3>Pocket sequencer</h3><p>A browser music box driven by Hara forms and a small deterministic timing core.</p><footer><span>by Ari K.</span><span>audio · wasm</span></footer></article><article><span class="hara-v2-badge" data-tone="signal">New</span><h3>Rig field notes</h3><p>Portable movement experiments with visual examples and reusable forms.</p><footer><span>by Sara V.</span><span>3d · motion</span></footer></article></div></section>
-
-            <div slot="aside" class="world-aside-stack">
-              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Topics moving today</h2></header><div class="hara-v2-panel-body world-topic-list"><a href="#feed"><span>std.typed</span><b>9 posts</b></a><a href="#feed"><span>work.*</span><b>7 posts</b></a><a href="#feed"><span>agents</span><b>6 posts</b></a><a href="#feed"><span>wasm</span><b>4 posts</b></a><a href="#feed"><span>graphics</span><b>3 posts</b></a></div></section>
-              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Build your corner</h2></header><div class="hara-v2-panel-body"><p class="world-aside-copy">Add a profile, register an agent, connect an RSS feed, or just post one working note. World should become useful before it asks for a large commitment.</p><div class="hara-v2-stack"><a class="hara-v2-button" data-variant="primary" href="#community">Add profile</a><a class="hara-v2-button" href="#community">Register agent</a><a class="hara-v2-button" href="#feed">Add feed</a></div></div></section>
-            </div>
+            <ConversationCluster />
           </Shell>
         </div>
-        <div class="world-lab-notes"><article><b>Work before biography</b><p>Profiles are useful, but recent posts, projects, topics, and agents give people a reason to connect.</p></article><article><b>Lightweight following</b><p>Following changes feed composition. It does not create a new public authority or alter the canonical content record.</p></article><article><b>Low-friction participation</b><p>Profile, agent, feed, and post entry points coexist so contributors can choose the smallest useful commitment.</p></article></div>
+        <div class="world-feed-lab-notes"><article><b>Canonical first</b><p>The underlying release or article remains the primary object. Cross-posts become members of its conversation cluster.</p></article><article><b>No metric flattening</b><p>Likes, points, upvotes, replies, and comments retain source-local labels rather than becoming a fake universal count.</p></article><article><b>Merge receipts</b><p>Moderators can inspect why items were joined and split a cluster when evidence was wrong.</p></article></div>
       </section>
 
-      <section class="world-lab-conclusion">
-        <div><p class="hara-v2-kicker">Proposed World grammar</p><h2>Feed · Play · People · Agents · Learn · Sources</h2><p>The shell stays Hara. The words stay human. Reading is the centre; games and community loops create return visits; durable public work remains portable and reviewable.</p></div>
+      <section class="world-feed-lab-screen" id="relay">
+        <header class="world-feed-lab-screen-head">
+          <div><p class="hara-v2-kicker">Screen 04 · Operator automation</p><h2>Hara Bot is a relay with receipts.</h2></div>
+          <p>Top-performing work can be proposed for X, Reddit, community channels, and the What’s New digest. Community and third-party material remains human-reviewed; only narrow Hara-owned facts can update World’s internal hot list automatically.</p>
+        </header>
+        <div class="world-feed-lab-canvas">
+          <Shell embedded={true} sidebar={true} aside={false} mainId="world-relay-content">
+            <Header slot="header" section="World ops" nav={ecosystemNav}>
+              <span class="hara-v2-badge" data-tone="warning">Review mode</span>
+              <button class="hara-v2-icon-button" aria-label="Operator account">◎</button>
+              <ThemeToggle />
+            </Header>
+            <ContextNav slot="context" items={worldNav("relay")}>
+              <a class="hara-v2-button" href="#relay">Policy</a>
+              <a class="hara-v2-button" href="#relay">Dry run</a>
+              <a class="hara-v2-button" data-variant="primary" href="#relay">Review next ↗</a>
+            </ContextNav>
+            <Sidebar slot="sidebar" title="Relay" groups={relaySidebar}>
+              <span>Replies, comments, private or deleted content, unattributed quotes, and duplicate receipts are blocked.</span>
+            </Sidebar>
+
+            <RelayConsole />
+          </Shell>
+        </div>
+        <div class="world-feed-lab-notes"><article><b>Proposal, not personality</b><p>The bot drafts attributed relays from public facts. It does not manufacture opinions or autonomously join conversations.</p></article><article><b>Narrow auto path</b><p>Hara-owned releases, advisories, and scheduled snippets may auto-enter World’s own hot module. External posts remain reviewable.</p></article><article><b>Idempotent effects</b><p>Each destination receives one immutable publication receipt. A retry reuses it instead of creating a duplicate post.</p></article></div>
+      </section>
+
+      <section class="world-feed-lab-conclusion">
+        <div><p class="hara-v2-kicker">Proposed World grammar</p><h2>Feed · What’s new · Conversations · People · Sources</h2><p>World becomes the Hara ecosystem’s focused public reader: discover work across the open web, follow the people and repositories behind it, discuss with context, and amplify responsibly. Structured learning stays on Learn; production relay credentials stay outside visual-language.</p></div>
         <a class="hara-v2-button" href={documentLab}>Return to v2 laboratory</a>
       </section>
 
       <footer class="v2-lab-footer">
-        <span>Experimental World community study · Hara visual language v2</span>
+        <span>Experimental World feed and relay study · Hara visual language v2</span>
         <span><a href={documentLab}>Document laboratory</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>

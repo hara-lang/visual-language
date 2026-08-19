@@ -1,0 +1,124 @@
+@media (max-width: 1320px) {
+  .world-feed-lab-hero { grid-template-columns: minmax(0, 1fr) 400px; }
+  .world-feed-item--lead { grid-template-columns: 52px minmax(0, 1fr); }
+  .world-score-receipt { grid-column: 2; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; }
+  .world-score-receipt dl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .world-score-receipt > button { justify-self: end; }
+  .world-provider-table-head,
+  .world-provider-table article { grid-template-columns: minmax(170px, 1.4fr) minmax(110px, 1fr) 78px 90px 76px; }
+  .world-provider-table-head span:last-child,
+  .world-provider-table article > button { display: none; }
+  .world-relay-layout { grid-template-columns: minmax(0, 1fr) 370px; }
+}
+
+@media (max-width: 1120px) {
+  .world-feed-lab-hero { grid-template-columns: 1fr; min-height: auto; }
+  .world-feed-radar { min-height: 360px; }
+  .world-feed-lab-index { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .world-feed-lab-index a:nth-child(2) { border-right: 0; }
+  .world-feed-lab-index a:nth-child(-n + 2) { border-bottom: 1px solid var(--hara-v2-line); }
+  .world-feed-lab-screen-head { grid-template-columns: 1fr; gap: 14px; }
+  .world-source-config-grid,
+  .world-conversation-layout,
+  .world-relay-layout { grid-template-columns: 1fr; }
+  .world-relay-review { position: static; }
+  .world-canonical-story { grid-template-columns: 70px minmax(0, 1fr); }
+  .world-canonical-story > dl { grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 14px 0 0; border-top: 1px solid var(--hara-v2-line); border-left: 0; }
+  .world-canonical-story > dl > div { display: grid; grid-template-columns: 1fr; }
+  .world-relay-ledger { overflow-x: auto; }
+  .world-relay-ledger-head,
+  .world-relay-ledger > article { min-width: 820px; }
+}
+
+@media (max-width: 880px) {
+  .world-feed-title-row,
+  .world-source-manager-head,
+  .world-conversation-head,
+  .world-relay-head { align-items: start; flex-direction: column; }
+  .world-feed-window,
+  .world-relay-master-state { width: 100%; }
+  .world-feed-command-row { align-items: stretch; flex-direction: column; }
+  .world-feed-search { width: 100%; }
+  .world-source-health,
+  .world-relay-policy-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .world-source-health article:nth-child(2),
+  .world-relay-policy-strip article:nth-child(2) { border-right: 0; }
+  .world-source-health article:nth-child(-n + 2),
+  .world-relay-policy-strip article:nth-child(-n + 2) { border-bottom: 1px solid var(--hara-v2-line); }
+  .world-provider-table-head { display: none; }
+  .world-provider-table article {
+    grid-template-columns: minmax(160px, 1.3fr) minmax(110px, 1fr) 88px;
+    min-height: 66px;
+  }
+  .world-provider-table article > span:nth-of-type(2),
+  .world-provider-table article > strong { display: none; }
+  .world-feed-directory > div { grid-template-columns: 1fr; }
+  .world-feed-directory article { border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .world-feed-directory article:last-child { border-bottom: 0; }
+  .world-feed-lab-notes { grid-template-columns: 1fr; }
+  .world-feed-lab-notes article { border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .world-feed-lab-notes article:last-child { border-bottom: 0; }
+  .world-feed-lab-conclusion { align-items: start; flex-direction: column; }
+  .world-conversation-actions { width: 100%; }
+  .world-conversation-actions .hara-v2-button { flex: 1; }
+}
+
+@media (max-width: 680px) {
+  .world-feed-lab-hero { padding-top: 46px; }
+  .world-feed-lab-hero h1 { font-size: clamp(42px, 15vw, 68px); }
+  .world-feed-radar { min-height: 330px; }
+  .world-feed-radar-node { min-height: 30px; padding: 0 8px; font-size: 9px; }
+  .world-feed-radar-node--github { top: 12%; left: 8%; }
+  .world-feed-radar-node--reddit { top: 20%; right: 4%; }
+  .world-feed-radar-node--x { top: 53%; right: 2%; }
+  .world-feed-radar-node--hn { bottom: 10%; right: 12%; }
+  .world-feed-radar-node--substack { bottom: 9%; left: 8%; }
+  .world-feed-radar-node--rss { top: 50%; left: 2%; }
+  .world-feed-lab-index { grid-template-columns: 1fr; }
+  .world-feed-lab-index a { min-height: 126px; border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .world-feed-lab-index a:last-child { border-bottom: 0; }
+  .world-feed-lab-screen { padding-inline: 10px; }
+  .world-feed-lab-screen-head { padding-inline: 6px; }
+  .world-feed-lab-canvas { border-radius: 10px; }
+  .world-feed-item,
+  .world-feed-item--lead { grid-template-columns: 42px minmax(0, 1fr); gap: 10px; padding: 15px 12px 15px 8px; }
+  .world-feed-vote button { width: 27px; height: 27px; }
+  .world-feed-provenance time { margin-left: 0; }
+  .world-feed-item-actions span { width: 100%; margin-left: 0; }
+  .world-score-receipt { grid-column: 1 / -1; grid-template-columns: 1fr; }
+  .world-score-receipt dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .world-score-receipt > button { justify-self: start; }
+  .world-feed-load-row { align-items: start; flex-direction: column; }
+  .world-feed-load-row span { text-align: left; }
+  .world-source-health,
+  .world-relay-policy-strip { grid-template-columns: 1fr; }
+  .world-source-health article,
+  .world-relay-policy-strip article { border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .world-source-health article:last-child,
+  .world-relay-policy-strip article:last-child { border-bottom: 0; }
+  .world-provider-table article { grid-template-columns: minmax(150px, 1fr) 92px; gap: 10px; }
+  .world-provider-table article > span:first-of-type { display: none; }
+  .world-rule-list > div { grid-template-columns: 1fr; gap: 5px; }
+  .world-source-review-panel > article { grid-template-columns: minmax(0, 1fr) auto; }
+  .world-source-review-panel > article .world-source-badge { display: none; }
+  .world-canonical-story { grid-template-columns: 1fr; }
+  .world-canonical-mark { width: 54px; height: 54px; }
+  .world-canonical-story > dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .world-source-thread > header { grid-template-columns: minmax(0, 1fr) auto; }
+  .world-source-thread > header .world-source-badge { grid-column: 1 / -1; }
+  .world-source-thread > footer button { width: 100%; margin-left: 0; text-align: left; }
+  .world-conversation-inspector { grid-template-columns: 1fr; }
+  .world-relay-queue > header,
+  .world-relay-ledger > header { align-items: start; flex-direction: column; }
+  .world-relay-candidate { grid-template-columns: 42px minmax(0, 1fr); }
+  .world-relay-candidate > button { display: none; }
+  .world-relay-review-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .world-relay-review-actions .hara-v2-button:last-child { grid-column: 1 / -1; }
+  .world-feed-lab-conclusion { padding-inline: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-feed-radar *,
+  .world-feed-lab a,
+  .world-feed-lab button { scroll-behavior: auto; transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,87 @@
+---
+const providers = [
+  { id: "world", label: "Hara World", transport: "Native events", cadence: "live", state: "connected", count: "8 today" },
+  { id: "github", label: "GitHub", transport: "Webhook + API", cadence: "5 min", state: "connected", count: "11 today" },
+  { id: "reddit", label: "Reddit", transport: "API", cadence: "15 min", state: "connected", count: "6 today" },
+  { id: "x", label: "X / Twitter", transport: "API", cadence: "15 min", state: "review", count: "9 today" },
+  { id: "hacker-news", label: "Hacker News", transport: "API", cadence: "10 min", state: "connected", count: "3 today" },
+  { id: "substack", label: "Substack", transport: "RSS", cadence: "30 min", state: "connected", count: "5 today" },
+  { id: "rss", label: "RSS / JSON Feed", transport: "Open feeds", cadence: "30 min", state: "connected", count: "12 feeds" }
+];
+---
+<div class="world-source-manager">
+  <header class="world-source-manager-head">
+    <div>
+      <p class="hara-v2-kicker">Source explorer</p>
+      <h1>Choose where World listens.</h1>
+      <p>Providers normalize public material into one attributed envelope. Search rules keep “Hara” focused on the language rather than the many unrelated uses of the word.</p>
+    </div>
+    <button class="hara-v2-button" data-variant="primary">Add a feed</button>
+  </header>
+
+  <section class="world-source-health" aria-label="Ingestion status">
+    <article><span>Provider health</span><strong>7 / 7</strong><small>last full cycle 2 min ago</small></article>
+    <article><span>Incoming today</span><strong>42</strong><small>31 canonical clusters</small></article>
+    <article><span>Needs review</span><strong>4</strong><small>possible keyword collisions</small></article>
+    <article><span>Duplicates folded</span><strong>11</strong><small>canonical URL + evidence</small></article>
+  </section>
+
+  <section class="world-provider-table">
+    <header>
+      <div><h2>Providers</h2><p>Transport and cadence are visible because source freshness is part of the ranking receipt.</p></div>
+      <div class="world-source-table-actions"><button>Pause all</button><button>Export OPML</button></div>
+    </header>
+    <div class="world-provider-table-head" aria-hidden="true"><span>Source</span><span>Transport</span><span>Cadence</span><span>State</span><span>Incoming</span><span></span></div>
+    {providers.map((provider) => (
+      <article data-source={provider.id}>
+        <div class="world-provider-identity"><i aria-hidden="true"></i><span><b>{provider.label}</b><small>source/{provider.id}</small></span></div>
+        <span>{provider.transport}</span>
+        <span>{provider.cadence}</span>
+        <span class="world-provider-state" data-state={provider.state}><i></i>{provider.state}</span>
+        <strong>{provider.count}</strong>
+        <button aria-label={`Configure ${provider.label}`}>Configure</button>
+      </article>
+    ))}
+  </section>
+
+  <div class="world-source-config-grid">
+    <section class="world-source-rule-panel">
+      <header><div><p class="hara-v2-kicker">Discovery query</p><h2>Hara language relevance</h2></div><span class="hara-v2-badge" data-tone="success">Active</span></header>
+      <div class="world-query-preview" aria-label="Search query preview">
+        <span>(</span>
+        <b>"Hara language"</b>
+        <em>OR</em>
+        <b>"hara-lang"</b>
+        <em>OR</em>
+        <b>repo:hara-lang/*</b>
+        <span>)</span>
+        <em>AND NOT</em>
+        <i>fashion · religion · geography</i>
+      </div>
+      <dl class="world-rule-list">
+        <div><dt>Strong identity</dt><dd>hara-lang.org, `hara-lang/*`, `.hal`, known packages and maintainers</dd></div>
+        <div><dt>Context evidence</dt><dd>programming, Lisp, runtime, compiler, Wasm, package, namespace, schema</dd></div>
+        <div><dt>Weak keyword</dt><dd>“hara” alone enters review and cannot trend automatically</dd></div>
+        <div><dt>Language</dt><dd>retain original text; summaries are separate, attributed derived objects</dd></div>
+      </dl>
+      <footer><button class="hara-v2-button">Edit query rules</button><button class="hara-v2-button">Test against 100 items</button></footer>
+    </section>
+
+    <section class="world-source-review-panel">
+      <header><div><p class="hara-v2-kicker">Review queue</p><h2>Possible collisions</h2></div><span>4 items</span></header>
+      <article><span class="world-source-badge" data-source="x"><i></i>X</span><div><b>“The Hara collection launches Friday”</b><small>No programming context · fashion account</small></div><button>Exclude</button></article>
+      <article><span class="world-source-badge" data-source="reddit"><i></i>Reddit</span><div><b>“Visiting Hara this winter”</b><small>Place name · travel community</small></div><button>Exclude</button></article>
+      <article><span class="world-source-badge" data-source="rss"><i></i>RSS</span><div><b>“A small Hara macro experiment”</b><small>Contains `.hal` example · unknown author</small></div><button>Include</button></article>
+      <footer><a href="#conversation">Review all incoming items →</a></footer>
+    </section>
+  </div>
+
+  <section class="world-feed-directory">
+    <header><div><p class="hara-v2-kicker">Community feeds</p><h2>Portable subscriptions, not a closed graph.</h2></div><button class="hara-v2-button">Import OPML</button></header>
+    <div>
+      <article><span>RSS</span><h3>Small Language Systems</h3><p>Independent notes about language runtimes and tooling.</p><footer><code>/feeds/small-language-systems.xml</code><button>Following</button></footer></article>
+      <article><span>JSON Feed</span><h3>Hara release ledger</h3><p>Release, advisory, and package publication receipts.</p><footer><code>/feeds/releases.json</code><button>Following</button></footer></article>
+      <article><span>RSS</span><h3>Procedural media with Hara</h3><p>Audio, graphics, rigs, and browser runtime experiments.</p><footer><code>/feeds/procedural-hara.xml</code><button>Follow</button></footer></article>
+    </div>
+  </section>
+</div>
