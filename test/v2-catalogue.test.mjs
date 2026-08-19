@@ -96,8 +96,9 @@ test("the shared header composes grouped button disclosures from small component
   assert.match(group, /items\.map\(\(item\) => <CatalogueMenuItem/);
   assert.match(item, /item\.children\.map\(\(child\) => <CatalogueChildLink/);
   assert.match(child, /catalogueStatusLabels\[child\.status\]/);
-  assert.match(fallback, /<noscript>/);
+  assert.match(fallback, /fallbackMarkup = `<noscript>/);
   assert.match(fallback, /catalogueHref\(item, basePath\)/);
+  assert.match(fallback, /<Fragment set:html=\{fallbackMarkup\}/);
 });
 
 test("the catalogue home is manifest-driven and preserves the existing reference specimens", async () => {
