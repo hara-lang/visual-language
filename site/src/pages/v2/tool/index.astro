@@ -1,6 +1,7 @@
 ---
 import ThemeToggle from "../../../../../src/astro/ThemeToggle.astro";
 import HaraMark from "../../../../../src/astro/HaraMark.astro";
+import EnvironmentWorkbenchSpecimen from "../../../components/v2-tool/EnvironmentWorkbenchSpecimen.astro";
 import ThreeDWorkbenchSpecimen from "../../../components/v2-tool/ThreeDWorkbenchSpecimen.astro";
 import NodeWorkbenchSpecimen from "../../../components/v2-tool/NodeWorkbenchSpecimen.astro";
 import AnimationWorkbenchSpecimen from "../../../components/v2-tool/AnimationWorkbenchSpecimen.astro";
@@ -16,6 +17,7 @@ const pageUrl = new URL(`${basePath}v2/tool/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
 const documentLab = `${basePath}v2/`;
 const sections = [
+  { href: "#environment", label: "Environment" },
   { href: "#three-d", label: "3D" },
   { href: "#node", label: "Node" },
   { href: "#animation", label: "Animation" }
@@ -26,16 +28,16 @@ const sections = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hara v2 tool chrome: calm toolbar, dock, inspector, viewport, timeline, and workbench primitives." />
+    <meta name="description" content="Hara v2 tool chrome: calm environment, toolbar, dock, inspector, viewport, timeline, and workbench primitives." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
     <meta property="og:title" content="Hara v2 tool workbench laboratory" />
-    <meta property="og:description" content="3D, node/material, and animation workbenches built from one calm precision-tool language." />
+    <meta property="og:description" content="Live environment, 3D, node/material, and animation workbenches built from one calm precision-tool language." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Hara v2 tool workbench laboratory" />
-    <meta name="twitter:description" content="Calm command surfaces for Hara editors and workbenches." />
+    <meta name="twitter:description" content="Calm command surfaces for Hara environments, editors, and workbenches." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
@@ -59,7 +61,7 @@ const sections = [
         <div>
           <p class="hara-v2-kicker">Refined workbench layer · Version 2</p>
           <h1>Precision tools, made calm.</h1>
-          <p>Editor structure remains dense and capable, but the surfaces now settle into one continuous frame: softer seams, roomier controls, restrained depth, clear selection, and quieter telemetry that stays out of the work.</p>
+          <p>Editor structure remains dense and capable, but the surfaces now settle into one continuous frame: reusable environment sections, capability-aware controls, softer seams, restrained depth, clear selection, and quieter telemetry that stays out of the work.</p>
           <p><a class="tool-lab-back-link" href={documentLab}>← Return to WWW, Docs, Specs, Benchmarks, and World</a></p>
         </div>
         <div class="tool-lab-hero-frame" aria-hidden="true">
@@ -69,11 +71,13 @@ const sections = [
       </section>
 
       <nav class="tool-lab-index" aria-label="Tool layout catalogue">
+        <a href="#environment"><strong>Live environment</strong><span>Nav, frontmatter, graphics, code, sessions, files, canvas, and optional 3D controls.</span><code>embedded / capability-aware</code></a>
         <a href="#three-d"><strong>3D editor</strong><span>Toolbar, transform rail, outliner, viewport, property inspector, assets, and runtime status.</span><code>spatial / docked</code></a>
         <a href="#node"><strong>Node / material</strong><span>Graph canvas, command tabs, catalogue, floating palette, properties, and surface assets.</span><code>graph / palette</code></a>
         <a href="#animation"><strong>Scene / animation</strong><span>Transport, rig hierarchy, viewport, animation properties, timeline, and motion receipt.</span><code>temporal / timeline</code></a>
       </nav>
 
+      <EnvironmentWorkbenchSpecimen />
       <ThreeDWorkbenchSpecimen />
       <NodeWorkbenchSpecimen />
       <AnimationWorkbenchSpecimen />
