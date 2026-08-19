@@ -1,0 +1,19 @@
+---
+const {
+  label = "On this page",
+  items = [],
+  activeId = ""
+} = Astro.props;
+---
+<nav class="www-subnav" aria-label={label}>
+  <div class="www-subnav__identity">
+    <span>{label}</span>
+    <slot name="identity" />
+  </div>
+  <div class="www-subnav__links">
+    {items.map((item) => (
+      <a href={`#${item.id}`} aria-current={item.id === activeId ? "location" : undefined}>{item.label}</a>
+    ))}
+  </div>
+  <div class="www-subnav__actions"><slot /></div>
+</nav>

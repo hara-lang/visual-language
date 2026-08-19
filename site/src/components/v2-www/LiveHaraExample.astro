@@ -1,0 +1,190 @@
+---
+const {
+  id = "live-hara-example",
+  label = "Executable Hara example",
+  file = "main.hal",
+  source = "(+ 1 2)",
+  state = "ready",
+  runtime = "Wasm · isolated",
+  session = "docs-01",
+  generation = 4,
+  capabilities = ["pure", "clock:none", "network:none", "filesystem:none"],
+  expectedOutput = "3",
+  revision = "sha256:example",
+  openHref = "#playground",
+  exactRevisionHref = "#revision",
+  controls = ["Sessions", "Files", "Canvas", "3D"],
+  controlPane = true,
+  compact = false
+} = Astro.props;
+
+const stateMap = {
+  ready: {
+    label: "Runtime ready",
+    tone: "success",
+    message: "The runtime is attached. Running creates a new fenced execution receipt.",
+    executable: true
+  },
+  unavailable: {
+    label: "Runtime unavailable",
+    tone: "warning",
+    message: "Static source remains available. Run is disabled until the exact backend can attach.",
+    executable: false
+  },
+  error: {
+    label: "Compile error",
+    tone: "danger",
+    message: "Capability :network is required at work.hal:8:13. Source and revision remain inspectable.",
+    executable: false
+  },
+  stale: {
+    label: "Version mismatch",
+    tone: "notice",
+    message: "This example targets Hara 1.8. Pin the documented runtime or inspect the migration note.",
+    executable: false
+  }
+};
+
+const currentState = stateMap[state] ?? stateMap.ready;
+---
+<section
+  class:list={["www-live-example", { "www-live-example--compact": compact }]}
+  id={id}
+  data-live-example
+  data-executable={String(currentState.executable)}
+  data-state={state}
+>
+  <header class="www-live-example__header">
+    <div>
+      <p class="hara-v2-kicker">{label}</p>
+      <h3>{file}</h3>
+    </div>
+    <span class="hara-v2-badge" data-tone={currentState.tone}>{currentState.label}</span>
+  </header>
+
+  <div class="www-live-example__contract" aria-label="Runtime contract">
+    <dl>
+      <div><dt>Runtime</dt><dd>{runtime}</dd></div>
+      <div><dt>Session</dt><dd>{session}</dd></div>
+      <div><dt>Generation</dt><dd>{generation}</dd></div>
+      <div><dt>Revision</dt><dd><code>{revision}</code></dd></div>
+    </dl>
+    <div class="www-live-example__capabilities" aria-label="Capabilities">
+      {capabilities.map((capability) => <span>{capability}</span>)}
+    </div>
+  </div>
+
+  <div class:list={["www-live-example__workspace", { "www-live-example__workspace--pane": controlPane }]}>
+    <div class="www-live-example__source">
+      <div class="www-live-example__filebar">
+        <span>{file}</span>
+        <small>Static source · executable only when ready</small>
+      </div>
+      <pre><code>{source}</code></pre>
+    </div>
+
+    {controlPane && (
+      <aside class="www-live-example__controls" aria-label="Optional live environment controls">
+        <div class="www-live-example__control-tabs" role="tablist" aria-label="Control pane">
+          {controls.map((control, index) => (
+            <button
+              type="button"
+              role="tab"
+              aria-selected={index === 0 ? "true" : "false"}
+              data-live-control={control.toLowerCase()}
+            >{control}</button>
+          ))}
+        </div>
+        <div class="www-live-example__control-body" data-live-control-body>
+          <p class="hara-v2-kicker">Session inspector</p>
+          <dl>
+            <div><dt>Identity</dt><dd>{session}</dd></div>
+            <div><dt>Scope</dt><dd>isolated</dd></div>
+            <div><dt>Files</dt><dd>2 mounted</dd></div>
+            <div><dt>Canvas</dt><dd>detached</dd></div>
+          </dl>
+          <p>Optional controls reveal operational state without turning the article into a permanent editor.</p>
+        </div>
+      </aside>
+    )}
+  </div>
+
+  <div class="www-live-example__state" data-live-state data-tone={currentState.tone}>
+    <span class="www-live-example__state-lamp" aria-hidden="true"></span>
+    <p>{currentState.message}</p>
+  </div>
+
+  <div class="www-live-example__output" aria-live="polite">
+    <span>Result</span>
+    <pre data-live-output>{currentState.executable ? "Ready to run." : currentState.message}</pre>
+  </div>
+
+  <footer class="www-live-example__actions">
+    <button class="hara-v2-button" data-variant="primary" type="button" data-live-run disabled={!currentState.executable}>Run</button>
+    <button class="hara-v2-button" type="button" data-live-copy>Copy</button>
+    <a class="hara-v2-button" href={openHref}>Open in Playground</a>
+    <a class="hara-v2-button" data-variant="ghost" href={exactRevisionHref}>Exact revision</a>
+  </footer>
+
+  <template data-live-expected>{expectedOutput}</template>
+</section>
+
+<script>
+  const initialiseLiveExamples = () => {
+    document.querySelectorAll("[data-live-example]").forEach((example) => {
+      if (!(example instanceof HTMLElement) || example.dataset.ready === "true") return;
+      example.dataset.ready = "true";
+
+      const source = example.querySelector("code")?.textContent ?? "";
+      const run = example.querySelector("[data-live-run]");
+      const copy = example.querySelector("[data-live-copy]");
+      const output = example.querySelector("[data-live-output]");
+      const state = example.querySelector("[data-live-state] p");
+      const expected = example.querySelector("[data-live-expected]")?.textContent ?? "Complete.";
+
+      if (run instanceof HTMLButtonElement && output instanceof HTMLElement && example.dataset.executable === "true") {
+        run.addEventListener("click", () => {
+          run.disabled = true;
+          run.textContent = "Running…";
+          output.textContent = "Evaluating in a fenced session…";
+          if (state) state.textContent = "Execution generation is fenced; a receipt will attach to the exact source revision.";
+          window.setTimeout(() => {
+            output.textContent = expected;
+            run.disabled = false;
+            run.textContent = "Run again";
+            if (state) state.textContent = "Execution complete · receipt runtime:docs-01:g5 · source revision unchanged.";
+          }, 260);
+        });
+      }
+
+      if (copy instanceof HTMLButtonElement) {
+        copy.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(source);
+            copy.textContent = "Copied";
+          } catch {
+            copy.textContent = "Select source";
+          }
+          window.setTimeout(() => { copy.textContent = "Copy"; }, 1200);
+        });
+      }
+
+      const controlBody = example.querySelector("[data-live-control-body]");
+      example.querySelectorAll("[data-live-control]").forEach((button) => {
+        button.addEventListener("click", () => {
+          example.querySelectorAll("[data-live-control]").forEach((item) => item.setAttribute("aria-selected", "false"));
+          button.setAttribute("aria-selected", "true");
+          if (controlBody instanceof HTMLElement) {
+            const label = button.getAttribute("data-live-control") ?? "session";
+            controlBody.dataset.activeControl = label;
+            const kicker = controlBody.querySelector(".hara-v2-kicker");
+            if (kicker) kicker.textContent = `${label.replace(/^./, (value) => value.toUpperCase())} inspector`;
+          }
+        });
+      });
+    });
+  };
+
+  initialiseLiveExamples();
+  document.addEventListener("astro:page-load", initialiseLiveExamples);
+</script>

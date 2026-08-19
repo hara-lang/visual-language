@@ -1,0 +1,30 @@
+---
+const {
+  id,
+  tone = "notice",
+  eyebrow = "State",
+  title,
+  summary,
+  details = [],
+  actionLabel = "Inspect details",
+  actionHref = `#${id}`
+} = Astro.props;
+
+const role = tone === "danger" ? "alert" : "status";
+---
+<article class="www-state-specimen" id={id} data-tone={tone} role={role}>
+  <header>
+    <span class="www-state-specimen__lamp" aria-hidden="true"></span>
+    <div>
+      <p class="hara-v2-kicker">{eyebrow}</p>
+      <h3>{title}</h3>
+    </div>
+  </header>
+  <p>{summary}</p>
+  <ul>
+    {details.map((detail) => <li>{detail}</li>)}
+  </ul>
+  <footer>
+    <a href={actionHref}>{actionLabel} <span aria-hidden="true">→</span></a>
+  </footer>
+</article>
