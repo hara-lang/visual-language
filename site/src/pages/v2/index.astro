@@ -15,12 +15,14 @@ const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
 const pageUrl = new URL(`${basePath}v2/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const toolLab = `${basePath}v2/tool/`;
 const ecosystem = [
   { href: "#www", label: "WWW" },
   { href: "#docs", label: "Docs" },
   { href: "#specs", label: "Specs" },
   { href: "#benchmarks", label: "Benchmarks" },
-  { href: "#world", label: "World" }
+  { href: "#world", label: "World" },
+  { href: toolLab, label: "Tools" }
 ];
 ---
 <!doctype html>
@@ -68,6 +70,7 @@ const ecosystem = [
             <div><b>Drawn precision</b><span>Construction grids and doubled lines add a novel-like hand.</span></div>
             <div><b>Same identity</b><span>The block H, signal dot, and current header family do not move.</span></div>
           </div>
+          <p><a href={toolLab}>Open the tool workbench laboratory →</a></p>
         </div>
         <div class="v2-lab-hero-art"><FleetField title="Hara fleet-command visual field" /></div>
       </section>
@@ -87,7 +90,7 @@ const ecosystem = [
       <WorldSpecimen />
       <footer class="v2-lab-footer">
         <span>Experimental v2 interface contract · Hara visual language</span>
-        <span><a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+        <span><a href={toolLab}>Tool workbench laboratory</a> · <a href="https://github.com/hara-lang/visual-language/blob/main/V2-THEME.md">Theme contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>
   </body>
