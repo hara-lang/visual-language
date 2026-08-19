@@ -1,0 +1,107 @@
+---
+import {
+  catalogueGroupIsCurrent,
+  catalogueGroups,
+  catalogueHref,
+  catalogueItemIsCurrent,
+  catalogueLinkIsExternal,
+  catalogueStatusLabels
+} from "../../lib/v2-catalogue.mjs";
+
+const {
+  basePath,
+  activePath,
+  id = "v2-catalogue-launcher"
+} = Astro.props;
+
+const groups = catalogueGroups.map((group) => ({
+  ...group,
+  current: catalogueGroupIsCurrent(group, activePath),
+  items: group.items.map((item) => ({
+    ...item,
+    current: catalogueItemIsCurrent(item, activePath),
+    href: catalogueHref(item, basePath),
+    external: catalogueLinkIsExternal(item),
+    children: (item.children ?? []).map((child) => ({
+      ...child,
+      current: catalogueItemIsCurrent(child, activePath),
+      href: catalogueHref(child, basePath),
+      external: catalogueLinkIsExternal(child)
+    }))
+  }))
+}));
+---
+<div class="v2-catalogue-launcher-backdrop" hidden data-catalogue-launcher-backdrop></div>
+<section
+  class="v2-catalogue-launcher"
+  id={id}
+  aria-label="Visual language app launcher"
+  hidden
+  data-catalogue-launcher
+>
+  <header class="v2-catalogue-launcher-header">
+    <div>
+      <p class="hara-v2-kicker">App launcher</p>
+      <h2>Browse the visual language</h2>
+      <p>Shared foundations, reusable interface patterns, and focused product laboratories.</p>
+    </div>
+    <button class="v2-catalogue-launcher-close" type="button" data-catalogue-launcher-close>
+      <span>Close</span>
+      <kbd>Esc</kbd>
+    </button>
+  </header>
+
+  <div class="v2-catalogue-launcher-grid">
+    {groups.map((group) => (
+      <section class="v2-catalogue-launcher-group" data-current={group.current ? "true" : "false"}>
+        <header>
+          <div>
+            <span>{group.label}</span>
+            <small>{group.items.length}</small>
+          </div>
+          <p>{group.summary}</p>
+        </header>
+
+        <nav aria-label={`${group.label} catalogue routes`}>
+          {group.items.map((item) => (
+            <div class="v2-catalogue-launcher-family" data-current={item.current ? "true" : "false"}>
+              <a
+                class="v2-catalogue-launcher-item"
+                href={item.href}
+                aria-current={item.current ? "page" : undefined}
+                data-status={item.status}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer" : undefined}
+              >
+                <span class="v2-catalogue-launcher-glyph" aria-hidden="true">{item.label.slice(0, 1)}</span>
+                <span class="v2-catalogue-launcher-copy">
+                  <strong>{item.label}</strong>
+                  <small>{item.eyebrow ?? catalogueStatusLabels[item.status]}</small>
+                </span>
+                <em>{catalogueStatusLabels[item.status]}</em>
+              </a>
+
+              {item.children.length > 0 && (
+                <div class="v2-catalogue-launcher-children">
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      aria-current={child.current ? "page" : undefined}
+                      data-status={child.status}
+                      data-kind={child.kind ?? "current"}
+                      target={child.external ? "_blank" : undefined}
+                      rel={child.external ? "noreferrer" : undefined}
+                    >
+                      <span>{child.tabLabel ?? child.label}</span>
+                      <small>{child.kind === "historical" ? "Historical" : catalogueStatusLabels[child.status]}</small>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </nav>
+      </section>
+    ))}
+  </div>
+</section>
