@@ -1,0 +1,255 @@
+/* Calm presentation layer shared by the document and tool laboratories. */
+
+.v2-lab-header {
+  border-bottom-color: var(--hara-v2-line);
+  background: color-mix(in srgb, var(--hara-v2-panel-raised) 88%, transparent);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--hara-v2-canvas) 72%, transparent);
+  backdrop-filter: blur(20px);
+}
+
+.v2-lab-header nav {
+  gap: 1.15rem;
+}
+
+.v2-lab-header nav a {
+  padding: .36rem .5rem;
+  border-radius: 5px;
+  letter-spacing: 0;
+  transition: color var(--hara-v2-motion) var(--hara-v2-ease), background-color var(--hara-v2-motion) var(--hara-v2-ease);
+}
+
+.v2-lab-header nav a:hover {
+  background: var(--hara-v2-hover);
+}
+
+.v2-lab-hero,
+.tool-lab-hero {
+  gap: clamp(2rem, 4.5vw, 5.5rem);
+}
+
+.v2-lab-hero h1,
+.tool-lab-hero h1 {
+  max-width: 820px;
+  font-size: clamp(3.4rem, 7vw, 6.6rem);
+  line-height: .9;
+  letter-spacing: -.055em;
+}
+
+.v2-lab-hero-art,
+.tool-lab-hero-frame {
+  border-color: var(--hara-v2-line);
+  border-radius: 14px;
+  box-shadow: var(--hara-v2-calm-shadow);
+  clip-path: none;
+}
+
+.tool-lab-hero-frame {
+  background-image:
+    linear-gradient(var(--hara-v2-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hara-v2-grid) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.tool-lab-hero-frame::before {
+  border-color: var(--hara-tool-edge);
+  opacity: .46;
+}
+
+.tool-lab-hero-frame::after {
+  opacity: .42;
+}
+
+.tool-lab-hero-core {
+  border-color: var(--hara-tool-edge);
+  border-radius: 14px;
+  box-shadow: var(--hara-v2-calm-shadow-small);
+  clip-path: none;
+}
+
+.tool-lab-hero-core i {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--hara-tool-signal) 38%, transparent);
+}
+
+.tool-lab-hero-telemetry {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.v2-lab-principles,
+.v2-lab-index,
+.v2-lab-notes,
+.tool-lab-index,
+.tool-lab-notes {
+  gap: .7rem;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.v2-lab-principles div,
+.v2-lab-index a,
+.v2-lab-notes article,
+.v2-lab-lesson,
+.tool-lab-index a,
+.tool-lab-notes article {
+  border: 1px solid var(--hara-v2-line);
+  border-radius: 9px;
+  box-shadow: none;
+}
+
+.v2-lab-principles div::before,
+.v2-lab-index a::before,
+.v2-lab-notes article::before,
+.v2-lab-lesson::before {
+  display: none;
+}
+
+.v2-lab-index a,
+.tool-lab-index a {
+  transition:
+    color var(--hara-v2-motion) var(--hara-v2-ease),
+    background-color var(--hara-v2-motion) var(--hara-v2-ease),
+    border-color var(--hara-v2-motion) var(--hara-v2-ease),
+    box-shadow var(--hara-v2-motion) var(--hara-v2-ease);
+}
+
+.v2-lab-index a:hover,
+.tool-lab-index a:hover {
+  border-color: color-mix(in srgb, var(--hara-v2-signal) 22%, var(--hara-v2-line));
+  background: color-mix(in srgb, var(--hara-v2-signal) 4%, var(--hara-v2-panel));
+  box-shadow: var(--hara-v2-calm-shadow-small);
+}
+
+.v2-lab-index code,
+.tool-lab-index code {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.v2-lab-canvas {
+  border-color: var(--hara-v2-line);
+  border-radius: 14px;
+  box-shadow: var(--hara-v2-calm-shadow);
+}
+
+.v2-lab-www-closing {
+  border-color: var(--hara-v2-line);
+  border-radius: 9px;
+  box-shadow: none;
+  clip-path: none;
+}
+
+.tool-lab-left-stack > .hara-tool-icon-rail {
+  border-color: var(--hara-tool-edge);
+  border-radius: 0;
+}
+
+.tool-lab-tree {
+  padding: 6px 4px;
+}
+
+.tool-lab-tree li {
+  min-height: 32px;
+  margin-block: 2px;
+  border: 0;
+  border-radius: 5px;
+}
+
+.tool-lab-tree li[data-active="true"] {
+  border-inline-start-color: transparent;
+  background: var(--hara-tool-highlight);
+  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--hara-tool-signal) 66%, transparent);
+}
+
+.tool-lab-tree-kind {
+  border-color: var(--hara-tool-edge);
+  border-radius: 4px;
+}
+
+.tool-lab-vector-row {
+  border-block-end-color: var(--hara-tool-edge);
+}
+
+.tool-lab-vector-row > b,
+.tool-lab-search,
+.tool-lab-node-categories summary {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.tool-lab-search input {
+  border-color: var(--hara-tool-edge);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.tool-lab-node-categories details,
+.tool-lab-node-categories summary {
+  border-color: var(--hara-tool-edge);
+}
+
+.tool-lab-node-categories summary {
+  background: transparent;
+}
+
+.tool-lab-asset-strip,
+.tool-lab-material-strip {
+  gap: .55rem;
+  padding: .55rem;
+  background: transparent;
+}
+
+.tool-lab-asset-strip button,
+.tool-lab-material-strip button {
+  border: 1px solid var(--hara-tool-edge);
+  border-radius: 7px;
+  background: var(--hara-tool-bg);
+  transition:
+    background-color var(--hara-tool-motion) var(--hara-tool-ease),
+    border-color var(--hara-tool-motion) var(--hara-tool-ease),
+    box-shadow var(--hara-tool-motion) var(--hara-tool-ease);
+}
+
+.tool-lab-asset-strip button[data-active="true"],
+.tool-lab-material-strip button[data-active="true"] {
+  border-block-start-color: color-mix(in srgb, var(--hara-tool-signal) 44%, var(--hara-tool-edge));
+  background: color-mix(in srgb, var(--hara-tool-signal) 7%, var(--hara-tool-bg));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--hara-tool-signal) 9%, transparent);
+}
+
+.tool-lab-asset-strip button > span,
+.tool-lab-material-strip button > span {
+  border-color: var(--hara-tool-edge);
+  border-radius: 5px;
+  box-shadow: none;
+}
+
+.tool-lab-object-core {
+  border-color: var(--hara-tool-edge);
+  box-shadow: var(--hara-v2-calm-shadow-small);
+}
+
+.tool-lab-object-ring {
+  border-color: var(--hara-tool-edge);
+}
+
+.tool-lab-grid-plane {
+  opacity: .32;
+}
+
+@media (max-width: 820px) {
+  .v2-lab-hero h1,
+  .tool-lab-hero h1 {
+    font-size: clamp(3rem, 14vw, 5.3rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-lab-header nav a,
+  .v2-lab-index a,
+  .tool-lab-index a,
+  .tool-lab-asset-strip button,
+  .tool-lab-material-strip button {
+    transition: none;
+  }
+}

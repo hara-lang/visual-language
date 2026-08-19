@@ -2,15 +2,15 @@
 
 Version 2 is the opt-in document and product interface layer for Hara's public
 sites and content-heavy applications. It keeps the existing identity and theme
-machinery while changing the spatial language from soft generic cards to flat,
-command-aware fleet surfaces.
+machinery while moving the spatial language away from both generic cards and
+hard editor chrome toward calm, continuous command surfaces.
 
 For toolbars, docks, inspectors, palettes, viewports, timelines, consoles, and
 editor workbenches, use the additive [`V2-TOOL.md`](./V2-TOOL.md) contract.
 `v2-tool.css` imports this document layer rather than creating a separate theme.
 
-The reference mood is military space opera seen through an illustrator's
-technical notebook: matte hull panels, command rails, sparse telemetry, and
+The reference mood is a precision instrument drawn through an illustrator's
+technical notebook: continuous matte fields, quiet seams, sparse telemetry, and
 slightly imperfect construction lines. It must remain recognisably Hara rather
 than reproduce any franchise symbol, ship, type treatment, or control panel.
 
@@ -23,8 +23,12 @@ than reproduce any franchise symbol, ship, type treatment, or control panel.
   decoration.
 - Light and dark modes are equal products. Light mode is pale steel and paper,
   not a washed-out dark mode.
-- Structure comes from one-pixel seams, compact rails, and clipped corners.
-  Shadows are ambient only; document controls do not imitate thick hardware.
+- Structure comes from alignment, tonal layers, and one-pixel seams. Repeated
+  controls and panels use restrained radii; clipped or chamfered geometry is
+  reserved for rare identity and hero moments.
+- Shadows are ambient only. Document controls do not imitate thick hardware,
+  and no surface should combine a strong seam, bevel, chamfer, and state wash
+  when one cue would communicate the hierarchy.
 - Hand-drawn character is a quiet second line, grid drift, and original
   technical illustration. It must never reduce text contrast or data density.
 - The tool extension may add raised and recessed operational surfaces, but it
@@ -62,10 +66,28 @@ Everything else is a class-level primitive in `v2.css`. This lets Starlight,
 Astro pages, and framework-free surfaces use the same geometry without forcing
 one component model on every repository.
 
-The command-surface retune strengthens headers, context rows, side rails,
-buttons, fields, panels, tabs, tables, matrices, feeds, profiles, callouts, and
-code frames with existing v2 tokens. It intentionally does not import
-`--hara-tool-*` tokens: prose and editorial reading surfaces remain calm.
+The calm-surface refinement is part of the public entry point. It softens the
+original command-surface pass across headers, context rows, side rails, buttons,
+fields, panels, tabs, tables, matrices, feeds, profiles, callouts, and code
+frames. It intentionally does not import `--hara-tool-*` tokens: prose and
+editorial reading surfaces remain calm.
+
+## Surface rhythm
+
+The governing principle is **precision without armour**.
+
+- Use one primary separation cue per boundary: spacing, tone, or a seam.
+- Prefer sentence case and natural letter spacing for repeated operational
+  labels; reserve uppercase monospace labels for metadata and compact status.
+- Repeated controls should be comfortable enough for long sessions. V2 uses
+  34px regular tool controls and 30px dense controls rather than forcing every
+  action into the smallest possible frame.
+- Common panels and controls use restrained 6–12px radii. Large chamfers remain
+  available as identity accents but are not the default component shape.
+- Hover and selection changes should settle over roughly 180–190ms with reduced
+  motion support. Do not animate geometry merely for atmosphere.
+- Light/dark parity includes rhythm and contrast, not only token completeness.
+  Dark mode must not compensate for weak hierarchy by increasing every edge.
 
 ## Choosing the document or tool layer
 

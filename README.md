@@ -47,7 +47,10 @@ complete material, motion, accessibility, and composition rules.
 ## Experimental interface language v2
 
 V2 has two related entry points. Both preserve the current block-H mark, signal
-dot, theme storage, and heading family.
+dot, theme storage, and heading family. Both now follow a calm-surface rule:
+**precision without armour**. Common controls use quieter seams, restrained
+rounding, sentence-case labels, and smooth state transitions; chamfers and
+strong material effects are reserved for rare identity moments.
 
 | Entry point | Use it for | Contract |
 | --- | --- | --- |
@@ -57,8 +60,8 @@ dot, theme storage, and heading family.
 `v2-tool.css` imports `v2.css`, so a workbench consumer imports only the tool
 entry point and places both `hara-v2` and `hara-v2-tool` on its interface root.
 The two layers deliberately share identity, state colours, typography, and
-responsive priorities; the tool layer adds denser controls and stronger
-material hierarchy only where operational state requires it.
+responsive priorities. The tool layer adds denser controls and structural
+regions without making every surface visually heavier.
 
 ### Document and product shells
 
@@ -81,8 +84,8 @@ import "@hara-lang/visual-language/v2.css";
 
 The document contract is intentionally additive: v1 tokens and motifs are
 unchanged, so sites can migrate layout family by layout family. See
-[`V2-THEME.md`](./V2-THEME.md) for identity invariants, site anatomy,
-responsive behaviour, and adoption order.
+[`V2-THEME.md`](./V2-THEME.md) for identity invariants, surface rhythm, site
+anatomy, responsive behaviour, and adoption order.
 
 ### Tool and editor workbenches
 
