@@ -1,0 +1,9 @@
+---
+const { receipt, compact = false } = Astro.props;
+---
+<article class="www-proof-receipt" data-status={receipt.status} data-compact={compact ? "true" : "false"}>
+  <header><span>{receipt.label}</span><b>{receipt.status}</b></header>
+  <p>{receipt.claim}</p>
+  <dl><div><dt>Source</dt><dd>{receipt.source}</dd></div><div><dt>Revision</dt><dd><code>{receipt.revision}</code></dd></div></dl>
+  <footer><span>{receipt.evidence}</span><button type="button">Inspect evidence</button></footer>
+</article>
