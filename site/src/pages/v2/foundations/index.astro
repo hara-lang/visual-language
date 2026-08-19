@@ -24,6 +24,13 @@ const identitySizes = [
   { size: 24, label: "Minimum", note: "Smallest supported interface mark" }
 ];
 
+const withSwatchStyle = ([name, value, role]) => ({
+  name,
+  value,
+  role,
+  style: `background:${value}`
+});
+
 const lightTokens = [
   ["--hara-v2-canvas", "#eef0ef", "Page field"],
   ["--hara-v2-canvas-clean", "#f8f8f5", "Reading field"],
@@ -33,7 +40,7 @@ const lightTokens = [
   ["--hara-v2-ink", "#13171c", "Primary content"],
   ["--hara-v2-muted", "#5d656e", "Secondary content"],
   ["--hara-v2-faint", "#8a9299", "Tertiary metadata"]
-];
+].map(withSwatchStyle);
 
 const darkTokens = [
   ["--hara-v2-canvas", "#090b0e", "Page field"],
@@ -44,7 +51,7 @@ const darkTokens = [
   ["--hara-v2-ink", "#eef1f4", "Primary content"],
   ["--hara-v2-muted", "#a1aab3", "Secondary content"],
   ["--hara-v2-faint", "#6e7882", "Tertiary metadata"]
-];
+].map(withSwatchStyle);
 
 const tokenFamilies = [
   {
@@ -89,7 +96,24 @@ const tokenFamilies = [
   }
 ];
 
-const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
+const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64].map((value) => ({
+  value,
+  style: `width:${value}px;height:${value}px`
+}));
+
+const selectedExample = [
+  "(defn selected? [node]",
+  "  (= :active (:state node)))"
+].join("\n");
+
+const workflowExample = [
+  "(def.workflow",
+  "  lint",
+  "  [:task] {:main {:fn lint-project",
+  "                  :argcount 1}})"
+].join("\n");
+
+const productRoutePattern = "site/src/pages/v2/{product}";
 ---
 <!doctype html>
 <html lang="en">
@@ -170,18 +194,9 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
 
           <article class="foundations-specimen foundations-lockups">
             <header><span>Approved lockups</span><code>identity / product</code></header>
-            <div class="foundations-lockup-row">
-              <HaraMark size={48} />
-              <div><strong>Hara</strong><small>Programming language</small></div>
-            </div>
-            <div class="foundations-lockup-row foundations-lockup-row--section">
-              <HaraMark size={38} />
-              <div><strong>Hara visual language</strong><small>Foundations · Version 2</small></div>
-            </div>
-            <div class="foundations-lockup-row foundations-lockup-row--product">
-              <HaraMark size={34} />
-              <div><strong>Packages</strong><small>A Hara application</small></div>
-            </div>
+            <div class="foundations-lockup-row"><HaraMark size={48} /><div><strong>Hara</strong><small>Programming language</small></div></div>
+            <div class="foundations-lockup-row foundations-lockup-row--section"><HaraMark size={38} /><div><strong>Hara visual language</strong><small>Foundations · Version 2</small></div></div>
+            <div class="foundations-lockup-row foundations-lockup-row--product"><HaraMark size={34} /><div><strong>Packages</strong><small>A Hara application</small></div></div>
           </article>
 
           <article class="foundations-specimen foundations-clear-space">
@@ -196,26 +211,10 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
         </div>
 
         <div class="foundations-rule-grid">
-          <article class="foundations-rule foundations-rule--do">
-            <span>Do</span>
-            <div class="foundations-rule-mark"><HaraMark size={48} /></div>
-            <p>Use current text colour for the H and the shared signal token for the square.</p>
-          </article>
-          <article class="foundations-rule foundations-rule--avoid">
-            <span>Avoid · stretch</span>
-            <div class="foundations-rule-mark foundations-rule-mark--stretched"><HaraMark size={48} /></div>
-            <p>Do not alter proportions to fill a container.</p>
-          </article>
-          <article class="foundations-rule foundations-rule--avoid">
-            <span>Avoid · rotate</span>
-            <div class="foundations-rule-mark foundations-rule-mark--rotated"><HaraMark size={48} /></div>
-            <p>Do not turn the identity into an ornamental glyph.</p>
-          </article>
-          <article class="foundations-rule foundations-rule--avoid">
-            <span>Avoid · outline</span>
-            <div class="foundations-rule-mark foundations-rule-mark--outline"><HaraMark size={48} /></div>
-            <p>Do not redraw, outline, bevel, or add a second signal.</p>
-          </article>
+          <article class="foundations-rule foundations-rule--do"><span>Do</span><div class="foundations-rule-mark"><HaraMark size={48} /></div><p>Use current text colour for the H and the shared signal token for the square.</p></article>
+          <article class="foundations-rule foundations-rule--avoid"><span>Avoid · stretch</span><div class="foundations-rule-mark foundations-rule-mark--stretched"><HaraMark size={48} /></div><p>Do not alter proportions to fill a container.</p></article>
+          <article class="foundations-rule foundations-rule--avoid"><span>Avoid · rotate</span><div class="foundations-rule-mark foundations-rule-mark--rotated"><HaraMark size={48} /></div><p>Do not turn the identity into an ornamental glyph.</p></article>
+          <article class="foundations-rule foundations-rule--avoid"><span>Avoid · outline</span><div class="foundations-rule-mark foundations-rule-mark--outline"><HaraMark size={48} /></div><p>Do not redraw, outline, bevel, or add a second signal.</p></article>
         </div>
 
         <div class="foundations-relationship">
@@ -237,30 +236,18 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
         <div class="foundations-theme-pair" aria-label="Light and dark token tables">
           <article class="foundations-theme-preview" data-foundation-theme="light">
             <header><div><span>Light</span><strong>Pale steel and paper</strong></div><code>data-theme="light"</code></header>
-            <div class="foundations-theme-surface foundations-theme-surface--raised">
-              <small>Raised</small><strong>Evidence panel</strong><p>Bright enough to separate, never white enough to glare.</p>
-            </div>
+            <div class="foundations-theme-surface foundations-theme-surface--raised"><small>Raised</small><strong>Evidence panel</strong><p>Bright enough to separate, never white enough to glare.</p></div>
             <div class="foundations-theme-surface foundations-theme-surface--panel"><small>Panel</small><span>Ordinary working surface</span></div>
             <div class="foundations-theme-surface foundations-theme-surface--recess"><small>Recess</small><span>Input, rail, or nested field</span></div>
-            <ul>
-              {lightTokens.map(([name, value, role]) => (
-                <li><i style={`background:${value}`}></i><code>{name}</code><b>{value}</b><span>{role}</span></li>
-              ))}
-            </ul>
+            <ul>{lightTokens.map((token) => <li><i style={token.style}></i><code>{token.name}</code><b>{token.value}</b><span>{token.role}</span></li>)}</ul>
           </article>
 
           <article class="foundations-theme-preview" data-foundation-theme="dark">
             <header><div><span>Dark</span><strong>Graphite and cool ink</strong></div><code>data-theme="dark"</code></header>
-            <div class="foundations-theme-surface foundations-theme-surface--raised">
-              <small>Raised</small><strong>Evidence panel</strong><p>Depth comes from tone, not a brighter border around every region.</p>
-            </div>
+            <div class="foundations-theme-surface foundations-theme-surface--raised"><small>Raised</small><strong>Evidence panel</strong><p>Depth comes from tone, not a brighter border around every region.</p></div>
             <div class="foundations-theme-surface foundations-theme-surface--panel"><small>Panel</small><span>Ordinary working surface</span></div>
             <div class="foundations-theme-surface foundations-theme-surface--recess"><small>Recess</small><span>Input, rail, or nested field</span></div>
-            <ul>
-              {darkTokens.map(([name, value, role]) => (
-                <li><i style={`background:${value}`}></i><code>{name}</code><b>{value}</b><span>{role}</span></li>
-              ))}
-            </ul>
+            <ul>{darkTokens.map((token) => <li><i style={token.style}></i><code>{token.name}</code><b>{token.value}</b><span>{token.role}</span></li>)}</ul>
           </article>
         </div>
 
@@ -277,7 +264,7 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
           </article>
 
           <article class="foundations-specimen">
-            <header><span>Functional colour</span><code>state, not decoration</code></header>
+            <header><span>Functional colour</span><code>State, not decoration</code></header>
             <div class="foundations-state-palette">
               <div data-state="signal"><i></i><b>Signal</b><code>#4d9cff</code><span>Identity, focus, selection</span></div>
               <div data-state="success"><i></i><b>Success</b><code>#3e9d6f</code><span>Completed or verified</span></div>
@@ -288,7 +275,7 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
         </div>
 
         <div class="foundations-contrast-grid">
-          <article data-contrast="pass"><span>Pass</span><strong>Primary ink on ordinary panel</strong><p>Use full ink for reading, labels, and critical values.</p><button class="hara-v2-button">Visible action</button></article>
+          <article data-contrast="pass"><span>Pass</span><strong>Primary ink on ordinary panel</strong><p>Use full ink for reading, labels, and critical values.</p><button class="hara-v2-button" type="button">Visible action</button></article>
           <article data-contrast="pass"><span>Pass</span><strong>State plus text and shape</strong><p><i class="foundations-status-symbol">✓</i> Verified release · exact revision recorded</p></article>
           <article data-contrast="fail"><span>Forbidden</span><strong>Faint text as body copy</strong><p>Metadata contrast is not a substitute for readable prose.</p></article>
           <article data-contrast="fail"><span>Forbidden</span><strong>Colour-only selection</strong><p>A blue wash without text, marker, or current-state semantics is ambiguous.</p></article>
@@ -336,8 +323,7 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
           <article class="foundations-telemetry-sample">
             <p class="hara-v2-kicker">Telemetry and data</p>
             <dl><div><dt>session</dt><dd>live/8f24</dd></div><div><dt>generation</dt><dd>042</dd></div><div><dt>source revision</dt><dd>9d7b…e21</dd></div><div><dt>backend</dt><dd>hbc-wasm</dd></div></dl>
-            <pre><code>(defn selected? [node]
-  (= :active (:state node)))</code></pre>
+            <pre><code>{selectedExample}</code></pre>
           </article>
         </div>
 
@@ -355,9 +341,7 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
         </header>
 
         <div class="foundations-spacing-scale" aria-label="Spacing scale">
-          {spacingSteps.map((step) => (
-            <div><span style={`width:${step}px;height:${step}px`}></span><code>{step}px</code></div>
-          ))}
+          {spacingSteps.map((step) => <div><span style={step.style}></span><code>{step.value}px</code></div>)}
         </div>
 
         <div class="foundations-layout-metrics">
@@ -371,7 +355,7 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
           <article class="foundations-geometry-card" data-geometry="common"><span>Common surface</span><div></div><code>7px radius</code><p>Panels, fields, tabs, cards, and repeated controls.</p></article>
           <article class="foundations-geometry-card" data-geometry="large"><span>Large calm surface</span><div></div><code>12px radius</code><p>Workbench frames, major previews, and large composed examples.</p></article>
           <article class="foundations-geometry-card" data-geometry="cut"><span>Rare cut accent</span><div></div><code>4px cut</code><p>Identity or hero moments only; never every container.</p></article>
-          <article class="foundations-control-rhythm"><span>Control rhythm</span><button>34px regular</button><button class="is-dense">30px dense</button><div class="foundations-row-sample">38px data row</div><p>Dense mode is earned by repeated comparison, not used as the default visual tone.</p></article>
+          <article class="foundations-control-rhythm"><span>Control rhythm</span><button type="button">34px regular</button><button class="is-dense" type="button">30px dense</button><div class="foundations-row-sample">38px data row</div><p>Dense mode is earned by repeated comparison, not used as the default visual tone.</p></article>
         </div>
 
         <article class="foundations-responsive-order">
@@ -392,15 +376,9 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
         </header>
 
         <div class="foundations-motif-grid">
-          <Motif kind="edge" class="foundations-motif">
-            <div><span>Edge</span><strong>Directional transition</strong><p>Use for arrival, movement, and a broad product proposition.</p></div>
-          </Motif>
-          <Motif kind="aperture" class="foundations-motif">
-            <div><span>Aperture</span><strong>Inspection and focus</strong><p>Use around evidence, selection, checking, or a central concept.</p></div>
-          </Motif>
-          <Motif kind="rack" class="foundations-motif">
-            <div><span>Rack</span><strong>Systems and inventory</strong><p>Use for packages, runtimes, resources, and operational composition.</p></div>
-          </Motif>
+          <Motif kind="edge" class="foundations-motif"><div><span>Edge</span><strong>Directional transition</strong><p>Use for arrival, movement, and a broad product proposition.</p></div></Motif>
+          <Motif kind="aperture" class="foundations-motif"><div><span>Aperture</span><strong>Inspection and focus</strong><p>Use around evidence, selection, checking, or a central concept.</p></div></Motif>
+          <Motif kind="rack" class="foundations-motif"><div><span>Rack</span><strong>Systems and inventory</strong><p>Use for packages, runtimes, resources, and operational composition.</p></div></Motif>
         </div>
 
         <div class="foundations-fleet-study">
@@ -421,14 +399,14 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
         </header>
 
         <div class="foundations-state-grid" aria-label="Interface state specimens">
-          <button class="foundations-state-control" data-state="default"><span>Default</span><small>Available action</small></button>
-          <button class="foundations-state-control" data-state="selected" aria-pressed="true"><span>Selected</span><small>Text + marker + signal</small></button>
-          <button class="foundations-state-control" data-state="pressed"><span>Pressed</span><small>Immediate tactile response</small></button>
-          <button class="foundations-state-control" data-state="loading" aria-busy="true"><span>Loading</span><small><i></i> Fetching exact revision</small></button>
-          <button class="foundations-state-control" data-state="success"><span>Success</span><small>✓ Receipt recorded</small></button>
-          <button class="foundations-state-control" data-state="warning"><span>Warning</span><small>! Review required</small></button>
-          <button class="foundations-state-control" data-state="danger"><span>Danger</span><small>× Publication blocked</small></button>
-          <button class="foundations-state-control" data-state="disabled" disabled><span>Disabled</span><small>Capability unavailable</small></button>
+          <button class="foundations-state-control" data-state="default" type="button"><span>Default</span><small>Available action</small></button>
+          <button class="foundations-state-control" data-state="selected" aria-pressed="true" type="button"><span>Selected</span><small>Text + marker + signal</small></button>
+          <button class="foundations-state-control" data-state="pressed" type="button"><span>Pressed</span><small>Immediate tactile response</small></button>
+          <button class="foundations-state-control" data-state="loading" aria-busy="true" type="button"><span>Loading</span><small><i></i> Fetching exact revision</small></button>
+          <button class="foundations-state-control" data-state="success" type="button"><span>Success</span><small>✓ Receipt recorded</small></button>
+          <button class="foundations-state-control" data-state="warning" type="button"><span>Warning</span><small>! Review required</small></button>
+          <button class="foundations-state-control" data-state="danger" type="button"><span>Danger</span><small>× Publication blocked</small></button>
+          <button class="foundations-state-control" data-state="disabled" type="button" disabled><span>Disabled</span><small>Capability unavailable</small></button>
         </div>
 
         <div class="foundations-motion-grid">
@@ -438,9 +416,9 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
         </div>
 
         <div class="foundations-accessibility-grid">
-          <article><button class="foundations-focus-demo">Keyboard focus specimen</button><p>Every interactive control has a visible focus ring with sufficient offset.</p></article>
+          <article><button class="foundations-focus-demo" type="button">Keyboard focus specimen</button><p>Every interactive control has a visible focus ring with sufficient offset.</p></article>
           <article><div class="foundations-noncolour-state"><i>✓</i><span><b>Verified</b><small>Green, icon, label, and receipt</small></span></div><p>State is never encoded by colour alone.</p></article>
-          <article><div class="foundations-touch-target"><button aria-label="Previous item">←</button><button aria-label="Next item">→</button></div><p>Touch controls retain a minimum 34px height and accessible names.</p></article>
+          <article><div class="foundations-touch-target"><button type="button" aria-label="Previous item">←</button><button type="button" aria-label="Next item">→</button></div><p>Touch controls retain a minimum 34px height and accessible names.</p></article>
         </div>
       </section>
 
@@ -451,38 +429,12 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
         </header>
 
         <div class="foundations-composition-grid">
-          <article class="foundations-composition" id="composition-navigation">
-            <header><span>Navigation</span><code>identity · current state · quiet seam</code></header>
-            <div class="foundations-mini-nav"><div><HaraMark size={24} /><b>Hara Docs</b></div><nav><a>Guide</a><a aria-current="page">Reference</a><a>Packages</a></nav><button>⌕</button></div>
-          </article>
-
-          <article class="foundations-composition" id="composition-editorial">
-            <header><span>Editorial prose</span><code>760px measure · calm hierarchy</code></header>
-            <div class="foundations-mini-prose"><p class="hara-v2-kicker">Runtime model</p><h3>One lifecycle contract, multiple backends.</h3><p>Interpreter and HBC execution share session, generation, and source-revision fencing while preserving backend-specific observations.</p><a>Read the exact contract →</a></div>
-          </article>
-
-          <article class="foundations-composition" id="composition-data">
-            <header><span>Dense data</span><code>38px rows · selection is not colour-only</code></header>
-            <table><thead><tr><th>Runtime</th><th>Status</th><th>Median</th></tr></thead><tbody><tr aria-selected="true"><td><i></i> HBC Wasm</td><td>selected</td><td>4.8 ms</td></tr><tr><td>Interpreter</td><td>verified</td><td>13.2 ms</td></tr><tr><td>JVM</td><td>baseline</td><td>6.1 ms</td></tr></tbody></table>
-          </article>
-
-          <article class="foundations-composition" id="composition-code">
-            <header><span>Code</span><code>stable dark frame · exact identifiers</code></header>
-            <pre><code>(def.workflow
-  lint
-  [:task] {:main {:fn lint-project
-                  :argcount 1}})</code></pre><footer><span>hara/main · af6273c</span><button>Run</button></footer>
-          </article>
-
-          <article class="foundations-composition" id="composition-workbench">
-            <header><span>Workbench panel</span><code>v2 document around scoped tool chrome</code></header>
-            <div class="foundations-mini-workbench"><nav><button aria-pressed="true">Code</button><button>Files</button><button>Canvas</button></nav><main><code>supersonic-live/main.hal</code><div></div></main><aside><span>Session</span><b>live/8f24</b><span>Backend</span><b>hbc-wasm</b></aside></div>
-          </article>
-
-          <article class="foundations-composition" id="composition-community">
-            <header><span>Community content</span><code>paper surface · provenance first</code></header>
-            <div class="foundations-mini-story"><div class="foundations-mini-avatar">M</div><div><span>Package release · 41 min</span><h3>Schema values move into the ordinary Hara runtime</h3><p>Submitted by @mina · hara-lang/hara · exact release revision</p><footer><b>94 hot</b><a>11 comments</a><a>Open source</a></footer></div></div>
-          </article>
+          <article class="foundations-composition" id="composition-navigation"><header><span>Navigation</span><code>identity · current state · quiet seam</code></header><div class="foundations-mini-nav"><div><HaraMark size={24} /><b>Hara Docs</b></div><nav><a href="#composition-navigation">Guide</a><a href="#composition-navigation" aria-current="page">Reference</a><a href="#composition-navigation">Packages</a></nav><button type="button">⌕</button></div></article>
+          <article class="foundations-composition" id="composition-editorial"><header><span>Editorial prose</span><code>760px measure · calm hierarchy</code></header><div class="foundations-mini-prose"><p class="hara-v2-kicker">Runtime model</p><h3>One lifecycle contract, multiple backends.</h3><p>Interpreter and HBC execution share session, generation, and source-revision fencing while preserving backend-specific observations.</p><a href={themeContract}>Read the exact contract →</a></div></article>
+          <article class="foundations-composition" id="composition-data"><header><span>Dense data</span><code>38px rows · selection is not colour-only</code></header><table><thead><tr><th>Runtime</th><th>Status</th><th>Median</th></tr></thead><tbody><tr aria-selected="true"><td><i></i> HBC Wasm</td><td>selected</td><td>4.8 ms</td></tr><tr><td>Interpreter</td><td>verified</td><td>13.2 ms</td></tr><tr><td>JVM</td><td>baseline</td><td>6.1 ms</td></tr></tbody></table></article>
+          <article class="foundations-composition" id="composition-code"><header><span>Code</span><code>stable dark frame · exact identifiers</code></header><pre><code>{workflowExample}</code></pre><footer><span>hara/main · af6273c</span><button type="button">Run</button></footer></article>
+          <article class="foundations-composition" id="composition-workbench"><header><span>Workbench panel</span><code>v2 document around scoped tool chrome</code></header><div class="foundations-mini-workbench"><nav><button type="button" aria-pressed="true">Code</button><button type="button">Files</button><button type="button">Canvas</button></nav><main><code>supersonic-live/main.hal</code><div></div></main><aside><span>Session</span><b>live/8f24</b><span>Backend</span><b>hbc-wasm</b></aside></div></article>
+          <article class="foundations-composition" id="composition-community"><header><span>Community content</span><code>paper surface · provenance first</code></header><div class="foundations-mini-story"><div class="foundations-mini-avatar">M</div><div><span>Package release · 41 min</span><h3>Schema values move into the ordinary Hara runtime</h3><p>Submitted by @mina · hara-lang/hara · exact release revision</p><footer><b>94 hot</b><a href="#composition-community">11 comments</a><a href="#composition-community">Open source</a></footer></div></div></article>
         </div>
       </section>
 
@@ -494,7 +446,7 @@ const spacingSteps = [4, 8, 12, 16, 24, 32, 48, 64];
 
         <div class="foundations-ownership-grid">
           <article data-owner="shared"><span>Shared package contract</span><h3>Protected</h3><ul><li>Block-H identity and signal</li><li>Theme, colour, state, type, and motion tokens</li><li>Shell and component geometry</li><li>Focus, responsive, and reduced-motion behavior</li></ul><code>src/v2/* · src/astro/v2/*</code></article>
-          <article data-owner="product"><span>Product-owned composition</span><h3>Flexible</h3><ul><li>Information architecture and local navigation</li><li>Real data, workflows, and product terminology</li><li>Screen composition and task prioritisation</li><li>Product-specific imagery that explains the task</li></ul><code>site/src/pages/v2/{product}</code></article>
+          <article data-owner="product"><span>Product-owned composition</span><h3>Flexible</h3><ul><li>Information architecture and local navigation</li><li>Real data, workflows, and product terminology</li><li>Screen composition and task prioritisation</li><li>Product-specific imagery that explains the task</li></ul><code>{productRoutePattern}</code></article>
           <article data-owner="lab"><span>Catalogue-only framing</span><h3>Not exported</h3><ul><li>Specimen labels and measurement overlays</li><li>Do/avoid comparisons</li><li>Side-by-side theme previews</li><li>Annotation grids used for review</li></ul><code>site/src/styles/v2-foundations.css</code></article>
         </div>
 
