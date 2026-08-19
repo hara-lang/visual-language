@@ -108,8 +108,9 @@ export const catalogueGroups = [
         id: "www",
         label: "WWW",
         path: "/v2/www/",
+        href: "/v2/www/",
         summary: "The public language site family: narrative, proof, executable examples, Docs, and Benchmarks.",
-        status: "planned",
+        status: "active",
         issue: 38,
         eyebrow: "Public language family",
         children: [
@@ -117,16 +118,18 @@ export const catalogueGroups = [
             id: "www-docs",
             label: "Docs",
             path: "/v2/www/docs/",
+            href: "/v2/www/docs/",
             summary: "Guides, reference, search, live examples, version selection, and embedded runtime states.",
-            status: "planned",
+            status: "active",
             issue: 38
           },
           {
             id: "www-benchmarks",
             label: "Benchmarks",
             path: "/v2/www/benchmarks/",
+            href: "/v2/www/benchmarks/",
             summary: "Overview, insights, workload matrix, selected evidence, exact context, and methodology.",
-            status: "planned",
+            status: "active",
             issue: 38
           }
         ]
@@ -135,8 +138,9 @@ export const catalogueGroups = [
         id: "playground",
         label: "Playground",
         path: "/v2/playground/",
+        href: "/v2/playground/",
         summary: "Samples, studio editor, live sessions, optional control panes, embeds, sharing, and mobile execution.",
-        status: "planned",
+        status: "active",
         issue: 39,
         eyebrow: "Executable workspace"
       },

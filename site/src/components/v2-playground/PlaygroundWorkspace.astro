@@ -1,0 +1,313 @@
+---
+import EnvironmentWorkbench from "../../../../src/astro/v2/tool/EnvironmentWorkbench.astro";
+import FrontmatterGrid from "../../../../src/astro/v2/tool/FrontmatterGrid.astro";
+import ResourceList from "../../../../src/astro/v2/tool/ResourceList.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import TabStrip from "../../../../src/astro/v2/tool/TabStrip.astro";
+import Toolbar from "../../../../src/astro/v2/tool/Toolbar.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolGroup from "../../../../src/astro/v2/tool/ToolGroup.astro";
+
+interface Props {
+  source: string;
+}
+
+const { source } = Astro.props;
+
+const frontmatter = [
+  { label: "Content contract", value: "docs.live-example@2.1.0", detail: "shareable example identity", code: true },
+  { label: "Learning context", value: "learn.project@2.0.0", detail: "optional project framing", code: true },
+  { label: "Repository", value: "hara-lang/hara-playground", detail: "author-selected source", code: true },
+  { label: "Branch", value: "main", detail: "requested ref", code: true },
+  { label: "Path", value: "samples/supersonic-live/main.hara", detail: "requested source path", code: true },
+  { label: "Source revision", value: "sha256:9f3c2ab7", detail: "runtime-controlled fence", status: "ready", code: true },
+  { label: "Requested backend", value: "interpreter", detail: "browser request", code: true },
+  { label: "Actual backend", value: "interpreter", detail: "capability-confirmed", status: "ready", code: true },
+  { label: "Capabilities", value: "eval · cancel · canvas · observations", detail: "advertised by this exact session" },
+  { label: "Execution receipt", value: "receipt:runtime:exec-2048", detail: "durable runtime fact", code: true }
+];
+
+const sessions = [
+  { id: "session-shared", label: "Shared · supersonic-live", detail: "session:pg-7a91 · generation 4", meta: "seq 148", status: "ready", marker: "●", current: true, action: true },
+  { id: "session-scratch", label: "Isolated scratch", detail: "session:pg-a03d · generation 1", meta: "idle", status: "idle", marker: "○", action: true },
+  { id: "session-saved", label: "Saved · ribbon field", detail: "account-scoped snapshot", meta: "rev 18", status: "saved", marker: "◇", action: true }
+];
+
+const files = [
+  { id: "file-main", label: "main.hara", detail: "active source · writable", meta: "2.4 KB", status: "modified", marker: "H", current: true, action: true },
+  { id: "file-scene", label: "scene.hara", detail: "canvas scene description", meta: "1.1 KB", status: "clean", marker: "H", action: true },
+  { id: "file-readme", label: "README.md", detail: "sample intent and controls", meta: "812 B", status: "clean", marker: "M", action: true },
+  { id: "file-lock", label: "hara.lock", detail: "runtime-owned dependency lock", meta: "read only", status: "controlled", marker: "L", disabled: true }
+];
+
+const outputTabs = [
+  { id: "playground-result-tab", label: "Result", active: true, controls: "playground-result-panel", value: "result" },
+  { id: "playground-observations-tab", label: "Observations", controls: "playground-observations-panel", value: "observations", badge: 6 },
+  { id: "playground-diagnostics-tab", label: "Diagnostics", controls: "playground-diagnostics-panel", value: "diagnostics", badge: 1 }
+];
+---
+<section class="playground-workspace-shell" data-playground-studio data-runtime-state="ready" data-event-sequence="148">
+  <header class="playground-workspace-heading">
+    <div>
+      <p class="hara-v2-kicker">Primary surface · unified live session</p>
+      <h2>One studio, five operational modes.</h2>
+      <p>The editor stays primary while project navigation, controlled front matter, canvas output, and observations remain attached to the same session envelope.</p>
+    </div>
+    <div class="playground-runtime-summary" aria-label="Current runtime summary">
+      <span data-state="ready"><i></i><b data-runtime-state-label>Ready</b></span>
+      <code>session:<b data-session-id-value>pg-7a91</b></code>
+      <code>gen <b data-session-generation>4</b></code>
+      <code>rev <b data-source-revision>9f3c2ab7</b></code>
+      <code>seq <b data-event-sequence-value>148</b></code>
+    </div>
+  </header>
+
+  <nav class="playground-studio-modebar" aria-label="Studio modes">
+    <button type="button" data-studio-mode="nav">Navigation / project</button>
+    <button type="button" data-studio-mode="frontmatter">Front matter / configuration</button>
+    <button type="button" data-studio-mode="graphics">Graphics / canvas</button>
+    <button type="button" data-studio-mode="code" aria-pressed="true">Code</button>
+    <button type="button" data-studio-mode="console">Console / observations</button>
+  </nav>
+
+  <EnvironmentWorkbench
+    label="Hara Playground workspace"
+    activeSection="code"
+    activeControlGroup="sessions"
+    idPrefix="playground-studio"
+    minHeight="780px"
+    sectionLabels={{ nav: "Project", frontmatter: "Front matter", graphics: "Canvas", code: "Code" }}
+    sectionBadges={{ nav: 4, frontmatter: "v2.1", graphics: "live", code: "main.hara" }}
+    capabilityBadges={{ sessions: 3, files: 4, canvas: "2D", "three-d": "off" }}
+    class="playground-environment-workbench"
+  >
+    <div slot="commands" class="playground-command-rail">
+      <Toolbar label="Playground transport and runtime controls" density="dense">
+        <ToolGroup label="Execution controls">
+          <ToolButton label="Run" command="Meta+Enter" class="playground-run">
+            <span slot="icon" aria-hidden="true">▶</span>
+          </ToolButton>
+          <ToolButton label="Cancel" command="Escape" class="playground-cancel" disabled>
+            <span slot="icon" aria-hidden="true">■</span>
+          </ToolButton>
+          <ToolButton label="Restart" class="playground-restart">
+            <span slot="icon" aria-hidden="true">↻</span>
+          </ToolButton>
+          <ToolButton label="Reset" class="playground-reset">
+            <span slot="icon" aria-hidden="true">↺</span>
+          </ToolButton>
+        </ToolGroup>
+        <ToolGroup label="Backend request" class="playground-backend-group">
+          <label for="playground-backend">Backend</label>
+          <select id="playground-backend" data-backend-request>
+            <option value="interpreter" selected>Interpreter</option>
+            <option value="hbc">HBC</option>
+          </select>
+          <span data-backend-actual>actual · interpreter</span>
+        </ToolGroup>
+        <ToolGroup label="Workspace display">
+          <ToolButton label="Toggle control pane" class="playground-control-pane-toggle">
+            <span slot="icon" aria-hidden="true">▥</span>
+          </ToolButton>
+          <ToolButton label="Command palette" command="Meta+K" class="playground-command-palette">
+            <span slot="icon" aria-hidden="true">⌘</span>
+          </ToolButton>
+        </ToolGroup>
+      </Toolbar>
+    </div>
+
+    <section slot="nav" class="playground-project-mode" aria-label="Project navigation">
+      <header><span>Repository</span><code>hara-lang/hara-playground</code></header>
+      <div class="playground-project-columns">
+        <nav aria-label="Project files">
+          <p class="playground-panel-kicker">Files</p>
+          <ul class="playground-tree">
+            <li><button type="button" aria-expanded="true">▾ samples</button></li>
+            <li class="playground-tree-indent"><button type="button" aria-expanded="true">▾ supersonic-live</button></li>
+            <li class="playground-tree-indent-2"><button type="button" aria-current="page">H main.hara</button></li>
+            <li class="playground-tree-indent-2"><button type="button">H scene.hara</button></li>
+            <li class="playground-tree-indent-2"><button type="button">M README.md</button></li>
+            <li><button type="button">▸ packages</button></li>
+          </ul>
+        </nav>
+        <div class="playground-project-detail">
+          <p class="playground-panel-kicker">Exact source</p>
+          <dl>
+            <div><dt>Repository</dt><dd>hara-lang/hara-playground</dd></div>
+            <div><dt>Branch</dt><dd>main</dd></div>
+            <div><dt>Path</dt><dd>samples/supersonic-live/main.hara</dd></div>
+            <div><dt>Revision</dt><dd>9f3c2ab7</dd></div>
+          </dl>
+          <div class="playground-state-note" data-state="notice">
+            Changing branch, path, or revision requests a replacement session. It never mutates the current fenced session in place.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section slot="frontmatter" class="playground-frontmatter-mode" aria-label="Front matter and runtime configuration">
+      <div class="playground-mode-intro">
+        <div>
+          <p class="playground-panel-kicker">Shared content contract</p>
+          <h3>Author intent beside controlled runtime facts.</h3>
+        </div>
+        <span class="playground-contract-chip">docs.live-example</span>
+      </div>
+      <FrontmatterGrid entries={frontmatter} label="Playground live-example front matter" columns="auto" />
+      <div class="playground-ownership-grid">
+        <article>
+          <span>Browser authorable</span>
+          <strong>Title · summary · source intent · learning context</strong>
+          <p>Useful descriptions and requested coordinates may be edited before publication.</p>
+        </article>
+        <article>
+          <span>Controlled or derived</span>
+          <strong>Identity · route · revision · backend · capabilities · receipts</strong>
+          <p>The browser displays these facts but cannot mint or rewrite them.</p>
+        </article>
+      </div>
+    </section>
+
+    <section slot="graphics" class="playground-graphics-mode" aria-label="Canvas output">
+      <div class="playground-canvas-stage" role="img" aria-label="Animated ribbon field canvas preview">
+        <div class="playground-canvas-grid" aria-hidden="true"></div>
+        <div class="playground-ribbon playground-ribbon-a" aria-hidden="true"></div>
+        <div class="playground-ribbon playground-ribbon-b" aria-hidden="true"></div>
+        <div class="playground-canvas-object" aria-hidden="true"><span>H</span><i></i></div>
+        <div class="playground-canvas-hud">
+          <span>Canvas2D · 60 fps target</span>
+          <span>frame 02814</span>
+          <span>source 9f3c2ab7</span>
+        </div>
+      </div>
+      <div class="playground-capability-ledger" aria-label="Graphics capability ledger">
+        <span data-capability="canvas" data-available="true">Canvas · ready</span>
+        <span data-capability="pointer" data-available="true">Pointer · ready</span>
+        <span data-capability="three-d" data-available="false">3D · unavailable</span>
+        <span data-capability="audio" data-available="false">Audio · unavailable</span>
+      </div>
+    </section>
+
+    <section slot="code" class="playground-code-mode" aria-label="Code editor and result">
+      <div class="playground-editor-layout">
+        <section class="playground-editor-pane" aria-label="Code editor">
+          <header>
+            <div><span class="playground-file-dot" data-modified="true"></span><strong>main.hara</strong></div>
+            <div><span>Hara</span><span>UTF-8</span><span>Ln 1, Col 1</span></div>
+          </header>
+          <div class="playground-editor-surface">
+            <ol class="playground-line-numbers" aria-hidden="true">
+              {Array.from({ length: source.split("\n").length }, (_, index) => <li>{index + 1}</li>)}
+            </ol>
+            <textarea data-playground-editor aria-label="Hara source editor" spellcheck="false">{source}</textarea>
+          </div>
+        </section>
+
+        <section class="playground-output-pane" aria-label="Result and observations">
+          <header>
+            <TabStrip tabs={outputTabs} label="Output views" density="dense" />
+            <span class="playground-output-state" data-output-state>latest · seq 148</span>
+          </header>
+          <div id="playground-result-panel" role="tabpanel" aria-labelledby="playground-result-tab" data-output-panel="result">
+            <div class="playground-result-preview" role="img" aria-label="Result preview showing an animated signal field">
+              <span class="playground-result-orbit" aria-hidden="true"></span>
+              <strong>Signal field ready</strong>
+              <small>12 ribbons · 4 anchors · 0 dropped observations</small>
+            </div>
+            <pre data-run-result>{`{:status :ready
+ :backend :interpreter
+ :frames 2814
+ :receipt "runtime:exec-2048"}`}</pre>
+          </div>
+          <div id="playground-observations-panel" role="tabpanel" aria-labelledby="playground-observations-tab" data-output-panel="observations" hidden>
+            <ol class="playground-observation-list">
+              <li><code>143</code><span>lifecycle</span><strong>evaluation accepted</strong><small>source 9f3c2ab7</small></li>
+              <li><code>144</code><span>canvas.frame</span><strong>first frame presented</strong><small>16.8 ms</small></li>
+              <li><code>145</code><span>canvas.frame</span><strong>steady state</strong><small>59.8 fps</small></li>
+              <li><code>146</code><span>runtime.value</span><strong>:ribbon-count 12</strong><small>structured</small></li>
+              <li><code>147</code><span>runtime.receipt</span><strong>exec-2048 committed</strong><small>durable</small></li>
+              <li><code>148</code><span>lifecycle</span><strong>ready</strong><small>generation 4</small></li>
+            </ol>
+          </div>
+          <div id="playground-diagnostics-panel" role="tabpanel" aria-labelledby="playground-diagnostics-tab" data-output-panel="diagnostics" hidden>
+            <article class="playground-diagnostic" data-severity="warning">
+              <header><span>warning · schema-argument-mismatch</span><code>main.hara:18:7</code></header>
+              <p><code>:trail-width</code> expects a number between 0 and 1; the current value is clamped for preview.</p>
+              <p class="playground-diagnostic-trace-label">Stack trace</p>
+              <pre>{`at ribbon/options       main.hara:18:7
+at scene/build          scene.hara:42:3
+at playground/evaluate runtime:pg-7a91`}</pre>
+              <button type="button">Open source location</button>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <div slot="sessions" class="playground-control-group">
+      <ResourceList items={sessions} label="Live sessions" density="dense" />
+      <div class="playground-control-actions">
+        <button type="button" data-replace-session>Replace from exact source</button>
+        <button type="button" data-dispose-session>Dispose session</button>
+      </div>
+      <p>Restart advances generation. Replacement creates a newly fenced session. Disposal is terminal and idempotent.</p>
+    </div>
+
+    <div slot="files" class="playground-control-group">
+      <ResourceList items={files} label="Session files" density="dense" />
+      <p>Writable source files are distinct from runtime-owned lock and receipt material.</p>
+    </div>
+
+    <form slot="canvas" class="playground-canvas-controls" aria-label="Canvas controls">
+      <label>Ribbon count <output>12</output><input type="range" min="4" max="24" value="12" /></label>
+      <label>Trail width <output>0.42</output><input type="range" min="0" max="100" value="42" /></label>
+      <label>Signal decay <output>0.18</output><input type="range" min="0" max="100" value="18" /></label>
+      <label class="playground-checkbox"><input type="checkbox" checked /> Pointer field</label>
+      <label class="playground-checkbox"><input type="checkbox" checked /> Frame observations</label>
+      <p>These controls render only because the exact session advertises <code>canvas.controls</code>.</p>
+    </form>
+
+    <section slot="threeD" class="playground-unavailable-capability" aria-label="3D unavailable">
+      <span>Capability unavailable</span>
+      <h3>No 3D provider in this session.</h3>
+      <p>The interpreter session did not advertise <code>three-d.scene</code>, <code>three-d.camera</code>, or <code>three-d.selection</code>. The studio does not manufacture disabled controls that imply support.</p>
+      <button type="button" disabled>Open 3D controls</button>
+    </section>
+
+    <section slot="bottom" class="playground-console" data-console-surface aria-label="Console and runtime event stream">
+      <header>
+        <div><strong>Console / observations</strong><span>monotonic sequence</span></div>
+        <button type="button" data-console-collapse aria-expanded="true">Collapse</button>
+      </header>
+      <ol data-event-log>
+        <li><code>146</code><span>runtime.value</span><strong>:ribbon-count 12</strong><small>generation 4</small></li>
+        <li><code>147</code><span>runtime.receipt</span><strong>exec-2048 committed</strong><small>source 9f3c2ab7</small></li>
+        <li><code>148</code><span>lifecycle</span><strong>ready</strong><small>interpreter</small></li>
+      </ol>
+      <form data-console-form>
+        <label for="playground-console-input">Evaluate in fenced session</label>
+        <input id="playground-console-input" name="command" value="(:ribbon-count world)" autocomplete="off" />
+        <button type="submit">Evaluate</button>
+      </form>
+    </section>
+
+    <StatusBar slot="status" label="Playground session status" live>
+      <span data-state="ready"><i></i><b data-runtime-state-label>Ready</b></span>
+      <span>session <code data-session-id-value>pg-7a91</code></span>
+      <span>generation <code data-session-generation>4</code></span>
+      <span>source <code data-source-revision>9f3c2ab7</code></span>
+      <span slot="secondary">backend <code data-backend-status>interpreter</code> · event <code data-event-sequence-value>148</code> · receipt <code data-receipt-status>exec-2048</code></span>
+    </StatusBar>
+  </EnvironmentWorkbench>
+
+  <aside class="playground-command-palette-panel" data-command-palette hidden aria-label="Command palette">
+    <header><strong>Command palette</strong><kbd>Esc</kbd></header>
+    <label>Search commands <input type="search" placeholder="Run, restart, open file…" /></label>
+    <ul>
+      <li><button type="button"><span>Run exact source revision</span><kbd>⌘ Enter</kbd></button></li>
+      <li><button type="button"><span>Restart session generation</span><kbd>⌘ ⇧ R</kbd></button></li>
+      <li><button type="button"><span>Open diagnostics</span><kbd>⌘ 8</kbd></button></li>
+      <li><button type="button"><span>Toggle live controls</span><kbd>⌘ .</kbd></button></li>
+    </ul>
+  </aside>
+</section>
