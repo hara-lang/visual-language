@@ -218,7 +218,7 @@ test("states remain semantic, keyboard-visible, and understandable without colou
     /aria-label="Copy exact revision"/,
     /Keyboard focus/,
     /Reduced motion/,
-    /minimum 34px height/
+    /at least 34px height/
   ]) assert.match(page, contract);
 });
 
