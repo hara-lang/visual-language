@@ -1,0 +1,93 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../src/astro/HaraMark.astro";
+import CatalogueFallback from "./CatalogueFallback.astro";
+import CatalogueLauncher from "./CatalogueLauncher.astro";
+import { catalogueRouteContext } from "../../lib/v2-catalogue.mjs";
+import "../../styles/v2-catalogue.css";
+import "../../styles/v2-catalogue-disclosure.css";
+import "../../styles/v2-mobile-polish.css";
+import "../../styles/v2-navigation-tighten.css";
+
+const {
+  basePath,
+  activePath = "/v2/",
+  label = "Hara visual language catalogue",
+  sourceHref = "https://github.com/hara-lang/visual-language"
+} = Astro.props;
+
+const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
+const catalogueHome = `${normalizedBasePath}v2/`;
+const context = catalogueRouteContext(activePath);
+const launcherContext = context?.group.label ?? "Catalogue";
+---
+<header class="v2-catalogue-masthead" data-catalogue-masthead data-launcher-open="false">
+  <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
+    <HaraMark size={27} />
+    <span>
+      <b>Hara visual language</b>
+      <small>Interface catalogue · V2</small>
+    </span>
+  </a>
+
+  <div class="v2-catalogue-masthead-actions">
+    <button
+      class="v2-catalogue-launcher-trigger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="v2-catalogue-launcher"
+      data-catalogue-launcher-trigger
+    >
+      <span class="v2-catalogue-launcher-icon" aria-hidden="true">
+        {Array.from({ length: 9 }, () => <i></i>)}
+      </span>
+      <span>Browse</span>
+      <small>{launcherContext}</small>
+    </button>
+    <a class="v2-catalogue-source-link" href={sourceHref}>Source</a>
+    <ThemeToggle />
+  </div>
+
+  <CatalogueLauncher basePath={basePath} activePath={activePath} />
+  <CatalogueFallback basePath={basePath} />
+</header>
+
+<script>
+  const initialiseCatalogueMastheads = () => {
+    document.querySelectorAll("[data-catalogue-masthead]").forEach((header) => {
+      if (!(header instanceof HTMLElement) || header.dataset.ready === "true") return;
+      header.dataset.ready = "true";
+
+      const trigger = header.querySelector("[data-catalogue-launcher-trigger]");
+      const launcher = header.querySelector("[data-catalogue-launcher]");
+      const backdrop = header.querySelector("[data-catalogue-launcher-backdrop]");
+      const close = header.querySelector("[data-catalogue-launcher-close]");
+      if (!(trigger instanceof HTMLButtonElement) || !(launcher instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) return;
+
+      const setOpen = (open, restoreFocus = false) => {
+        header.dataset.launcherOpen = String(open);
+        trigger.setAttribute("aria-expanded", String(open));
+        launcher.hidden = !open;
+        backdrop.hidden = !open;
+        document.documentElement.dataset.catalogueLauncherOpen = String(open);
+
+        if (open) {
+          const firstLink = launcher.querySelector("a[aria-current], a");
+          if (firstLink instanceof HTMLAnchorElement) requestAnimationFrame(() => firstLink.focus());
+        } else if (restoreFocus) trigger.focus();
+      };
+
+      trigger.addEventListener("click", () => setOpen(header.dataset.launcherOpen !== "true"));
+      backdrop.addEventListener("click", () => setOpen(false, true));
+      if (close instanceof HTMLButtonElement) close.addEventListener("click", () => setOpen(false, true));
+      launcher.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && header.dataset.launcherOpen === "true") setOpen(false, true);
+      });
+    });
+  };
+
+  initialiseCatalogueMastheads();
+  document.addEventListener("astro:page-load", initialiseCatalogueMastheads);
+</script>
