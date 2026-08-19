@@ -94,31 +94,34 @@ test("every implemented laboratory advertised by the manifest exists", async () 
   ]) await access(new URL(path, import.meta.url));
 });
 
-test("the shared header composes grouped button disclosures from small components", async () => {
-  const [header, group, item, child, fallback] = await Promise.all([
+test("the shared shell keeps the global catalogue inside one app launcher", async () => {
+  const [header, masthead, launcher, fallback] = await Promise.all([
     read("../site/src/components/v2-catalogue/CatalogueHeader.astro"),
-    read("../site/src/components/v2-catalogue/CatalogueGroup.astro"),
-    read("../site/src/components/v2-catalogue/CatalogueMenuItem.astro"),
-    read("../site/src/components/v2-catalogue/CatalogueChildLink.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueMasthead.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueLauncher.astro"),
     read("../site/src/components/v2-catalogue/CatalogueFallback.astro")
   ]);
 
-  assert.match(header, /import CatalogueGroup/);
-  assert.match(header, /<CatalogueGroup group=\{foundations\}/);
-  assert.match(header, /<CatalogueGroup group=\{library\}/);
-  assert.match(header, /<CatalogueGroup group=\{applications\}/);
-  assert.match(header, /data-catalogue-menu-button/);
-  assert.match(header, /aria-controls="v2-catalogue-navigation"/);
-  assert.match(header, /event\.key !== "Escape"/);
-  assert.match(header, /header\.contains\(event\.target\)/);
-  assert.match(header, /document\.addEventListener\("astro:page-load"/);
-  assert.match(header, /v2-mobile-polish\.css/);
+  assert.match(header, /import CatalogueMasthead/);
+  assert.match(header, /CatalogueRouteBar/);
+  assert.match(header, /CatalogueSectionNav/);
+  assert.match(header, /CataloguePageFooter/);
+  assert.match(header, /slot="route-actions"/);
+  assert.doesNotMatch(header, /CatalogueGroup/);
 
-  assert.match(group, /data-catalogue-group-trigger/);
-  assert.match(group, /aria-controls={`v2-catalogue-panel-\$\{group\.id\}`}/);
-  assert.match(group, /items\.map\(\(item\) => <CatalogueMenuItem/);
-  assert.match(item, /item\.children\.map\(\(child\) => <CatalogueChildLink/);
-  assert.match(child, /catalogueStatusLabels\[child\.status\]/);
+  assert.match(masthead, /data-catalogue-launcher-trigger/);
+  assert.match(masthead, /aria-controls="v2-catalogue-launcher"/);
+  assert.match(masthead, /CatalogueLauncher/);
+  assert.match(masthead, /CatalogueFallback/);
+  assert.match(masthead, /event\.key === "Escape"/);
+  assert.match(masthead, /document\.addEventListener\("astro:page-load"/);
+
+  assert.match(launcher, /catalogueGroups\.map/);
+  assert.match(launcher, /v2-catalogue-launcher-grid/);
+  assert.match(launcher, /catalogueStatusLabels\[item\.status\]/);
+  assert.match(launcher, /item\.children\.map/);
+  assert.match(launcher, /aria-current=\{item\.current/);
+
   assert.match(fallback, /fallbackMarkup = `<noscript>/);
   assert.match(fallback, /catalogueHref\(item, basePath\)/);
   assert.match(fallback, /<Fragment set:html=\{fallbackMarkup\}/);
@@ -151,27 +154,28 @@ test("the catalogue home preserves four references and Learn owns the guided Wor
   assert.match(page, /Around Hara feed explorer/);
 });
 
-test("catalogue styling includes focus, compact mobile disclosure, and reduced-motion contracts", async () => {
-  const [css, disclosure, mobile] = await Promise.all([
+test("catalogue styling includes the launcher, compact layers and responsive contracts", async () => {
+  const [css, disclosure, mobile, tighten] = await Promise.all([
     read("../site/src/styles/v2-catalogue.css"),
     read("../site/src/styles/v2-catalogue-disclosure.css"),
-    read("../site/src/styles/v2-mobile-polish.css")
+    read("../site/src/styles/v2-mobile-polish.css"),
+    read("../site/src/styles/v2-navigation-tighten.css")
   ]);
-  const combined = `${css}\n${disclosure}\n${mobile}`;
+  const combined = `${css}\n${disclosure}\n${mobile}\n${tighten}`;
 
   for (const selector of [
-    ".v2-catalogue-header",
-    ".v2-catalogue-menu-button",
-    ".v2-catalogue-group-trigger",
-    ".v2-catalogue-panel",
+    ".v2-catalogue-masthead",
+    ".v2-catalogue-launcher-trigger",
+    ".v2-catalogue-launcher",
+    ".v2-catalogue-launcher-grid",
+    ".v2-catalogue-route-bar",
+    ".v2-catalogue-section-nav",
     ".v2-catalogue-card-grid",
-    ".v2-catalogue-children",
     ".v2-lab-quick-links"
   ]) assert.match(combined, new RegExp(selector.replace(".", "\\.")));
 
   assert.match(combined, /:focus-visible/);
-  assert.match(combined, /data-menu-open="false"/);
-  assert.match(combined, /data-open="true"/);
+  assert.match(combined, /data-catalogue-launcher-open/);
   assert.match(combined, /@media \(max-width: 840px\)/);
   assert.match(combined, /@media \(max-width: 820px\)/);
   assert.match(combined, /@media \(max-width: 560px\)/);
