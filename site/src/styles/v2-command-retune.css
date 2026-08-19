@@ -1,0 +1,59 @@
+/* Laboratory framing for the shared document-shell retune. */
+
+.v2-lab-canvas {
+  border: 1px solid var(--hara-v2-line-strong);
+  box-shadow:
+    inset 0 1px 0 var(--hara-v2-sketch),
+    0 1px 0 color-mix(in srgb, var(--hara-v2-line-strong) 26%, transparent);
+}
+
+.v2-lab-principles,
+.v2-lab-index,
+.v2-lab-notes {
+  border-color: var(--hara-v2-line-strong);
+  background: var(--hara-v2-line-strong);
+}
+
+.v2-lab-principles div,
+.v2-lab-index a,
+.v2-lab-notes article,
+.v2-lab-lesson {
+  position: relative;
+  box-shadow: inset 0 1px 0 var(--hara-v2-sketch);
+}
+
+.v2-lab-principles div::before,
+.v2-lab-index a::before,
+.v2-lab-notes article::before,
+.v2-lab-lesson::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 1px;
+  content: "";
+  background: var(--hara-v2-line-strong);
+}
+
+.v2-lab-index a:hover::before {
+  background: var(--hara-v2-signal);
+}
+
+.v2-lab-index code {
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.v2-lab-www-closing {
+  border-color: var(--hara-v2-line-strong);
+  background: var(--hara-v2-panel-raised);
+  box-shadow: inset 0 1px 0 var(--hara-v2-sketch);
+  clip-path: polygon(
+    var(--hara-v2-cut-small) 0,
+    100% 0,
+    100% calc(100% - var(--hara-v2-cut-small)),
+    calc(100% - var(--hara-v2-cut-small)) 100%,
+    0 100%,
+    0 var(--hara-v2-cut-small)
+  );
+}
