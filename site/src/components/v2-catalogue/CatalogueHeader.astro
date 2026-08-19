@@ -19,6 +19,22 @@ const {
 } = Astro.props;
 
 const catalogueHome = `${basePath.endsWith("/") ? basePath : `${basePath}/`}v2/`;
+const menuGroups = catalogueGroups.map((group) => ({
+  ...group,
+  current: catalogueGroupIsCurrent(group, activePath),
+  items: group.items.map((item) => ({
+    ...item,
+    current: catalogueItemIsCurrent(item, activePath),
+    external: catalogueLinkIsExternal(item),
+    resolvedHref: catalogueHref(item, basePath),
+    children: (item.children ?? []).map((child) => ({
+      ...child,
+      current: catalogueItemIsCurrent(child, activePath),
+      external: catalogueLinkIsExternal(child),
+      resolvedHref: catalogueHref(child, basePath)
+    }))
+  }))
+}));
 ---
 <header class="v2-catalogue-header" data-catalogue-header data-menu-open="false">
   <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
@@ -41,67 +57,56 @@ const catalogueHome = `${basePath.endsWith("/") ? basePath : `${basePath}/`}v2/`
   </button>
 
   <nav class="v2-catalogue-nav" id="v2-catalogue-navigation" aria-label="Visual language catalogue" data-catalogue-navigation>
-    {catalogueGroups.map((group) => {
-      const groupCurrent = catalogueGroupIsCurrent(group, activePath);
-      return (
-        <details class="v2-catalogue-group" data-catalogue-group data-current={groupCurrent ? "true" : "false"}>
-          <summary>
-            <span>{group.label}</span>
-            <small>{group.items.length}</small>
-          </summary>
-          <div class="v2-catalogue-panel">
-            <header>
-              <p class="hara-v2-kicker">Catalogue group</p>
-              <h2>{group.label}</h2>
-              <p>{group.summary}</p>
-            </header>
-            <div class="v2-catalogue-panel-grid">
-              {group.items.map((item) => {
-                const external = catalogueLinkIsExternal(item);
-                const current = catalogueItemIsCurrent(item, activePath);
-                return (
-                  <article class="v2-catalogue-menu-item" data-status={item.status} data-current={current ? "true" : "false"}>
-                    <a
-                      href={catalogueHref(item, basePath)}
-                      target={external ? "_blank" : undefined}
-                      rel={external ? "noreferrer" : undefined}
-                      aria-current={current ? "page" : undefined}
-                    >
-                      <span class="v2-catalogue-menu-eyebrow">{item.eyebrow ?? group.label}</span>
-                      <b>{item.label}</b>
-                      <p>{item.summary}</p>
-                      <span class="v2-catalogue-status" data-status={item.status}>
-                        {catalogueStatusLabels[item.status]}
-                        {external && item.issue ? ` · #${item.issue}` : ""}
-                      </span>
-                    </a>
-                    {item.children && item.children.length > 0 && (
-                      <nav aria-label={`${item.label} routes`} class="v2-catalogue-children">
-                        {item.children.map((child) => {
-                          const childExternal = catalogueLinkIsExternal(child);
-                          const childCurrent = catalogueItemIsCurrent(child, activePath);
-                          return (
-                            <a
-                              href={catalogueHref(child, basePath)}
-                              target={childExternal ? "_blank" : undefined}
-                              rel={childExternal ? "noreferrer" : undefined}
-                              aria-current={childCurrent ? "page" : undefined}
-                            >
-                              <span>{child.label}</span>
-                              <small data-status={child.status}>{catalogueStatusLabels[child.status]}</small>
-                            </a>
-                          );
-                        })}
-                      </nav>
-                    )}
-                  </article>
-                );
-              })}
-            </div>
+    {menuGroups.map((group) => (
+      <details class="v2-catalogue-group" data-catalogue-group data-current={group.current ? "true" : "false"}>
+        <summary>
+          <span>{group.label}</span>
+          <small>{group.items.length}</small>
+        </summary>
+        <div class="v2-catalogue-panel">
+          <header>
+            <p class="hara-v2-kicker">Catalogue group</p>
+            <h2>{group.label}</h2>
+            <p>{group.summary}</p>
+          </header>
+          <div class="v2-catalogue-panel-grid">
+            {group.items.map((item) => (
+              <article class="v2-catalogue-menu-item" data-status={item.status} data-current={item.current ? "true" : "false"}>
+                <a
+                  href={item.resolvedHref}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noreferrer" : undefined}
+                  aria-current={item.current ? "page" : undefined}
+                >
+                  <span class="v2-catalogue-menu-eyebrow">{item.eyebrow ?? group.label}</span>
+                  <b>{item.label}</b>
+                  <p>{item.summary}</p>
+                  <span class="v2-catalogue-status" data-status={item.status}>
+                    {catalogueStatusLabels[item.status]}
+                    {item.external && item.issue ? ` · #${item.issue}` : ""}
+                  </span>
+                </a>
+                {item.children.length > 0 && (
+                  <nav aria-label={`${item.label} routes`} class="v2-catalogue-children">
+                    {item.children.map((child) => (
+                      <a
+                        href={child.resolvedHref}
+                        target={child.external ? "_blank" : undefined}
+                        rel={child.external ? "noreferrer" : undefined}
+                        aria-current={child.current ? "page" : undefined}
+                      >
+                        <span>{child.label}</span>
+                        <small data-status={child.status}>{catalogueStatusLabels[child.status]}</small>
+                      </a>
+                    ))}
+                  </nav>
+                )}
+              </article>
+            ))}
           </div>
-        </details>
-      );
-    })}
+        </div>
+      </details>
+    ))}
   </nav>
 
   <div class="v2-catalogue-actions">
