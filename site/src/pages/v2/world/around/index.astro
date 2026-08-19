@@ -1,0 +1,88 @@
+---
+import ThemeToggle from "../../../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../../../src/astro/HaraMark.astro";
+import ClipScreen from "../../../../components/v2-world-around/ClipScreen.astro";
+import ModerationScreen from "../../../../components/v2-world-around/ModerationScreen.astro";
+import RadarScreen from "../../../../components/v2-world-around/RadarScreen.astro";
+import RelayScreen from "../../../../components/v2-world-around/RelayScreen.astro";
+import SignalScreen from "../../../../components/v2-world-around/SignalScreen.astro";
+import SourceProfileScreen from "../../../../components/v2-world-around/SourceProfileScreen.astro";
+import StoryScreen from "../../../../components/v2-world-around/StoryScreen.astro";
+import SubmitSourceScreen from "../../../../components/v2-world-around/SubmitSourceScreen.astro";
+import "../../../../../../src/v2.css";
+import "../../../../../../src/theme.js";
+import "../../../../styles/v2-lab.css";
+import "../../../../styles/v2-calm-lab.css";
+import "../../../../styles/v2-world-lab.css";
+import "../../../../styles/v2-world-around.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/world/around/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const documentLab = `${basePath}v2/`;
+const worldLab = `${basePath}v2/world/`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Around Hara: a visual-language v2 study for attributed signal discovery, story clustering, clipping, source registration, moderation, and accountable Hara Relay drafts." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Around Hara feed explorer" />
+    <meta property="og:description" content="Eight World screens for finding external Hara signals and turning them into attributed stories, discussions, source profiles, and policy-gated bot posts." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Around Hara feed explorer" />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Around Hara feed explorer</title>
+  </head>
+  <body class="hara-v2">
+    <header class="v2-lab-header around-lab-header">
+      <a class="v2-lab-brand" href={worldLab}><HaraMark size={28} /><b>Hara visual language</b><small>Around Hara field test</small></a>
+      <nav aria-label="Prototype screens"><a href="#radar">Radar</a><a href="#story">Story</a><a href="#signal">Signal</a><a href="#clip">Clip</a><a href="#submit">Submit</a><a href="#source">Source</a><a href="#moderation">Moderate</a><a href="#relay">Relay</a></nav>
+      <ThemeToggle />
+    </header>
+
+    <main class="v2-lab-main world-lab-main around-lab-main">
+      <section class="world-lab-hero around-lab-hero">
+        <div>
+          <p class="hara-v2-kicker">World signal explorer · Prototype data</p>
+          <h1>The internet, resolved into Hara stories.</h1>
+          <p>Around Hara collects narrow, attributed signals from X, Reddit, Hacker News, Substack, and GitHub. It groups repeated coverage, explains every match, keeps external identity separate from World identity, and lets the Hara bot redistribute only policy-approved highlights.</p>
+          <div class="world-lab-hero-actions"><a class="hara-v2-button" data-variant="primary" href="#radar">Open the radar</a><a class="hara-v2-button" href="#relay">Review Hara Relay</a><a class="world-lab-back-link" href={worldLab}>← Back to World laboratory</a></div>
+          <div class="around-contract"><span>Original platform owns the post</span><span>World owns the connections</span><span>Every ranking is explainable</span></div>
+        </div>
+        <div class="around-radar-art" aria-hidden="true"><i></i><i></i><b>H<em></em></b><span data-source="x">X</span><span data-source="reddit">r/</span><span data-source="hn">Y</span><span data-source="substack">S</span><span data-source="github">◇</span></div>
+      </section>
+
+      <nav class="world-lab-index around-lab-index" aria-label="Around Hara screen catalogue">
+        <a href="#radar"><strong>Signal radar</strong><span>Source-relative hotness, recency, discussion, and curation.</span><code>discover / rank / explain</code></a>
+        <a href="#story"><strong>Story cluster</strong><span>Canonical Hara update plus resolved external coverage.</span><code>cluster / relate / discuss</code></a>
+        <a href="#signal"><strong>Signal detail</strong><span>Original preview, identity, evidence, entities, and local discussion.</span><code>attribute / verify / converse</code></a>
+        <a href="#clip"><strong>Clip composer</strong><span>Save a signal with a new Hara-specific note.</span><code>clip / annotate / share</code></a>
+        <a href="#submit"><strong>Submit source</strong><span>Register feeds, accounts, communities, and repositories.</span><code>identify / match / preview</code></a>
+        <a href="#source"><strong>Source profile</strong><span>Provenance, ownership, health, rules, and discoveries.</span><code>provenance / claim / audit</code></a>
+        <a href="#moderation"><strong>Match review</strong><span>Resolve ambiguity with explicit evidence and dispositions.</span><code>keep / reject / merge</code></a>
+        <a href="#relay"><strong>Hara Relay</strong><span>Human-approved, channel-specific outbound drafts.</span><code>score / approve / publish</code></a>
+      </nav>
+
+      <RadarScreen home={documentLab} world={worldLab} />
+      <StoryScreen home={documentLab} world={worldLab} />
+      <SignalScreen home={documentLab} world={worldLab} />
+      <ClipScreen home={documentLab} world={worldLab} />
+      <SubmitSourceScreen home={documentLab} world={worldLab} />
+      <SourceProfileScreen home={documentLab} world={worldLab} />
+      <ModerationScreen home={documentLab} world={worldLab} />
+      <RelayScreen home={documentLab} world={worldLab} />
+
+      <section class="world-lab-conclusion around-conclusion"><div><p class="hara-v2-kicker">Around Hara grammar</p><h2>Signal · Clip · Story · Source · Discussion · Relay</h2><p>The external platform owns the original item. Hara World owns the resolved entities, community notes, local discussion, curation, and accountable outbound effects around it.</p></div><div><a class="hara-v2-button" href={worldLab}>Return to World</a><a class="hara-v2-button" data-variant="primary" href="#radar">Back to radar</a></div></section>
+      <footer class="v2-lab-footer"><span>Experimental Around Hara study · Hara visual language v2 · prototype data only</span><span><a href={worldLab}>World laboratory</a> · <a href={documentLab}>V2 laboratory</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span></footer>
+    </main>
+  </body>
+</html>

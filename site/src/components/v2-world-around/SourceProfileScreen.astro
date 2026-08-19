@@ -1,0 +1,26 @@
+---
+import AroundScreen from "./AroundScreen.astro";
+import SourceBadge from "./SourceBadge.astro";
+import { sidebars, sourceSignals } from "./data";
+
+interface Props { home: string; world: string; }
+const { home, world } = Astro.props;
+---
+<section class="world-lab-screen" id="source">
+        <header class="world-lab-screen-head"><div><p class="hara-v2-kicker">Screen 06 · Source profile</p><h2>Every feed has provenance, health, and a steward.</h2></div><p>The source page exposes who submitted it, claim state, matching contract, refresh health, discoveries, and change history.</p></header>
+        <div class="world-lab-canvas around-lab-canvas">
+          <AroundScreen current="source" mainId="around-source-content" sidebarTitle="Systems in the Small" sidebarGroups={sidebars.source} sidebarNote="Community recommended by @chris. Public RSS adapter. Ownership not yet verified." home={home} world={world}>
+            <Fragment slot="actions"><a class="hara-v2-button" href="#submit">Submit another</a><a class="hara-v2-button">Edit topics</a><a class="hara-v2-button" data-variant="primary">Claim source ↗</a></Fragment>
+            <section class="around-profile"><span class="around-profile-mark">S</span><div><div class="around-source-stack"><SourceBadge source="substack" label="RSS publication" /><span class="hara-v2-badge">Community verified</span></div><h1>Systems in the Small</h1><p>Long-form writing about programming languages, runtimes, durable work, and inspectable systems.</p><code>systems-small.example/feed</code></div><button class="hara-v2-button">Open publication ↗</button></section>
+            <div class="around-stat-row"><div><b>18</b><span>signals</span></div><div><b>6</b><span>clusters</span></div><div><b>4</b><span>clips</span></div><div><b>97%</b><span>health</span></div><div><b>12 min</b><span>refresh</span></div></div>
+            <div class="around-source-grid"><section class="around-panel"><header class="around-section-head"><div><p class="hara-v2-kicker">Recent discoveries</p><h2>Signals from this source.</h2></div><a href="#radar">Open radar →</a></header><div class="around-record-list">{sourceSignals.map((item) => <article><SourceBadge source={item[0]} /><p><b>{item[1]}</b><small>{item[2]}</small></p><span>{item[3]}</span></article>)}</div></section><section class="around-panel"><header class="around-section-head"><div><p class="hara-v2-kicker">Matching contract</p><h2>Why entries qualify.</h2></div><button>Edit</button></header><ol class="around-rules"><li><b>1</b><p><strong>Exact domain</strong><span>hara-lang.org and github.com/hara-lang</span></p></li><li><b>2</b><p><strong>Known namespace</strong><span>std.typed, work.*, LiveSession</span></p></li><li><b>3</b><p><strong>Context threshold</strong><span>Keyword-only matches require ≥ 0.82</span></p></li><li><b>4</b><p><strong>Review fence</strong><span>Ambiguous items enter moderation</span></p></li></ol></section></div>
+            <section class="around-panel around-audit"><header class="around-section-head"><div><p class="hara-v2-kicker">Source history</p><h2>Reviewable changes.</h2></div><span>Immutable event trail</span></header><ol><li><time>Today · 10:12</time><p><b>Feed refreshed</b><span>3 inspected · 1 match</span></p></li><li><time>Aug 18 · 16:40</time><p><b>Rule narrowed</b><span>Threshold raised to 0.82</span></p></li><li><time>Aug 11 · 09:04</time><p><b>Source approved</b><span>Recommendation accepted</span></p></li></ol></section>
+            <Fragment slot="aside">
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Ownership</h2><span class="hara-v2-badge" data-tone="warning">Unclaimed</span></header><div class="hara-v2-panel-body around-stack"><p>Claim through a feed, domain, or linked GitHub profile verification token.</p><button class="hara-v2-button" data-variant="primary">Begin claim</button><small>Claims connect identity; they do not transfer content ownership.</small></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Topics</h2></header><div class="hara-v2-panel-body around-pills"><span>language design</span><span>runtimes</span><span>durable work</span><span>schemas</span></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Digest inclusion</h2></header><div class="hara-v2-panel-body around-kv"><div><span>Weekly digest</span><b>eligible</b></div><div><span>Hara Relay</span><b>manual</b></div><div><span>Front page</span><b>curated</b></div></div></section>
+            </Fragment>
+          </AroundScreen>
+        </div>
+        <div class="world-lab-notes"><article><b>Public ingestion contract</b><p>Readers can see exactly why this source contributes.</p></article><article><b>Claimable stewardship</b><p>Verified owners maintain metadata, not ownership of linked content.</p></article><article><b>Auditable tuning</b><p>Rule changes and moderation outcomes remain history.</p></article></div>
+      </section>

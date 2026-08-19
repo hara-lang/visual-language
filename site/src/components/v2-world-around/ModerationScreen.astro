@@ -1,0 +1,25 @@
+---
+import AroundScreen from "./AroundScreen.astro";
+import MatchReason from "./MatchReason.astro";
+import SourceBadge from "./SourceBadge.astro";
+import { sidebars } from "./data";
+
+interface Props { home: string; world: string; }
+const { home, world } = Astro.props;
+---
+<section class="world-lab-screen" id="moderation">
+        <header class="world-lab-screen-head"><div><p class="hara-v2-kicker">Screen 07 · Match moderation</p><h2>False positives become correctable facts.</h2></div><p>Reviewers inspect decomposed evidence, resolve duplicates and identity claims, and record explicit dispositions and rule effects.</p></header>
+        <div class="world-lab-canvas around-lab-canvas">
+          <AroundScreen current="moderation" mainId="around-moderation-content" sidebarTitle="Moderation" sidebarGroups={sidebars.moderation} sidebarNote="Three potential matches need a human disposition. Every action records reviewer, evidence, and rule effect." home={home} world={world}>
+            <Fragment slot="actions"><a class="hara-v2-button" href="#radar">Open radar</a><a class="hara-v2-button">Audit trail</a><a class="hara-v2-button" data-variant="primary">Save disposition ↗</a></Fragment>
+            <div class="around-heading"><div><p class="hara-v2-kicker">Potential matches</p><h1>Review evidence, not vibes.</h1><p>Exact Hara entities, contextual guesses, and keyword collisions remain distinguishable.</p></div><span class="hara-v2-badge" data-tone="warning">3 pending</span></div>
+            <section class="around-review-grid"><div class="around-panel around-queue"><header><h2>Queue</h2><button>Oldest first</button></header><article class="is-selected"><SourceBadge source="reddit" /><p><b>Hara for API workflows?</b><span>Contextual match · 0.62</span></p></article><article><SourceBadge source="x" /><p><b>Hara meditation retreat</b><span>Keyword collision · 0.18</span></p></article><article><SourceBadge source="hacker-news" /><p><b>Duplicate LiveSession link</b><span>Likely merge · 0.99</span></p></article></div><div class="around-panel around-inspector"><header class="around-section-head"><div><p class="hara-v2-kicker">Selected candidate</p><h2>Hara for API workflows?</h2></div><SourceBadge source="reddit" /></header><div class="around-review-post"><b>u/workflow_architect</b><p>Has anyone used Hara for coordinating API workflows? I want an algebraic model with durable boundaries rather than a queue-first framework.</p><footer><span>12 upvotes</span><span>4 comments</span></footer></div><h3>Evidence</h3><div class="around-evidence-table"><div><span>Keyword</span><b>Hara</b><strong>+0.20</strong></div><div><span>Context</span><b>algebraic · durable</b><strong>+0.32</strong></div><div><span>Exact domain</span><b>none</b><strong>+0.00</strong></div><div><span>Namespace</span><b>none</b><strong>+0.10</strong></div></div><h3>Disposition</h3><div class="around-options"><button aria-pressed="true"><b>Keep for review</b><span>Ask for a canonical link.</span></button><button><b>Accept as Hara</b><span>Publish with evidence.</span></button><button><b>Not Hara</b><span>Record a collision.</span></button><button><b>Merge duplicate</b><span>Attach to a signal.</span></button></div><label class="around-field"><span>Reviewer note</span><textarea>Context is plausible but no exact Hara entity is present. Hold for a canonical link.</textarea></label></div></section>
+            <Fragment slot="aside">
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Rule impact</h2></header><div class="hara-v2-panel-body around-kv"><div><span>Confidence</span><b>0.62</b></div><div><span>Publish fence</span><b>0.82</b></div><div><span>Suggested</span><b>hold</b></div></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Strong examples</h2></header><div class="hara-v2-panel-body around-evidence-stack"><MatchReason title="Exact domain" detail="hara-lang.org" /><MatchReason title="Repository" detail="hara-lang/hara" /><MatchReason title="Namespace" detail="std.typed · work.*" /></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Moderation receipt</h2></header><div class="hara-v2-panel-body"><p class="world-aside-copy">The disposition records source item, evidence, reviewer, rule version, and downstream changes.</p></div></section>
+            </Fragment>
+          </AroundScreen>
+        </div>
+        <div class="world-lab-notes"><article><b>Evidence first</b><p>Reviewers correct rules rather than merely hiding items.</p></article><article><b>Explicit dispositions</b><p>Keep, reject, hold, and merge have different effects.</p></article><article><b>No opaque loop</b><p>Versioned deterministic contracts still govern publication.</p></article></div>
+      </section>

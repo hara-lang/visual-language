@@ -1,0 +1,28 @@
+---
+interface Props {
+  source: "x" | "reddit" | "hacker-news" | "substack" | "github" | "world";
+  label?: string;
+}
+
+const { source, label } = Astro.props;
+const labels = {
+  x: "X",
+  reddit: "Reddit",
+  "hacker-news": "Hacker News",
+  substack: "Substack",
+  github: "GitHub",
+  world: "Hara World"
+};
+const marks = {
+  x: "X",
+  reddit: "r/",
+  "hacker-news": "Y",
+  substack: "S",
+  github: "◇",
+  world: "H"
+};
+---
+<span class="around-source-badge" data-source={source}>
+  <i aria-hidden="true">{marks[source]}</i>
+  <span>{label ?? labels[source]}</span>
+</span>

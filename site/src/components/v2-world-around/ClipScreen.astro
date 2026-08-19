@@ -1,0 +1,28 @@
+---
+import AroundScreen from "./AroundScreen.astro";
+import SourceBadge from "./SourceBadge.astro";
+import { sidebars } from "./data";
+
+interface Props { home: string; world: string; }
+const { home, world } = Astro.props;
+---
+<section class="world-lab-screen" id="clip">
+        <header class="world-lab-screen-head"><div><p class="hara-v2-kicker">Screen 04 · Clip composer</p><h2>Add Hara context without copying ownership.</h2></div><p>A clip records the canonical URL, source metadata, the user’s note, related Hara entities, tags, and visibility.</p></header>
+        <div class="world-lab-canvas around-lab-canvas">
+          <AroundScreen current="clip" mainId="around-clip-content" sidebarTitle="New clipping" sidebarGroups={sidebars.clip} sidebarNote="The canonical external URL is required. A clipping never pretends to own the original post." home={home} world={world}>
+            <Fragment slot="actions"><a class="hara-v2-button" href="#signal">Cancel</a><a class="hara-v2-button">Save private</a><a class="hara-v2-button" data-variant="primary">Publish clip ↗</a></Fragment>
+            <div class="around-heading"><div><p class="hara-v2-kicker">Clip to World</p><h1>Save the signal with context.</h1></div><span class="hara-v2-badge" data-tone="signal">Draft</span></div>
+            <section class="around-composer">
+              <div class="around-panel around-clip-source"><header><SourceBadge source="x" /><span>Original signal</span></header><b>@compiler_notes</b><blockquote>Hara’s LiveSession boundary is interesting because it reads like a protocol rather than a browser REPL…</blockquote><a href="#signal">Open canonical source ↗</a><footer><span>Available · 2 min</span><span>Cluster: LiveSession</span></footer></div>
+              <form class="around-panel around-form"><label><span>Your note</span><textarea>Useful framing: the session boundary is reusable because stale intent, capabilities, restart, and event ordering are explicit.</textarea><small>Explain why this matters; do not reproduce the external post.</small></label><div class="around-form-grid"><label><span>Related item</span><select><option>LiveSession</option><option>hara-wasm-core</option></select></label><label><span>Story cluster</span><select><option>Browser sessions</option><option>Create new</option></select></label></div><fieldset><legend>Tags</legend><div class="around-pills"><button aria-pressed="true">browser</button><button aria-pressed="true">wasm</button><button aria-pressed="true">sessions</button><button>protocol</button></div></fieldset><fieldset><legend>Visibility</legend><div class="around-options"><label><input type="radio" name="visibility" checked /><span><b>World</b><small>Visible in the story and profile.</small></span></label><label><input type="radio" name="visibility" /><span><b>Private</b><small>Saved only to your library.</small></span></label></div></fieldset></form>
+            </section>
+            <section class="around-panel around-preview"><header class="around-section-head"><div><p class="hara-v2-kicker">Preview</p><h2>How the clipping appears.</h2></div><span>Attribution locked</span></header><article><span class="hara-v2-avatar">CZ</span><div><div class="around-source-stack"><b>Chris Zheng clipped</b><SourceBadge source="x" /></div><p>Useful framing: the session boundary is reusable because stale intent, capabilities, restart, and event ordering are explicit.</p><footer><span>Original by @compiler_notes</span><span>LiveSession · browser · wasm</span></footer></div></article></section>
+            <Fragment slot="aside">
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Clipping contract</h2></header><div class="hara-v2-panel-body around-kv"><div><span>Canonical URL</span><b>required</b></div><div><span>Original author</span><b>locked</b></div><div><span>Your note</span><b>editable</b></div><div><span>Visibility</span><b>user choice</b></div></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Duplicate found</h2><span class="hara-v2-badge">3 clips</span></header><div class="hara-v2-panel-body around-stack"><p>Join the same signal and story rather than creating another external copy.</p><a class="hara-v2-button" href="#story">View clips</a></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Relay eligibility</h2></header><div class="hara-v2-panel-body"><p class="world-aside-copy">Publishing a clip never authorizes Hara Relay. Redistribution is a separate approval.</p></div></section>
+            </Fragment>
+          </AroundScreen>
+        </div>
+        <div class="world-lab-notes"><article><b>New authorship only</b><p>The user authors the note and selection.</p></article><article><b>Cluster-aware</b><p>One external URL can support distinct community notes.</p></article><article><b>Bot permission stays separate</b><p>A public clip is not consent to outbound reposting.</p></article></div>
+      </section>
