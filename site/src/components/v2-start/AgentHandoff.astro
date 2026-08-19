@@ -1,0 +1,57 @@
+---
+interface Props {
+  prompt: string;
+  repositoryUrl?: string;
+}
+
+const {
+  prompt,
+  repositoryUrl = "https://github.com/hara-lang/hara"
+} = Astro.props;
+---
+<section class="start-lab-section" id="handoff" data-start-handoff>
+  <header class="start-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Screen 01 · Agent handoff</p>
+      <h2>Give the agent a job, not a reading assignment.</h2>
+    </div>
+    <p>The brief asks for buildable outcomes, requires evidence, and prevents the usual detour through language history and installation. It works with the repository as it exists today while making room for a future machine-readable catalogue.</p>
+  </header>
+
+  <div class="start-handoff-grid">
+    <article class="start-agent-brief">
+      <header>
+        <div>
+          <span class="start-status-dot" data-state="ready" aria-hidden="true"></span>
+          <div><b>Copy this into any coding agent</b><small>{repositoryUrl}</small></div>
+        </div>
+        <button class="hara-v2-button" data-variant="primary" type="button" data-copy-agent-prompt>Copy agent brief</button>
+      </header>
+      <textarea readonly spellcheck="false" data-agent-prompt aria-label="Hara agent starter brief">{prompt}</textarea>
+      <footer>
+        <span data-copy-agent-status aria-live="polite">Ready to copy</span>
+        <span>Repository evidence only · no invented capabilities</span>
+      </footer>
+    </article>
+
+    <aside class="start-handoff-aside">
+      <section>
+        <p class="hara-v2-kicker">The one opening question</p>
+        <blockquote>What would you like to see move, automate, inspect, transform, or publish?</blockquote>
+      </section>
+      <section>
+        <b>Lazy-person contract</b>
+        <ul>
+          <li>The agent returns three concrete projects.</li>
+          <li>It recommends one and explains the choice.</li>
+          <li>It distinguishes working, experimental, and proposed paths.</li>
+          <li>It ends with one meaningful value to change.</li>
+        </ul>
+      </section>
+      <section class="start-boundary-note">
+        <span class="hara-v2-badge" data-tone="signal">Prototype boundary</span>
+        <p>This page demonstrates the discovery and live-edit experience. It does not claim that the Hara repository already contains <code>BUILD_WITH_HARA.md</code>, <code>examples/catalog.edn</code>, or a connected browser evaluator.</p>
+      </section>
+    </aside>
+  </div>
+</section>
