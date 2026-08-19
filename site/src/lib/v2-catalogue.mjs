@@ -55,8 +55,9 @@ export const catalogueGroups = [
         id: "frontmatter",
         label: "Front matter",
         path: "/v2/frontmatter/",
+        href: "/v2/frontmatter/",
         summary: "Cross-product content metadata, controlled fields, lifecycle states, previews, and provenance.",
-        status: "planned",
+        status: "active",
         issue: 37,
         eyebrow: "Content contract"
       }
