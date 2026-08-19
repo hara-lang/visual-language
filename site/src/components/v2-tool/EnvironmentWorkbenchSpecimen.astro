@@ -1,0 +1,287 @@
+---
+import EnvironmentWorkbench from "../../../../src/astro/v2/tool/EnvironmentWorkbench.astro";
+import FrontmatterGrid from "../../../../src/astro/v2/tool/FrontmatterGrid.astro";
+import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import ResourceList from "../../../../src/astro/v2/tool/ResourceList.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolNumberField from "../../../../src/astro/v2/tool/ToolNumberField.astro";
+import ToolSelect from "../../../../src/astro/v2/tool/ToolSelect.astro";
+import ToolToggle from "../../../../src/astro/v2/tool/ToolToggle.astro";
+import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
+
+const frontmatter = [
+  { label: "Scope", value: "isolated", detail: "This workbench only", status: "current" },
+  { label: "Session", value: "live-environment-01", detail: "generation 7", code: true },
+  { label: "Filesystem", value: "memory:live-environment-01", detail: "browser owned", code: true },
+  { label: "File", value: "src/main.hal", detail: "source revision 18", code: true },
+  { label: "Runtime", value: "Whole-Wasm", detail: "canvas/2d · file/read", status: "ready" },
+  { label: "Published", value: "Not published", detail: "local draft", status: "warning" }
+];
+
+const sessions = [
+  { id: "live-01", label: "Live environment", detail: "isolated · generation 7", status: "ready", meta: "rev 18", current: true, action: true },
+  { id: "preview-02", label: "Preview renderer", detail: "shared with graphics view", status: "busy", meta: "frame 284", action: true }
+];
+
+const files = [
+  { id: "main", label: "main.hal", detail: "entry point", status: "current", meta: "2.8 KB", current: true, action: true },
+  { id: "scene", label: "scene.hal", detail: "canvas graph", status: "ready", meta: "4.1 KB", action: true },
+  { id: "project", label: "project.edn", detail: "project manifest", status: "ready", meta: "612 B", action: true },
+  { id: "readme", label: "README.md", detail: "environment notes", meta: "1.2 KB", action: true }
+];
+
+const codeSample = `(defn draw-frame [ctx state]
+  (draw/clear ctx :graphite)
+  (draw/grid ctx {:spacing 32 :alpha 0.12})
+  (draw/node ctx (:focus state))
+  (draw/receipt ctx {:generation 7
+                     :revision 18}))`;
+---
+<section class="tool-lab-section" id="environment" data-tool-layout="environment">
+  <header class="tool-lab-section-head">
+    <div>
+      <p class="hara-v2-kicker">Workbench specimen 04 · Embedded environment</p>
+      <h2>Live environment</h2>
+    </div>
+    <p>A reusable shell for code, graphics, navigation, frontmatter, sessions, files, canvas controls, and optional 3D capabilities. The visual language renders initial semantic state; the host application owns switching and commands.</p>
+  </header>
+
+  <EnvironmentWorkbench
+    label="Live Hara environment specimen"
+    activeSection="graphics"
+    activeControlGroup="canvas"
+    idPrefix="environment-specimen"
+    minHeight="660px"
+    sectionBadges={{ nav: 4, frontmatter: 6, code: 18 }}
+    capabilityBadges={{ sessions: 2, files: 4 }}
+  >
+    <nav slot="nav" class="environment-specimen-nav" aria-label="Environment navigation">
+      <a href="#environment" aria-current="page"><strong>Overview</strong><small>Current environment</small></a>
+      <a href="#three-d"><strong>3D editor</strong><small>Spatial workbench</small></a>
+      <a href="#node"><strong>Node graph</strong><small>Material workbench</small></a>
+      <a href="#animation"><strong>Animation</strong><small>Temporal workbench</small></a>
+    </nav>
+
+    <FrontmatterGrid slot="frontmatter" entries={frontmatter} label="Live environment frontmatter" />
+
+    <div slot="graphics" class="environment-specimen-graphics" aria-label="Canvas output specimen">
+      <div class="environment-specimen-grid" aria-hidden="true"></div>
+      <div class="environment-specimen-orbit environment-specimen-orbit--outer" aria-hidden="true"></div>
+      <div class="environment-specimen-orbit environment-specimen-orbit--inner" aria-hidden="true"></div>
+      <div class="environment-specimen-node" aria-hidden="true"><i></i><b>draw / focus</b><small>frame 284</small></div>
+      <div class="environment-specimen-receipt"><span>generation 7</span><span>source revision 18</span><span>canvas / current</span></div>
+    </div>
+
+    <div slot="code" class="environment-specimen-code">
+      <header><span>src/main.hal</span><span>Hara · balanced</span></header>
+      <pre><code>{codeSample}</code></pre>
+      <footer><span>Ctrl+Enter run</span><span>Alt+Enter eval form</span></footer>
+    </div>
+
+    <div slot="commands" class="environment-specimen-commands">
+      <ToolButton label="Eval" density="dense" />
+      <ToolButton label="Run" active density="dense" />
+    </div>
+
+    <ResourceList slot="sessions" items={sessions} label="Environment sessions" density="dense" />
+    <ResourceList slot="files" items={files} label="Environment files" density="dense" />
+
+    <div slot="canvas" class="environment-specimen-controls">
+      <InspectorSection title="Viewport" open>
+        <ToolToggle label="Grid" pressed />
+        <ToolToggle label="Guides" pressed />
+        <ToolNumberField label="Scale" value={100} min={25} max={200} step={5} unit="%" />
+      </InspectorSection>
+      <InspectorSection title="Execution" open>
+        <ToolSelect label="Backend" value="whole-wasm" options={[
+          { value: "interpreter", label: "Interpreter" },
+          { value: "whole-wasm", label: "Whole-Wasm" }
+        ]} />
+        <ToolNumberField label="Frame limit" value={60} min={1} max={240} unit="fps" />
+        <ToolButton label="Stop canvas" />
+      </InspectorSection>
+    </div>
+
+    <div slot="threeD" class="environment-specimen-controls">
+      <InspectorSection title="Camera" open>
+        <ToolSelect label="View" value="orbit" options={[
+          { value: "orbit", label: "Orbit" },
+          { value: "front", label: "Front" },
+          { value: "top", label: "Top" }
+        ]} />
+        <ToolToggle label="Perspective" pressed />
+      </InspectorSection>
+      <InspectorSection title="Scene provider" open>
+        <p class="environment-specimen-note">The 3D group appears only when the host attaches a 3D capability.</p>
+      </InspectorSection>
+    </div>
+
+    <div slot="overlay">
+      <ViewportOverlay placement="top-left">Isolated · canvas/2d</ViewportOverlay>
+      <ViewportOverlay placement="top-right">60 fps · 1.0×</ViewportOverlay>
+    </div>
+
+    <StatusBar slot="status" label="Live environment status">
+      <span>Kernel connected</span><span>Generation 7</span><span>Revision 18</span>
+      <span slot="secondary">memory:live-environment-01</span>
+    </StatusBar>
+  </EnvironmentWorkbench>
+
+  <footer class="tool-lab-contract-note">
+    <strong>Application contract</strong>
+    <span>Synchronize selected tabs, hidden panels, focus, persistence, command dispatch, and capability data without forking the visual tokens.</span>
+  </footer>
+</section>
+
+<style>
+  .environment-specimen-nav {
+    display: grid;
+    gap: 5px;
+    padding: 14px;
+  }
+  .environment-specimen-nav a {
+    display: grid;
+    gap: 4px;
+    padding: 11px 12px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--hara-tool-ink);
+    text-decoration: none;
+  }
+  .environment-specimen-nav a:hover,
+  .environment-specimen-nav a[aria-current="page"] {
+    border-color: var(--hara-tool-edge);
+    background: var(--hara-tool-highlight);
+  }
+  .environment-specimen-nav a[aria-current="page"] {
+    box-shadow: inset 2px 0 0 var(--hara-tool-signal);
+  }
+  .environment-specimen-nav strong {
+    font: 650 12px/1.2 var(--hara-v2-font-body);
+  }
+  .environment-specimen-nav small {
+    color: var(--hara-tool-muted);
+    font: 500 10px/1.3 var(--hara-v2-font-body);
+  }
+  .environment-specimen-graphics {
+    position: relative;
+    height: 100%;
+    min-height: 430px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--hara-tool-signal) 12%, transparent), transparent 34%),
+      var(--hara-tool-bg-recessed);
+  }
+  .environment-specimen-grid {
+    position: absolute;
+    inset: 0;
+    opacity: .72;
+    background-image:
+      linear-gradient(var(--hara-v2-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hara-v2-grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(circle at 50% 48%, #000, transparent 78%);
+  }
+  .environment-specimen-orbit {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    border: 1px solid color-mix(in srgb, var(--hara-tool-signal) 36%, var(--hara-tool-edge));
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-14deg);
+  }
+  .environment-specimen-orbit--outer { width: min(62%, 420px); aspect-ratio: 1.55; }
+  .environment-specimen-orbit--inner { width: min(38%, 260px); aspect-ratio: 1.45; transform: translate(-50%, -50%) rotate(24deg); }
+  .environment-specimen-node {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    display: grid;
+    min-width: 150px;
+    grid-template-columns: auto 1fr;
+    gap: 3px 9px;
+    align-items: center;
+    padding: 12px 14px;
+    border: 1px solid color-mix(in srgb, var(--hara-tool-signal) 38%, var(--hara-tool-edge));
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--hara-tool-bg-raised) 92%, transparent);
+    box-shadow: var(--hara-tool-shadow);
+    transform: translate(-50%, -50%);
+  }
+  .environment-specimen-node i {
+    grid-row: 1 / 3;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--hara-tool-signal);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--hara-tool-signal) 12%, transparent);
+  }
+  .environment-specimen-node b { font: 650 11px/1.2 var(--hara-v2-font-code); }
+  .environment-specimen-node small { color: var(--hara-tool-muted); font: 500 9px/1.2 var(--hara-v2-font-code); }
+  .environment-specimen-receipt {
+    position: absolute;
+    inset: auto 14px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    justify-content: flex-end;
+    color: var(--hara-tool-muted);
+    font: 560 9px/1.2 var(--hara-v2-font-code);
+  }
+  .environment-specimen-code {
+    display: grid;
+    min-height: 100%;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    background: var(--hara-tool-bg-recessed);
+  }
+  .environment-specimen-code :where(header, footer) {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 11px;
+    border-color: var(--hara-tool-edge);
+    color: var(--hara-tool-muted);
+    background: var(--hara-tool-bg-raised);
+    font: 560 9px/1.2 var(--hara-v2-font-code);
+  }
+  .environment-specimen-code header { border-block-end: 1px solid var(--hara-tool-edge); }
+  .environment-specimen-code footer { border-block-start: 1px solid var(--hara-tool-edge); }
+  .environment-specimen-code pre {
+    min-height: 0;
+    margin: 0;
+    overflow: auto;
+    padding: clamp(16px, 4vw, 36px);
+    color: var(--hara-tool-ink);
+    background: transparent;
+    font: 540 12px/1.7 var(--hara-v2-font-code);
+  }
+  .environment-specimen-commands {
+    display: flex;
+    gap: 4px;
+  }
+  .environment-specimen-controls {
+    min-height: 100%;
+  }
+  .environment-specimen-note {
+    margin: 0;
+    color: var(--hara-tool-muted);
+    font: 500 10px/1.55 var(--hara-v2-font-body);
+  }
+  .tool-lab-contract-note {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    margin-top: 10px;
+    padding: 11px 13px;
+    border: 1px solid var(--hara-tool-edge);
+    border-radius: 8px;
+    color: var(--hara-tool-muted);
+    background: var(--hara-tool-bg);
+    font: 500 11px/1.5 var(--hara-v2-font-body);
+  }
+  .tool-lab-contract-note strong { color: var(--hara-tool-ink); }
+  @media (max-width: 640px) {
+    .tool-lab-contract-note { grid-template-columns: 1fr; }
+    .environment-specimen-receipt { justify-content: flex-start; }
+  }
+</style>
