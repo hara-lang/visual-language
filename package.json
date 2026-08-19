@@ -46,6 +46,12 @@
     "./astro/v2/tool/TabStrip.astro": "./src/astro/v2/tool/TabStrip.astro",
     "./astro/v2/tool/IconRail.astro": "./src/astro/v2/tool/IconRail.astro",
     "./astro/v2/tool/StatusBar.astro": "./src/astro/v2/tool/StatusBar.astro",
+    "./astro/v2/tool/WorkbenchShell.astro": "./src/astro/v2/tool/WorkbenchShell.astro",
+    "./astro/v2/tool/DockPanel.astro": "./src/astro/v2/tool/DockPanel.astro",
+    "./astro/v2/tool/FloatingPalette.astro": "./src/astro/v2/tool/FloatingPalette.astro",
+    "./astro/v2/tool/ViewportOverlay.astro": "./src/astro/v2/tool/ViewportOverlay.astro",
+    "./astro/v2/tool/InspectorSection.astro": "./src/astro/v2/tool/InspectorSection.astro",
+    "./astro/v2/tool/PanelHeader.astro": "./src/astro/v2/tool/PanelHeader.astro",
     "./assets/*": "./assets/*"
   },
   "scripts": {

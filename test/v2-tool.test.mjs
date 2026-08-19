@@ -7,7 +7,8 @@ const readToolCss = async () => (await Promise.all([
   "../src/v2-tool.css",
   "../src/v2/tool-tokens.css",
   "../src/v2/tool-surfaces.css",
-  "../src/v2/tool-controls.css"
+  "../src/v2/tool-controls.css",
+  "../src/v2/tool-shell.css"
 ].map(read))).join("\n");
 
 test("the tool layer is additive to v2 and exported independently", async () => {
@@ -81,4 +82,45 @@ test("tool control CSS covers density, orientation, pressed, selected, and disab
   assert.match(css, /aria-pressed="true"/);
   assert.match(css, /aria-selected="true"/);
   assert.match(css, /:disabled/);
+});
+
+test("workbench structure exports explicit dock, overlay, inspector, and shell semantics", async () => {
+  const names = [
+    "WorkbenchShell", "DockPanel", "FloatingPalette", "ViewportOverlay",
+    "InspectorSection", "PanelHeader"
+  ];
+  const packageJson = JSON.parse(await read("../package.json"));
+  for (const name of names) {
+    const key = `./astro/v2/tool/${name}.astro`;
+    assert.equal(packageJson.exports[key], `./src/astro/v2/tool/${name}.astro`);
+    await access(new URL(`../src/astro/v2/tool/${name}.astro`, import.meta.url));
+  }
+
+  const [shell, dock, palette, overlay, inspector] = await Promise.all([
+    read("../src/astro/v2/tool/WorkbenchShell.astro"),
+    read("../src/astro/v2/tool/DockPanel.astro"),
+    read("../src/astro/v2/tool/FloatingPalette.astro"),
+    read("../src/astro/v2/tool/ViewportOverlay.astro"),
+    read("../src/astro/v2/tool/InspectorSection.astro")
+  ]);
+  for (const slot of ["top", "left", "viewport", "right", "bottom", "overlay", "status"])
+    assert.match(shell, new RegExp(`Astro\\.slots\\.has\\("${slot}"\\)`), `missing ${slot} slot state`);
+  assert.match(dock, /data-collapsed=/);
+  assert.match(dock, /data-selected=/);
+  assert.match(palette, /role="dialog"/);
+  assert.match(overlay, /data-interactive=/);
+  assert.match(inspector, /<details/);
+});
+
+test("workbench CSS preserves the viewport while secondary regions collapse", async () => {
+  const css = await readToolCss();
+  for (const name of [
+    "hara-tool-workbench", "hara-tool-workbench-viewport", "hara-tool-dock-panel",
+    "hara-tool-floating-palette", "hara-tool-viewport-overlay",
+    "hara-tool-inspector-section", "hara-tool-panel-header"
+  ]) assert.match(css, new RegExp(`\\.${name}\\b`), `missing .${name}`);
+  assert.match(css, /@media \(max-width: 1120px\)[\s\S]*hara-tool-workbench-right/);
+  assert.match(css, /@media \(max-width: 820px\)[\s\S]*hara-tool-workbench-left/);
+  assert.match(css, /@media \(max-width: 640px\)[\s\S]*hara-tool-workbench-bottom/);
+  assert.match(css, /grid-area:\s*viewport/);
 });
