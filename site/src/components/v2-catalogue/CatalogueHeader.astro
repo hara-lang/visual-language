@@ -1,0 +1,140 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../src/astro/HaraMark.astro";
+import CatalogueFallback from "./CatalogueFallback.astro";
+import CatalogueGroup from "./CatalogueGroup.astro";
+import { catalogueGroups } from "../../lib/v2-catalogue.mjs";
+import "../../styles/v2-catalogue.css";
+import "../../styles/v2-catalogue-disclosure.css";
+
+const {
+  basePath,
+  activePath = "/v2/",
+  label = "Hara visual language catalogue",
+  sourceHref = "https://github.com/hara-lang/visual-language"
+} = Astro.props;
+
+const catalogueHome = `${basePath.endsWith("/") ? basePath : `${basePath}/`}v2/`;
+const foundations = catalogueGroups[0];
+const library = catalogueGroups[1];
+const applications = catalogueGroups[2];
+---
+<header class="v2-catalogue-header" data-catalogue-header data-menu-open="false">
+  <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
+    <HaraMark size={28} />
+    <span>
+      <b>Hara visual language</b>
+      <small>Interface catalogue · V2</small>
+    </span>
+  </a>
+
+  <button
+    class="v2-catalogue-menu-button"
+    type="button"
+    aria-expanded="false"
+    aria-controls="v2-catalogue-navigation"
+    data-catalogue-menu-button
+  >
+    <span>Browse catalogue</span>
+    <small>Foundations · Library · Applications</small>
+  </button>
+
+  <nav class="v2-catalogue-nav" id="v2-catalogue-navigation" aria-label="Visual language catalogue" data-catalogue-navigation>
+    <CatalogueGroup group={foundations} basePath={basePath} activePath={activePath} />
+    <CatalogueGroup group={library} basePath={basePath} activePath={activePath} />
+    <CatalogueGroup group={applications} basePath={basePath} activePath={activePath} />
+  </nav>
+
+  <CatalogueFallback basePath={basePath} />
+
+  <div class="v2-catalogue-actions">
+    <a href={sourceHref}>Source</a>
+    <ThemeToggle />
+  </div>
+</header>
+
+<script>
+  const initialiseCatalogueHeader = () => {
+    document.querySelectorAll("[data-catalogue-header]").forEach((header) => {
+      if (!(header instanceof HTMLElement) || header.dataset.ready === "true") return;
+      header.dataset.ready = "true";
+      header.dataset.enhanced = "true";
+      header.dataset.menuOpen = "false";
+
+      const menuButton = header.querySelector("[data-catalogue-menu-button]");
+      const navigation = header.querySelector("[data-catalogue-navigation]");
+      const groups = [...header.querySelectorAll("[data-catalogue-group]")];
+
+      const closeMenu = (restoreFocus = false) => {
+        header.dataset.menuOpen = "false";
+        if (menuButton instanceof HTMLButtonElement) {
+          menuButton.setAttribute("aria-expanded", "false");
+          if (restoreFocus) menuButton.focus();
+        }
+      };
+
+      const setGroupOpen = (group, open, restoreFocus = false) => {
+        if (!(group instanceof HTMLElement)) return;
+        group.dataset.open = String(open);
+        const trigger = group.querySelector("[data-catalogue-group-trigger]");
+        if (trigger instanceof HTMLButtonElement) {
+          trigger.setAttribute("aria-expanded", String(open));
+          if (restoreFocus) trigger.focus();
+        }
+      };
+
+      const closeGroups = (except = null, restoreFocus = false) => {
+        groups.forEach((group) => {
+          if (group === except || !(group instanceof HTMLElement) || group.dataset.open !== "true") return;
+          setGroupOpen(group, false, restoreFocus);
+        });
+      };
+
+      if (menuButton instanceof HTMLButtonElement && navigation instanceof HTMLElement) {
+        menuButton.addEventListener("click", () => {
+          const open = header.dataset.menuOpen !== "true";
+          header.dataset.menuOpen = String(open);
+          menuButton.setAttribute("aria-expanded", String(open));
+          if (!open) closeGroups();
+        });
+      }
+
+      groups.forEach((group) => {
+        if (!(group instanceof HTMLElement)) return;
+        const trigger = group.querySelector("[data-catalogue-group-trigger]");
+        if (!(trigger instanceof HTMLButtonElement)) return;
+        trigger.addEventListener("click", () => {
+          const open = group.dataset.open !== "true";
+          closeGroups(group);
+          setGroupOpen(group, open);
+        });
+      });
+
+      header.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          closeGroups();
+          closeMenu();
+        });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        const openGroup = groups.find((group) => group instanceof HTMLElement && group.dataset.open === "true");
+        if (openGroup instanceof HTMLElement) {
+          setGroupOpen(openGroup, false, true);
+          return;
+        }
+        if (header.dataset.menuOpen === "true") closeMenu(true);
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Node) || header.contains(event.target)) return;
+        closeGroups();
+        closeMenu();
+      });
+    });
+  };
+
+  initialiseCatalogueHeader();
+  document.addEventListener("astro:page-load", initialiseCatalogueHeader);
+</script>

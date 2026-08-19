@@ -1,0 +1,25 @@
+---
+import {
+  catalogueGroups,
+  catalogueHref,
+  catalogueLinkIsExternal
+} from "../../lib/v2-catalogue.mjs";
+
+const { basePath } = Astro.props;
+const escapeHtml = (value) => String(value)
+  .replaceAll("&", "&amp;")
+  .replaceAll('"', "&quot;")
+  .replaceAll("<", "&lt;")
+  .replaceAll(">", "&gt;");
+const links = catalogueGroups
+  .flatMap((group) => group.items.flatMap((item) => [item, ...(item.children ?? [])]))
+  .map((item) => {
+    const external = catalogueLinkIsExternal(item);
+    const href = catalogueHref(item, basePath);
+    const attributes = external ? ' target="_blank" rel="noreferrer"' : "";
+    return `<a href="${escapeHtml(href)}"${attributes}>${escapeHtml(item.label)}</a>`;
+  })
+  .join("");
+const fallbackMarkup = `<noscript><nav class="v2-catalogue-noscript" aria-label="Visual language catalogue without JavaScript">${links}</nav></noscript>`;
+---
+<Fragment set:html={fallbackMarkup} />

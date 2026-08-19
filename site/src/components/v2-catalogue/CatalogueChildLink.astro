@@ -1,0 +1,14 @@
+---
+import { catalogueStatusLabels } from "../../lib/v2-catalogue.mjs";
+
+const { child } = Astro.props;
+---
+<a
+  href={child.resolvedHref}
+  target={child.external ? "_blank" : undefined}
+  rel={child.external ? "noreferrer" : undefined}
+  aria-current={child.current ? "page" : undefined}
+>
+  <span>{child.label}</span>
+  <small data-status={child.status}>{catalogueStatusLabels[child.status]}</small>
+</a>

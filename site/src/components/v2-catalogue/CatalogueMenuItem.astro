@@ -1,0 +1,27 @@
+---
+import CatalogueChildLink from "./CatalogueChildLink.astro";
+import { catalogueStatusLabels } from "../../lib/v2-catalogue.mjs";
+
+const { item, groupLabel } = Astro.props;
+---
+<article class="v2-catalogue-menu-item" data-status={item.status} data-current={item.current ? "true" : "false"}>
+  <a
+    href={item.resolvedHref}
+    target={item.external ? "_blank" : undefined}
+    rel={item.external ? "noreferrer" : undefined}
+    aria-current={item.current ? "page" : undefined}
+  >
+    <span class="v2-catalogue-menu-eyebrow">{item.eyebrow ?? groupLabel}</span>
+    <b>{item.label}</b>
+    <p>{item.summary}</p>
+    <span class="v2-catalogue-status" data-status={item.status}>
+      {catalogueStatusLabels[item.status]}
+      {item.external && item.issue ? ` · #${item.issue}` : ""}
+    </span>
+  </a>
+  {item.children.length > 0 && (
+    <nav aria-label={`${item.label} routes`} class="v2-catalogue-children">
+      {item.children.map((child) => <CatalogueChildLink child={child} />)}
+    </nav>
+  )}
+</article>
