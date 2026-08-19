@@ -138,7 +138,7 @@ test("the earlier community study is linked from Learn rather than the active Wo
   const world = catalogueItemById("world");
   const learn = catalogueItemById("learn");
 
-  assert.deepEqual(world?.children?.map(({ label }) => label), ["Focused discussion", "Around Hara"]);
+  assert.deepEqual(world?.children?.map(({ label }) => label), ["Discussion", "Around Hara"]);
   assert.ok(learn?.children?.some(({ id }) => id === "learn-community-study"));
   assert.match(learnPage, /const communityStudy = `\$\{basePath\}v2\/world\/community\/`/);
   assert.match(learnPage, /Earlier community reader/);
