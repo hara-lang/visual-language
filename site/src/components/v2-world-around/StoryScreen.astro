@@ -1,0 +1,28 @@
+---
+import AroundScreen from "./AroundScreen.astro";
+import MatchReason from "./MatchReason.astro";
+import SourceBadge from "./SourceBadge.astro";
+import { sidebars, coverage } from "./data";
+
+interface Props { home: string; world: string; }
+const { home, world } = Astro.props;
+---
+<section class="world-lab-screen" id="story">
+        <header class="world-lab-screen-head"><div><p class="hara-v2-kicker">Screen 02 · Story cluster</p><h2>Coverage becomes one navigable event.</h2></div><p>The canonical Hara update anchors the cluster. External reactions remain distinct records while one World thread discusses the resolved story.</p></header>
+        <div class="world-lab-canvas around-lab-canvas">
+          <AroundScreen current="story" mainId="around-story-content" sidebarTitle="Browser sessions" sidebarGroups={sidebars.story} sidebarNote="One canonical update and seven external signals. Last resolved two minutes ago." home={home} world={world}>
+            <Fragment slot="actions"><a class="hara-v2-button" href="#radar">← Radar</a><a class="hara-v2-button" href="#clip">Clip story</a><a class="hara-v2-button" data-variant="primary" href="#relay">Recommend to Relay ↗</a></Fragment>
+            <article class="around-story-hero"><div class="around-source-stack"><SourceBadge source="world" label="Canonical Hara update" /><span class="hara-v2-badge" data-tone="success">Resolved</span></div><p class="hara-v2-kicker">Story cluster · LiveSession</p><h1>Browser sessions without browser-only semantics.</h1><p>One lifecycle contract now fences stale requests, preserves event order, exposes backend capabilities, and gives interpreter and HBC sessions the same browser-facing envelope.</p><div class="around-entity-row"><a href="#story">LiveSession</a><a href="#story">hara-wasm-core</a><a href="#story">PR #767</a></div><footer><span>8 signals</span><span>14 World comments</span><span>3 maintainer clips</span></footer></article>
+            <div class="around-story-grid">
+              <section class="around-panel"><header class="around-section-head"><div><p class="hara-v2-kicker">Coverage map</p><h2>One event, five views.</h2></div><button>Newest first</button></header><div class="around-timeline">{coverage.map((item, index) => <article class:list={{ "is-canonical": index === 0 }}><i></i><div><SourceBadge source={item[0]} label={item[1]} /><h3>{item[2]}</h3><p>{item[3]}</p><footer><span>{item[4]}</span><a href="#signal">Inspect →</a></footer></div></article>)}</div></section>
+              <section class="around-panel around-thread"><header class="around-section-head"><div><p class="hara-v2-kicker">Hara World discussion</p><h2>Conversation about the story.</h2></div><span>14 comments</span></header><p class="around-notice">External comments stay on their original platforms. This thread discusses the resolved Hara story.</p><article><span class="hara-v2-avatar">MN</span><div><header><b>Mina N.</b><time>11 min</time></header><p>The useful part is that unsupported operations remain explicit capabilities instead of silent fallback.</p></div></article><article><span class="hara-v2-avatar">HB</span><div><header><b>Hara build bot</b><span class="hara-v2-badge">Bot</span><time>8 min</time></header><p>PR #767 is the canonical implementation. Both browser hosts use the same packed-pointer transport.</p></div></article><div class="around-comment"><textarea placeholder="Add a Hara-specific observation…"></textarea><button class="hara-v2-button" data-variant="primary">Comment</button></div></section>
+            </div>
+            <Fragment slot="aside">
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Cluster state</h2><span class="hara-v2-badge" data-tone="success">Healthy</span></header><div class="hara-v2-panel-body around-kv"><div><span>Canonical item</span><b>1</b></div><div><span>External signals</span><b>7</b></div><div><span>Duplicate merges</span><b>2</b></div><div><span>Open reviews</span><b>0</b></div></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Why grouped</h2></header><div class="hara-v2-panel-body around-evidence-stack"><MatchReason title="Same pull request" detail="PR #767" /><MatchReason title="Shared repository" detail="hara-wasm-core" /><MatchReason title="Semantic overlap" detail="LiveSession · lifecycle" /></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Editorial controls</h2></header><div class="hara-v2-panel-body hara-v2-stack"><button class="hara-v2-button">Edit summary</button><button class="hara-v2-button">Split cluster</button><button class="hara-v2-button">Pin canonical source</button></div></section>
+            </Fragment>
+          </AroundScreen>
+        </div>
+        <div class="world-lab-notes"><article><b>Canonical anchor</b><p>The official release leads whenever one exists.</p></article><article><b>One local thread</b><p>World discussion attaches to the story, not a copied comment tree.</p></article><article><b>Recorded evidence</b><p>URLs, repositories, entities, and editorial decisions explain every merge.</p></article></div>
+      </section>

@@ -1,0 +1,44 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../src/astro/v2/ContextNav.astro";
+import Sidebar from "../../../../src/astro/v2/Sidebar.astro";
+
+interface Props {
+  current: "radar" | "story" | "signal" | "clip" | "submit" | "source" | "moderation" | "relay";
+  mainId: string;
+  sidebarTitle: string;
+  sidebarGroups: Array<{ label: string; items: Array<{ href: string; label: string; current?: boolean; badge?: number }> }>;
+  sidebarNote: string;
+  home: string;
+  world: string;
+}
+
+const { current, mainId, sidebarTitle, sidebarGroups, sidebarNote, home, world } = Astro.props;
+const ecosystemNav = [
+  { href: home, label: "Home" },
+  { href: world, label: "World", current: true },
+  { href: "#radar", label: "Specs" },
+  { href: "#source", label: "Packages" },
+  { href: "#source", label: "Identity" }
+];
+const aroundNav = [
+  { href: "#radar", label: "Radar", current: current === "radar" },
+  { href: "#story", label: "Stories", current: current === "story" || current === "signal" },
+  { href: "#clip", label: "Clips", current: current === "clip" },
+  { href: "#submit", label: "Sources", current: current === "submit" || current === "source" },
+  { href: "#moderation", label: "Moderate", current: current === "moderation" },
+  { href: "#relay", label: "Hara Relay", current: current === "relay" }
+];
+---
+<Shell embedded={true} sidebar={true} aside={true} mainId={mainId}>
+  <Header slot="header" section="World" nav={ecosystemNav}>
+    <button class="hara-v2-icon-button" aria-label="Account">◎</button>
+    <ThemeToggle />
+  </Header>
+  <ContextNav slot="context" items={aroundNav}><slot name="actions" /></ContextNav>
+  <Sidebar slot="sidebar" title={sidebarTitle} groups={sidebarGroups}><span>{sidebarNote}</span></Sidebar>
+  <slot />
+  <div slot="aside" class="world-aside-stack"><slot name="aside" /></div>
+</Shell>

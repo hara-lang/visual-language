@@ -1,0 +1,27 @@
+---
+import AroundScreen from "./AroundScreen.astro";
+import SignalCard from "./SignalCard.astro";
+import SourceBadge from "./SourceBadge.astro";
+import { sidebars, radarSignals } from "./data";
+
+interface Props { home: string; world: string; }
+const { home, world } = Astro.props;
+---
+<section class="world-lab-screen" id="radar">
+        <header class="world-lab-screen-head"><div><p class="hara-v2-kicker">Screen 01 · Signal radar</p><h2>One feed, without pretending every source is the same.</h2></div><p>Raw likes, upvotes, points, comments, and stars remain source facts. Percentiles, velocity, freshness, and Hara relevance make the combined view legible.</p></header>
+        <div class="world-lab-canvas around-lab-canvas">
+          <AroundScreen current="radar" mainId="around-radar-content" sidebarTitle="Around Hara" sidebarGroups={sidebars.radar} sidebarNote="42 prototype signals from 26 registered sources. External items retain their original identity and canonical URL." home={home} world={world}>
+            <Fragment slot="actions"><a class="hara-v2-button" href="#submit">Submit source</a><a class="hara-v2-button" data-variant="primary" href="#clip">Clip a link ↗</a></Fragment>
+            <div class="around-heading"><div><p class="hara-v2-kicker">Around Hara</p><h1>What the wider internet is saying.</h1><p>Exact Hara links and known repositories are strongest. Ambiguous keyword matches enter review.</p></div><span class="hara-v2-badge" data-tone="success">26 sources online</span></div>
+            <div class="around-toolbar"><div class="hara-v2-tabs"><button class="hara-v2-tab" aria-selected="true">All</button><button class="hara-v2-tab">X</button><button class="hara-v2-tab">Reddit</button><button class="hara-v2-tab">Hacker News</button><button class="hara-v2-tab">Substack</button><button class="hara-v2-tab">GitHub</button></div><div><button aria-pressed="true">Hot</button><button>New</button><button>Discussed</button><button>Curated</button></div></div>
+            <article class="around-feature"><header><div class="around-source-stack"><SourceBadge source="world" label="Canonical" /><SourceBadge source="x" /><SourceBadge source="hacker-news" /><SourceBadge source="substack" /></div><span class="hara-v2-badge" data-tone="signal">Story cluster · 8 signals</span></header><p class="hara-v2-kicker">Moving now</p><h2>Browser sessions without browser-only semantics.</h2><p>The merged LiveSession contract is being discussed as a reusable lifecycle boundary: revision fencing, ordered events, capabilities, cancellation, and transactional restart.</p><div class="around-entity-row"><span>LiveSession</span><span>hara-wasm-core</span><span>PR #767</span><span>browser runtime</span></div><footer><div><b>Why this cluster is hot</b><span>Top 4% X velocity · rising HN discussion · canonical release linked</span></div><a class="hara-v2-button" data-variant="primary" href="#story">Open story →</a></footer></article>
+            <div class="around-signal-list">{radarSignals.map((signal) => <SignalCard {...signal} />)}</div>
+            <Fragment slot="aside">
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Signal watch</h2><span>2 min</span></header><div class="hara-v2-panel-body around-stats"><div><b>42</b><span>matched today</span></div><div><b>7</b><span>hot now</span></div><div><b>5</b><span>clusters</span></div><div><b>3</b><span>review</span></div></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>How Hot works</h2></header><div class="hara-v2-panel-body around-kv"><div><span>Source percentile</span><b>35%</b></div><div><span>Velocity</span><b>25%</b></div><div><span>Freshness</span><b>20%</b></div><div><span>World discussion</span><b>10%</b></div><div><span>Curator confidence</span><b>10%</b></div></div></section>
+              <section class="hara-v2-panel"><header class="hara-v2-panel-header"><h2>Source health</h2></header><div class="hara-v2-panel-body around-status"><div><SourceBadge source="x" /><span>live</span></div><div><SourceBadge source="reddit" /><span>reviewed</span></div><div><SourceBadge source="hacker-news" /><span>live</span></div><div><SourceBadge source="substack" /><span>live</span></div></div></section>
+            </Fragment>
+          </AroundScreen>
+        </div>
+        <div class="world-lab-notes"><article><b>Source-relative ranking</b><p>Unlike metrics are preserved, then compared through source percentiles and velocity.</p></article><article><b>Visible provenance</b><p>Every card says external signal and keeps original actions separate from World actions.</p></article><article><b>Ambiguity enters review</b><p>The word Hara alone is weak evidence; exact entities drive confidence.</p></article></div>
+      </section>
