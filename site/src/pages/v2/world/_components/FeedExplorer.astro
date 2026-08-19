@@ -1,0 +1,134 @@
+---
+const sources = [
+  ["all", "All sources", "42"],
+  ["world", "World", "8"],
+  ["github", "GitHub", "11"],
+  ["reddit", "Reddit", "6"],
+  ["x", "X / Twitter", "9"],
+  ["hacker-news", "Hacker News", "3"],
+  ["substack", "Substack", "5"]
+];
+---
+<div class="world-feed-explorer">
+  <header class="world-feed-title-row">
+    <div>
+      <p class="hara-v2-kicker">Incoming Hara</p>
+      <h1>What’s worth reading right now.</h1>
+      <p>One attributed view across Hara World, repositories, social posts, discussions, and independent writing.</p>
+    </div>
+    <div class="world-feed-window" aria-label="Ranking window">
+      <span>Rank window</span>
+      <strong>24 hours</strong>
+      <small>updated 2 min ago</small>
+    </div>
+  </header>
+
+  <div class="world-feed-command-row">
+    <div class="hara-v2-tabs" role="tablist" aria-label="Feed ordering">
+      <button class="hara-v2-tab" role="tab" aria-selected="true">Hot</button>
+      <button class="hara-v2-tab" role="tab">New</button>
+      <button class="hara-v2-tab" role="tab">Following</button>
+      <button class="hara-v2-tab" role="tab">Releases</button>
+    </div>
+    <label class="world-feed-search">
+      <span class="sr-only">Search the Hara feed</span>
+      <input class="hara-v2-field" type="search" placeholder="Search Hara, std.typed, work.*, Wasm…" />
+      <kbd>/</kbd>
+    </label>
+  </div>
+
+  <nav class="world-source-strip" aria-label="Filter by source">
+    {sources.map(([id, label, count], index) => (
+      <button data-source={id} aria-pressed={index === 0 ? "true" : "false"}>
+        <i aria-hidden="true"></i>
+        <span>{label}</span>
+        <b>{count}</b>
+      </button>
+    ))}
+  </nav>
+
+  <div class="world-feed-stream">
+    <article class="world-feed-item world-feed-item--lead" data-source="github">
+      <div class="world-feed-vote" aria-label="World score 94">
+        <button aria-label="Save story">⌁</button>
+        <strong>94</strong>
+        <span>hot</span>
+      </div>
+      <div class="world-feed-item-body">
+        <div class="world-feed-provenance">
+          <span class="world-source-badge" data-source="github"><i></i> GitHub</span>
+          <b>hara-lang/hara</b>
+          <span>release</span>
+          <time>41 min</time>
+        </div>
+        <h2>Schema values move into the ordinary Hara runtime</h2>
+        <p>A release note with runnable examples, migration notes, and links to the implementation discussion. The same story is being discussed on X and Hacker News.</p>
+        <div class="world-feed-item-actions">
+          <a href="#conversation">Open 3-source conversation</a>
+          <button>Save</button>
+          <button>Discuss in World</button>
+          <span>42 reactions · 11 replies</span>
+        </div>
+      </div>
+      <aside class="world-score-receipt" aria-label="Ranking receipt">
+        <header><span>Why it’s hot</span><strong>0.94</strong></header>
+        <dl>
+          <div><dt>Hara relevance</dt><dd><i style="--value:100%"></i><b>35</b></dd></div>
+          <div><dt>Velocity</dt><dd><i style="--value:78%"></i><b>16</b></dd></div>
+          <div><dt>Trust</dt><dd><i style="--value:100%"></i><b>15</b></dd></div>
+          <div><dt>Freshness</dt><dd><i style="--value:95%"></i><b>14</b></dd></div>
+        </dl>
+        <button>Full score receipt</button>
+      </aside>
+    </article>
+
+    <article class="world-feed-item" data-source="x">
+      <div class="world-feed-vote"><button aria-label="Save story">⌁</button><strong>88</strong><span>hot</span></div>
+      <div class="world-feed-item-body">
+        <div class="world-feed-provenance"><span class="world-source-badge" data-source="x"><i></i> X / Twitter</span><b>@mina_forms</b><span>thread</span><time>1 h</time></div>
+        <h2>What if a work runtime is just executor + store + capabilities?</h2>
+        <p>A compact technical thread comparing an algebraic work description with a conventional task runtime.</p>
+        <div class="world-quote-preview"><p>“The interesting boundary is not workflow versus task. It is replayable description versus checkpointed effect.”</p></div>
+        <div class="world-feed-item-actions"><a href="#conversation">Open thread</a><button>Save</button><button>Discuss in World</button><span>86 likes · 18 replies · 21 reposts</span></div>
+      </div>
+    </article>
+
+    <article class="world-feed-item" data-source="reddit">
+      <div class="world-feed-vote"><button aria-label="Save story">⌁</button><strong>81</strong><span>rising</span></div>
+      <div class="world-feed-item-body">
+        <div class="world-feed-provenance"><span class="world-source-badge" data-source="reddit"><i></i> Reddit</span><b>u/quietcompiler</b><span>showcase</span><time>3 h</time></div>
+        <h2>I made my first small Hara graphics program</h2>
+        <p>A newcomer shares a runnable sketch and asks how namespaces, browser sessions, and the visual canvas fit together.</p>
+        <pre class="world-feed-code"><code>(defn orbit [t]
+  {:x (* 120 (cos t))
+   :y (* 120 (sin t))})</code></pre>
+        <div class="world-feed-item-actions"><a href="#conversation">29 comments</a><button>Run snippet</button><button>Save</button><span>64 upvotes · newcomer</span></div>
+      </div>
+    </article>
+
+    <article class="world-feed-item" data-source="hacker-news">
+      <div class="world-feed-vote"><button aria-label="Save story">⌁</button><strong>76</strong><span>active</span></div>
+      <div class="world-feed-item-body">
+        <div class="world-feed-provenance"><span class="world-source-badge" data-source="hacker-news"><i></i> Hacker News</span><b>kernel_notes</b><span>discussion</span><time>9 h</time></div>
+        <h2>Hara’s portable runtime boundary is becoming easier to inspect</h2>
+        <p>A technical discussion about interpreter, bytecode, Wasm, native sessions, and why one lifecycle contract matters.</p>
+        <div class="world-feed-item-actions"><a href="#conversation">36 comments</a><button>Save</button><button>Discuss in World</button><span>53 points</span></div>
+      </div>
+    </article>
+
+    <article class="world-feed-item" data-source="substack">
+      <div class="world-feed-vote"><button aria-label="Save story">⌁</button><strong>69</strong><span>new</span></div>
+      <div class="world-feed-item-body">
+        <div class="world-feed-provenance"><span class="world-source-badge" data-source="substack"><i></i> Substack</span><b>Small Language Systems</b><span>essay</span><time>13 h</time></div>
+        <h2>Language tooling without a second semantic universe</h2>
+        <p>An independent essay uses Hara’s typed schemas and lint facts as one example of converging tools on runtime values.</p>
+        <div class="world-feed-item-actions"><a href="#conversation">Read original</a><button>Save</button><button>Discuss in World</button><span>12 min read · 14 shares</span></div>
+      </div>
+    </article>
+  </div>
+
+  <footer class="world-feed-load-row">
+    <button class="hara-v2-button">Load the next 20</button>
+    <span>Duplicates collapse into their canonical conversation. Ranking never hides source attribution.</span>
+  </footer>
+</div>
