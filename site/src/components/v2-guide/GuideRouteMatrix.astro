@@ -1,0 +1,60 @@
+---
+import {
+  guideSummary,
+  historicalReviewRoutes,
+  requiredReviewRoutes,
+  supplementaryReviewRoutes
+} from "../../lib/v2-guide.mjs";
+
+const { basePath } = Astro.props;
+const base = basePath.endsWith("/") ? basePath : `${basePath}/`;
+const routeHref = (path) => `${base}${path.replace(/^\/+/, "")}`;
+const groups = ["Catalogue", "Foundations", "Library", "Applications"];
+---
+<section class="guide-section" id="routes" aria-labelledby="guide-routes-title">
+  <header class="guide-section-heading">
+    <div><p class="hara-v2-kicker">Manifest and route inventory</p><h2 id="guide-routes-title">Every current route has one place in the review matrix.</h2></div>
+    <p>The fourteen closeout routes are represented exactly once. Current extensions and historical studies remain visible below without competing with the primary catalogue.</p>
+  </header>
+
+  <div class="guide-summary-grid" aria-label="Guide route summary">
+    <article><span>Required routes</span><strong>{guideSummary.requiredRoutes}</strong><small>Issue 44 inventory</small></article>
+    <article><span>Theme × viewport cells</span><strong>{guideSummary.matrixCells}</strong><small>{guideSummary.themes} themes · {guideSummary.viewports} widths</small></article>
+    <article><span>Review checks</span><strong>{guideSummary.reviewChecks}</strong><small>Per route and state</small></article>
+    <article><span>Manifest-backed</span><strong>{guideSummary.manifestBackedRequiredRoutes}/{guideSummary.requiredRoutes}</strong><small>Catalogue home is the manifest root</small></article>
+  </div>
+
+  <div class="guide-route-toolbar">
+    <label><span>Find a route, state or downstream target</span><input type="search" placeholder="Playground, unavailable, hara-specs…" data-guide-route-query /></label>
+    <label><span>Catalogue group</span><select data-guide-route-group><option value="all">All groups</option>{groups.map((group) => <option value={group}>{group}</option>)}</select></label>
+    <button type="button" data-guide-route-reset>Reset</button>
+    <output data-guide-route-count>{requiredReviewRoutes.length} routes</output>
+  </div>
+
+  <div class="guide-route-table-wrap" tabindex="0" aria-label="Current route inventory; horizontally scrollable on narrow screens">
+    <table class="guide-route-table">
+      <thead><tr><th>Route</th><th>Group</th><th>Primary task</th><th>Required states</th><th>Authority evidence</th><th>Downstream</th></tr></thead>
+      <tbody>
+        {requiredReviewRoutes.map((route) => (
+          <tr data-guide-route-row data-group={route.group} data-search={[route.label, route.path, route.group, route.shell, route.primaryTask, route.downstream, route.provenance, ...route.states].join(" ").toLowerCase()}>
+            <td><a href={routeHref(route.path)}><strong>{route.label}</strong><code>{route.path}</code></a></td>
+            <td><span class="guide-state" data-tone="signal">{route.group}</span><small>{route.shell}</small></td>
+            <td>{route.primaryTask}</td>
+            <td><div class="guide-chip-list">{route.states.map((state) => <code>{state}</code>)}</div></td>
+            <td>{route.provenance}</td>
+            <td>{route.downstream}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="guide-route-empty" data-guide-route-empty hidden>
+    <strong>No matching review route</strong><p>The query and group remain visible. Reset without leaving the catalogue guide.</p><button type="button" data-guide-route-reset>Reset route filters</button>
+  </div>
+
+  <div class="guide-route-secondary">
+    <section aria-labelledby="guide-current-extensions"><header><span>Current extensions</span><strong id="guide-current-extensions">Additional active review routes</strong></header><div>{supplementaryReviewRoutes.map((route) => <article><div><span class="guide-state" data-tone="success">{route.kind}</span><strong>{route.label}</strong></div><code>{route.path}</code><p>{route.summary}</p><small>Parent · {route.parent}</small></article>)}</div></section>
+    <section aria-labelledby="guide-historical-routes"><header><span>Historical and compatibility</span><strong id="guide-historical-routes">Secondary by design</strong></header><div>{historicalReviewRoutes.map((route) => <article><div><span class="guide-state" data-tone="muted">historical</span><strong>{route.label}</strong></div><code>{route.path}</code><p>{route.summary}</p><small>Canonical relationship · {route.canonicalPath}</small></article>)}</div></section>
+  </div>
+</section>

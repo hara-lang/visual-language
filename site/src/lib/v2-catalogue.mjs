@@ -65,6 +65,16 @@ export const catalogueGroups = [
         status: "active",
         issue: 37,
         eyebrow: "Content contract"
+      },
+      {
+        id: "catalogue-guide",
+        label: "Catalogue guide",
+        path: "/v2/guide/",
+        href: "/v2/guide/",
+        summary: "Route architecture, live theme and viewport review, state coverage, validation, lifecycle, and downstream adoption.",
+        status: "active",
+        issue: 90,
+        eyebrow: "Architecture and validation"
       }
     ]
   },

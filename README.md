@@ -52,6 +52,13 @@ dot, theme storage, and heading family. Both now follow a calm-surface rule:
 rounding, sentence-case labels, and smooth state transitions; chamfers and
 strong material effects are reserved for rare identity moments.
 
+**[Open the v2 catalogue guide and live review matrix](https://hara-lang.github.io/visual-language/v2/guide/)**
+
+The guide documents the route manifest, global versus product-local navigation,
+shared versus product-owned boundaries, route lifecycle, screenshot and
+accessibility review procedure, and downstream adoption map. See
+[`V2-GUIDE.md`](./V2-GUIDE.md) for the written contract.
+
 | Entry point | Use it for | Contract |
 | --- | --- | --- |
 | `v2.css` | WWW, Docs, Specs, Benchmarks, World, data products, and content-heavy application shells | [`V2-THEME.md`](./V2-THEME.md) |

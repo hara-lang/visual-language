@@ -178,3 +178,8 @@ The tool extension has its own viewport-first collapse order in
 See the [five-layout document laboratory](https://hara-lang.github.io/visual-language/v2/)
 and the [tool workbench laboratory](https://hara-lang.github.io/visual-language/v2/tool/)
 for the executable reference compositions.
+
+Use the [v2 catalogue guide and live route review matrix](https://hara-lang.github.io/visual-language/v2/guide/)
+with [`V2-GUIDE.md`](./V2-GUIDE.md) for the exact route inventory, two-theme and
+five-viewport review procedure, navigation ownership, lifecycle, screenshot
+evidence contract, and downstream adoption boundaries.

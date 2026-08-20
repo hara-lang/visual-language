@@ -1,0 +1,50 @@
+---
+import {
+  requiredReviewRoutes,
+  reviewChecks,
+  reviewThemes,
+  reviewViewports
+} from "../../lib/v2-guide.mjs";
+
+const { basePath } = Astro.props;
+const base = basePath.endsWith("/") ? basePath : `${basePath}/`;
+const routeHref = (path) => `${base}${path.replace(/^\/+/, "")}`;
+const initialRoute = requiredReviewRoutes[0];
+const initialViewport = reviewViewports[0];
+const initialTheme = reviewThemes[0];
+---
+<section class="guide-section" id="review" aria-labelledby="guide-review-title">
+  <header class="guide-section-heading">
+    <div><p class="hara-v2-kicker">Live route review deck</p><h2 id="guide-review-title">One route, two themes, five exact widths.</h2></div>
+    <p>The same-origin preview changes route, theme and viewport without rewriting the parent page preference. Review marks are local to this browser session and do not claim external certification.</p>
+  </header>
+
+  <div class="guide-review-deck" data-guide-review-deck data-route={initialRoute.id} data-viewport={initialViewport.id} data-theme={initialTheme.id}>
+    <div class="guide-review-controls">
+      <label><span>Review route</span><select data-guide-review-route>{requiredReviewRoutes.map((route) => <option value={route.id} data-path={routeHref(route.path)} data-label={route.label} data-task={route.primaryTask} data-provenance={route.provenance}>{route.label} · {route.path}</option>)}</select></label>
+      <fieldset><legend>Theme</legend>{reviewThemes.map((theme, index) => <button type="button" data-guide-theme={theme.id} aria-pressed={index === 0 ? "true" : "false"}><span>{theme.label}</span><small>{theme.summary}</small></button>)}</fieldset>
+      <fieldset><legend>Viewport</legend>{reviewViewports.map((viewport, index) => <button type="button" data-guide-viewport={viewport.id} data-width={viewport.width} data-height={viewport.height} aria-pressed={index === 0 ? "true" : "false"}><span>{viewport.label}</span><small>{viewport.width} × {viewport.height}</small></button>)}</fieldset>
+      <div class="guide-review-actions"><a href={routeHref(initialRoute.path)} data-guide-open-route>Open route</a><button type="button" data-guide-copy-target>Copy review target</button><button type="button" data-guide-reload>Reload exact frame</button></div>
+    </div>
+
+    <div class="guide-review-workspace">
+      <aside class="guide-review-ledger">
+        <header><span>Selected target</span><span class="guide-state" data-tone="warning" data-guide-review-status>Review required</span></header>
+        <div><p class="guide-mono" data-guide-target-id>{initialRoute.id}:{initialViewport.id}:{initialTheme.id}</p><h3 data-guide-target-label>{initialRoute.label}</h3><p data-guide-target-task>{initialRoute.primaryTask}</p><dl><div><dt>Route</dt><dd class="guide-mono" data-guide-target-path>{initialRoute.path}</dd></div><div><dt>Theme</dt><dd data-guide-target-theme>{initialTheme.label}</dd></div><div><dt>Viewport</dt><dd data-guide-target-viewport>{initialViewport.width} × {initialViewport.height}</dd></div><div><dt>Authority</dt><dd data-guide-target-provenance>{initialRoute.provenance}</dd></div></dl></div>
+        <div class="guide-review-markers" role="group" aria-label="Local review decision"><button type="button" data-guide-mark="accepted"><span class="guide-state" data-tone="success">Accepted</span><small>Evidence recorded separately</small></button><button type="button" data-guide-mark="needs-work"><span class="guide-state" data-tone="error">Needs work</span><small>Record exact route and state</small></button><button type="button" data-guide-mark="review-required" aria-pressed="true"><span class="guide-state" data-tone="warning">Review required</span><small>No decision yet</small></button></div>
+      </aside>
+
+      <div class="guide-frame-stage" tabindex="0" aria-label="Live route preview; scroll locally when the exact viewport is wider than the review stage">
+        <div class="guide-frame-ruler"><span data-guide-ruler-label>{initialViewport.label} · {initialViewport.width} × {initialViewport.height}</span><span data-guide-ruler-theme>{initialTheme.label} theme</span></div>
+        <div class="guide-frame-shell" style={`--guide-frame-width:${initialViewport.width}px;--guide-frame-height:${initialViewport.height}px`} data-guide-frame-shell>
+          <iframe title={`Live review preview: ${initialRoute.label}`} src={routeHref(initialRoute.path)} loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" data-guide-frame></iframe>
+        </div>
+      </div>
+    </div>
+
+    <section class="guide-review-checklist" aria-labelledby="guide-review-checklist-title">
+      <header><div><span>Per-target checklist</span><h3 id="guide-review-checklist-title">Eleven questions before acceptance</h3></div><button type="button" data-guide-reset-checks>Reset local checks</button></header>
+      <div>{reviewChecks.map((check) => <article data-guide-check={check.id} data-state="unchecked"><button type="button" aria-pressed="false"><span class="guide-check-box" aria-hidden="true">○</span><div><strong>{check.label}</strong><p>{check.question}</p></div><small>Unchecked</small></button></article>)}</div>
+    </section>
+  </div>
+</section>
