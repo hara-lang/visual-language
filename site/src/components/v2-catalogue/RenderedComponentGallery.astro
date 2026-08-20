@@ -103,6 +103,11 @@ const runtimeConnections = [
   { id: "catalogue-debugger", label: "Debugger", detail: "Awaiting attachment", state: "connecting", stateLabel: "CONNECTING", desired: true },
   { id: "catalogue-network", label: "Network", detail: "Capability unavailable", state: "disabled", stateLabel: "DISABLED", disabled: true }
 ];
+const haraSource = `(defn ready? [session]
+  (= :ready (:status session)))
+
+(work/submit {:op :evaluate
+              :target :wasm})`;
 ---
 <div class="v2-component-showcase" data-rendered-component-gallery>
   <header class="v2-component-showcase__intro">
@@ -298,11 +303,7 @@ const runtimeConnections = [
         <ResourceList slot="nav" items={resources} label="Environment navigation resources" density="dense" />
         <FrontmatterGrid slot="frontmatter" entries={frontmatterEntries} label="Environment frontmatter" columns={2} />
         <div slot="graphics" class="v2-component-showcase__environment-graphic"><span>GRAPHICS FIELD</span><strong>lattice / signal</strong></div>
-        <pre slot="code" class="v2-component-showcase__code"><code>(defn ready? [session]
-  (= :ready (:status session)))
-
-(work/submit {:op :evaluate
-              :target :wasm})</code></pre>
+        <pre slot="code" class="v2-component-showcase__code"><code>{haraSource}</code></pre>
         <Toolbar slot="commands" label="Environment commands" density="dense"><ToolButton label="Evaluate" command="Meta+Enter" density="dense" active><span slot="icon" aria-hidden="true">▶</span></ToolButton></Toolbar>
         <ResourceList slot="sessions" items={resources.slice(0, 2)} label="Environment sessions" density="dense" />
         <ResourceList slot="files" items={[{ id: "environment-file", label: "main.hal", detail: "workspace", meta: "clean", status: "ready", marker: "ƒ", action: true }]} label="Environment files" density="dense" />
