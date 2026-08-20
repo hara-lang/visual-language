@@ -1,0 +1,81 @@
+.packages-namespace-shell .hara-v2-workspace { grid-template-columns: minmax(220px, 270px) minmax(0, 1fr) minmax(280px, 340px); min-height: 1100px; }
+.packages-namespace-nav { border-right: 1px solid var(--hara-v2-line); }
+.packages-namespace-nav > header { display: grid; justify-content: stretch; gap: .2rem; }
+.packages-namespace-nav > header span { padding-left: .55rem; }
+.packages-namespace-nav > header code { color: var(--hara-v2-faint); font-size: .5rem; }
+.packages-namespace-nav > a { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .4rem; padding: .62rem .7rem; color: var(--hara-v2-muted); border-bottom: 1px solid var(--hara-v2-line); text-decoration: none; }
+.packages-namespace-nav > a[aria-current="page"],
+.packages-namespace-nav > a:hover,
+.packages-namespace-nav > a:focus-visible { color: var(--hara-v2-ink); background: var(--hara-v2-selected); box-shadow: inset 3px 0 0 var(--hara-v2-success); }
+.packages-namespace-nav > a > span { color: var(--hara-v2-success); font: .52rem var(--hara-v2-font-code); }
+.packages-namespace-nav > a strong { font-size: .59rem; }
+.packages-namespace-nav > a small { grid-column: 2; color: var(--hara-v2-faint); font-size: .49rem; }
+.packages-namespace-header .packages-identity-label { padding-left: .58rem; }
+
+.packages-namespace-toolbar { display: flex; gap: .7rem; align-items: end; margin: 1rem 0; padding: .7rem; border: 1px solid var(--hara-v2-line); border-radius: var(--hara-v2-radius); background: var(--hara-v2-panel-raised); }
+.packages-namespace-toolbar label { display: grid; gap: .3rem; flex: 1; color: var(--hara-v2-muted); font-size: .59rem; }
+.packages-namespace-toolbar output { color: var(--hara-v2-faint); font: .53rem var(--hara-v2-font-code); white-space: nowrap; }
+.packages-namespace-toolbar a { min-height: 38px; padding: .58rem .7rem; color: var(--hara-v2-signal); font-size: .6rem; font-weight: 700; white-space: nowrap; }
+
+.packages-api-table,
+.packages-runtime-availability { margin-top: .75rem; border: 1px solid var(--hara-v2-line); border-radius: var(--hara-v2-radius); background: var(--hara-v2-panel-raised); }
+.packages-api-table > header p,
+.packages-runtime-availability > header p { max-width: 390px; margin: 0; color: var(--hara-v2-muted); font-size: .58rem; line-height: 1.45; }
+.packages-api-table [role="row"] { display: grid; grid-template-columns: minmax(210px, 1fr) minmax(90px, .35fr) minmax(140px, .55fr) minmax(90px, .35fr) minmax(100px, .4fr); min-width: 760px; }
+.packages-api-table [role="cell"],
+.packages-api-table [role="columnheader"] { padding: .58rem .65rem; font-size: .57rem; }
+.packages-api-table code { color: var(--hara-v2-ink); }
+
+.packages-namespace-example { margin-top: .75rem; overflow: hidden; border: 1px solid var(--hara-v2-line); border-radius: var(--hara-v2-radius); }
+.packages-namespace-example > header,
+.packages-namespace-example > footer { display: flex; justify-content: space-between; gap: .6rem; align-items: center; padding: .65rem .7rem; border-bottom: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel-raised); }
+.packages-namespace-example > header div { display: grid; gap: .14rem; }
+.packages-namespace-example > header span { color: var(--hara-v2-faint); font-size: .5rem; }
+.packages-namespace-example > header strong { font-size: .6rem; }
+.packages-namespace-example > header a { color: var(--hara-v2-signal); font-size: .59rem; font-weight: 700; }
+.packages-namespace-example pre { margin: 0; overflow: auto; padding: .9rem; color: #e4e9ef; background: #090d12; font: .64rem/1.68 var(--hara-v2-font-code); }
+.packages-namespace-example > footer { border-top: 1px solid var(--hara-v2-line); border-bottom: 0; color: var(--hara-v2-faint); font-size: .5rem; }
+
+.packages-runtime-availability > div { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .35rem; padding: .65rem; }
+.packages-runtime-availability article { display: grid; gap: .28rem; padding: .55rem; border: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel); }
+.packages-runtime-availability strong { font-size: .6rem; }
+.packages-runtime-availability article > span:not(.packages-state) { color: var(--hara-v2-muted); font-size: .53rem; }
+
+.packages-alias-migration { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin-top: .75rem; }
+.packages-alias-migration > article { border: 1px solid var(--hara-v2-line); border-radius: var(--hara-v2-radius); background: var(--hara-v2-panel-raised); }
+.packages-alias-migration > article > header { display: flex; justify-content: space-between; padding: .65rem; border-bottom: 1px solid var(--hara-v2-line); color: var(--hara-v2-muted); font-size: .58rem; }
+.packages-alias-migration > article > div { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: .35rem; align-items: center; padding: .55rem .65rem; border-bottom: 1px solid var(--hara-v2-line); }
+.packages-alias-migration > article > div:last-child { border-bottom: 0; }
+.packages-alias-migration code { overflow-wrap: anywhere; font-size: .52rem; }
+.packages-alias-migration i { color: var(--hara-v2-signal); font-style: normal; }
+.packages-alias-migration p,
+.packages-alias-migration small { grid-column: 1 / -1; margin: 0; color: var(--hara-v2-muted); font-size: .51rem; line-height: 1.45; }
+
+.packages-trust-questions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
+.packages-trust-questions > article { display: grid; min-height: 290px; padding: .8rem; border: 1px solid var(--hara-v2-line); border-radius: var(--hara-v2-radius-large); background: var(--hara-v2-panel); }
+.packages-trust-questions header { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .55rem; align-items: start; }
+.packages-trust-questions header > span { color: var(--hara-v2-signal); font: .55rem var(--hara-v2-font-code); }
+.packages-trust-questions h3 { margin: 0; font: 735 1.35rem/1.08 var(--hara-v2-font-heading); letter-spacing: -.035em; }
+.packages-trust-questions > article > p { color: var(--hara-v2-muted); font-size: .65rem; line-height: 1.55; }
+.packages-trust-questions dl { display: grid; margin: .5rem 0; border-top: 1px solid var(--hara-v2-line); }
+.packages-trust-questions dl > div { padding: .5rem 0; border-bottom: 1px solid var(--hara-v2-line); }
+.packages-trust-questions dt { color: var(--hara-v2-faint); font-size: .49rem; }
+.packages-trust-questions dd { margin: .2rem 0 0; overflow-wrap: anywhere; font-size: .54rem; line-height: 1.4; }
+.packages-trust-questions button { align-self: end; justify-self: start; }
+
+.packages-reproduction-chain { margin-top: .75rem; border: 1px solid var(--hara-v2-line-strong); border-radius: var(--hara-v2-radius-large); background: var(--hara-v2-panel-raised); }
+.packages-reproduction-chain > header { display: flex; justify-content: space-between; gap: .8rem; align-items: center; padding: .75rem; border-bottom: 1px solid var(--hara-v2-line); }
+.packages-reproduction-chain > header span:first-child { color: var(--hara-v2-faint); font-size: .52rem; }
+.packages-reproduction-chain h3 { margin: .2rem 0 0; font: 740 1.55rem var(--hara-v2-font-heading); }
+.packages-chain-diagram { display: grid; grid-template-columns: repeat(11, auto); gap: .45rem; align-items: center; overflow-x: auto; padding: 1rem; }
+.packages-chain-diagram span { display: grid; gap: .22rem; min-width: 170px; min-height: 84px; padding: .65rem; border: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel); }
+.packages-chain-diagram small { color: var(--hara-v2-faint); font-size: .49rem; }
+.packages-chain-diagram strong { overflow-wrap: anywhere; font: 560 .53rem/1.45 var(--hara-v2-font-code); }
+.packages-chain-diagram i { color: var(--hara-v2-signal); font-style: normal; }
+.packages-reproduction-chain > footer { display: flex; flex-wrap: wrap; gap: .4rem; padding: .75rem; border-top: 1px solid var(--hara-v2-line); }
+
+.packages-authority-boundary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: .75rem; border: 1px solid var(--hara-v2-line); border-radius: var(--hara-v2-radius-large); background: var(--hara-v2-panel); }
+.packages-authority-boundary article { min-height: 190px; padding: .9rem; border-right: 1px solid var(--hara-v2-line); }
+.packages-authority-boundary article:last-child { border-right: 0; }
+.packages-authority-boundary span { font-size: .66rem; font-weight: 720; }
+.packages-authority-boundary p { color: var(--hara-v2-muted); font-size: .62rem; line-height: 1.55; }

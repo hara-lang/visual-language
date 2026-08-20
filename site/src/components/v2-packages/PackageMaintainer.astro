@@ -1,0 +1,47 @@
+---
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import { maintainerFixture } from "../../lib/v2-packages.mjs";
+
+const tone = (state) => ({ review: "warning", request: "signal", planning: "muted", breaking: "error", accepted: "success", pass: "success", published: "success", available: "success", "paused-owner-away": "warning" }[state] ?? "muted");
+const filters = [
+  { id: "all", label: "All work" },
+  { id: "release", label: "Releases" },
+  { id: "namespace ownership", label: "Ownership" },
+  { id: "migration", label: "Migrations" },
+  { id: "dependency", label: "Dependencies" }
+];
+---
+<section class="packages-section" id="maintain" aria-labelledby="package-maintainer-title">
+  <header class="packages-section-heading">
+    <div><p class="hara-v2-kicker">Maintainer surfaces</p><h2 id="package-maintainer-title">Action queues explain scope, owner, evidence, and consequence.</h2></div>
+    <p>Releases, namespace ownership, migrations, dependency breakage, contributor review, and owned automation share one package context without collapsing their distinct authorities.</p>
+  </header>
+
+  <Shell embedded={true} sidebar={true} aside={true} density="compact" mainId="packages-maintainer-dashboard" class="packages-maintainer-shell">
+    <aside slot="sidebar" class="packages-maintainer-nav">
+      <header><span>Maintainer dashboard</span><strong>hara/std.typed</strong><code>{maintainerFixture.registryRevision.split(":").at(-1)}</code></header>
+      <div role="group" aria-label="Maintainer queue filters">{filters.map((filter, index) => <button type="button" data-maintainer-filter={filter.id} aria-pressed={index === 0 ? "true" : "false"}>{filter.label}</button>)}</div>
+      <section><span>Registry context</span><dl><div><dt>Package</dt><dd>{maintainerFixture.packageRef}</dd></div><div><dt>Revision</dt><dd class="packages-mono">{maintainerFixture.registryRevision}</dd></div><div><dt>Visibility</dt><dd>Maintainer-scoped operations</dd></div></dl></section>
+    </aside>
+
+    <article class="packages-maintainer-dashboard">
+      <header><div><span>Package operations</span><h3>Maintain exact releases and stewardship.</h3><p>Popularity signals are intentionally absent from the action queue.</p></div><button type="button" class="packages-primary-button">Propose release</button></header>
+
+      <div class="packages-maintainer-stats">{maintainerFixture.stats.map((stat) => <article><span>{stat.label}</span><strong>{stat.value}</strong><small>{stat.detail}</small></article>)}</div>
+
+      <section class="packages-maintainer-queue"><header><div><span>Awaiting action</span><h4>{maintainerFixture.queues.length} evidence-backed items</h4></div><button type="button">Export queue</button></header><div>{maintainerFixture.queues.map((item) => <article data-maintainer-item data-kind={item.kind}><div><span class="packages-state" data-tone={tone(item.state)}>{item.state}</span><small>{item.kind}</small></div><h5>{item.title}</h5><dl><div><dt>Responsible identity</dt><dd>{item.owner}</dd></div><div><dt>Evidence</dt><dd class="packages-mono">{item.evidence}</dd></div></dl><footer><button type="button">Inspect exact record</button><button type="button">Open action</button></footer></article>)}</div></section>
+
+      <section class="packages-maintainer-activity"><header><div><span>Contributor and reviewer activity</span><h4>Profile evidence links back to exact package work.</h4></div><a href="#trust">Inspect provenance →</a></header><div role="table" aria-label="Maintainer activity evidence"><div role="row" class="packages-table-head"><span role="columnheader">Identity</span><span role="columnheader">Action</span><span role="columnheader">Result</span><span role="columnheader">Evidence</span></div>{maintainerFixture.activity.map((entry) => <div role="row"><strong role="cell">{entry.identity}</strong><span role="cell">{entry.action}</span><span role="cell"><span class="packages-state" data-tone={tone(entry.result)}>{entry.result}</span></span><code role="cell">{entry.evidence}</code></div>)}</div></section>
+
+      <section class="packages-owned-bots"><header><div><span>User-owned release bots</span><h4>Automation remains attached to accountable owners.</h4></div><p>An absent owner can pause policy-sensitive actions without erasing prior receipts.</p></header><div>{maintainerFixture.bots.map((bot) => <article data-state={bot.state}><div class="packages-bot-identity"><span>BOT</span><strong>{bot.label}</strong><span class="packages-state" data-tone={tone(bot.state)}>{bot.state}</span></div><p>{bot.purpose}</p><dl><div><dt>Verified owner</dt><dd>{bot.owner}</dd></div><div><dt>Owner presence</dt><dd>{bot.ownerPresent ? "Present" : "Away"}</dd></div><div><dt>Capabilities</dt><dd>{bot.capabilities.join(" · ")}</dd></div><div><dt>Last receipt / policy</dt><dd class="packages-mono">{bot.receipt}</dd></div></dl><footer><button type="button">Inspect bot policy</button><button type="button" disabled={!bot.ownerPresent}>{bot.ownerPresent ? "Run bounded action" : "Paused until owner returns"}</button></footer></article>)}</div></section>
+    </article>
+
+    <aside slot="aside" class="packages-maintainer-inspector">
+      <header><span>Operational boundary</span><strong>maintainer</strong></header>
+      <section><span>May propose</span><code>release notes</code><code>migration notes</code><code>compatibility target</code><code>namespace delegation</code></section>
+      <section><span>Cannot rewrite</span><code>package coordinates</code><code>historical digests</code><code>publisher identity</code><code>verification receipts</code><code>revocation evidence</code></section>
+      <section><span>Escalation rules</span><article><strong>Compatibility break</strong><p>Requires exact dependant evidence and a migration or version-range decision.</p></article><article><strong>Ownership request</strong><p>Requires current owner approval and a durable delegated-scope record.</p></article><article><strong>Bot proposal</strong><p>Shows bot identity, verified owner, purpose, capabilities, source, and receipt.</p></article></section>
+      <p>Maintainer convenience never moves package, namespace, release, compatibility, or identity authority into a browser-local dashboard.</p>
+    </aside>
+  </Shell>
+</section>

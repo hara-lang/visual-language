@@ -1,0 +1,74 @@
+---
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import { publishFixture, publishStates } from "../../lib/v2-packages.mjs";
+
+const rawFrontmatter = `schema: hara.packages
+schemaVersion: 2.2.0
+contentType: packages.release
+title: ${publishFixture.metadata.title}
+summary: ${publishFixture.metadata.summary}
+releaseNotes: |
+  ${publishFixture.metadata.releaseNotes}
+migrationNotes: |
+  ${publishFixture.metadata.migrationNotes}`;
+const checkTone = (state) => ({ pass: "success", warning: "warning", pending: "signal" }[state] ?? "muted");
+---
+<section class="packages-section" id="publish" aria-labelledby="package-publish-title">
+  <header class="packages-section-heading">
+    <div><p class="hara-v2-kicker">Publish workflow</p><h2 id="package-publish-title">Author release intent. Let registries control identity and proof.</h2></div>
+    <p>Release and migration notes are editable. Package coordinates, namespace ownership, version, maintainers, compatibility evidence, artifact digests, lifecycle state, revision, and publication receipt stay controlled.</p>
+  </header>
+
+  <div class="packages-publish-states" role="group" aria-label="Publish workflow states">
+    {publishStates.map((state, index) => <button type="button" data-publish-state={state.id} aria-pressed={index === 0 ? "true" : "false"}><span class="packages-state" data-tone={state.tone}>{state.label}</span><small>{state.state}</small></button>)}
+  </div>
+
+  <Shell embedded={true} sidebar={true} aside={true} density="comfortable" mainId="packages-publish-workflow" class="packages-publish-shell">
+    <aside slot="sidebar" class="packages-publish-outline">
+      <header><span>Release proposal</span><strong class="packages-mono">2.5.0-beta.1</strong></header>
+      <ol>
+        <li data-state="complete"><span>01</span><div><strong>Metadata</strong><small>author-controlled</small></div><span class="packages-state" data-tone="success">complete</span></li>
+        <li data-state="complete"><span>02</span><div><strong>Inventory</strong><small>4 namespaces · 4 artifacts</small></div><span class="packages-state" data-tone="success">complete</span></li>
+        <li data-state="current"><span>03</span><div><strong>Checks</strong><small>review 2 Wasm observations</small></div><span class="packages-state" data-tone="warning">review</span></li>
+        <li data-state="locked"><span>04</span><div><strong>Sign</strong><small>publisher key + manifest</small></div><span class="packages-state" data-tone="muted">locked</span></li>
+        <li data-state="locked"><span>05</span><div><strong>Publish</strong><small>registry receipt</small></div><span class="packages-state" data-tone="muted">locked</span></li>
+      </ol>
+      <section><span>Draft fence</span><code>{publishFixture.draftRevision}</code><p>Changing an author field creates a new local draft revision. It never mutates a submitted or published release.</p></section>
+    </aside>
+
+    <form class="packages-publish-form" onsubmit="return false">
+      <header class="packages-publish-header"><div><span>{publishFixture.contentType}@{publishFixture.schemaVersion}</span><h3>{publishFixture.metadata.title}</h3><p>{publishFixture.metadata.summary}</p></div><span class="packages-state" data-tone="muted" data-publish-state-label>Draft</span></header>
+
+      <section class="packages-author-fields">
+        <header><div><span>Author-controlled metadata</span><h4>Human explanation remains portable.</h4></div><button type="button" data-copy-value={rawFrontmatter}>Copy front matter</button></header>
+        <div><label><span>Title</span><input data-publish-author-field value={publishFixture.metadata.title} /></label><label><span>Summary</span><textarea data-publish-author-field rows="3">{publishFixture.metadata.summary}</textarea></label><label><span>Release notes</span><textarea data-publish-author-field rows="4">{publishFixture.metadata.releaseNotes}</textarea></label><label><span>Migration notes</span><textarea data-publish-author-field rows="4">{publishFixture.metadata.migrationNotes}</textarea></label></div>
+        <details><summary>Raw front matter</summary><pre><code>{rawFrontmatter}</code></pre></details>
+      </section>
+
+      <section class="packages-declaration-grid">
+        <article><header><span>Version and compatibility declaration</span><strong>{publishFixture.declaration.version}</strong></header><dl><div><dt>Package</dt><dd>{publishFixture.declaration.package}</dd></div><div><dt>Language range</dt><dd>{publishFixture.declaration.languageRange}</dd></div><div><dt>Runtime targets</dt><dd>{publishFixture.declaration.runtimes.join(" · ")}</dd></div></dl></article>
+        <article><header><span>Namespace inventory</span><strong>{publishFixture.declaration.namespaces.length}</strong></header>{publishFixture.declaration.namespaces.map((namespace) => <code data-identity-kind="namespace">{namespace}</code>)}</article>
+      </section>
+
+      <section class="packages-artifact-inventory"><header><div><span>Artifact inventory</span><h4>Every artifact retains kind, size, and digest.</h4></div><strong>{publishFixture.artifacts.length} artifacts</strong></header><div role="table" aria-label="Release artifact inventory"><div role="row" class="packages-table-head"><span role="columnheader">Path</span><span role="columnheader">Kind</span><span role="columnheader">Size</span><span role="columnheader">Digest</span></div>{publishFixture.artifacts.map((artifact) => <div role="row"><code role="cell">{artifact.path}</code><span role="cell">{artifact.kind}</span><span role="cell">{artifact.size}</span><code role="cell">{artifact.digest}</code></div>)}</div></section>
+
+      <section class="packages-check-output"><header><div><span>Build and validation</span><h4>Exact checks before signing.</h4></div><button type="button">Run checks again</button></header><div>{publishFixture.checks.map((check) => <article data-state={check.state}><span class="packages-state" data-tone={checkTone(check.state)}>{check.state}</span><strong>{check.label}</strong><p>{check.detail}</p><code>{check.id}</code></article>)}</div></section>
+
+      <section class="packages-registry-preview"><header><div><span>Registry listing preview</span><h4>{publishFixture.metadata.title}</h4></div><span class="packages-state" data-tone="signal">Preview only</span></header><p>{publishFixture.metadata.summary}</p><div class="packages-preview-command"><code>{publishFixture.previewInstallCommand}</code><button type="button" data-copy-value={publishFixture.previewInstallCommand}>Copy install projection</button></div><dl><div><dt>Namespaces</dt><dd>{publishFixture.declaration.namespaces.length}</dd></div><div><dt>Artifacts</dt><dd>{publishFixture.artifacts.length}</dd></div><div><dt>Compatibility</dt><dd>{publishFixture.declaration.runtimes.length} declared targets</dd></div><div><dt>Source fence</dt><dd class="packages-mono">{publishFixture.signingEnvelope.sourceRevision}</dd></div></dl></section>
+
+      <div class="packages-publish-state-panels" aria-live="polite">
+        {publishStates.map((state, index) => <section data-publish-panel={state.id} hidden={index !== 0}><span class="packages-state" data-tone={state.tone}>{state.label}</span><p>{state.summary}</p><dl><div><dt>Author fields</dt><dd>{state.editable ? "Editable in a new draft" : "Read-only exact revision"}</dd></div><div><dt>Receipt</dt><dd class="packages-mono">{state.receipt ?? "No durable receipt yet"}</dd></div></dl></section>)}
+      </div>
+
+      <footer class="packages-publish-actions"><button type="button">Save local draft</button><button type="button">Download proposal</button><button type="button" class="packages-primary-button" data-publish-action>Resolve findings and submit</button></footer>
+    </form>
+
+    <aside slot="aside" class="packages-publish-inspector">
+      <header><span>Controlled facts</span><strong>{publishFixture.controlledFields.length}</strong></header>
+      <section><span>Author-controlled</span>{publishFixture.authorFields.map((field) => <code>{field}</code>)}</section>
+      <section><span>Registry / identity controlled</span>{publishFixture.controlledFields.map((field) => <code>{field}</code>)}</section>
+      <section class="packages-signing-envelope"><span>Signing envelope</span><dl><div><dt>Publisher</dt><dd>{publishFixture.signingEnvelope.publisher}</dd></div><div><dt>Key</dt><dd>{publishFixture.signingEnvelope.key}</dd></div><div><dt>Source</dt><dd class="packages-mono">{publishFixture.signingEnvelope.sourceRevision}</dd></div><div><dt>Manifest</dt><dd class="packages-mono">{publishFixture.signingEnvelope.artifactManifest}</dd></div><div><dt>Expected receipt</dt><dd class="packages-mono">{publishFixture.signingEnvelope.expectedReceipt}</dd></div></dl></section>
+      <p><strong>No browser-authored release identity.</strong> Submission proposes exact bytes and declarations; the registry assigns durable status, revision, and receipt.</p>
+    </aside>
+  </Shell>
+</section>

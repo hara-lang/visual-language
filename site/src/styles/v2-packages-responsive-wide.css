@@ -1,0 +1,100 @@
+@media (max-width: 1320px) {
+  .packages-hero { grid-template-columns: minmax(0, 1fr) minmax(390px, .8fr); }
+  .packages-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .packages-adoption-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .packages-adoption-grid article:nth-child(3n) { border-right: 0; }
+  .packages-adoption-grid article:nth-child(-n+3) { border-bottom: 1px solid var(--hara-v2-line); }
+}
+
+@media (max-width: 1120px) {
+  .packages-hero { grid-template-columns: 1fr; min-height: auto; padding-block: 72px 104px; }
+  .packages-hero-registry { max-width: 820px; }
+  .packages-filter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .packages-release-scenarios,
+  .packages-publish-states { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .packages-detail-shell .hara-v2-workspace,
+  .packages-namespace-shell .hara-v2-workspace,
+  .packages-publish-shell .hara-v2-workspace,
+  .packages-maintainer-shell .hara-v2-workspace { grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); }
+  .packages-provenance-inspector,
+  .packages-namespace-inspector,
+  .packages-publish-inspector,
+  .packages-maintainer-inspector { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(270px, .36fr) minmax(0, 1fr); border-top: 1px solid var(--hara-v2-line); border-left: 0; }
+  .packages-provenance-inspector > header,
+  .packages-namespace-inspector > header,
+  .packages-publish-inspector > header,
+  .packages-maintainer-inspector > header { grid-column: 1 / -1; }
+  .packages-provenance-inspector > section,
+  .packages-namespace-inspector > section,
+  .packages-publish-inspector > section,
+  .packages-maintainer-inspector > section { border-right: 1px solid var(--hara-v2-line); }
+  .packages-provenance-inspector > section:nth-last-of-type(1),
+  .packages-namespace-inspector > section:nth-last-of-type(1),
+  .packages-publish-inspector > section:nth-last-of-type(1),
+  .packages-maintainer-inspector > section:nth-last-of-type(1) { border-right: 0; }
+  .packages-trust-questions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .packages-example-links > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
+  .packages-main { width: min(100% - 32px, 1600px); }
+  .packages-section { padding-bottom: 104px; }
+  .packages-section-heading { grid-template-columns: 1fr; gap: 1rem; }
+  .packages-section-heading h2 { font-size: clamp(2.7rem, 12vw, 4.6rem); }
+  .packages-fixture-notice { grid-template-columns: 1fr; gap: .3rem; }
+  .packages-filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .packages-view-switch { grid-template-columns: 1fr; }
+  .packages-card-grid { grid-template-columns: 1fr; }
+  .packages-card-grid > article { min-height: 360px; }
+  .packages-detail-shell .hara-v2-workspace,
+  .packages-namespace-shell .hara-v2-workspace,
+  .packages-publish-shell .hara-v2-workspace,
+  .packages-maintainer-shell .hara-v2-workspace { grid-template-columns: 1fr; }
+  .packages-release-history,
+  .packages-namespace-nav,
+  .packages-publish-outline,
+  .packages-maintainer-nav { border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .packages-release-history ol,
+  .packages-publish-outline ol,
+  .packages-maintainer-nav > div { display: flex; gap: .35rem; overflow-x: auto; }
+  .packages-release-history li,
+  .packages-publish-outline li,
+  .packages-maintainer-nav > div button { flex: 0 0 245px; }
+  .packages-provenance-inspector,
+  .packages-namespace-inspector,
+  .packages-publish-inspector,
+  .packages-maintainer-inspector { grid-template-columns: 1fr; }
+  .packages-provenance-inspector > header,
+  .packages-namespace-inspector > header,
+  .packages-publish-inspector > header,
+  .packages-maintainer-inspector > header { grid-column: auto; }
+  .packages-provenance-inspector > section,
+  .packages-namespace-inspector > section,
+  .packages-publish-inspector > section,
+  .packages-maintainer-inspector > section { border-right: 0; }
+  .packages-record-header { display: grid; gap: .8rem; }
+  .packages-record-header > div:last-child { justify-items: start; min-width: 0; }
+  .packages-record-header > div:last-child > code { text-align: left; }
+  .packages-install-command { grid-template-columns: 1fr; }
+  .packages-install-command > div:last-child { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .packages-namespace-inventory > div { grid-template-columns: 1fr; }
+  .packages-namespace-inventory article { grid-template-columns: 1fr; }
+  .packages-dependency-grid { grid-template-columns: 1fr; }
+  .packages-runtime-availability > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .packages-alias-migration { grid-template-columns: 1fr; }
+  .packages-declaration-grid { grid-template-columns: 1fr; }
+  .packages-check-output > div { grid-template-columns: 1fr; }
+  .packages-maintainer-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .packages-maintainer-stats article:nth-child(2) { border-right: 0; }
+  .packages-maintainer-stats article:nth-child(-n+2) { border-bottom: 1px solid var(--hara-v2-line); }
+  .packages-maintainer-queue > div,
+  .packages-owned-bots > div { grid-template-columns: 1fr; }
+  .packages-authority-boundary { grid-template-columns: 1fr; }
+  .packages-authority-boundary article { min-height: 0; border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .packages-authority-boundary article:last-child { border-bottom: 0; }
+  .packages-adoption-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .packages-adoption-grid article { border-right: 1px solid var(--hara-v2-line) !important; border-bottom: 1px solid var(--hara-v2-line); }
+  .packages-adoption-grid article:nth-child(2n) { border-right: 0 !important; }
+  .packages-adoption-grid article:last-child { grid-column: 1 / -1; border-right: 0 !important; border-bottom: 0; }
+}
+
