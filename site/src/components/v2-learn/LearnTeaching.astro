@@ -1,0 +1,27 @@
+---
+import { teachingFixture } from "../../lib/v2-learn.mjs";
+const frontmatter = `schema: hara.learn
+schemaVersion: 2.0.0
+contentType: learn.lesson
+title: Namespaces give values a durable home
+summary: Define, resolve, and inspect qualified names.
+learningObjectives:
+  - Define one namespace and public value
+  - Resolve a qualified symbol
+prerequisiteConcepts:
+  - concept/function
+estimatedMinutes: 18
+exerciseSpec:
+  checker: namespace-alias@1.4.0
+  starterSource: fixtures/namespace-alias.hara`;
+---
+<section class="learn-section" id="teaching" aria-labelledby="learn-teaching-title">
+  <header class="learn-section-heading"><div><p class="hara-v2-kicker">Teaching and reference surfaces</p><h2 id="learn-teaching-title">Author the lesson. Inspect the controlled curriculum facts.</h2></div><p>Authors own objectives, prerequisites, estimates, and exercise specifications. Registries control identity, concept graph, runtime, revision, attempts, and completion evidence.</p></header>
+  <div class="learn-teaching-layout">
+    <form class="learn-authoring-form"><header><div><span>{teachingFixture.contentType}@{teachingFixture.schemaVersion}</span><strong>Lesson authoring preview</strong></div><span class="learn-state" data-tone="muted">Draft · {teachingFixture.previewRevision}</span></header><div class="learn-authoring-fields"><label><span>Title</span><input value="Namespaces give values a durable home" /></label><label><span>Summary</span><textarea rows="3">Define, resolve, and inspect qualified names without hiding source or runtime identity.</textarea></label><label><span>Learning objectives</span><textarea rows="4">Define one namespace and public value.
+Resolve a qualified symbol.
+Explain source revision versus runtime state.</textarea></label><label><span>Prerequisite concepts</span><input value="concept/function, concept/immutable-value" /></label><label><span>Estimated minutes</span><input type="number" value="18" /></label><label><span>Exercise specification</span><input value="namespace-alias@1.4.0" /></label></div><section class="learn-authoring-preview"><header><span>Rendered lesson card</span><button type="button">Preview reader</button></header><p class="hara-v2-kicker">Lesson · 18 minutes</p><h3>Namespaces give values a durable home</h3><p>Define, resolve, and inspect qualified names without hiding source or runtime identity.</p><div><code>concept/function</code><code>concept/immutable-value</code></div></section><section class="learn-authoring-source"><header><span>Raw front matter</span><button type="button" data-copy-value={frontmatter}>Copy YAML</button></header><pre><code>{frontmatter}</code></pre></section><footer><button type="button">Save draft</button><button type="button">Run contract checks</button><button type="button" class="learn-primary-button">Submit exact revision</button></footer></form>
+    <aside class="learn-authority-panel"><header><span>Field ownership</span><strong>hara.learn@2.0.0</strong></header><section><span>Author-controlled</span>{teachingFixture.authorFields.map((field) => <code>{field}</code>)}</section><section><span>Registry / runtime-controlled</span>{teachingFixture.controlledFields.map((field) => <code>{field}</code>)}</section><p><strong>Progress is never authored here.</strong> Attempts and completion evidence are account-scoped registry facts against an exact curriculum revision.</p></aside>
+  </div>
+  <div class="learn-teaching-lower"><section class="learn-concept-registry"><header><div><span>Concept registry</span><h3>Prerequisite maintenance</h3></div><button type="button">Export graph</button></header><div>{teachingFixture.conceptRegistry.map((concept) => <article data-status={concept.status}><code>{concept.id}</code><span>{concept.dependants} dependants</span><span class="learn-state" data-tone={concept.status === "published" ? "success" : concept.status === "review" ? "warning" : "muted"}>{concept.status}</span><button type="button">Inspect</button></article>)}</div></section><section class="learn-migration-notice"><header><span>Version migration</span><span class="learn-state" data-tone="warning">Explicit review required</span></header><h3>{teachingFixture.migrationNotice.from} → {teachingFixture.migrationNotice.to}</h3><p>{teachingFixture.migrationNotice.summary}</p><div><button type="button">Preview migration</button><button type="button">Inspect affected lessons</button></div></section><section class="learn-machine-formats"><header><span>Portable teaching metadata</span><strong>{teachingFixture.machineFormats.length} projections</strong></header><div>{teachingFixture.machineFormats.map((format) => <button type="button">{format}</button>)}</div><p>Downloads and feeds project the same exact identities and revisions rather than creating another source of truth.</p></section></div>
+</section>

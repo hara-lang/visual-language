@@ -5,15 +5,17 @@ import test from "node:test";
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("Learn owns runnable onboarding and guided World examples", async () => {
-  const [page, specimen] = await Promise.all([
+  const [page, landing, specimen] = await Promise.all([
     read("../site/src/pages/v2/learn/index.astro"),
+    read("../site/src/components/v2-learn/LearnLanding.astro"),
     read("../site/src/components/v2/WorldSpecimen.astro")
   ]);
+  const combined = `${page}\n${landing}`;
 
-  assert.match(page, /Application buildout · Learn/);
-  assert.match(page, /Learn by running something real/);
-  assert.match(page, /id="start"/);
-  assert.match(page, /id="tracks"/);
+  assert.match(combined, /Application buildout · Learn/);
+  assert.match(combined, /Learn by running something real/);
+  assert.match(combined, /id="start"/);
+  assert.match(combined, /id="tracks"/);
   assert.match(page, /id="world-examples"/);
   assert.match(page, /Programmer onboarding/);
   assert.match(page, /Earlier community reader/);
