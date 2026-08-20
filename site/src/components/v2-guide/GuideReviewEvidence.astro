@@ -1,0 +1,15 @@
+<section class="guide-review-evidence" aria-labelledby="guide-review-evidence-title" data-guide-review-evidence>
+  <header>
+    <div><span>Evidence export</span><h3 id="guide-review-evidence-title">Turn the current local decision into a fenced record.</h3></div>
+    <span class="guide-state" data-tone="signal">JSON · local download</span>
+  </header>
+  <div class="guide-review-evidence-fields">
+    <label><span>Issue or PR reference</span><input type="text" placeholder="hara-lang/visual-language#44" value="hara-lang/visual-language#44" data-guide-evidence-reference /></label>
+    <label><span>Reviewer</span><input type="text" placeholder="GitHub identity or review role" data-guide-evidence-reviewer /></label>
+    <label class="guide-review-evidence-notes"><span>Observation notes</span><textarea rows="4" placeholder="Describe the exact state, defect, expected behavior and evidence location." data-guide-evidence-notes></textarea></label>
+  </div>
+  <footer>
+    <button type="button" data-guide-export-evidence>Download exact review record</button>
+    <output data-guide-export-evidence-status>Nothing is uploaded or persisted by this guide.</output>
+  </footer>
+</section>
