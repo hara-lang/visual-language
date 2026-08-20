@@ -22,6 +22,10 @@ const pathname = Astro.url.pathname.startsWith(normalizedBasePath)
   : Astro.url.pathname;
 const resolvedActivePath = activePath ?? pathname;
 const deepRoute = resolvedActivePath !== "/v2/";
+const componentCatalogue = resolvedActivePath.replace(/\/+$/, "") === "/v2/components";
+const RenderedComponentGallery = componentCatalogue
+  ? (await import("./RenderedComponentGallery.astro")).default
+  : null;
 ---
 <CatalogueMasthead
   basePath={basePath}
@@ -35,4 +39,49 @@ const deepRoute = resolvedActivePath !== "/v2/";
 </CatalogueRouteBar>
 
 <CatalogueSectionNav enabled={deepRoute && autoSections} />
+{RenderedComponentGallery && (
+  <section
+    id="rendered-components"
+    class="v2-component-showcase-section"
+    data-section-label="Rendered components"
+    data-components-showcase-mount
+  >
+    <RenderedComponentGallery />
+  </section>
+)}
+<script is:inline>
+  (() => {
+    const initialShowcase = document.querySelector("[data-components-showcase-mount]");
+    if (!(initialShowcase instanceof HTMLElement)) return;
+
+    const mountComponentShowcase = () => {
+      const showcase = document.querySelector("[data-components-showcase-mount]");
+      const main = document.querySelector("main.components-main");
+      const hero = main?.querySelector(":scope > .components-hero");
+      if (!(showcase instanceof HTMLElement) || !(main instanceof HTMLElement) || !(hero instanceof HTMLElement)) return false;
+
+      if (showcase.parentElement !== main || showcase.previousElementSibling !== hero) hero.after(showcase);
+
+      const primary = hero.querySelector(".components-hero-actions a[data-variant='primary']");
+      if (primary instanceof HTMLAnchorElement) {
+        primary.setAttribute("href", "#rendered-components");
+        primary.textContent = "See rendered components";
+      }
+      return true;
+    };
+
+    if (!mountComponentShowcase()) {
+      const observer = new MutationObserver(() => {
+        if (mountComponentShowcase()) observer.disconnect();
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+      document.addEventListener("DOMContentLoaded", () => {
+        if (mountComponentShowcase()) observer.disconnect();
+      }, { once: true });
+      document.addEventListener("astro:page-load", () => {
+        if (mountComponentShowcase()) observer.disconnect();
+      });
+    }
+  })();
+</script>
 <CataloguePageFooter basePath={basePath} activePath={pageFooter ? resolvedActivePath : "/v2/"} />

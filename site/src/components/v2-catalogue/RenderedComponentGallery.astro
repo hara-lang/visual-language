@@ -1,0 +1,351 @@
+---
+import ThemeToggle from "../../../../src/astro/ThemeToggle.astro";
+import HaraMark from "../../../../src/astro/HaraMark.astro";
+import Motif from "../../../../src/astro/Motif.astro";
+import Backdrop from "../../../../src/astro/Backdrop.astro";
+import Surface from "../../../../src/astro/Surface.astro";
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import Header from "../../../../src/astro/v2/Header.astro";
+import ContextNav from "../../../../src/astro/v2/ContextNav.astro";
+import Sidebar from "../../../../src/astro/v2/Sidebar.astro";
+import PageHeader from "../../../../src/astro/v2/PageHeader.astro";
+import FleetField from "../../../../src/astro/v2/FleetField.astro";
+import ShaderField from "../../../../src/astro/v2/ShaderField.astro";
+import Toolbar from "../../../../src/astro/v2/tool/Toolbar.astro";
+import ToolGroup from "../../../../src/astro/v2/tool/ToolGroup.astro";
+import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
+import ToolToggle from "../../../../src/astro/v2/tool/ToolToggle.astro";
+import ToolSelect from "../../../../src/astro/v2/tool/ToolSelect.astro";
+import ToolNumberField from "../../../../src/astro/v2/tool/ToolNumberField.astro";
+import TabStrip from "../../../../src/astro/v2/tool/TabStrip.astro";
+import IconRail from "../../../../src/astro/v2/tool/IconRail.astro";
+import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import WorkbenchShell from "../../../../src/astro/v2/tool/WorkbenchShell.astro";
+import DockPanel from "../../../../src/astro/v2/tool/DockPanel.astro";
+import PanelHeader from "../../../../src/astro/v2/tool/PanelHeader.astro";
+import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import FloatingPalette from "../../../../src/astro/v2/tool/FloatingPalette.astro";
+import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
+import SectionNavigator from "../../../../src/astro/v2/tool/SectionNavigator.astro";
+import EnvironmentSection from "../../../../src/astro/v2/tool/EnvironmentSection.astro";
+import FrontmatterGrid from "../../../../src/astro/v2/tool/FrontmatterGrid.astro";
+import ResourceList from "../../../../src/astro/v2/tool/ResourceList.astro";
+import CapabilityPane from "../../../../src/astro/v2/tool/CapabilityPane.astro";
+import EnvironmentWorkbench from "../../../../src/astro/v2/tool/EnvironmentWorkbench.astro";
+import StatusLamp from "../../../../src/astro/v2/tool/StatusLamp.astro";
+import RuntimeSwitch from "../../../../src/astro/v2/tool/RuntimeSwitch.astro";
+import ConnectionRow from "../../../../src/astro/v2/tool/ConnectionRow.astro";
+import CompactRuntimeShell from "../../../../src/astro/v2/tool/CompactRuntimeShell.astro";
+import RuntimeAppShell from "../../../../src/astro/v2/tool/RuntimeAppShell.astro";
+import { componentShowcaseGroups } from "../../lib/v2-component-showcase.mjs";
+import "../../styles/v2-component-showcase.css";
+
+const sourceRoot = "https://github.com/hara-lang/visual-language/blob/main/";
+const group = (id) => componentShowcaseGroups.find((candidate) => candidate.id === id);
+const identityGroup = group("identity-atmosphere");
+const shellGroup = group("document-shell");
+const controlsGroup = group("tool-controls");
+const workbenchGroup = group("workbench-shell");
+const environmentGroup = group("environment-composition");
+const runtimeGroup = group("runtime-composition");
+
+const shellNav = [
+  { href: "/docs", label: "Docs" },
+  { href: "/components", label: "Components", current: true },
+  { href: "/patterns", label: "Patterns" }
+];
+const contextItems = [
+  { href: "#identity-atmosphere", label: "Foundations" },
+  { href: "#document-shell", label: "Components", current: true },
+  { href: "#runtime-composition", label: "Runtime" }
+];
+const sidebarGroups = [
+  {
+    label: "Library",
+    items: [
+      { href: "#document-shell", label: "Shell", badge: 5, current: true },
+      { href: "#tool-controls", label: "Controls", badge: 9 },
+      { href: "#workbench-shell", label: "Workbench", badge: 6 }
+    ]
+  },
+  {
+    label: "Compositions",
+    items: [
+      { href: "#environment-composition", label: "Environment", badge: 6 },
+      { href: "#runtime-composition", label: "Runtime", badge: 5 }
+    ]
+  }
+];
+const controlTabs = [
+  { id: "showcase-editor-tab", label: "Editor", active: true, controls: "showcase-editor", badge: 2 },
+  { id: "showcase-preview-tab", label: "Preview", controls: "showcase-preview" },
+  { id: "showcase-output-tab", label: "Output", controls: "showcase-output", badge: 1 }
+];
+const environmentSections = [
+  { id: "nav", label: "Nav", badge: 4 },
+  { id: "frontmatter", label: "Frontmatter", active: true, badge: 3 },
+  { id: "graphics", label: "Graphics" },
+  { id: "code", label: "Code", badge: "HAL" }
+];
+const frontmatterEntries = [
+  { label: "namespace", value: "hara.demo.runtime", detail: "resolved", status: "ready", code: true },
+  { label: "target", value: "wasm32", detail: "browser session", code: true },
+  { label: "revision", value: "af6273c", detail: "clean", status: "ready", code: true },
+  { label: "capabilities", value: 4, detail: "all granted" }
+];
+const resources = [
+  { id: "session-main", label: "main", detail: "isolated evaluation session", meta: "ready", status: "ready", marker: "●", action: true, current: true },
+  { id: "session-preview", label: "preview", detail: "shared graphics context", meta: "warm", status: "connected", marker: "◆", action: true },
+  { id: "session-archive", label: "archive", detail: "read-only snapshot", meta: "locked", status: "disabled", marker: "◇", disabled: true }
+];
+const runtimeConnections = [
+  { id: "catalogue-filesystem", label: "Filesystem", detail: "Workspace mounted", state: "connected", stateLabel: "CONNECTED", desired: true },
+  { id: "catalogue-debugger", label: "Debugger", detail: "Awaiting attachment", state: "connecting", stateLabel: "CONNECTING", desired: true },
+  { id: "catalogue-network", label: "Network", detail: "Capability unavailable", state: "disabled", stateLabel: "DISABLED", disabled: true }
+];
+---
+<div class="v2-component-showcase" data-rendered-component-gallery>
+  <header class="v2-component-showcase__intro">
+    <div>
+      <p class="hara-v2-kicker">Rendered catalogue · 38 public exports</p>
+      <h2>These are the components.</h2>
+      <p>Every specimen below imports the public Astro export it names. The canvases show real props, slots, states, and compound boundaries; the inventory and contracts continue below.</p>
+    </div>
+    <div class="v2-component-showcase__legend" aria-label="Specimen legend">
+      <span><i data-kind="component"></i> exported component</span>
+      <span><i data-kind="state"></i> owned state</span>
+      <span><i data-kind="boundary"></i> composition boundary</span>
+    </div>
+  </header>
+
+  <article class="v2-component-specimen" id={identityGroup.id} data-component-specimen={identityGroup.id}>
+    <header class="v2-component-specimen__header">
+      <div><p>{identityGroup.eyebrow}</p><h3>{identityGroup.title}</h3><span>{identityGroup.description}</span></div>
+      <div class="v2-component-specimen__exports">
+        {identityGroup.components.map((component) => <a href={`${sourceRoot}${component.path}`}><code>{component.name}</code></a>)}
+      </div>
+    </header>
+    <div class="v2-component-specimen__canvas v2-component-specimen__canvas--identity">
+      <Backdrop effect="lattice" intensity="balanced" label="Lattice backdrop component" class="v2-component-showcase__backdrop" />
+      <Motif kind="edge" responsive class="v2-component-showcase__motif">
+        <Surface as="section" class="v2-component-showcase__identity-card">
+          <div class="v2-component-showcase__identity-line">
+            <span class="v2-component-showcase__mark"><HaraMark size={46} title="Hara component mark" /></span>
+            <div><strong>Hara visual language</strong><small>Identity, atmosphere, and material fields</small></div>
+            <ThemeToggle label="Catalogue theme" />
+          </div>
+          <div class="v2-component-showcase__graphic-pair">
+            <div class="v2-component-showcase__graphic-frame">
+              <FleetField title="FleetField rendered component" />
+              <span>FleetField · SVG field</span>
+            </div>
+            <ShaderField mode="monolith" atmosphere="nocturne" interactive label="ShaderField rendered component" plate="shader field" class="v2-component-showcase__shader">
+              <span class="v2-component-showcase__graphic-label">ShaderField · WebGL with fallback</span>
+            </ShaderField>
+          </div>
+        </Surface>
+      </Motif>
+    </div>
+  </article>
+
+  <article class="v2-component-specimen" id={shellGroup.id} data-component-specimen={shellGroup.id}>
+    <header class="v2-component-specimen__header">
+      <div><p>{shellGroup.eyebrow}</p><h3>{shellGroup.title}</h3><span>{shellGroup.description}</span></div>
+      <div class="v2-component-specimen__exports">
+        {shellGroup.components.map((component) => <a href={`${sourceRoot}${component.path}`}><code>{component.name}</code></a>)}
+      </div>
+    </header>
+    <div class="v2-component-specimen__canvas v2-component-specimen__canvas--shell">
+      <Shell embedded mainId="component-gallery-shell-content" class="v2-component-showcase__shell">
+        <Header slot="header" homeHref="#rendered-components" section="Components" nav={shellNav} activePath="/components">
+          <span class="v2-component-showcase__release">v2 · stable</span>
+        </Header>
+        <ContextNav slot="context" items={contextItems} activePath="/components" sticky={false}>
+          <a class="hara-v2-button" data-variant="ghost" href={`${sourceRoot}src/astro/v2/`}>Source</a>
+        </ContextNav>
+        <Sidebar slot="sidebar" title="Public exports" groups={sidebarGroups} activePath="/components">
+          <small>Package boundary · <code>@hara/visual-language</code></small>
+        </Sidebar>
+        <PageHeader
+          heading="h2"
+          kicker="Document shell"
+          title="A navigable Hara surface"
+          description="Global identity, section context, local navigation, and page intent remain separate and composable."
+          meta={["comfortable density", "responsive sidebar", "semantic landmarks"]}
+        >
+          <a slot="actions" class="hara-v2-button" data-variant="primary" href="#tool-controls">Inspect controls</a>
+        </PageHeader>
+        <div class="v2-component-showcase__shell-content">
+          <section><span>01</span><strong>Navigation owns location.</strong><p>Header, context, and sidebar each answer a different wayfinding question.</p></section>
+          <section><span>02</span><strong>PageHeader owns intent.</strong><p>The content area starts with purpose, actions, and compact metadata.</p></section>
+        </div>
+      </Shell>
+    </div>
+  </article>
+
+  <article class="v2-component-specimen" id={controlsGroup.id} data-component-specimen={controlsGroup.id}>
+    <header class="v2-component-specimen__header">
+      <div><p>{controlsGroup.eyebrow}</p><h3>{controlsGroup.title}</h3><span>{controlsGroup.description}</span></div>
+      <div class="v2-component-specimen__exports">
+        {controlsGroup.components.map((component) => <a href={`${sourceRoot}${component.path}`}><code>{component.name}</code></a>)}
+      </div>
+    </header>
+    <div class="v2-component-specimen__canvas v2-component-specimen__canvas--controls">
+      <Toolbar label="Component command bar" density="regular">
+        <ToolGroup label="Execution controls">
+          <ToolButton label="Run" command="Meta+Enter" active><span slot="icon" aria-hidden="true">▶</span></ToolButton>
+          <ToolButton label="Stop" disabled><span slot="icon" aria-hidden="true">■</span></ToolButton>
+          <ToolToggle label="Inspect" pressed command="Meta+I"><span slot="icon" aria-hidden="true">⌁</span></ToolToggle>
+        </ToolGroup>
+        <ToolGroup label="Runtime values">
+          <ToolSelect label="Target" value="wasm" inline options={[{ value: "tree", label: "Tree" }, { value: "fiber", label: "Fiber" }, { value: "wasm", label: "Wasm" }]} />
+          <ToolNumberField label="Timeout" value={250} min={50} max={2000} step={50} unit="ms" inline />
+        </ToolGroup>
+      </Toolbar>
+      <TabStrip tabs={controlTabs} label="Component workspace tabs" density="dense" />
+      <div class="v2-component-showcase__control-body">
+        <IconRail label="Component tools" orientation="horizontal">
+          <ToolButton label="Select" iconOnly density="dense" active><span slot="icon" aria-hidden="true">↖</span></ToolButton>
+          <ToolButton label="Pan" iconOnly density="dense"><span slot="icon" aria-hidden="true">✥</span></ToolButton>
+          <ToolButton label="Measure" iconOnly density="dense"><span slot="icon" aria-hidden="true">⌗</span></ToolButton>
+        </IconRail>
+        <div class="v2-component-showcase__state-row" aria-label="Control states">
+          <ToolToggle label="Grid" pressed><span slot="icon" aria-hidden="true">▦</span></ToolToggle>
+          <ToolToggle label="Snap" disabled><span slot="icon" aria-hidden="true">⌁</span></ToolToggle>
+          <ToolSelect label="Profile" value="release" options={[{ value: "debug", label: "Debug" }, { value: "release", label: "Release" }]} />
+        </div>
+      </div>
+      <StatusBar label="Control specimen status" live>
+        <span><strong>READY</strong> · 9 control exports rendered</span>
+        <span slot="secondary"><code>wasm32</code> · 250 ms</span>
+      </StatusBar>
+    </div>
+  </article>
+
+  <article class="v2-component-specimen" id={workbenchGroup.id} data-component-specimen={workbenchGroup.id}>
+    <header class="v2-component-specimen__header">
+      <div><p>{workbenchGroup.eyebrow}</p><h3>{workbenchGroup.title}</h3><span>{workbenchGroup.description}</span></div>
+      <div class="v2-component-specimen__exports">
+        {workbenchGroup.components.map((component) => <a href={`${sourceRoot}${component.path}`}><code>{component.name}</code></a>)}
+      </div>
+    </header>
+    <div class="v2-component-specimen__canvas v2-component-specimen__canvas--workbench">
+      <WorkbenchShell label="Component workbench specimen" minHeight="390px" class="v2-component-showcase__workbench">
+        <Toolbar slot="top" label="Workbench commands" density="dense">
+          <ToolGroup label="Viewport">
+            <ToolButton label="Frame" density="dense" active><span slot="icon" aria-hidden="true">□</span></ToolButton>
+            <ToolButton label="Orbit" density="dense"><span slot="icon" aria-hidden="true">◎</span></ToolButton>
+          </ToolGroup>
+        </Toolbar>
+        <DockPanel slot="left" label="Scene outline" position="left" size="narrow" selected>
+          <PanelHeader title="Scene" eyebrow="Outline" compact><span slot="metadata">4 nodes</span></PanelHeader>
+          <InspectorSection title="Fleet field" open><p><code>field/root</code></p><p>Visible · inherited</p></InspectorSection>
+          <InspectorSection title="Signal layer" open={false}><p>2 routes</p></InspectorSection>
+        </DockPanel>
+        <div slot="viewport" class="v2-component-showcase__viewport">
+          <span class="v2-component-showcase__viewport-grid" aria-hidden="true"></span>
+          <div><small>LIVE VIEWPORT</small><strong>evaluation / lattice</strong><span>1200 × 680 · 100%</span></div>
+        </div>
+        <DockPanel slot="right" label="Properties" position="right" size="regular">
+          <PanelHeader title="Properties" eyebrow="Selection" compact><span slot="metadata">field/root</span></PanelHeader>
+          <InspectorSection title="Transform" open>
+            <div class="v2-component-showcase__property-grid"><span>X <code>0</code></span><span>Y <code>0</code></span><span>Z <code>0</code></span></div>
+          </InspectorSection>
+          <InspectorSection title="Material" open><p>Nocturne · signal 64%</p></InspectorSection>
+        </DockPanel>
+        <div slot="overlay">
+          <ViewportOverlay label="Viewport metrics" placement="top-left"><strong>60 fps</strong><span> · 8.2 ms</span></ViewportOverlay>
+          <FloatingPalette label="Quick tools" placement="bottom-right">
+            <ToolButton label="Capture" density="dense"><span slot="icon" aria-hidden="true">◉</span></ToolButton>
+            <ToolButton label="Reset" density="dense"><span slot="icon" aria-hidden="true">↺</span></ToolButton>
+          </FloatingPalette>
+        </div>
+        <div slot="bottom" class="v2-component-showcase__timeline"><span>0</span><i></i><span>240</span></div>
+        <StatusBar slot="status" label="Workbench status"><span>Frame 124</span><span slot="secondary">No selection errors</span></StatusBar>
+      </WorkbenchShell>
+    </div>
+  </article>
+
+  <article class="v2-component-specimen" id={environmentGroup.id} data-component-specimen={environmentGroup.id}>
+    <header class="v2-component-specimen__header">
+      <div><p>{environmentGroup.eyebrow}</p><h3>{environmentGroup.title}</h3><span>{environmentGroup.description}</span></div>
+      <div class="v2-component-specimen__exports">
+        {environmentGroup.components.map((component) => <a href={`${sourceRoot}${component.path}`}><code>{component.name}</code></a>)}
+      </div>
+    </header>
+    <div class="v2-component-specimen__canvas v2-component-specimen__canvas--environment">
+      <div class="v2-component-showcase__environment-primitives">
+        <SectionNavigator sections={environmentSections} activeSection="frontmatter" label="Primitive environment sections" idPrefix="catalogue-primitive" density="dense" />
+        <EnvironmentSection id="catalogue-primitive-frontmatter-panel" section="frontmatter" tabId="catalogue-primitive-frontmatter-tab" kind="frontmatter" active>
+          <FrontmatterGrid entries={frontmatterEntries} label="Primitive frontmatter" columns={2} compact />
+          <ResourceList items={resources} label="Primitive resources" density="dense" />
+        </EnvironmentSection>
+        <CapabilityPane label="Primitive capabilities" activeGroup="files" idPrefix="catalogue-primitive-capabilities" position="right" size="regular" badges={{ sessions: 2, files: 3 }}>
+          <ResourceList slot="sessions" items={resources.slice(0, 2)} label="Session capabilities" density="dense" />
+          <ResourceList slot="files" items={[{ id: "file-main", label: "main.hal", detail: "2.4 KB", meta: "modified", status: "attention", marker: "ƒ", action: true, current: true }, { id: "file-spec", label: "main_spec.hal", detail: "1.1 KB", meta: "clean", status: "ready", marker: "ƒ", action: true }]} label="File capabilities" density="dense" />
+        </CapabilityPane>
+      </div>
+      <EnvironmentWorkbench
+        label="Rendered Hara environment"
+        activeSection="code"
+        activeControlGroup="sessions"
+        idPrefix="catalogue-environment"
+        minHeight="430px"
+        sectionBadges={{ nav: 4, frontmatter: 4, code: "HAL" }}
+        capabilityBadges={{ sessions: 2, files: 2 }}
+        class="v2-component-showcase__environment"
+      >
+        <ResourceList slot="nav" items={resources} label="Environment navigation resources" density="dense" />
+        <FrontmatterGrid slot="frontmatter" entries={frontmatterEntries} label="Environment frontmatter" columns={2} />
+        <div slot="graphics" class="v2-component-showcase__environment-graphic"><span>GRAPHICS FIELD</span><strong>lattice / signal</strong></div>
+        <pre slot="code" class="v2-component-showcase__code"><code>(defn ready? [session]
+  (= :ready (:status session)))
+
+(work/submit {:op :evaluate
+              :target :wasm})</code></pre>
+        <Toolbar slot="commands" label="Environment commands" density="dense"><ToolButton label="Evaluate" command="Meta+Enter" density="dense" active><span slot="icon" aria-hidden="true">▶</span></ToolButton></Toolbar>
+        <ResourceList slot="sessions" items={resources.slice(0, 2)} label="Environment sessions" density="dense" />
+        <ResourceList slot="files" items={[{ id: "environment-file", label: "main.hal", detail: "workspace", meta: "clean", status: "ready", marker: "ƒ", action: true }]} label="Environment files" density="dense" />
+        <ViewportOverlay slot="overlay" label="Environment evaluation status" placement="bottom-left"><strong>EVAL 018</strong><span> · 12 ms</span></ViewportOverlay>
+        <StatusBar slot="status" label="Environment status" live><span><strong>READY</strong> · hbc-wasm</span><span slot="secondary">4 capabilities</span></StatusBar>
+      </EnvironmentWorkbench>
+    </div>
+  </article>
+
+  <article class="v2-component-specimen" id={runtimeGroup.id} data-component-specimen={runtimeGroup.id}>
+    <header class="v2-component-specimen__header">
+      <div><p>{runtimeGroup.eyebrow}</p><h3>{runtimeGroup.title}</h3><span>{runtimeGroup.description}</span></div>
+      <div class="v2-component-specimen__exports">
+        {runtimeGroup.components.map((component) => <a href={`${sourceRoot}${component.path}`}><code>{component.name}</code></a>)}
+      </div>
+    </header>
+    <div class="v2-component-specimen__canvas v2-component-specimen__canvas--runtime">
+      <div class="v2-component-showcase__runtime-states" aria-label="Runtime lifecycle states">
+        <StatusLamp label="Off" state="off" />
+        <StatusLamp label="Connecting" state="connecting" />
+        <StatusLamp label="Connected" state="connected" />
+        <StatusLamp label="Warning" state="warning" />
+        <StatusLamp label="Error" state="error" />
+        <div class="v2-component-showcase__runtime-switch"><span>Requested</span><RuntimeSwitch id="catalogue-runtime-requested" label="Request runtime" checked /></div>
+      </div>
+      <div class="v2-component-showcase__runtime-grid">
+        <CompactRuntimeShell idPrefix="catalogue-compact-runtime" label="Compact runtime control" title="Hara Wasm" eyebrow="Runtime control" state="connected" stateLabel="READY" target="playground/main" targetDetail="isolated session" width="wide">
+          <div slot="connections">
+            {runtimeConnections.map((connection) => <ConnectionRow {...connection} />)}
+          </div>
+          <div slot="status"><StatusLamp label="Evaluator ready" state="ready" detail="12 ms" /><StatusLamp label="Filesystem attached" state="connected" detail="3 mounts" /></div>
+          <div slot="actions"><ToolButton label="Restart" density="dense"><span slot="icon" aria-hidden="true">↺</span></ToolButton><ToolButton label="Open logs" density="dense"><span slot="icon" aria-hidden="true">≡</span></ToolButton></div>
+        </CompactRuntimeShell>
+        <RuntimeAppShell idPrefix="catalogue-runtime-app" label="Runtime application shell" title="Session inspector" activeApp="sessions" state="ready" inspector bottom>
+          <div slot="header-actions"><StatusLamp label="Ready" state="ready" live /></div>
+          <div slot="navigation" class="v2-component-showcase__runtime-nav"><button type="button" aria-current="page">Sessions</button><button type="button">Files</button><button type="button">Trace</button></div>
+          <Toolbar slot="toolbar" label="Runtime application controls" density="dense"><ToolButton label="Attach" density="dense" active><span slot="icon" aria-hidden="true">＋</span></ToolButton><ToolToggle label="Live trace" pressed density="dense"><span slot="icon" aria-hidden="true">⌁</span></ToolToggle></Toolbar>
+          <div class="v2-component-showcase__runtime-main"><small>ACTIVE SESSION</small><strong>main / wasm32</strong><code>session-01J9…F6A</code><p>Tree, fiber, bytecode, native, and Wasm consume the same runtime value boundary.</p></div>
+          <InspectorSection slot="inspector" title="Session" open><p>Status <strong>ready</strong></p><p>Namespace <code>hara.user</code></p><p>Revision <code>af6273c</code></p></InspectorSection>
+          <div slot="bottom" class="v2-component-showcase__runtime-log"><code>08:41:12</code><span>filesystem attached</span><code>08:41:13</code><span>evaluation complete</span></div>
+          <StatusBar slot="status" label="Runtime application status"><span>2 connections · 0 errors</span><span slot="secondary">hbc-wasm</span></StatusBar>
+        </RuntimeAppShell>
+      </div>
+    </div>
+  </article>
+</div>
