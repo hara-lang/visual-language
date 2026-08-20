@@ -1,0 +1,127 @@
+---
+import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
+import PackagesDiscovery from "../../../components/v2-packages/PackagesDiscovery.astro";
+import PackageDetail from "../../../components/v2-packages/PackageDetail.astro";
+import NamespaceDetail from "../../../components/v2-packages/NamespaceDetail.astro";
+import PackagePublish from "../../../components/v2-packages/PackagePublish.astro";
+import PackageMaintainer from "../../../components/v2-packages/PackageMaintainer.astro";
+import PackageTrust from "../../../components/v2-packages/PackageTrust.astro";
+import { contentContractById, contentTypeById } from "../../../lib/v2-frontmatter.mjs";
+import { packageContentTypes, packagesFixtureNotice } from "../../../lib/v2-packages.mjs";
+import "../../../../../src/v2.css";
+import "../../../../../src/v2-tool.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-lab.css";
+import "../../../styles/v2-command-retune.css";
+import "../../../styles/v2-calm-lab.css";
+import "../../../styles/v2-packages.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/packages/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/packages.jpg`, Astro.site);
+const catalogueHome = `${basePath}v2/`;
+const docsUrl = `${basePath}v2/www/docs/?package=hara%2Fstd.typed&version=2.4.1&namespace=std.typed`;
+const playgroundUrl = `${basePath}v2/playground/?package=hara%2Fstd.typed&version=2.4.1&namespace=std.typed&revision=6a7f813ca41d227e`;
+const specsUrl = `${basePath}v2/specs/?query=typed%20schema`;
+const worldUrl = `${basePath}v2/world/discussion/?package=hara%2Fstd.typed&version=2.4.1`;
+const frontmatterUrl = `${basePath}v2/frontmatter/`;
+const componentsUrl = `${basePath}v2/components/`;
+const uiUrl = `${basePath}v2/ui/`;
+
+const packageContract = contentContractById("packages");
+const packageType = contentTypeById("packages.package");
+const releaseType = contentTypeById("packages.release");
+const namespaceType = contentTypeById("packages.namespace");
+const maintainerType = contentTypeById("packages.maintainer");
+const compatibilityType = contentTypeById("packages.compatibility");
+const localNav = [
+  { href: "#discover", label: "Discover" },
+  { href: "#package", label: "Package" },
+  { href: "#namespace", label: "Namespace" },
+  { href: "#publish", label: "Publish" },
+  { href: "#maintain", label: "Maintain" },
+  { href: "#trust", label: "Trust" },
+  { href: "#adoption", label: "Adoption" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Detailed Hara Packages v2 application laboratory for package discovery, exact releases, namespace stewardship, publishing, maintainer workflows, compatibility, and provenance." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara v2 Packages application laboratory" />
+    <meta property="og:description" content="Find, evaluate, install, publish, and maintain Hara packages without hiding exact identity, compatibility, maintenance state, or provenance." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara v2 Packages application laboratory" />
+    <meta name="twitter:description" content="Package discovery, namespace stewardship, publishing, compatibility, maintenance, and reproducible release evidence." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara v2 Packages application laboratory</title>
+  </head>
+  <body class="hara-v2 hara-v2-tool packages-page">
+    <CatalogueHeader basePath={basePath} activePath="/v2/packages/" label="Packages laboratory">
+      <a slot="route-actions" href="#publish">Publish release</a>
+    </CatalogueHeader>
+
+    <nav class="packages-local-nav" aria-label="Packages laboratory sections">
+      <span>Packages</span>
+      <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+      <a href="https://github.com/hara-lang/visual-language/issues/41">Issue 41 ↗</a>
+    </nav>
+
+    <main class="packages-main">
+      <aside class="packages-fixture-notice" role="note">
+        <strong>{packagesFixtureNotice.label}</strong>
+        <span>{packagesFixtureNotice.summary}</span>
+        <code>{packagesFixtureNotice.id} · {packagesFixtureNotice.sourceRevision}</code>
+      </aside>
+
+      <div class="packages-contract-strip" aria-label="Consumed hara.packages content contracts">
+        <span>{packageType?.id}<b>@{packageType?.version ?? packageContract?.schemaVersion}</b></span>
+        <span>{releaseType?.id}<b>@{releaseType?.version ?? packageContract?.schemaVersion}</b></span>
+        <span>{namespaceType?.id}<b>@{namespaceType?.version ?? packageContract?.schemaVersion}</b></span>
+        <span>{maintainerType?.id}<b>@{maintainerType?.version ?? packageContract?.schemaVersion}</b></span>
+        <span>{compatibilityType?.id}<b>@{compatibilityType?.version ?? packageContract?.schemaVersion}</b></span>
+      </div>
+
+      <PackagesDiscovery packageUrl="#package" />
+      <PackageDetail docsUrl={docsUrl} playgroundUrl={playgroundUrl} specsUrl={specsUrl} worldUrl={worldUrl} />
+      <NamespaceDetail docsUrl={docsUrl} playgroundUrl={playgroundUrl} />
+      <PackagePublish />
+      <PackageMaintainer />
+      <PackageTrust />
+
+      <section class="packages-section packages-adoption" id="adoption" aria-labelledby="packages-adoption-title">
+        <header class="packages-section-heading">
+          <div><p class="hara-v2-kicker">Ownership and downstream adoption</p><h2 id="packages-adoption-title">The application composes package truth; the registry and runtimes remain authoritative.</h2></div>
+          <p>The future packages/registry product can adopt these screens while preserving exact package coordinates, namespace stewardship, release evidence, runtime checks, and durable receipts.</p>
+        </header>
+        <div class="packages-adoption-grid">
+          <article><span>Shared visual-language package</span><p>Shell, tables, filters, forms, status, identity labels, focus, responsive behavior, receipts, and degraded-state presentation.</p></article>
+          <article><span>Packages application</span><p>Discovery, comparison, install projection, package and namespace navigation, publish composition, maintainer queues, and cross-product handoffs.</p></article>
+          <article><span>Package and namespace registries</span><p>Coordinates, stewardship, versions, maintainers, artifacts, compatibility evidence, lifecycle decisions, signatures, and receipts.</p></article>
+          <article><span>Resolver and runtimes</span><p>Dependency resolution, download, verification, installation, execution, environment compatibility, reproduction, and attempt receipts.</p></article>
+          <article><span>Docs, Playground, Specs, World</span><p>Version-aware guidance, execution, formal contracts, and public discussion retain separate navigation and authority.</p></article>
+        </div>
+        <p>Review the <a href={frontmatterUrl}>front-matter contract</a>, <a href={componentsUrl}>shared component inventory</a>, <a href={uiUrl}>workflow patterns</a>, <a href={docsUrl}>Docs handoff</a>, <a href={playgroundUrl}>Playground handoff</a>, and <code>V2-PACKAGES.md</code> before downstream adoption. The fixture exposes {packageContentTypes.length} hara.packages types and no live registry records.</p>
+      </section>
+
+      <footer class="v2-lab-footer packages-footer">
+        <span>Detailed Packages application laboratory · Hara visual language v2</span>
+        <span><a href={catalogueHome}>V2 catalogue</a> · <a href={docsUrl}>Docs</a> · <a href={playgroundUrl}>Playground</a> · <a href={specsUrl}>Specs</a> · <a href="https://github.com/hara-lang/visual-language/issues/41">Issue 41</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script>
+      import { initialisePackages } from "../../../scripts/v2-packages.js";
+      initialisePackages();
+    </script>
+  </body>
+</html>

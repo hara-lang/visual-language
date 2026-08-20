@@ -163,8 +163,9 @@ export const catalogueGroups = [
         id: "packages",
         label: "Packages",
         path: "/v2/packages/",
+        href: "/v2/packages/",
         summary: "Package discovery, namespace stewardship, compatibility, publishing, provenance, and maintenance.",
-        status: "planned",
+        status: "active",
         issue: 41,
         eyebrow: "Distribution and ownership"
       },

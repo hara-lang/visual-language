@@ -1,0 +1,72 @@
+---
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import { packageDetail, releaseScenarios } from "../../lib/v2-packages.mjs";
+
+const {
+  docsUrl = "#namespace",
+  playgroundUrl = "#namespace",
+  specsUrl = "../specs/",
+  worldUrl = "../world/discussion/"
+} = Astro.props;
+const stateTone = (state) => ({ current: "success", superseded: "warning", deprecated: "warning", revoked: "error", verified: "success", partial: "warning" }[state] ?? "muted");
+---
+<section class="packages-section" id="package" aria-labelledby="package-detail-title">
+  <header class="packages-section-heading">
+    <div><p class="hara-v2-kicker">Package detail</p><h2 id="package-detail-title">Purpose first. Exact release facts beside it.</h2></div>
+    <p>The package record explains what a coordinate is for; the release record proves which version, source, artifacts, namespaces, compatibility evidence, and publisher signature were published.</p>
+  </header>
+
+  <div class="packages-release-scenarios" role="group" aria-label="Release and installation states">
+    {releaseScenarios.map((scenario, index) => <button type="button" data-release-scenario={scenario.id} aria-pressed={index === 0 ? "true" : "false"}><span class="packages-state" data-tone={scenario.tone}>{scenario.label}</span><small>{scenario.state}</small></button>)}
+  </div>
+
+  <Shell embedded={true} sidebar={true} aside={true} density="comfortable" mainId="packages-package-record" class="packages-detail-shell">
+    <aside slot="sidebar" class="packages-release-history">
+      <header><span>Release history</span><strong>{packageDetail.releases.length} exact versions</strong></header>
+      <ol>
+        {packageDetail.releases.map((release, index) => <li data-state={release.state}><button type="button" aria-pressed={index === 0 ? "true" : "false"}><span>{release.version}</span><time>{release.date}</time><span class="packages-state" data-tone={stateTone(release.state)}>{release.state}</span><code>{release.revision}</code></button></li>)}
+      </ol>
+      <section class="packages-migration-card"><span>Migration relation</span><strong>{packageDetail.migration.from} → {packageDetail.migration.to}</strong><p>{packageDetail.migration.summary}</p><code>{packageDetail.migration.receipt}</code></section>
+    </aside>
+
+    <article class="packages-package-record">
+      <header class="packages-record-header">
+        <div><span class="packages-identity-label" data-identity-kind="package">Package coordinate</span><h3>{packageDetail.coordinate}</h3><p>{packageDetail.purpose}</p></div>
+        <div><span class="packages-state" data-tone="success" data-release-state-label>Available release</span><strong>{packageDetail.version}</strong><code>{packageDetail.exactReleaseRevision}</code></div>
+      </header>
+
+      <section class="packages-install-command">
+        <div><span>Install projection</span><code>{packageDetail.installCommand}</code><p>{packageDetail.installProjectionNote}</p></div>
+        <div><button type="button" class="packages-primary-button" data-package-install>Install exact release</button><button type="button" data-copy-value={packageDetail.installCommand}>Copy command</button><a href={docsUrl}>Open install guide</a></div>
+      </section>
+
+      <div class="packages-release-state-panels" aria-live="polite">
+        {releaseScenarios.map((scenario, index) => <section data-release-panel={scenario.id} data-install-allowed={scenario.installAllowed ? "true" : "false"} hidden={index !== 0}><header><span class="packages-state" data-tone={scenario.tone}>{scenario.label}</span><strong>{scenario.summary}</strong></header>{scenario.findings.length > 0 ? <div>{scenario.findings.map((finding) => <article data-severity={finding.severity}><code>{finding.code}</code><p>{finding.message}</p></article>)}</div> : <p>No release or resolver findings in this state.</p>}<dl><div><dt>Install allowed</dt><dd>{scenario.installAllowed ? "Yes, with exact verification" : "No"}</dd></div><div><dt>Receipt</dt><dd class="packages-mono">{scenario.receipt ?? "No receipt"}</dd></div></dl></section>)}
+      </div>
+
+      <section class="packages-package-section packages-namespace-inventory">
+        <header><div><span>Namespace inventory</span><h4>{packageDetail.namespaceInventory.length} exact stewardship boundaries</h4></div><a href="#namespace">Inspect namespace detail →</a></header>
+        <div>{packageDetail.namespaceInventory.map((namespace) => <article data-identity-kind="namespace"><div><small>Namespace</small><strong>{namespace.name}</strong><code>{namespace.ref}</code></div><dl><div><dt>Status</dt><dd>{namespace.status}</dd></div><div><dt>Public forms</dt><dd>{namespace.publicForms}</dd></div><div><dt>Introduced</dt><dd>{namespace.introduced}</dd></div></dl></article>)}</div>
+      </section>
+
+      <section class="packages-package-section packages-compatibility-matrix">
+        <header><div><span>Compatibility matrix</span><h4>Target claims retain evidence.</h4></div><a href="#trust">Verify all evidence →</a></header>
+        <div role="table" aria-label="Runtime compatibility matrix"><div role="row" class="packages-table-head"><span role="columnheader">Target</span><span role="columnheader">Version</span><span role="columnheader">State</span><span role="columnheader">Evidence</span></div>{packageDetail.compatibility.map((entry) => <div role="row"><strong role="cell">{entry.target}</strong><span role="cell">{entry.version}</span><span role="cell"><span class="packages-state" data-tone={stateTone(entry.state)}>{entry.state}</span></span><code role="cell">{entry.evidence}</code></div>)}</div>
+      </section>
+
+      <section class="packages-dependency-grid">
+        <article><header><span>Dependencies</span><strong>{packageDetail.dependencies.length}</strong></header>{packageDetail.dependencies.map((dependency) => <div><code>{dependency.coordinate}</code><span>{dependency.range} → {dependency.resolved}</span><small>{dependency.digest}</small></div>)}</article>
+        <article><header><span>Reverse dependencies</span><strong>{packageDetail.reverseDependencies.length} shown</strong></header>{packageDetail.reverseDependencies.map((dependency) => <div><code>{dependency.coordinate}</code><span>{dependency.version}</span><span class="packages-state" data-tone={stateTone(dependency.compatibility)}>{dependency.compatibility}</span></div>)}</article>
+      </section>
+
+      <section class="packages-example-links"><header><span>Use and inspect</span><strong>Examples hand off to the owning product.</strong></header><div><a href={docsUrl}><small>Docs</small><strong>Read typed schema reference</strong><span>Version-aware prose and API symbols →</span></a><a href={playgroundUrl}><small>Playground</small><strong>Run exact std.typed example</strong><span>Source revision and runtime capabilities →</span></a><a href={specsUrl}><small>Specs</small><strong>Inspect schema contract</strong><span>Formal definitions and conformance →</span></a><a href={worldUrl}><small>World</small><strong>Discuss release changes</strong><span>Public thread, not package authority →</span></a></div></section>
+    </article>
+
+    <aside slot="aside" class="packages-provenance-inspector">
+      <header><span>Release authority</span><strong class="packages-mono">{packageDetail.exactReleaseRevision.split(":").at(-1)}</strong></header>
+      <dl><div><dt>Package</dt><dd>{packageDetail.packageRef}</dd></div><div><dt>Version</dt><dd>{packageDetail.version}</dd></div><div><dt>Publisher</dt><dd>{packageDetail.publishedBy}</dd></div><div><dt>Published</dt><dd>{packageDetail.publishedAt}</dd></div><div><dt>Source revision</dt><dd class="packages-mono">{packageDetail.sourceRevision}</dd></div><div><dt>Artifact digest</dt><dd class="packages-mono">{packageDetail.artifactDigest}</dd></div><div><dt>Registry revision</dt><dd class="packages-mono">{packageDetail.registryRevision}</dd></div></dl>
+      <section><span>Maintainers and roles</span>{packageDetail.maintainers.map((maintainer) => <article><strong>{maintainer.label}</strong><small>{maintainer.role}</small><p>{maintainer.scope}</p><code>{maintainer.owner ?? maintainer.identity}</code><a href="#maintain">Evidence: {maintainer.evidence}</a></article>)}</section>
+      <section class="packages-receipt-links"><span>Authority links</span>{packageDetail.links.map((link) => <button type="button">{link}</button>)}</section>
+    </aside>
+  </Shell>
+</section>

@@ -1,0 +1,32 @@
+---
+import { packageDetail, provenanceChecklist } from "../../lib/v2-packages.mjs";
+---
+<section class="packages-section" id="trust" aria-labelledby="package-trust-title">
+  <header class="packages-section-heading">
+    <div><p class="hara-v2-kicker">Trust and provenance</p><h2 id="package-trust-title">Six questions should be answerable without trusting the page.</h2></div>
+    <p>Each answer names its authority and evidence. The interface composes registry facts; it does not become a second package, namespace, identity, compatibility, or receipt registry.</p>
+  </header>
+
+  <div class="packages-trust-questions">
+    {provenanceChecklist.map((item, index) => <article><header><span>{String(index + 1).padStart(2, "0")}</span><h3>{item.question}</h3></header><p>{item.answer}</p><dl><div><dt>Authority</dt><dd>{item.authority}</dd></div><div><dt>Evidence</dt><dd class="packages-mono">{item.evidence}</dd></div></dl><button type="button">Inspect evidence chain</button></article>)}
+  </div>
+
+  <article class="packages-reproduction-chain">
+    <header><div><span>Reproduction chain</span><h3>Resolve inputs, rebuild artifacts, compare evidence.</h3></div><span class="packages-state" data-tone="success">Reproducible fixture</span></header>
+    <div class="packages-chain-diagram" role="img" aria-label="Source, lock, build environment, artifacts, signature, and publication receipt form the reproduction chain">
+      <span><small>Source</small><strong>{packageDetail.sourceRevision}</strong></span><i>→</i>
+      <span><small>Dependency lock</small><strong>lock:std.typed:2.4.1:17c2</strong></span><i>→</i>
+      <span><small>Build environment</small><strong>build:hara:ubuntu24:jdk21</strong></span><i>→</i>
+      <span><small>Artifact digest</small><strong>{packageDetail.artifactDigest.slice(0, 24)}…</strong></span><i>→</i>
+      <span><small>Publisher signature</small><strong>signature:7b1f:verified</strong></span><i>→</i>
+      <span><small>Registry receipt</small><strong>{packageDetail.exactReleaseRevision}</strong></span>
+    </div>
+    <footer><button type="button">Download reproduction manifest</button><button type="button">Verify artifact digests</button><button type="button">Inspect publisher key</button><button type="button">Copy publication receipt</button></footer>
+  </article>
+
+  <div class="packages-authority-boundary">
+    <article><span>Packages application owns</span><p>Discovery, comparison, install projection, publish composition, maintainer queues, state presentation, and links into Docs, Playground, Specs, and World.</p></article>
+    <article><span>Registries own</span><p>Package coordinates, namespace stewardship, versions, maintainers, compatibility evidence, artifact digests, lifecycle decisions, signatures, and durable receipts.</p></article>
+    <article><span>Runtimes own</span><p>Actual dependency resolution, artifact download, installation, environment checks, execution, reproduction, and install-attempt receipts.</p></article>
+  </div>
+</section>

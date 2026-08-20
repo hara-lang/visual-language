@@ -1,0 +1,57 @@
+---
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import { namespaceDetail } from "../../lib/v2-packages.mjs";
+
+const { docsUrl = "#", playgroundUrl = "#" } = Astro.props;
+const publicForms = namespaceDetail.categories.flatMap((category) => category.forms.map((form, index) => ({ ...form, category: category.label, categoryId: category.id, anchor: index === 0 ? `namespace-category-${category.id}` : undefined })));
+const tone = (state) => ({ active: "success", available: "success", partial: "warning", supported: "success", migration: "warning", documented: "signal" }[state] ?? "muted");
+---
+<section class="packages-section" id="namespace" aria-labelledby="namespace-detail-title">
+  <header class="packages-section-heading">
+    <div><p class="hara-v2-kicker">Namespace detail</p><h2 id="namespace-detail-title">A namespace is stewardship, not a package card subsection.</h2></div>
+    <p>Namespace identity, ownership, public forms, aliases, conflicts, migrations, and runtime availability remain distinct from the package and release that currently distribute it.</p>
+  </header>
+
+  <Shell embedded={true} sidebar={true} aside={true} density="comfortable" mainId="packages-namespace-record" class="packages-namespace-shell">
+    <nav slot="sidebar" class="packages-namespace-nav" aria-label="Namespace API categories">
+      <header><span data-identity-kind="namespace">Namespace</span><strong>{namespaceDetail.name}</strong><code>{namespaceDetail.exactRevision.split(":").at(-1)}</code></header>
+      {namespaceDetail.categories.map((category, index) => <a href={`#namespace-category-${category.id}`} aria-current={index === 0 ? "page" : undefined}><span>{String(index + 1).padStart(2, "0")}</span><strong>{category.label}</strong><small>{category.forms.length} forms</small></a>)}
+      <a href="#namespace-migrations"><span>04</span><strong>Aliases and migrations</strong><small>{namespaceDetail.migrations.length} relations</small></a>
+    </nav>
+
+    <article class="packages-namespace-record">
+      <header class="packages-record-header packages-namespace-header">
+        <div><span class="packages-identity-label" data-identity-kind="namespace">Namespace identity</span><h3>{namespaceDetail.name}</h3><p>Public schema construction, validation, and coercion forms distributed by <span data-identity-kind="package">{namespaceDetail.packageCoordinate}</span>.</p></div>
+        <div><span class="packages-state" data-tone={tone(namespaceDetail.status)}>{namespaceDetail.status}</span><strong>introduced {namespaceDetail.introduced}</strong><code>{namespaceDetail.namespaceRef}</code></div>
+      </header>
+
+      <section class="packages-namespace-toolbar"><label><span>Find a public form</span><input type="search" placeholder="check, optional, coercion…" data-namespace-query /></label><output data-symbol-count>{publicForms.length} public forms</output><a href={docsUrl}>Open canonical reference</a></section>
+
+      <section class="packages-api-table" aria-labelledby="namespace-api-title">
+        <header><div><span>Public API</span><h4 id="namespace-api-title">Registered forms and version boundaries</h4></div><p>Deprecated forms remain visible with their introduction and migration evidence.</p></header>
+        <div role="table" aria-label={`${namespaceDetail.name} public forms`}>
+          <div role="row" class="packages-table-head"><span role="columnheader">Form</span><span role="columnheader">Kind</span><span role="columnheader">Category</span><span role="columnheader">Introduced</span><span role="columnheader">Deprecated</span></div>
+          {publicForms.map((form) => <div role="row" data-symbol-row data-search={[form.name, form.kind, form.category].join(" ").toLowerCase()} id={form.anchor}><code role="cell">{namespaceDetail.name}/{form.name}</code><span role="cell">{form.kind}</span><span role="cell">{form.category}</span><span role="cell">{form.introduced}</span><span role="cell">{form.deprecated ? <span class="packages-state" data-tone="warning">{form.deprecated}</span> : "—"}</span></div>)}
+        </div>
+        <div class="packages-empty" data-symbol-empty hidden><strong>No public form matches this query.</strong><p>The namespace identity and category outline remain visible.</p></div>
+      </section>
+
+      <section class="packages-namespace-example"><header><div><span>Exact example</span><strong>docs.live-example + packages.namespace</strong></div><a href={playgroundUrl}>Run in Playground →</a></header><pre><code>{namespaceDetail.exampleSource}</code></pre><footer><span>Package {namespaceDetail.packageCoordinate}@2.4.1</span><span>Namespace revision {namespaceDetail.exactRevision}</span></footer></section>
+
+      <section class="packages-runtime-availability"><header><div><span>Runtime availability</span><h4>Distribution does not imply parity.</h4></div><p>Each target retains the exact package version and availability state.</p></header><div>{namespaceDetail.availability.map((entry) => <article><strong>{entry.runtime}</strong><span>{entry.packageVersion}</span><span class="packages-state" data-tone={tone(entry.state)}>{entry.state}</span></article>)}</div></section>
+
+      <section class="packages-alias-migration" id="namespace-migrations">
+        <article><header><span>Aliases</span><strong>{namespaceDetail.aliases.length}</strong></header>{namespaceDetail.aliases.map((alias) => <div><code>{alias.alias}</code><i>→</i><code>{alias.target}</code><span class="packages-state" data-tone={tone(alias.state)}>{alias.state}</span>{alias.deprecated && <small>deprecated {alias.deprecated}</small>}</div>)}</article>
+        <article><header><span>Conflicts</span><strong>{namespaceDetail.conflicts.length}</strong></header>{namespaceDetail.conflicts.map((conflict) => <div><code>{conflict.symbol}</code><span>{conflict.namespace}</span><p>{conflict.resolution}</p><span class="packages-state" data-tone={tone(conflict.state)}>{conflict.state}</span></div>)}</article>
+        <article><header><span>Migration paths</span><strong>{namespaceDetail.migrations.length}</strong></header>{namespaceDetail.migrations.map((migration) => <div><code>{migration.from}</code><i>→</i><code>{migration.to}</code><span>{migration.version}</span><small>{migration.receipt}</small></div>)}</article>
+      </section>
+    </article>
+
+    <aside slot="aside" class="packages-namespace-inspector">
+      <header><span>Stewardship authority</span><strong class="packages-mono">{namespaceDetail.exactRevision.split(":").at(-1)}</strong></header>
+      <dl><div><dt>Namespace</dt><dd>{namespaceDetail.namespaceRef}</dd></div><div><dt>Package</dt><dd>{namespaceDetail.packageRef}</dd></div><div><dt>Owner</dt><dd>{namespaceDetail.owner}</dd></div><div><dt>Introduced</dt><dd>{namespaceDetail.introduced}</dd></div><div><dt>Deprecated</dt><dd>{namespaceDetail.deprecated ?? "No"}</dd></div><div><dt>Status</dt><dd>{namespaceDetail.status}</dd></div></dl>
+      <section><span>Stewards</span>{namespaceDetail.stewards.map((steward) => <article><strong>{steward.identity}</strong><small>{steward.scope} · since {steward.since}</small></article>)}</section>
+      <section><span>Contribution evidence</span>{namespaceDetail.contributions.map((entry) => <article><strong>{entry.identity}</strong><p>{entry.action}</p><code>{entry.evidence}</code></article>)}</section>
+    </aside>
+  </Shell>
+</section>
