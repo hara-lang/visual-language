@@ -1,0 +1,135 @@
+---
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import { checkerScenarios, conformanceMatrix, specifications } from "../../lib/v2-specs.mjs";
+
+const sourceFixture = `{:session "pg-7a91"
+ :generation 4
+ :source-revision "9f3c2ab7"
+ :requested-backend :interpreter
+ :actual-backend :interpreter
+ :capabilities #{:eval :cancel :canvas :observations}
+ :event-sequence 148
+ :state :ready}`;
+const initial = checkerScenarios[0];
+const severityLabel = (severity) => severity === "error" ? "Error" : severity === "warning" ? "Warning" : "Notice";
+---
+<section class="specs-section" id="checker" aria-labelledby="specs-checker-title">
+  <header class="specs-section-heading">
+    <div>
+      <p class="hara-v2-kicker">Checker and conformance</p>
+      <h2 id="specs-checker-title">A result is only useful when its fence is inspectable.</h2>
+    </div>
+    <p>The checker names the exact input, specification version, specification revision, implementation, findings, and receipt. Unavailable never masquerades as failure.</p>
+  </header>
+
+  <div class="specs-checker-scenarios" role="group" aria-label="Checker result scenarios">
+    {checkerScenarios.map((scenario, index) => (
+      <button type="button" data-checker-scenario={scenario.id} aria-pressed={index === 0 ? "true" : "false"}>
+        <span class="specs-state" data-tone={scenario.state}>{scenario.label}</span>
+        <small>{scenario.specification}@{scenario.version}</small>
+      </button>
+    ))}
+  </div>
+
+  <Shell embedded={true} sidebar={true} aside={true} density="compact" mainId="specs-checker-result" class="specs-checker-shell">
+    <form slot="sidebar" class="specs-checker-input" data-checker-form>
+      <header><span>Input</span><strong>Paste · upload · select</strong></header>
+      <label>
+        <span>Specification</span>
+        <select data-checker-specification>
+          {specifications.map((specification) => <option value={specification.identifier}>{specification.identifier}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Version</span>
+        <select data-checker-version>
+          {specifications.map((specification) => <option value={specification.version}>{specification.version}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Source</span>
+        <textarea rows="18" spellcheck="false" data-checker-source>{sourceFixture}</textarea>
+      </label>
+      <div class="specs-checker-input-actions">
+        <button type="button">Upload file</button>
+        <button type="button">Select example</button>
+        <button type="submit" class="specs-primary-button">Run exact check</button>
+      </div>
+      <p>No source leaves this design specimen. Production transport remains owned by the checker application.</p>
+    </form>
+
+    <div class="specs-checker-result" data-checker-result data-state={initial.state}>
+      <header>
+        <div>
+          <span>Exact checker result</span>
+          <h3 data-checker-heading>{initial.label}: {initial.specification}@{initial.version}</h3>
+        </div>
+        <span class="specs-state" data-tone={initial.state} data-checker-state>{initial.state}</span>
+      </header>
+      <p data-checker-summary>{initial.summary}</p>
+      <dl class="specs-checker-fence">
+        <div><dt>Source</dt><dd data-checker-source-label>{initial.sourceLabel}</dd></div>
+        <div><dt>Source revision</dt><dd class="specs-mono" data-checker-source-revision>{initial.sourceRevision}</dd></div>
+        <div><dt>Specification</dt><dd class="specs-mono" data-checker-spec>{initial.specification}@{initial.version}</dd></div>
+        <div><dt>Spec revision</dt><dd class="specs-mono" data-checker-spec-revision>{initial.specRevision}</dd></div>
+        <div><dt>Implementation</dt><dd class="specs-mono" data-checker-implementation>{initial.implementation}</dd></div>
+        <div><dt>Receipt</dt><dd class="specs-mono" data-checker-receipt>{initial.receipt}</dd></div>
+      </dl>
+
+      <div class="specs-findings" data-checker-findings>
+        {initial.findings.map((finding, index) => (
+          <button
+            type="button"
+            data-finding
+            data-finding-id={finding.id}
+            data-finding-severity={finding.severity}
+            data-finding-location={finding.line ? `Line ${finding.line}:${finding.column}` : "No source location"}
+            data-finding-path={finding.path ?? "No value path"}
+            data-finding-message={finding.message}
+            aria-pressed={index === 0 ? "true" : "false"}
+          >
+            <span class="specs-state" data-tone={finding.severity}>{severityLabel(finding.severity)}</span>
+            <strong>{finding.id}</strong>
+            <small>{finding.line ? `Line ${finding.line}:${finding.column} · ${finding.path}` : "Checker-level finding"}</small>
+            <p>{finding.message}</p>
+          </button>
+        ))}
+      </div>
+      <footer>
+        <button type="button" data-copy-value={initial.receipt ?? "No receipt produced"}>Copy receipt</button>
+        <button type="button">Download exact result</button>
+        <button type="button">Share fenced result</button>
+      </footer>
+    </div>
+
+    <aside slot="aside" class="specs-finding-inspector" data-finding-inspector>
+      <header><span>Selected finding</span><strong data-finding-severity>{severityLabel(initial.findings[0].severity)}</strong></header>
+      <div>
+        <p class="specs-mono" data-finding-id>{initial.findings[0].id}</p>
+        <h3 data-finding-location>Line {initial.findings[0].line}:{initial.findings[0].column}</h3>
+        <p class="specs-mono" data-finding-path>{initial.findings[0].path}</p>
+        <p data-finding-message>{initial.findings[0].message}</p>
+        <a href="#detail">Read the referenced normative requirement →</a>
+      </div>
+    </aside>
+  </Shell>
+
+  <div class="specs-conformance-wrap" tabindex="0" aria-label="Conformance matrix; horizontally scrollable on narrow screens">
+    <table class="specs-conformance-table">
+      <caption>Exact implementation claims in this review fixture</caption>
+      <thead><tr><th>Specification</th><th>Implementation</th><th>Target</th><th>Revision</th><th>Result</th><th>Receipt</th></tr></thead>
+      <tbody>
+        {conformanceMatrix.map((claim) => (
+          <tr data-state={claim.state}>
+            <td class="specs-mono">{claim.specification}</td>
+            <td>{claim.implementation}</td>
+            <td>{claim.target}</td>
+            <td class="specs-mono">{claim.revision}</td>
+            <td><span class="specs-state" data-tone={claim.state}>{claim.state} · {claim.passed}/{claim.total}</span></td>
+            <td class="specs-mono">{claim.receipt ?? "No claim"}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
