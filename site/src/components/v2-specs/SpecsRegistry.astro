@@ -1,0 +1,147 @@
+---
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import {
+  registryDegradedStates,
+  specificationDomains,
+  specifications,
+  specificationStatuses,
+  specsRegistrySummary
+} from "../../lib/v2-specs.mjs";
+
+const selected = specifications[0];
+const tone = (status) => ({
+  accepted: "success",
+  proposed: "signal",
+  experimental: "warning",
+  draft: "neutral",
+  superseded: "muted",
+  withdrawn: "error"
+}[status] ?? "neutral");
+---
+<section class="specs-section" id="registry" aria-labelledby="specs-registry-title">
+  <header class="specs-section-heading">
+    <div>
+      <p class="hara-v2-kicker">Registry and discovery</p>
+      <h2 id="specs-registry-title">Find the exact standard before reading the prose.</h2>
+    </div>
+    <p>Status, identifier, version, revision, authority, and conformance remain visible together. Popularity never outranks whether a specification is current or reviewable.</p>
+  </header>
+
+  <div class="specs-stat-grid" aria-label="Fixture registry summary">
+    <article><span>Specifications</span><strong>{specsRegistrySummary.specifications}</strong><small>Review fixture records</small></article>
+    <article><span>Lifecycle states</span><strong>{specsRegistrySummary.statuses}</strong><small>Every state represented</small></article>
+    <article><span>Conformance claims</span><strong>{specsRegistrySummary.conformanceClaims}</strong><small>Exact implementation revisions</small></article>
+    <article><span>Fixture revision</span><strong class="specs-mono">{specsRegistrySummary.exactFixtureRevision.slice(0, 8)}</strong><small>Not a live registry digest</small></article>
+  </div>
+
+  <Shell embedded={true} sidebar={false} aside={true} density="compact" mainId="specs-registry-results" class="specs-registry-shell">
+    <div class="specs-registry-toolbar" data-specs-filter-form>
+      <label class="specs-search-field">
+        <span>Search specifications</span>
+        <input type="search" placeholder="Identifier, title, domain, or requirement" data-specs-query />
+      </label>
+      <label>
+        <span>Status</span>
+        <select data-specs-status>
+          <option value="all">All status</option>
+          {specificationStatuses.map((status) => <option value={status.id}>{status.label}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Domain</span>
+        <select data-specs-domain>
+          <option value="all">All domains</option>
+          {specificationDomains.map((domain) => <option value={domain.id}>{domain.label}</option>)}
+        </select>
+      </label>
+      <button type="button" data-specs-reset>Reset</button>
+      <output data-specs-count>{specifications.length} specifications</output>
+    </div>
+
+    <div class="specs-registry-table-wrap" tabindex="0" aria-label="Specification registry table; horizontally scrollable on narrow screens">
+      <table class="specs-registry-table">
+        <thead>
+          <tr><th>Specification</th><th>Version</th><th>Status</th><th>Domain</th><th>Revision</th><th>Updated</th></tr>
+        </thead>
+        <tbody>
+          {specifications.map((specification, index) => (
+            <tr
+              data-spec-row
+              data-id={specification.id}
+              data-identifier={specification.identifier}
+              data-title={specification.title}
+              data-summary={specification.summary}
+              data-version={specification.version}
+              data-status={specification.status}
+              data-domain={specification.domain}
+              data-revision={specification.revision}
+              data-source={specification.canonicalSource}
+              data-contract={specification.machineContract}
+              data-receipt={specification.receipt ?? "No publication receipt"}
+              data-search={[specification.id, specification.identifier, specification.title, specification.summary, ...specification.tags].join(" ").toLowerCase()}
+              data-selected={index === 0 ? "true" : "false"}
+            >
+              <td>
+                <button type="button" data-spec-select aria-pressed={index === 0 ? "true" : "false"}>
+                  <strong>{specification.identifier}</strong><small>{specification.id} · {specification.title}</small>
+                </button>
+              </td>
+              <td class="specs-mono">{specification.version}</td>
+              <td><span class="specs-state" data-tone={tone(specification.status)}>{specification.status}</span></td>
+              <td>{specification.domain}</td>
+              <td class="specs-mono">{specification.revision.slice(0, 8)}</td>
+              <td>{specification.updatedAt}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="specs-empty-state" data-specs-empty hidden>
+      <span>No matching specifications</span>
+      <strong>The filters produced an empty registry view.</strong>
+      <p>Exact filters remain visible. Reset them without losing the current catalogue location.</p>
+      <button type="button" data-specs-reset>Reset filters</button>
+    </div>
+
+    <div slot="aside" class="specs-registry-inspector" data-specs-inspector>
+      <header>
+        <span>Selected specification</span>
+        <span class="specs-state" data-tone="success" data-inspector-status>{selected.status}</span>
+      </header>
+      <div class="specs-registry-inspector-body">
+        <p class="specs-mono" data-inspector-id>{selected.id}</p>
+        <h3 data-inspector-identifier>{selected.identifier}</h3>
+        <p data-inspector-title>{selected.title}</p>
+        <p class="specs-muted" data-inspector-summary>{selected.summary}</p>
+        <dl>
+          <div><dt>Version</dt><dd class="specs-mono" data-inspector-version>{selected.version}</dd></div>
+          <div><dt>Revision</dt><dd class="specs-mono" data-inspector-revision>{selected.revision}</dd></div>
+          <div><dt>Machine contract</dt><dd class="specs-mono" data-inspector-contract>{selected.machineContract}</dd></div>
+          <div><dt>Canonical source</dt><dd data-inspector-source>{selected.canonicalSource}</dd></div>
+          <div><dt>Receipt</dt><dd class="specs-mono" data-inspector-receipt>{selected.receipt}</dd></div>
+        </dl>
+        <a href="#detail">Open exact-version detail →</a>
+      </div>
+    </div>
+  </Shell>
+
+  <div class="specs-state-inventory" aria-label="Specification lifecycle inventory">
+    {specificationStatuses.map((status) => (
+      <article data-status={status.id}>
+        <span class="specs-state" data-tone={tone(status.id)}>{status.label}</span>
+        <strong>{status.authority}</strong>
+        <p>{status.summary}</p>
+      </article>
+    ))}
+  </div>
+
+  <div class="specs-degraded-grid" aria-label="Registry degraded states">
+    {registryDegradedStates.map((state) => (
+      <article data-state={state.id}>
+        <span>{state.label}</span>
+        <p>{state.summary}</p>
+      </article>
+    ))}
+  </div>
+</section>

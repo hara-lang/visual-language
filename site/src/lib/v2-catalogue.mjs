@@ -153,8 +153,9 @@ export const catalogueGroups = [
         id: "specs",
         label: "Specs",
         path: "/v2/specs/",
+        href: "/v2/specs/",
         summary: "Registry, detail, checker, conformance, proposal, review, publication, and change digest.",
-        status: "planned",
+        status: "active",
         issue: 40,
         eyebrow: "Standards and checking"
       },

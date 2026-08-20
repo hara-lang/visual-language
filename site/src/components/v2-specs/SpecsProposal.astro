@@ -1,0 +1,161 @@
+---
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import {
+  changeDigest,
+  proposalFixture,
+  proposalStates,
+  reviewQueue
+} from "../../lib/v2-specs.mjs";
+
+const rawFrontmatter = `schema: hara.specs
+schemaVersion: 3.0.0
+contentType: specs.proposal
+title: Filesystem provider capability contract
+summary: >-
+  Defines provider identity, capability discovery, path semantics,
+  normalized failures, and lifecycle behavior.
+abstract: >-
+  One pluggable filesystem boundary for native, Google Drive,
+  GitHub, SFTP, and IndexedDB providers.
+motivation: >-
+  Applications need one inspectable capability contract without
+  pretending every provider shares identical implementation details.
+compatibility: Additive; existing native filesystem behavior remains supported.`;
+---
+<section class="specs-section" id="proposal" aria-labelledby="specs-proposal-title">
+  <header class="specs-section-heading">
+    <div>
+      <p class="hara-v2-kicker">Authoring and proposal workflow</p>
+      <h2 id="specs-proposal-title">Author intent here. Canonical history in GitHub.</h2>
+    </div>
+    <p>The product provides structured entry, validation, preview, and review state. GitHub remains the exact source and discussion history once a proposal is submitted.</p>
+  </header>
+
+  <Shell embedded={true} sidebar={false} aside={true} density="comfortable" mainId="specs-proposal-editor" class="specs-proposal-shell">
+    <form class="specs-proposal-form" data-proposal-form>
+      <header>
+        <div><span>{proposalFixture.specNumber}</span><strong>{proposalFixture.title}</strong></div>
+        <span class="specs-state" data-tone="signal" data-proposal-status>{proposalFixture.status}</span>
+      </header>
+      <div class="specs-proposal-fields">
+        <label><span>Title</span><input value={proposalFixture.title} /></label>
+        <label><span>Summary</span><textarea rows="3">{proposalFixture.summary}</textarea></label>
+        <label><span>Normative change</span><textarea rows="4">{proposalFixture.normativeChange}</textarea></label>
+        <label><span>Compatibility declaration</span><textarea rows="3">{proposalFixture.compatibility}</textarea></label>
+        <fieldset>
+          <legend>Change classification</legend>
+          <label><input type="radio" name="change-kind" checked /> Additive</label>
+          <label><input type="radio" name="change-kind" /> Breaking</label>
+          <label><input type="radio" name="change-kind" /> Editorial</label>
+        </fieldset>
+        <label><span>Test vectors</span><input value="fixtures/filesystem-provider/*.hara" /></label>
+      </div>
+      <section class="specs-proposal-preview" aria-label="Rendered proposal preview">
+        <header><span>Rendered preview</span><strong>{proposalFixture.contentType}@{proposalFixture.schemaVersion}</strong></header>
+        <p class="hara-v2-kicker">{proposalFixture.specNumber} · Additive proposal</p>
+        <h3>{proposalFixture.title}</h3>
+        <p>{proposalFixture.summary}</p>
+        <div><strong>Normative change</strong><p>{proposalFixture.normativeChange}</p></div>
+        <div><strong>Compatibility</strong><p>{proposalFixture.compatibility}</p></div>
+        <p class="specs-mono">Exact revision · {proposalFixture.exactRevision}</p>
+      </section>
+      <section class="specs-proposal-source" aria-label="Raw proposal front matter">
+        <header><span>Raw front matter</span><button type="button" data-copy-value={rawFrontmatter}>Copy YAML</button></header>
+        <pre><code>{rawFrontmatter}</code></pre>
+      </section>
+      <footer class="specs-proposal-actions">
+        <button type="button">Save draft</button>
+        <button type="button">Run checks</button>
+        <button type="button" class="specs-primary-button">Submit exact revision</button>
+      </footer>
+    </form>
+
+    <aside slot="aside" class="specs-review-panel">
+      <header><span>Review evidence</span><strong>{proposalFixture.githubProposal}</strong></header>
+      <div class="specs-proposal-checks">
+        {proposalFixture.checks.map((check) => (
+          <article data-state={check.state}>
+            <span class="specs-state" data-tone={check.state}>{check.state}</span>
+            <strong>{check.label}</strong>
+            <small>{check.id}</small>
+          </article>
+        ))}
+      </div>
+      <ol class="specs-proposal-timeline" data-proposal-timeline>
+        {proposalStates.map((state) => (
+          <li data-proposal-state={state.id} data-current={state.id === proposalFixture.status ? "true" : "false"}>
+            <button type="button" data-set-proposal-state={state.id} aria-pressed={state.id === proposalFixture.status ? "true" : "false"}>
+              <span>{state.label}</span>
+              <small>{state.actor}</small>
+            </button>
+            <p>{state.evidence}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="specs-boundary-note"><strong>Canonical boundary.</strong> Submission creates or updates the exact GitHub proposal. Review conversation, merged commit, and acceptance decision are referenced here rather than copied into a private workflow.</p>
+    </aside>
+  </Shell>
+
+  <section class="specs-review-queue" aria-labelledby="review-queue-title">
+    <header><div><span>Reviewer queue</span><h3 id="review-queue-title">Exact revisions awaiting action</h3></div><button type="button">Open reviewer filters</button></header>
+    <div>
+      {reviewQueue.map((proposal) => (
+        <article data-state={proposal.state}>
+          <div><span class="specs-mono">{proposal.id}</span><strong>{proposal.title}</strong></div>
+          <dl>
+            <div><dt>Revision</dt><dd class="specs-mono">{proposal.revision}</dd></div>
+            <div><dt>Reviewers</dt><dd>{proposal.reviewers}</dd></div>
+            <div><dt>Checks</dt><dd>{proposal.checks}</dd></div>
+            <div><dt>Age</dt><dd>{proposal.age}</dd></div>
+          </dl>
+          <span class="specs-state" data-tone="signal">{proposal.state}</span>
+          <button type="button">Review exact revision</button>
+        </article>
+      ))}
+    </div>
+  </section>
+</section>
+
+<section class="specs-section" id="digest" aria-labelledby="specs-digest-title">
+  <header class="specs-section-heading">
+    <div>
+      <p class="hara-v2-kicker">Digest and change review</p>
+      <h2 id="specs-digest-title">Read the consequence before opening the diff.</h2>
+    </div>
+    <p>Breaking, additive, and proposed changes name the exact specification revision, affected packages and namespaces, and concrete migration guidance.</p>
+  </header>
+
+  <div class="specs-digest-toolbar">
+    <div role="group" aria-label="Digest scope">
+      <button type="button" aria-pressed="true" data-digest-filter="all">All changes</button>
+      <button type="button" data-digest-filter="breaking">Breaking</button>
+      <button type="button" data-digest-filter="additive">Additive</button>
+      <button type="button" data-digest-filter="proposal">Proposals</button>
+    </div>
+    <div><button type="button">Weekly email</button><button type="button">RSS</button><button type="button">JSON Feed</button></div>
+  </div>
+
+  <div class="specs-digest-list">
+    {changeDigest.map((entry) => (
+      <article data-kind={entry.kind}>
+        <header>
+          <span class="specs-state" data-tone={entry.kind === "breaking" ? "error" : entry.kind === "additive" ? "success" : "signal"}>{entry.kind}</span>
+          <span class="specs-mono">{entry.specification} · {entry.revision}</span>
+          <time>{entry.publishedAt}</time>
+        </header>
+        <h3>{entry.title}</h3>
+        <p>{entry.summary}</p>
+        <div class="specs-digest-impact">
+          <section><span>Affected packages</span><div>{entry.affectedPackages.map((item) => <code>{item}</code>)}</div></section>
+          <section><span>Affected namespaces</span><div>{entry.affectedNamespaces.map((item) => <code>{item}</code>)}</div></section>
+        </div>
+        <footer><strong>Migration</strong><p>{entry.migration}</p><button type="button">Open exact diff →</button></footer>
+      </article>
+    ))}
+  </div>
+
+  <aside class="specs-subscription-panel">
+    <div><span>Specification change digest</span><strong>Subscribe without creating a Specs account.</strong><p>Choose daily or weekly delivery and exact domains. The public archive, RSS, and JSON Feed remain first-class alternatives.</p></div>
+    <form><label><span>Email</span><input type="email" placeholder="you@example.org" /></label><label><span>Cadence</span><select><option>Weekly</option><option>Daily</option></select></label><button type="button" class="specs-primary-button">Subscribe</button></form>
+  </aside>
+</section>
