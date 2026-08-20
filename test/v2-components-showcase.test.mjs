@@ -57,3 +57,31 @@ test("the rendered gallery has bounded responsive canvases and focus treatment",
   assert.match(source, /@media \(prefers-reduced-motion: reduce\)/);
   assert.doesNotMatch(source, /--hara-(?:ink|paper|signal|line|surface)\s*:/, "the gallery must consume protected tokens rather than redefine them");
 });
+
+// Compile the specimen with the same parser boundary used by Astro's Vite plugin.
+test("the rendered gallery compiles to a parseable Astro module", async () => {
+  const [{ transform: compileAstro }, { transform: parseWithEsbuild }, { fileURLToPath }] = await Promise.all([
+    import("@astrojs/compiler"),
+    import("esbuild"),
+    import("node:url")
+  ]);
+  const source = await readFile(galleryPath, "utf8");
+  const filename = fileURLToPath(galleryPath);
+  const compiled = await compileAstro(source, {
+    filename,
+    internalURL: "astro/runtime/server/index.js",
+    sourcemap: "external"
+  });
+
+  try {
+    await parseWithEsbuild(compiled.code, { loader: "ts", format: "esm", sourcemap: false });
+  } catch (error) {
+    const diagnostic = error?.errors?.[0];
+    const line = diagnostic?.location?.line;
+    const lines = compiled.code.split("\n");
+    const start = Math.max(0, (line ?? 1) - 5);
+    const end = Math.min(lines.length, (line ?? 1) + 4);
+    const context = lines.slice(start, end).map((value, index) => `${start + index + 1}: ${value}`).join("\n");
+    assert.fail(`${diagnostic?.text ?? error?.message ?? error}\n${context}`);
+  }
+});
