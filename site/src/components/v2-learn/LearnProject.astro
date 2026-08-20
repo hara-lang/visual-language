@@ -1,0 +1,41 @@
+---
+import EnvironmentWorkbench from "../../../../src/astro/v2/tool/EnvironmentWorkbench.astro";
+import { projectFixture } from "../../lib/v2-learn.mjs";
+const { playgroundUrl = "#", worldUrl = "#world-examples" } = Astro.props;
+const projectOutcomes = [
+  { id: "page", label: "Page", title: "Publish an interactive Hara page", capabilities: ["files", "web"] },
+  { id: "agent", label: "Agent", title: "Build an accountable tool workflow", capabilities: ["files", "work", "receipts"] },
+  { id: "visual", label: "Visual", title: "Build a live signal field", capabilities: ["files", "canvas", "observations"], current: true },
+  { id: "game", label: "Game", title: "Compose a deterministic mini-world", capabilities: ["files", "canvas", "timers"] },
+  { id: "audio", label: "Audio", title: "Program a portable pattern box", capabilities: ["files", "audio", "controls"] }
+];
+---
+<section class="learn-section" id="project" aria-labelledby="learn-project-title">
+  <header class="learn-section-heading"><div><p class="hara-v2-kicker">Project-based learning</p><h2 id="learn-project-title">Grow one visible result into a complete project.</h2></div><p>Projects own milestones, reflection, and curriculum evidence. The embedded environment reuses the shared Playground workbench rather than inventing a Learn-only editor.</p></header>
+  <div class="learn-project-gallery" role="list">{projectOutcomes.map((project) => <button type="button" role="listitem" data-project-choice={project.id} aria-pressed={project.current ? "true" : "false"}><span>{project.label}</span><strong>{project.title}</strong><div>{project.capabilities.map((capability) => <code>{capability}</code>)}</div></button>)}</div>
+  <article class="learn-project-summary"><div><span>{projectFixture.contentType}@{projectFixture.schemaVersion}</span><h3>{projectFixture.title}</h3><p>{projectFixture.outcome}</p></div><dl><div><dt>Project revision</dt><dd class="learn-mono">{projectFixture.exactRevision}</dd></div><div><dt>Source revision</dt><dd class="learn-mono">{projectFixture.sourceRevision}</dd></div><div><dt>Backend</dt><dd>{projectFixture.runtime.backend}</dd></div></dl></article>
+  <EnvironmentWorkbench label="Learn project environment" activeSection="code" activeControlGroup="files" idPrefix="learn-project" minHeight="680px" sectionLabels={{ nav: "Project", frontmatter: "Contract", graphics: "Canvas", code: "Code" }} sectionBadges={{ nav: projectFixture.files.length, frontmatter: "2.0", graphics: "live", code: "main" }} capabilityBadges={{ sessions: 1, files: projectFixture.files.length, canvas: 1 }} class="learn-project-workbench">
+    <div slot="commands" class="learn-project-commands"><button type="button">Run</button><button type="button">Cancel</button><button type="button">Restart</button><a href={playgroundUrl}>Open in Playground</a></div>
+    <div slot="nav" class="learn-project-nav"><header><span>Starter project</span><strong>{projectFixture.files.length} files</strong></header><ul>{projectFixture.files.map((file) => <li data-state={file.state}><span>{file.path}</span><small>{file.state}</small></li>)}</ul></div>
+    <div slot="frontmatter" class="learn-project-contract"><pre><code>{`{:schema hara.learn/project
+ :schema-version "2.0.0"
+ :source-revision "${projectFixture.sourceRevision}"
+ :runtime {:backend :browser-wasm
+           :capabilities [:eval :files :canvas :observations]}}`}</code></pre><p>Objectives are authored. Identity, runtime facts, completion evidence, and exact curriculum revision remain controlled.</p></div>
+    <div slot="graphics" class="learn-project-canvas" aria-label="Static signal-field output preview"><div>{Array.from({ length: 9 }).map((_, index) => <i style={`--index:${index}`} />)}<span>signal field · frame 284</span></div></div>
+    <div slot="code" class="learn-project-code"><pre><code>{`(defn ribbon-field
+  [{:keys [count width decay]
+    :or {count 12 width 0.42 decay 0.18}}]
+  (canvas/field
+    {:ribbons count
+     :trail-width width
+     :signal-decay decay
+     :palette :hara/signal}))`}</code></pre><section><span>Result</span><strong>Canvas session ready</strong><p>12 ribbons · trail width 0.42 · event sequence 284</p></section></div>
+    <div slot="sessions" class="learn-capability-list"><article><span class="learn-state" data-tone="success">Ready</span><strong>{projectFixture.runtime.session}</strong><small>generation {projectFixture.runtime.generation}</small></article></div>
+    <div slot="files" class="learn-capability-list">{projectFixture.files.map((file) => <article><strong>{file.path}</strong><small>{file.state}</small></article>)}</div>
+    <div slot="canvas" class="learn-capability-list"><article><span class="learn-state" data-tone="success">Available</span><strong>Canvas controls</strong><small>trail width · ribbons · decay</small></article></div>
+    <div slot="bottom" class="learn-project-observations"><span>event 282 · source loaded</span><span>event 283 · session ready</span><span>event 284 · canvas.frame</span></div>
+    <div slot="status" class="learn-project-status"><span>Session {projectFixture.runtime.session}</span><span>Generation {projectFixture.runtime.generation}</span><span>{projectFixture.sourceRevision}</span></div>
+  </EnvironmentWorkbench>
+  <div class="learn-project-milestones"><header><div><span>Project milestones</span><h3>Evidence grows with the project.</h3></div><p>{projectFixture.boundary}</p></header><ol>{projectFixture.milestones.map((milestone, index) => <li data-state={milestone.state}><span>{String(index + 1).padStart(2, "0")}</span><div><strong>{milestone.label}</strong><small>{milestone.evidence}</small></div><span class="learn-state" data-tone={milestone.state === "complete" ? "success" : milestone.state === "current" ? "signal" : "muted"}>{milestone.state}</span></li>)}</ol><footer>{projectFixture.handoffs.map((handoff) => handoff === "Discuss on World" ? <a href={worldUrl}>{handoff}</a> : handoff === "Open in Playground" ? <a href={playgroundUrl}>{handoff}</a> : <button type="button">{handoff}</button>)}</footer></div>
+</section>

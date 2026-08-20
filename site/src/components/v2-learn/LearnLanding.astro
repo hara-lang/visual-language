@@ -1,0 +1,127 @@
+---
+import {
+  experienceEntrances,
+  learnerStates,
+  learnSummary,
+  outcomeTracks
+} from "../../lib/v2-learn.mjs";
+
+const { playgroundUrl = "#lesson" } = Astro.props;
+const initialEntrance = experienceEntrances[0];
+---
+<section class="learn-hero" id="start" aria-labelledby="learn-title">
+  <div class="learn-hero-copy">
+    <p class="hara-v2-kicker">Application buildout · Learn</p>
+    <h1 id="learn-title">Learn by running something real.</h1>
+    <p>Begin with a visible result, then grow through concepts, exercises, projects, and durable evidence. Learn owns instructional sequence and progress; execution, specifications, packages, and discussion keep their own authority.</p>
+    <div class="learn-hero-actions">
+      <a class="learn-primary-link" href="#lesson">Run the first lesson</a>
+      <a href="#course">See the curriculum</a>
+      <a href="#practice">Try a koan</a>
+    </div>
+    <dl class="learn-hero-facts" aria-label="Learn fixture inventory">
+      <div><dt>Entrances</dt><dd>{learnSummary.entrances} experience-aware starts</dd></div>
+      <div><dt>Tracks</dt><dd>{learnSummary.tracks} outcome-led paths</dd></div>
+      <div><dt>Contract</dt><dd>{learnSummary.contentTypes} hara.learn@2.0.0 content types</dd></div>
+      <div><dt>Sign-in</dt><dd>Never required before first execution</dd></div>
+    </dl>
+  </div>
+
+  <div class="learn-first-run" aria-label="Runnable first lesson preview">
+    <header>
+      <div><span>First lesson</span><strong>lesson-01.hara</strong></div>
+      <span class="learn-state" data-tone="success">Local Wasm · ready</span>
+    </header>
+    <pre><code><b>(defn</b> greet [name]
+  &#123;<i>:message</i> (str "Hello, " name)
+   <i>:next</i>    <i>:build-something</i>&#125;)
+
+(greet "Hara")</code></pre>
+    <div class="learn-first-run-output" data-first-run-output>
+      <i></i><strong>Ready to run</strong><span>No account · no editor focus</span><code>⌘ ↵</code>
+    </div>
+    <footer>
+      <button type="button" data-first-run>Run</button>
+      <button type="button" data-first-edit>Edit</button>
+      <a href={playgroundUrl}>Open exact Playground →</a>
+    </footer>
+  </div>
+</section>
+
+<section class="learn-section learn-entrances" aria-labelledby="learn-entrances-title">
+  <header class="learn-section-heading">
+    <div><p class="hara-v2-kicker">Choose your starting context</p><h2 id="learn-entrances-title">Three entrances. One curriculum graph.</h2></div>
+    <p>The entrance changes explanation depth and the recommended first lesson. It does not create separate versions of the language or hide prerequisites.</p>
+  </header>
+
+  <div class="learn-entrance-layout">
+    <div class="learn-entrance-options" role="list" aria-label="Experience-level entrances">
+      {experienceEntrances.map((entrance, index) => (
+        <button type="button" role="listitem" data-learn-entrance={entrance.id} data-label={entrance.label} data-title={entrance.title} data-summary={entrance.summary} data-lesson={entrance.firstLesson} data-minutes={entrance.estimatedMinutes} data-evidence={entrance.evidence} aria-pressed={index === 0 ? "true" : "false"}>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <strong>{entrance.label}</strong>
+          <small>{entrance.estimatedMinutes} minute start</small>
+        </button>
+      ))}
+    </div>
+
+    <article class="learn-entrance-preview" data-learn-entrance-preview>
+      <header><span>Recommended start</span><strong data-entrance-label>{initialEntrance.label}</strong></header>
+      <h3 data-entrance-title>{initialEntrance.title}</h3>
+      <p data-entrance-summary>{initialEntrance.summary}</p>
+      <dl>
+        <div><dt>First lesson</dt><dd class="learn-mono" data-entrance-lesson>{initialEntrance.firstLesson}</dd></div>
+        <div><dt>Scope</dt><dd data-entrance-minutes>{initialEntrance.estimatedMinutes} minutes</dd></div>
+        <div><dt>Evidence path</dt><dd data-entrance-evidence>{initialEntrance.evidence}</dd></div>
+      </dl>
+      <a href="#lesson">Open recommended lesson →</a>
+    </article>
+  </div>
+</section>
+
+<section class="learn-section" id="tracks" aria-labelledby="learn-tracks-title">
+  <header class="learn-section-heading">
+    <div><p class="hara-v2-kicker">Outcome-oriented paths</p><h2 id="learn-tracks-title">Follow the thing you want to make.</h2></div>
+    <p>Tracks reuse concepts and exact lesson revisions. Preview tracks remain visible without implying that every project or runtime capability is already available.</p>
+  </header>
+
+  <div class="learn-track-toolbar">
+    <label><span>Find a path</span><input type="search" placeholder="Web, agents, music, source…" data-track-query /></label>
+    <output data-track-count>{outcomeTracks.length} tracks</output>
+  </div>
+
+  <div class="learn-track-grid">
+    {outcomeTracks.map((track) => (
+      <article data-track-card data-search={[track.label, track.title, track.summary, track.status].join(" ").toLowerCase()} data-status={track.status}>
+        <header><span>{track.icon}</span><span class="learn-state" data-tone={track.status === "available" ? "success" : "warning"}>{track.status}</span></header>
+        <p class="hara-v2-kicker">{track.label}</p><h3>{track.title}</h3><p>{track.summary}</p>
+        <footer><span>{track.units} units</span><a href="#course">Inspect path →</a></footer>
+      </article>
+    ))}
+  </div>
+
+  <div class="learn-track-empty" data-track-empty hidden>
+    <strong>No matching path</strong><p>Keep the query visible and reset it without moving the learner away from Learn.</p><button type="button" data-track-reset>Reset search</button>
+  </div>
+</section>
+
+<section class="learn-section learn-account-states" aria-labelledby="learn-account-title">
+  <header class="learn-section-heading">
+    <div><p class="hara-v2-kicker">Anonymous and returning states</p><h2 id="learn-account-title">Try first. Save after something meaningful happened.</h2></div>
+    <p>Identity is useful for durable progress, private notes, and selected project sharing. It is never a gate in front of the first lesson or local practice.</p>
+  </header>
+  <div class="learn-account-grid">
+    {learnerStates.map((state) => (
+      <article data-learner-state={state.id}>
+        <header><span>{state.label}</span><strong>{state.primaryAction}</strong></header><p>{state.summary}</p>
+        <div><span>Controlled facts</span>{state.controlledFacts.map((fact) => <code>{fact}</code>)}</div>
+        <div><span>Learner-owned</span>{state.editableFacts.map((fact) => <code>{fact}</code>)}</div>
+      </article>
+    ))}
+  </div>
+  <article class="learn-continue-card" data-returning-state>
+    <div><span>Continue learning</span><h3>Namespaces give values a durable home</h3><p>Resume the exact lesson revision from the last verified unit. A newer curriculum exists, so migration remains explicit.</p></div>
+    <dl><div><dt>Completed</dt><dd>3 of 7 units</dd></div><div><dt>Revision</dt><dd class="learn-mono">6f3a91c2</dd></div><div><dt>Next evidence</dt><dd>qualified symbol check</dd></div></dl>
+    <a href="#lesson">Continue exact lesson →</a>
+  </article>
+</section>

@@ -1,0 +1,22 @@
+---
+import Shell from "../../../../src/astro/v2/Shell.astro";
+import { conceptGraph, courseFixture, recommendedNextUnit } from "../../lib/v2-learn.mjs";
+const current = recommendedNextUnit();
+const stateTone = (state) => ({ complete: "success", current: "signal", locked: "muted", optional: "warning" }[state] ?? "muted");
+---
+<section class="learn-section" id="course" aria-labelledby="learn-course-title">
+  <header class="learn-section-heading"><div><p class="hara-v2-kicker">Course and prerequisite graph</p><h2 id="learn-course-title">Progress follows exact concepts, not a hidden score.</h2></div><p>Lessons, concepts, exercises, and projects form one reviewable path. Completion targets the exact curriculum revision and never becomes browser-editable front matter.</p></header>
+  <Shell embedded={true} sidebar={true} aside={true} density="compact" mainId="learn-course-graph" class="learn-course-shell">
+    <div slot="sidebar" class="learn-course-units">
+      <header><span>Path units</span><strong>{courseFixture.units.length} units</strong></header>
+      <ol>{courseFixture.units.map((unit, index) => <li data-state={unit.state}><button type="button" data-course-unit={unit.id} aria-pressed={unit.state === "current" ? "true" : "false"} disabled={unit.state === "locked"}><span>{String(index + 1).padStart(2, "0")}</span><div><strong>{unit.label}</strong><small>{unit.kind} · {unit.minutes} min</small></div><span class="learn-state" data-tone={stateTone(unit.state)}>{unit.state}</span></button></li>)}</ol>
+      <footer><button type="button">Download course manifest</button><button type="button">Self-host metadata</button></footer>
+    </div>
+    <div class="learn-course-main">
+      <header><div><span>{courseFixture.contentType}@{courseFixture.schemaVersion}</span><h3>{courseFixture.title}</h3><p>{courseFixture.summary}</p></div><span class="learn-state" data-tone="signal">Current · {current?.label}</span></header>
+      <div class="learn-concept-graph" aria-label="Prerequisite concept graph"><svg viewBox="0 0 100 100" role="img" aria-label="Concept dependencies from values to packages and durable work">{conceptGraph.edges.map(([from, to]) => { const source = conceptGraph.nodes.find(({ id }) => id === from); const target = conceptGraph.nodes.find(({ id }) => id === to); return source && target ? <line x1={source.x} y1={source.y} x2={target.x} y2={target.y} /> : null; })}</svg>{conceptGraph.nodes.map((node) => <button type="button" class="learn-concept-node" style={`--x:${node.x}%;--y:${node.y}%`} data-state={node.state} aria-label={`${node.label}, ${node.state}`}><span>{node.label}</span><small>{node.state}</small></button>)}</div>
+      <div class="learn-course-state-ledger"><article><span class="learn-state" data-tone="success">Complete</span><p>Durable evidence exists against this exact curriculum revision.</p></article><article><span class="learn-state" data-tone="signal">Current</span><p>The next recommended unit with prerequisites visible.</p></article><article><span class="learn-state" data-tone="muted">Locked</span><p>A named prerequisite is incomplete; the unit stays visible.</p></article><article><span class="learn-state" data-tone="warning">Optional</span><p>A useful branch, not a hidden requirement.</p></article></div>
+    </div>
+    <aside slot="aside" class="learn-course-inspector"><header><span>Course authority</span><strong class="learn-mono">{courseFixture.exactRevision.slice(0, 8)}</strong></header><dl><div><dt>Author</dt><dd>{courseFixture.author}</dd></div><div><dt>Exact revision</dt><dd class="learn-mono">{courseFixture.exactRevision}</dd></div><div><dt>Runtime compatibility</dt><dd>{courseFixture.runtimeCompatibility}</dd></div><div><dt>Estimated scope</dt><dd>{courseFixture.estimatedMinutes} minutes</dd></div><div><dt>Machine manifest</dt><dd class="learn-mono">{courseFixture.downloadableManifest}</dd></div></dl><section><span>Current prerequisites</span>{current?.prerequisites.map((prerequisite) => <code>{prerequisite}</code>)}</section><p><strong>No streak mechanics.</strong> Learn records completed work, meaningful milestones, and exact revisions without ranking engagement.</p></aside>
+  </Shell>
+</section>
