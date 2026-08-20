@@ -5,6 +5,7 @@ const { basePath, activePath } = Astro.props;
 const context = catalogueRouteContext(activePath);
 const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
 const catalogueHome = `${normalizedBasePath}v2/`;
+const catalogueGuide = `${normalizedBasePath}v2/guide/`;
 const itemHref = (item) => item.href || item.issue
   ? catalogueHref(item, basePath)
   : `${normalizedBasePath}${item.path.replace(/^\/+/, "")}`;
@@ -33,6 +34,7 @@ const itemHref = (item) => item.href || item.issue
           {context.parent ? `Back to ${context.parent.label}` : "Catalogue home"}
         </a>
         <a href={catalogueHome}>All catalogue routes</a>
+        <a href={catalogueGuide}>Catalogue guide</a>
         <span>{context.statusLabel}</span>
       </div>
     </footer>

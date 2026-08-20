@@ -1,0 +1,93 @@
+@media (max-width: 1280px) {
+  .guide-review-controls { grid-template-columns: minmax(260px, 1fr) minmax(220px, .7fr) minmax(0, 1fr); }
+  .guide-review-actions { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .guide-adoption-map, .guide-expansion-roadmap > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-expansion-roadmap article:nth-child(2n) { border-right: 0; }
+  .guide-expansion-roadmap article:nth-child(-n+2) { border-bottom: 1px solid var(--hara-v2-line); }
+}
+
+@media (max-width: 1040px) {
+  .guide-hero { grid-template-columns: 1fr; min-height: auto; padding-block: 72px 104px; }
+  .guide-hero-ledger { max-width: 780px; }
+  .guide-section-heading { grid-template-columns: 1fr; gap: 1rem; }
+  .guide-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-summary-grid article:nth-child(2) { border-right: 0; }
+  .guide-summary-grid article:nth-child(-n+2) { border-bottom: 1px solid var(--hara-v2-line); }
+  .guide-route-toolbar { grid-template-columns: minmax(260px, 1fr) minmax(180px, .35fr); }
+  .guide-route-toolbar button, .guide-route-toolbar output { grid-row: 2; }
+  .guide-review-controls { grid-template-columns: 1fr 1fr; }
+  .guide-review-controls > label, .guide-review-controls fieldset:nth-of-type(2) { grid-column: 1 / -1; }
+  .guide-review-actions { grid-column: 1 / -1; }
+  .guide-review-workspace { grid-template-columns: 1fr; }
+  .guide-review-ledger { display: grid; grid-template-columns: minmax(250px, .42fr) minmax(0, 1fr); border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .guide-review-ledger > header { grid-column: 1 / -1; }
+  .guide-review-markers { border-top: 0; border-left: 1px solid var(--hara-v2-line); }
+  .guide-review-checklist > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-review-checklist article:nth-child(3n) { border-right: 1px solid var(--hara-v2-line); }
+  .guide-review-checklist article:nth-child(2n) { border-right: 0; }
+  .guide-ownership-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-ownership-grid article:nth-child(2) { border-right: 0; }
+  .guide-ownership-grid article:nth-child(-n+2) { border-bottom: 1px solid var(--hara-v2-line); }
+  .guide-lifecycle-and-addition { grid-template-columns: 1fr; }
+  .guide-procedure ol { grid-template-columns: 1fr; }
+  .guide-procedure li:nth-child(odd) { border-right: 0; }
+}
+
+@media (max-width: 760px) {
+  .guide-main { width: min(100% - 32px, 1600px); }
+  .guide-section { padding-bottom: 104px; }
+  .guide-section-heading h2 { font-size: clamp(2.7rem, 12vw, 4.6rem); }
+  .guide-fixture-notice { grid-template-columns: 1fr; gap: .3rem; }
+  .guide-route-toolbar { grid-template-columns: 1fr; }
+  .guide-route-toolbar button, .guide-route-toolbar output { grid-row: auto; }
+  .guide-route-secondary { grid-template-columns: 1fr; }
+  .guide-review-controls { grid-template-columns: 1fr; }
+  .guide-review-controls > label, .guide-review-controls fieldset:nth-of-type(2) { grid-column: auto; }
+  .guide-review-actions { grid-column: auto; }
+  .guide-review-ledger { grid-template-columns: 1fr; }
+  .guide-review-ledger > header { grid-column: auto; }
+  .guide-review-markers { border-top: 1px solid var(--hara-v2-line); border-left: 0; }
+  .guide-review-checklist > header { align-items: stretch; flex-direction: column; }
+  .guide-review-checklist > div { grid-template-columns: 1fr; }
+  .guide-review-checklist article, .guide-review-checklist article:nth-child(2n), .guide-review-checklist article:nth-child(3n) { border-right: 0; }
+  .guide-ownership-grid { grid-template-columns: 1fr; }
+  .guide-ownership-grid article, .guide-ownership-grid article:nth-child(2) { min-height: 0; border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .guide-ownership-grid article:last-child { border-bottom: 0; }
+  .guide-anatomy > header, .guide-procedure > header { grid-template-columns: 1fr; }
+  .guide-lifecycle dl { grid-template-columns: 1fr; }
+  .guide-adoption-map, .guide-expansion-roadmap > div { grid-template-columns: 1fr; }
+  .guide-expansion-roadmap article, .guide-expansion-roadmap article:nth-child(2n) { min-height: 0; border-right: 0; border-bottom: 1px solid var(--hara-v2-line); }
+  .guide-expansion-roadmap article:last-child { border-bottom: 0; }
+  .guide-release-impact dl { grid-template-columns: 1fr; }
+  .guide-release-impact dl > div { border-right: 0; border-bottom: 1px solid var(--hara-v2-line) !important; }
+  .guide-release-impact dl > div:last-child { border-bottom: 0 !important; }
+}
+
+@media (max-width: 560px) {
+  .guide-main { width: min(100% - 24px, 1600px); }
+  .guide-local-nav { top: 58px; grid-template-columns: auto minmax(0, 1fr); padding-inline: 12px; }
+  .guide-local-nav > a { display: none; }
+  .guide-hero { gap: 1.6rem; padding-block: 52px 76px; }
+  .guide-hero h1 { font-size: clamp(3rem, 15vw, 4.8rem); line-height: .87; }
+  .guide-hero-actions { display: grid; }
+  .guide-hero-actions a, .guide-page button, .guide-page select, .guide-page input { min-height: 44px; }
+  .guide-hero-ledger dl, .guide-summary-grid { grid-template-columns: 1fr; }
+  .guide-hero-ledger dl > div, .guide-summary-grid article { border-right: 0; border-bottom: 1px solid var(--hara-v2-line) !important; }
+  .guide-hero-ledger dl > div:last-child, .guide-summary-grid article:last-child { border-bottom: 0 !important; }
+  .guide-section { padding-bottom: 82px; }
+  .guide-section-heading h2 { font-size: clamp(2.35rem, 13vw, 3.7rem); }
+  .guide-review-controls fieldset { display: flex; overflow-x: auto; }
+  .guide-review-controls fieldset button { flex: 0 0 145px; }
+  .guide-review-actions { grid-template-columns: 1fr; }
+  .guide-frame-shell { margin: .65rem; }
+  .guide-review-checklist article button { grid-template-columns: auto minmax(0, 1fr); }
+  .guide-review-checklist article small { grid-column: 2; }
+  .guide-anatomy > div b { display: block; min-width: 0; margin-bottom: .2rem; }
+  .guide-lifecycle li { grid-template-columns: auto minmax(0, 1fr); }
+  .guide-adoption-map article { min-height: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-page *, .guide-page *::before, .guide-page *::after { scroll-behavior: auto !important; transition-duration: .001ms !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+  .guide-hero-actions a:hover, .guide-hero-actions a:focus-visible { transform: none; }
+}

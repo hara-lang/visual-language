@@ -1,0 +1,44 @@
+---
+import {
+  adoptionTargets,
+  releaseImpact,
+  screenshotProcedure
+} from "../../lib/v2-guide.mjs";
+
+const { basePath } = Astro.props;
+const base = basePath.endsWith("/") ? basePath : `${basePath}/`;
+const routeHref = (path) => `${base}${path.replace(/^\/+/, "")}`;
+---
+<section class="guide-section" id="adoption" aria-labelledby="guide-adoption-title">
+  <header class="guide-section-heading">
+    <div><p class="hara-v2-kicker">Review procedure and adoption</p><h2 id="guide-adoption-title">Review the exact route. Adopt the merged contract. Keep authority downstream.</h2></div>
+    <p>Screenshots and live previews are evidence for a precise revision. Downstream repositories remain responsible for product behavior, authoritative data and their own integration tests.</p>
+  </header>
+
+  <section class="guide-procedure" id="procedure" aria-labelledby="guide-procedure-title">
+    <header><div><span>Screenshot and accessibility procedure</span><h3 id="guide-procedure-title">Eight repeatable steps</h3></div><p>The live deck makes the target deterministic; the durable review record still names the PR, SHA, route, theme, viewport, state and observed result.</p></header>
+    <ol>{screenshotProcedure.map((step, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><p>{step}</p></li>)}</ol>
+    <aside><strong>Evidence boundary.</strong> The guide does not store production screenshots inside the package and does not convert a local “Accepted” button into certification. Review evidence belongs with the exact issue or pull request it qualifies.</aside>
+  </section>
+
+  <div class="guide-adoption-map" aria-label="Downstream adoption map">
+    {adoptionTargets.map((target) => (
+      <article data-target={target.id}>
+        <header><span class="guide-state" data-tone="success">Current guide</span><h3>{target.label}</h3></header>
+        <p>{target.ownership}</p>
+        <dl><div><dt>Visual route</dt><dd><a href={routeHref(target.route)}>{target.route}</a></dd></div><div><dt>Target</dt><dd class="guide-mono">{target.target}</dd></div><div><dt>Adoption guide</dt><dd class="guide-mono">{target.guide}</dd></div></dl>
+        <footer><span>Pin only a merged revision</span><a href={routeHref(target.route)}>Open review route →</a></footer>
+      </article>
+    ))}
+  </div>
+
+  <section class="guide-release-impact" aria-labelledby="guide-release-title">
+    <header><span>Release and compatibility impact</span><h3 id="guide-release-title">The guide adds review infrastructure, not product runtime.</h3></header>
+    <dl><div><dt>Package exports</dt><dd>{releaseImpact.packageExports}</dd></div><div><dt>Route impact</dt><dd>{releaseImpact.routeImpact}</dd></div><div><dt>Downstream</dt><dd>{releaseImpact.downstream}</dd></div><div><dt>Compatibility</dt><dd>{releaseImpact.compatibility}</dd></div></dl>
+  </section>
+
+  <section class="guide-expansion-roadmap" aria-labelledby="guide-roadmap-title">
+    <header><span>Next visual-guide domains</span><h3 id="guide-roadmap-title">The catalogue can now grow without adding another review grammar.</h3></header>
+    <div><article><strong>Data visualisation</strong><p>Charts, matrices, timelines, uncertainty, missing values and accessible evidence alternatives.</p><a href="https://github.com/hara-lang/visual-language/issues/91">Issue 91 →</a></article><article><strong>Diagrams and architecture</strong><p>Data flow, sequence, state, package graphs and explanatory annotations.</p><a href="https://github.com/hara-lang/visual-language/issues/89">Expansion epic →</a></article><article><strong>Iconography and symbols</strong><p>Navigation, action, state, capability and product glyph contracts.</p><a href="https://github.com/hara-lang/visual-language/issues/89">Expansion epic →</a></article><article><strong>Delivery media and motion</strong><p>Email, print, social, low-bandwidth projections and reduced-motion-equivalent choreography.</p><a href="https://github.com/hara-lang/visual-language/issues/89">Expansion epic →</a></article></div>
+  </section>
+</section>

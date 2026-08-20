@@ -1,0 +1,56 @@
+---
+import {
+  navigationLayers,
+  newApplicationSteps,
+  ownershipLayers,
+  routeLifecycle
+} from "../../lib/v2-guide.mjs";
+---
+<section class="guide-section" id="architecture" aria-labelledby="guide-architecture-title">
+  <header class="guide-section-heading">
+    <div><p class="hara-v2-kicker">Catalogue architecture</p><h2 id="guide-architecture-title">Four navigation layers. Four ownership layers. No ambiguous middle.</h2></div>
+    <p>The guide separates where the reviewer is, what the product owns, which controls belong to the demonstrated application and which facts remain authoritative outside Visual Language.</p>
+  </header>
+
+  <div class="guide-layer-map" aria-label="Navigation ownership layers">
+    {navigationLayers.map((layer, index) => (
+      <article data-layer={layer.id}>
+        <span>{String(index + 1).padStart(2, "0")}</span>
+        <div><p class="hara-v2-kicker">{layer.owner}</p><h3>{layer.label}</h3><strong>{layer.surface}</strong><p>{layer.rule}</p></div>
+      </article>
+    ))}
+  </div>
+
+  <div class="guide-ownership-grid">
+    {ownershipLayers.map((layer) => (
+      <article data-owner={layer.id}>
+        <header><span class="guide-state" data-tone={layer.id === "authority" ? "signal" : "muted"}>{layer.id}</span><h3>{layer.label}</h3></header>
+        <section><span>Owns</span><p>{layer.owns}</p></section>
+        <section><span>Does not own</span><p>{layer.excludes}</p></section>
+      </article>
+    ))}
+  </div>
+
+  <section class="guide-anatomy" aria-labelledby="guide-anatomy-title">
+    <header><div><span>Page anatomy</span><h3 id="guide-anatomy-title">The same route shown as responsibility bands</h3></div><p>Product-local navigation may look different across Specs, Playground, World and Learn. Its placement in the ownership stack does not change.</p></header>
+    <div role="img" aria-label="Catalogue masthead, route context, product-local navigation, primary task, secondary inspector and authoritative facts">
+      <span data-band="global"><b>Global</b> Block-H · Browse · Source · Theme</span>
+      <span data-band="route"><b>Route</b> Breadcrumb · Family tabs · Status · Product actions</span>
+      <span data-band="local"><b>Product-local</b> Registry / Lesson / Feed / Workspace / Publish</span>
+      <span data-band="primary"><b>Primary task</b> The route’s durable reading, editing, comparing or execution surface</span>
+      <span data-band="secondary"><b>Secondary</b> Outline · Inspector · Capability pane · Evidence ledger</span>
+      <span data-band="authority"><b>Authority</b> Identity · Source · Registry · Reviewer · Runtime · Receipt</span>
+    </div>
+  </section>
+
+  <div class="guide-lifecycle-and-addition">
+    <section class="guide-lifecycle" id="lifecycle" aria-labelledby="guide-lifecycle-title">
+      <header><span>Route lifecycle</span><h3 id="guide-lifecycle-title">Plan, activate, settle, retain or deprecate explicitly.</h3></header>
+      <ol>{routeLifecycle.map((state, index) => <li data-state={state.id}><span>{String(index + 1).padStart(2, "0")}</span><div><strong>{state.label}</strong><p>{state.behavior}</p></div><dl><div><dt>Entry</dt><dd>{state.entry}</dd></div><div><dt>Exit</dt><dd>{state.exit}</dd></div></dl></li>)}</ol>
+    </section>
+    <section class="guide-new-application" id="adding" aria-labelledby="guide-adding-title">
+      <header><span>Adding an application</span><h3 id="guide-adding-title">One route record, one product boundary, one complete state model.</h3></header>
+      <ol>{newApplicationSteps.map((step, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><p>{step}</p></li>)}</ol>
+    </section>
+  </div>
+</section>

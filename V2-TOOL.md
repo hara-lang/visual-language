@@ -295,5 +295,8 @@ product behaviour is added to this package.
 - [ ] Keep prose and editorial content on the document surface language.
 - [ ] Record any product-specific extension rather than silently forking shared tokens.
 
-See [`README.md`](./README.md) for package imports and
-[`V2-THEME.md`](./V2-THEME.md) for the shared document and identity foundation.
+See [`README.md`](./README.md) for package imports,
+[`V2-THEME.md`](./V2-THEME.md) for the shared document and identity foundation,
+and the [v2 catalogue guide and live route review matrix](https://hara-lang.github.io/visual-language/v2/guide/)
+with [`V2-GUIDE.md`](./V2-GUIDE.md) for exact route, theme, viewport, state,
+keyboard, overflow, reduced-motion and adoption review.
