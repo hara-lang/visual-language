@@ -1,0 +1,93 @@
+---
+import DeliveryFrame from "../../../../src/astro/v2/DeliveryFrame.astro";
+import ArtifactProvenance from "../../../../src/astro/v2/ArtifactProvenance.astro";
+import {
+  artifactEnvelope,
+  deliveryFormats,
+  releaseStory
+} from "../../lib/v2-media.mjs";
+
+const envelope = artifactEnvelope(releaseStory);
+---
+<section class="media-guide-section" id="projection" aria-labelledby="media-projection-title">
+  <header class="media-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">01 · semantic projection</p>
+      <h2 id="media-projection-title">One release story. Seven delivery shapes. One source revision.</h2>
+      <p>The title may shorten and the composition may change, but the canonical URL, source revision, authority, status and proof fact remain stable. Plain text is a peer projection rather than an afterthought.</p>
+    </div>
+    <dl class="media-guide-fence">
+      <div><dt>Story</dt><dd>{releaseStory.id}</dd></div>
+      <div><dt>Source revision</dt><dd>{releaseStory.sourceRevision}</dd></div>
+      <div><dt>Authority</dt><dd>{releaseStory.authority}</dd></div>
+      <div><dt>Fixture revision</dt><dd>{releaseStory.fixtureRevision}</dd></div>
+    </dl>
+  </header>
+
+  <div class="media-projection-controls">
+    <div role="group" aria-label="Choose delivery format">
+      {deliveryFormats.map((format, index) => (
+        <button type="button" aria-pressed={index === 0 ? "true" : "false"} data-media-format={format.id}>
+          <b>{format.label}</b><span>{format.ratio}</span>
+        </button>
+      ))}
+    </div>
+    <label><span>Artifact state</span><select class="hara-v2-select" data-media-state><option value="current">Current</option><option value="stale">Stale</option><option value="unavailable">Unavailable</option><option value="failed">Failed</option></select></label>
+  </div>
+
+  <div class="media-projection-workbench">
+    <div class="media-projection-stage" data-media-stage>
+      <div data-format-panel="email">
+        <DeliveryFrame format="email" label="Email projection of std.work 0.4.2" title="Email · 600px-safe column">
+          <div class="hara-media-email">
+            <span class="hara-media-email-preheader">{releaseStory.deck}</span>
+            <table role="presentation"><tbody><tr><td><table role="presentation" class="hara-media-email-shell"><tbody>
+              <tr><td class="hara-media-email-header"><b>Hara Packages</b><p>Release accepted · exact package revision attached</p></td></tr>
+              <tr><td class="hara-media-email-body"><h1>{releaseStory.shortTitle}</h1><h2>{releaseStory.title}</h2><p>{releaseStory.deck}</p><p><b>{releaseStory.proofLabel}:</b> {releaseStory.proofValue}</p><p><a class="hara-media-email-button" href={releaseStory.canonicalUrl}>{releaseStory.callToAction}</a></p><p class="hara-media-email-meta">{releaseStory.sourceRevision}<br />{releaseStory.authority}</p></td></tr>
+              <tr><td class="hara-media-email-footer">You received this because you follow <b>std.work</b>. <a href={releaseStory.canonicalUrl}>Open on the web</a> · <a href="#projection">Email preferences</a> · <a href="#projection">Unsubscribe</a></td></tr>
+            </tbody></table></td></tr></tbody></table>
+          </div>
+        </DeliveryFrame>
+      </div>
+
+      <div data-format-panel="print" hidden>
+        <DeliveryFrame format="print" label="Print and PDF projection of std.work 0.4.2" title="Print / PDF · A4-safe page">
+          <article class="hara-media-print-page">
+            <header class="hara-media-print-running-header"><span>Hara package release</span><span>{releaseStory.shortTitle}</span></header>
+            <h1>{releaseStory.title}</h1>
+            <p>{releaseStory.deck}</p>
+            <section class="hara-media-print-evidence"><b>{releaseStory.proofLabel}</b><p>{releaseStory.proofValue}. The same work value is consumed by the Tree, Fiber, Bytecode, Native and Browser/Wasm hosts in the cited release evidence.</p></section>
+            <h2>What changed</h2><ul><li>Executor and store extension interfaces are explicit.</li><li>Runtime capabilities remain ordinary product-owned data.</li><li>Receipts preserve exact package and host revisions.</li></ul>
+            <h2>Source and migration</h2><p>Read the full release at <a class="hara-media-print-url" href={releaseStory.canonicalUrl}>the canonical package page</a>.</p>
+            <footer class="hara-media-print-running-footer"><span>{releaseStory.sourceRevision}</span><span>Page 1 of 1</span></footer>
+          </article>
+        </DeliveryFrame>
+      </div>
+
+      {(["og", "square", "portrait", "story"]).map((format) => (
+        <div data-format-panel={format} hidden>
+          <DeliveryFrame format={format} label={`${format} social projection of std.work 0.4.2`} title={`${deliveryFormats.find(({ id }) => id === format)?.label} · ${deliveryFormats.find(({ id }) => id === format)?.ratio}`}>
+            <article class="hara-media-social-card" data-product="packages" data-product-mark="PKG">
+              <span class="hara-media-safe-zone" aria-hidden="true"></span>
+              <header><span>HARA · PACKAGES</span><span>{releaseStory.shortTitle}</span></header>
+              <div><h2>{format === "story" ? releaseStory.shortTitle : releaseStory.title}</h2><p>{format === "square" || format === "story" ? releaseStory.deck.split(".")[0] + "." : releaseStory.deck}</p><div class="hara-media-social-proof"><span>{releaseStory.proofLabel}</span><strong>{releaseStory.proofValue}</strong></div></div>
+              <footer><span>{releaseStory.sourceRevision}</span><span>packages.hara-lang.org</span></footer>
+            </article>
+          </DeliveryFrame>
+        </div>
+      ))}
+
+      <div data-format-panel="text" hidden>
+        <DeliveryFrame format="text" label="Plain-text projection of std.work 0.4.2" title="Plain text · canonical reading order">
+          <pre class="hara-media-plain-text">{releaseStory.plainText}</pre>
+        </DeliveryFrame>
+      </div>
+    </div>
+
+    <aside class="media-projection-inspector">
+      <ArtifactProvenance envelope={envelope} />
+      <section><p class="hara-v2-kicker">Alt / text equivalent</p><h3>Meaning survives the image.</h3><p>{releaseStory.altText}</p></section>
+      <section><p class="hara-v2-kicker">Invariant</p><h3 data-media-invariant>{releaseStory.sourceRevision}</h3><p>The format selector does not alter source identity, authority or canonical destination.</p></section>
+    </aside>
+  </div>
+</section>
