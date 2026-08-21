@@ -1,7 +1,9 @@
 ---
 import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
 import GuideRouteMatrix from "../../../components/v2-guide/GuideRouteMatrix.astro";
+import GuideRegressionReport from "../../../components/v2-guide/GuideRegressionReport.astro";
 import GuideReviewDeck from "../../../components/v2-guide/GuideReviewDeck.astro";
+import GuideReviewEvidence from "../../../components/v2-guide/GuideReviewEvidence.astro";
 import GuideArchitecture from "../../../components/v2-guide/GuideArchitecture.astro";
 import GuideAdoption from "../../../components/v2-guide/GuideAdoption.astro";
 import { guideFixtureNotice, guideSummary } from "../../../lib/v2-guide.mjs";
@@ -10,16 +12,19 @@ import "../../../../../src/theme.js";
 import "../../../styles/v2-lab.css";
 import "../../../styles/v2-calm-lab.css";
 import "../../../styles/v2-guide.css";
+import "../../../styles/v2-matrix-regression-fixes.css";
 
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
 const pageUrl = new URL(`${basePath}v2/guide/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
 const catalogueUrl = `${basePath}v2/`;
-const issueUrl = "https://github.com/hara-lang/visual-language/issues/90";
+const guideIssueUrl = "https://github.com/hara-lang/visual-language/issues/90";
+const closeoutIssueUrl = "https://github.com/hara-lang/visual-language/issues/44";
 const localNav = [
   { href: "#overview", label: "Overview" },
   { href: "#routes", label: "Routes" },
+  { href: "#regressions", label: "Regressions" },
   { href: "#review", label: "Live review" },
   { href: "#architecture", label: "Architecture" },
   { href: "#lifecycle", label: "Lifecycle" },
@@ -33,7 +38,7 @@ const localNav = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="The Hara v2 catalogue guide: manifest-backed route inventory, live light/dark viewport review matrix, navigation and ownership architecture, lifecycle, validation and downstream adoption." />
+    <meta name="description" content="The Hara v2 catalogue guide: manifest-backed route inventory, live light/dark viewport review matrix, recorded regressions, navigation and ownership architecture, lifecycle, validation and downstream adoption." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
     <meta property="og:title" content="Hara v2 catalogue guide and review matrix" />
@@ -56,7 +61,7 @@ const localNav = [
     <nav class="guide-local-nav" aria-label="Catalogue guide sections">
       <span>Guide</span>
       <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
-      <a href={issueUrl}>Issue 90 ↗</a>
+      <a href={closeoutIssueUrl}>Issue 44 ↗</a>
     </nav>
 
     <main class="guide-main">
@@ -71,7 +76,7 @@ const localNav = [
           <p class="hara-v2-kicker">Architecture · validation · adoption</p>
           <h1 id="guide-title">One catalogue. Many products. One review grammar.</h1>
           <p>The guide makes route relationships, navigation ownership, product states, provenance, themes, responsive behavior and downstream responsibility reviewable from one place—without flattening every Hara product into the same information architecture.</p>
-          <div class="guide-hero-actions"><a class="guide-primary-link" href="#review">Review a live route</a><a href="#routes">Inspect route inventory</a><a href="#adding">Add an application</a></div>
+          <div class="guide-hero-actions"><a class="guide-primary-link" href="#review">Review a live route</a><a href="#regressions">Read first findings</a><a href="#adding">Add an application</a></div>
         </div>
         <aside class="guide-hero-ledger" aria-label="Catalogue closeout summary">
           <header><span>Review envelope</span><span class="guide-state" data-tone="signal">Manifest-backed</span></header>
@@ -81,16 +86,20 @@ const localNav = [
       </section>
 
       <GuideRouteMatrix basePath={basePath} />
+      <GuideRegressionReport />
       <GuideReviewDeck basePath={basePath} />
+      <GuideReviewEvidence />
       <GuideArchitecture />
       <GuideAdoption basePath={basePath} />
 
-      <footer class="v2-lab-footer guide-footer"><span>Hara v2 catalogue guide and live review matrix</span><span><a href={catalogueUrl}>Catalogue home</a> · <a href={issueUrl}>Issue 90</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span></footer>
+      <footer class="v2-lab-footer guide-footer"><span>Hara v2 catalogue guide and live review matrix</span><span><a href={catalogueUrl}>Catalogue home</a> · <a href={guideIssueUrl}>Guide issue 90</a> · <a href={closeoutIssueUrl}>Closeout issue 44</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span></footer>
     </main>
 
     <script>
       import { initialiseGuide } from "../../../scripts/v2-guide.js";
+      import { initialiseGuideReviewExport } from "../../../scripts/v2-guide-review-export.js";
       initialiseGuide();
+      initialiseGuideReviewExport();
     </script>
   </body>
 </html>

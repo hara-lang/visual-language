@@ -1,0 +1,145 @@
+.v2-catalogue-skip-link {
+  position: fixed;
+  z-index: 220;
+  top: .65rem;
+  left: .65rem;
+  min-height: 44px;
+  padding: .7rem .85rem;
+  color: var(--hara-v2-canvas);
+  border: 2px solid var(--hara-v2-signal);
+  border-radius: var(--hara-v2-radius);
+  background: var(--hara-v2-signal);
+  font-size: .72rem;
+  font-weight: 750;
+  text-decoration: none;
+  transform: translateY(calc(-100% - 1.5rem));
+  transition: transform var(--hara-v2-motion) var(--hara-v2-ease);
+}
+
+.v2-catalogue-skip-link:focus-visible {
+  outline: 3px solid var(--hara-v2-canvas);
+  outline-offset: 3px;
+  transform: translateY(0);
+}
+
+.v2-catalogue-content-target {
+  display: block;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  scroll-margin-top: 11rem;
+}
+
+body.hara-v2 :where(main, section, article)[id] {
+  scroll-margin-top: 11rem;
+}
+
+.guide-regression-summary {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-bottom: .75rem;
+  border: 1px solid var(--hara-v2-line);
+  border-radius: var(--hara-v2-radius-large);
+  background: var(--hara-v2-panel);
+}
+
+.guide-regression-summary article {
+  display: grid;
+  gap: .28rem;
+  min-height: 112px;
+  padding: .85rem;
+  border-right: 1px solid var(--hara-v2-line);
+}
+
+.guide-regression-summary article:last-child { border-right: 0; }
+.guide-regression-summary span { color: var(--hara-v2-faint); font-size: .57rem; }
+.guide-regression-summary strong { font: 750 1.9rem/.95 var(--hara-v2-font-heading); letter-spacing: -.04em; }
+.guide-regression-summary small { align-self: end; color: var(--hara-v2-muted); font-size: .56rem; }
+
+.guide-regression-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .65rem;
+}
+
+.guide-regression-list > article {
+  padding: .85rem;
+  border: 1px solid var(--hara-v2-line);
+  border-radius: var(--hara-v2-radius-large);
+  background: var(--hara-v2-panel);
+}
+
+.guide-regression-list > article[data-severity="high"] { box-shadow: inset 3px 0 0 var(--hara-v2-error); }
+.guide-regression-list > article[data-severity="medium"] { box-shadow: inset 3px 0 0 var(--hara-v2-warning); }
+.guide-regression-list header { display: flex; flex-wrap: wrap; gap: .42rem; align-items: center; }
+.guide-regression-list header > span:last-child { margin-left: auto; }
+.guide-regression-list h3 { margin: .7rem 0 .3rem; font: 740 1.45rem var(--hara-v2-font-heading); letter-spacing: -.035em; }
+.guide-regression-list > article > p { color: var(--hara-v2-muted); font-size: .67rem; line-height: 1.58; }
+.guide-regression-list dl { display: grid; margin: .7rem 0 0; border-top: 1px solid var(--hara-v2-line); }
+.guide-regression-list dl > div { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: .6rem; padding: .58rem 0; border-bottom: 1px solid var(--hara-v2-line); }
+.guide-regression-list dt { color: var(--hara-v2-faint); font: .52rem var(--hara-v2-font-code); text-transform: uppercase; }
+.guide-regression-list dd { margin: 0; overflow-wrap: anywhere; font-size: .61rem; line-height: 1.5; }
+
+.guide-regression-boundary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: .75rem;
+  align-items: center;
+  margin-top: .75rem;
+  padding: .75rem;
+  color: var(--hara-v2-muted);
+  border: 1px dashed var(--hara-v2-line-strong);
+  border-radius: var(--hara-v2-radius);
+  font-size: .63rem;
+  line-height: 1.5;
+}
+.guide-regression-boundary strong { color: var(--hara-v2-ink); }
+.guide-regression-boundary code { color: var(--hara-v2-faint); font-size: .52rem; }
+
+.guide-review-evidence {
+  margin-top: .75rem;
+  border: 1px solid var(--hara-v2-line-strong);
+  border-radius: var(--hara-v2-radius-large);
+  background: var(--hara-v2-panel-raised);
+}
+.guide-review-evidence > header { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: .75rem; border-bottom: 1px solid var(--hara-v2-line); }
+.guide-review-evidence > header div { display: grid; gap: .15rem; }
+.guide-review-evidence > header span:first-child { color: var(--hara-v2-faint); font: .54rem var(--hara-v2-font-code); text-transform: uppercase; }
+.guide-review-evidence h3 { margin: 0; font: 730 1.35rem var(--hara-v2-font-heading); }
+.guide-review-evidence-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; padding: .75rem; }
+.guide-review-evidence label { display: grid; gap: .32rem; color: var(--hara-v2-muted); font-size: .59rem; }
+.guide-review-evidence input,
+.guide-review-evidence textarea { width: 100%; min-height: 40px; padding: .58rem .65rem; color: var(--hara-v2-ink); border: 1px solid var(--hara-v2-line-strong); border-radius: var(--hara-v2-radius); background: var(--hara-v2-canvas); resize: vertical; }
+.guide-review-evidence-notes { grid-column: 1 / -1; }
+.guide-review-evidence > footer { display: flex; gap: .65rem; align-items: center; padding: .75rem; border-top: 1px solid var(--hara-v2-line); }
+.guide-review-evidence > footer button { min-height: 40px; padding: .58rem .72rem; color: var(--hara-v2-canvas); border: 1px solid var(--hara-v2-signal); border-radius: var(--hara-v2-radius); background: var(--hara-v2-signal); font-weight: 700; cursor: pointer; }
+.guide-review-evidence output { color: var(--hara-v2-muted); font-size: .59rem; }
+
+@media (max-width: 840px) {
+  .v2-catalogue-route-bar .v2-catalogue-parent-link,
+  .v2-catalogue-route-bar .v2-catalogue-family-tabs a,
+  .v2-catalogue-section-trigger,
+  .v2-catalogue-section-links a {
+    min-height: 44px;
+  }
+
+  body.hara-v2 :where(main, section, article)[id],
+  .v2-catalogue-content-target { scroll-margin-top: 8.5rem; }
+  .guide-regression-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-regression-summary article { border-right: 1px solid var(--hara-v2-line); border-bottom: 1px solid var(--hara-v2-line); }
+  .guide-regression-summary article:nth-child(2n) { border-right: 0; }
+  .guide-regression-summary article:last-child { grid-column: 1 / -1; border-right: 0; border-bottom: 0; }
+  .guide-regression-list { grid-template-columns: 1fr; }
+  .guide-regression-boundary { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .guide-review-evidence-fields { grid-template-columns: 1fr; }
+  .guide-review-evidence-notes { grid-column: auto; }
+  .guide-review-evidence > footer { align-items: stretch; flex-direction: column; }
+  .guide-review-evidence :is(input, textarea, button) { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-catalogue-skip-link { transition: none; }
+}
