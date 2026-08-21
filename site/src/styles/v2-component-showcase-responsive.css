@@ -31,6 +31,8 @@
 }
 
 .v2-component-showcase__environment-primitives > .hara-tool-capability-pane {
+  width: 100%;
+  max-width: none;
   height: auto;
   min-height: 260px;
 }
