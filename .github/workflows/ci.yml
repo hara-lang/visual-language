@@ -47,7 +47,7 @@ jobs:
           } > /tmp/issue-110-test-comment.md
           exit "$status"
       - name: Report issue 110 test failure
-        if: failure() && github.event_name == 'pull_request' && github.head_ref == 'agent/issue-110-technical-editorial-voice'
+        if: failure() && steps.tests.outcome == 'failure' && github.event_name == 'pull_request' && github.head_ref == 'agent/issue-110-technical-editorial-voice'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/issue-110-test-comment.md
@@ -57,7 +57,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/src scripts/editorial-copy.mjs
+          git add site/src test scripts/editorial-copy.mjs
           if git diff --cached --quiet; then
             echo "No editorial replacements were required."
           else
