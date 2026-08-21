@@ -31,11 +31,18 @@ jobs:
           set +e
           npm test 2>&1 | tee /tmp/issue-110-test.log
           status=${PIPESTATUS[0]}
+          awk '
+            /^# Subtest:/ { subtest=$0 }
+            /^not ok / { print subtest; print; failed=1; next }
+            failed && /TestContext\.<anonymous>/ { print; print ""; failed=0 }
+          ' /tmp/issue-110-test.log > /tmp/issue-110-failures.log
           {
-            echo '### Issue #110 validation output'
+            echo '### Issue #110 failing assertions'
             echo
             echo '```text'
-            tail -n 240 /tmp/issue-110-test.log
+            cat /tmp/issue-110-failures.log
+            echo
+            tail -n 10 /tmp/issue-110-test.log
             echo '```'
           } > /tmp/issue-110-test-comment.md
           exit "$status"
