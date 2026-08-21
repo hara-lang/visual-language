@@ -1,42 +1,21 @@
 ---
 import "../../styles/v2-component-showcase-support.css";
-import HaraIcon from "../../../../src/astro/HaraIcon.astro";
-import HaraGlyph from "../../../../src/astro/HaraGlyph.astro";
+import { ensureFoundationComponentInventory } from "../../lib/v2-foundation-component-inventory.mjs";
 import { ensureSymbolComponentInventory } from "../../lib/v2-symbol-component-inventory.mjs";
 import RenderedComponentGallery from "./RenderedComponentGallery.astro";
+import RenderedFoundationExtensionsSpecimen from "./RenderedFoundationExtensionsSpecimen.astro";
 import RenderedSymbolSpecimen from "./RenderedSymbolSpecimen.astro";
 import "../../styles/v2-component-showcase-responsive.css";
 
+ensureFoundationComponentInventory();
 ensureSymbolComponentInventory();
-const componentCount = 41;
+const componentCount = 43;
 ---
 <RenderedComponentGallery />
-<div class="v2-component-showcase v2-component-showcase--semantic" data-semantic-icon-specimens>
-  <article class="v2-component-specimen" data-component-specimen="semantic-icons">
-    <header class="v2-component-specimen__header">
-      <div>
-        <p>Support layer</p>
-        <h3>Semantic icons and glyphs</h3>
-        <span>The shared icon inventory is rendered through accessible package components rather than route-local vector markup.</span>
-      </div>
-      <div class="v2-component-specimen__exports">
-        <a href="https://github.com/hara-lang/visual-language/blob/main/src/astro/HaraIcon.astro"><code>HaraIcon</code></a>
-        <a href="https://github.com/hara-lang/visual-language/blob/main/src/astro/HaraGlyph.astro"><code>HaraGlyph</code></a>
-      </div>
-    </header>
-    <div class="v2-component-specimen__canvas v2-component-specimen__canvas--identity">
-      <div class="v2-component-showcase__identity-card">
-        <div class="v2-component-showcase__identity-line">
-          <span class="v2-component-showcase__mark"><HaraIcon name="run" size={32} label="Run" /></span>
-          <div><strong>HaraIcon</strong><small>Named interface icon with an explicit accessible label</small></div>
-        </div>
-        <div class="v2-component-showcase__identity-line">
-          <span class="v2-component-showcase__mark"><HaraGlyph name="session" size={32} label="Session" /></span>
-          <div><strong>HaraGlyph</strong><small>Named semantic glyph from the shared vector inventory</small></div>
-        </div>
-      </div>
-    </div>
-  </article>
+<div class="v2-component-showcase v2-component-showcase--foundation-extensions">
+  <RenderedFoundationExtensionsSpecimen />
+</div>
+<div class="v2-component-showcase v2-component-showcase--semantic">
   <RenderedSymbolSpecimen />
 </div>
 <script is:inline define:vars={{ componentCount }}>

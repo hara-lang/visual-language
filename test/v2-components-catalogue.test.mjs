@@ -9,6 +9,7 @@ import {
   toolComponentInventory,
   v2ComponentInventory
 } from "../site/src/lib/v2-component-inventory.mjs";
+import { ensureFoundationComponentInventory } from "../site/src/lib/v2-foundation-component-inventory.mjs";
 import { ensureSymbolComponentInventory } from "../site/src/lib/v2-symbol-component-inventory.mjs";
 import {
   catalogueHref,
@@ -17,6 +18,7 @@ import {
   catalogueLinkIsExternal
 } from "../site/src/lib/v2-catalogue.mjs";
 
+ensureFoundationComponentInventory();
 ensureSymbolComponentInventory();
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
@@ -105,9 +107,9 @@ test("the visible inventory exactly matches every public Astro package export", 
   const inventoryExports = publicComponentInventory.map(({ exportPath }) => exportPath).sort();
 
   assert.deepEqual(inventoryExports, packageExports);
-  assert.equal(publicComponentInventory.length, 41);
+  assert.equal(publicComponentInventory.length, 43);
   assert.equal(supportComponentInventory.length, 7);
-  assert.equal(v2ComponentInventory.length, 34);
+  assert.equal(v2ComponentInventory.length, 36);
   assert.equal(toolComponentInventory.length, 26);
 
   assert.equal(new Set(publicComponentInventory.map(({ name }) => name)).size, publicComponentInventory.length);
@@ -123,7 +125,7 @@ test("the visible inventory exactly matches every public Astro package export", 
   }
 });
 
-test("the inventory preserves the document, tool, environment, runtime, and support boundaries", () => {
+test("the inventory preserves support, shared document, tool, environment, runtime, symbol and delivery boundaries", () => {
   assert.deepEqual(componentGroups.map(({ id }) => id), [
     "support",
     "shell",
@@ -133,11 +135,21 @@ test("the inventory preserves the document, tool, environment, runtime, and supp
     "runtime"
   ]);
 
-  for (const name of ["ThemeToggle", "HaraMark", "HaraIcon", "HaraGlyph", "Motif", "Backdrop", "Surface"])
+  for (const name of ["ThemeToggle", "HaraMark", "Motif", "Backdrop", "Surface", "HaraIcon", "HaraGlyph"])
     assert.equal(componentInventoryByName(name)?.owner, "support");
 
-  for (const name of ["Shell", "Header", "ContextNav", "Sidebar", "PageHeader", "FleetField", "ShaderField", "Symbol"])
-    assert.equal(componentInventoryByName(name)?.owner, "shared");
+  for (const name of [
+    "Shell",
+    "Header",
+    "ContextNav",
+    "Sidebar",
+    "PageHeader",
+    "FleetField",
+    "ShaderField",
+    "Symbol",
+    "DeliveryFrame",
+    "ArtifactProvenance"
+  ]) assert.equal(componentInventoryByName(name)?.owner, "shared");
 
   for (const name of ["Toolbar", "ToolButton", "WorkbenchShell", "CapabilityPane", "EnvironmentWorkbench"])
     assert.equal(componentInventoryByName(name)?.owner, "tool");
@@ -264,8 +276,6 @@ test("catalogue styling is responsive, focus-visible, motion-safe, and contains 
   assert.match(css, /@media \(max-width: 440px\)/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 
-  // Component-level sizing hooks may be set on an individual specimen. The
-  // catalogue must not redefine global theme, identity, state, or geometry tokens.
   const globalDefinitions = [...css.matchAll(/(--hara-[A-Za-z0-9_-]+)\s*:/g)]
     .map((match) => match[1])
     .filter((name) => name !== "--hara-tool-workbench-min-height");
