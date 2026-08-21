@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   build:
@@ -23,7 +24,26 @@ jobs:
       - name: Apply issue 110 editorial migration
         if: github.head_ref == 'agent/issue-110-technical-editorial-voice'
         run: node scripts/run-editorial-copy.mjs
-      - run: npm test
+      - name: Run tests
+        id: tests
+        shell: bash
+        run: |
+          set +e
+          npm test 2>&1 | tee /tmp/issue-110-test.log
+          status=${PIPESTATUS[0]}
+          {
+            echo '### Issue #110 validation output'
+            echo
+            echo '```text'
+            tail -n 240 /tmp/issue-110-test.log
+            echo '```'
+          } > /tmp/issue-110-test-comment.md
+          exit "$status"
+      - name: Report issue 110 test failure
+        if: failure() && github.event_name == 'pull_request' && github.head_ref == 'agent/issue-110-technical-editorial-voice'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/issue-110-test-comment.md
       - run: npm run site:build
       - name: Commit validated editorial changes
         if: github.head_ref == 'agent/issue-110-technical-editorial-voice'
