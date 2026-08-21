@@ -1,0 +1,75 @@
+---
+import DeliveryFrame from "../../../../src/astro/v2/DeliveryFrame.astro";
+import {
+  productSocialCards,
+  releaseStory,
+  safeZones
+} from "../../lib/v2-media.mjs";
+
+const releaseFormats = ["og", "square", "portrait", "story"];
+const productMarks = { www: "H", playground: ">", specs: "§", packages: "□", world: "○", learn: "L" };
+---
+<section class="media-guide-section" id="social" aria-labelledby="media-social-title">
+  <header class="media-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">04 · social and campaign cards</p>
+      <h2 id="media-social-title">Short title, one proof, safe crop, complete alt text.</h2>
+      <p>Social images identify the source and destination without becoming posters full of body copy. Four aspect families use explicit crop-safe zones, one semantic proof fact and an alt-text projection generated from the same content.</p>
+    </div>
+    <dl class="media-guide-fence">
+      <div><dt>Link preview</dt><dd>40:21</dd></div>
+      <div><dt>Square</dt><dd>1:1</dd></div>
+      <div><dt>Portrait</dt><dd>4:5</dd></div>
+      <div><dt>Story</dt><dd>9:16</dd></div>
+    </dl>
+  </header>
+
+  <div class="media-social-controls">
+    <label><input type="checkbox" checked data-safe-zone-toggle /> Show crop-safe zones</label>
+    <label><input type="checkbox" data-social-text-only /> Text-only / image-disabled review</label>
+    <p>Safe zones are review overlays and are never exported into the final card.</p>
+  </div>
+
+  <div class="media-social-format-grid">
+    {releaseFormats.map((format) => {
+      const safe = safeZones[format];
+      return (
+        <article>
+          <header><div><h3>{safe.label}</h3><p>{safe.width} × {safe.height}</p></div><code>{releaseStory.sourceRevision}</code></header>
+          <DeliveryFrame format={format} label={`${safe.label} release card`} title={`${safe.label} · release`}>
+            <div class="hara-media-social-card" data-product="packages" data-product-mark="PKG" data-social-card>
+              <span class="hara-media-safe-zone" style={`--hara-media-safe-x:${(safe.insetX / safe.width) * 100}%;--hara-media-safe-y:${(safe.insetY / safe.height) * 100}%`} aria-hidden="true"></span>
+              <header><span>HARA · PACKAGES</span><span>{releaseStory.shortTitle}</span></header>
+              <div><h2>{format === "story" ? releaseStory.shortTitle : releaseStory.title}</h2><p>{format === "square" || format === "story" ? "Executor and store boundaries are explicit." : releaseStory.deck}</p><div class="hara-media-social-proof"><span>{releaseStory.proofLabel}</span><strong>{releaseStory.proofValue}</strong></div></div>
+              <footer><span>{releaseStory.sourceRevision}</span><span>packages.hara-lang.org</span></footer>
+            </div>
+          </DeliveryFrame>
+          <p class="media-social-alt"><b>Alt text</b>{releaseStory.altText}</p>
+        </article>
+      );
+    })}
+  </div>
+
+  <section class="media-product-card-family" aria-labelledby="media-product-family-title">
+    <header><div><p class="hara-v2-kicker">Product campaign family</p><h3 id="media-product-family-title">Shared structure, distinct product identity.</h3></div><p>The product name remains written. The compact mark is a Hara-family placeholder on this independent branch and can consume the settled iconography package after #107 merges.</p></header>
+    <div>
+      {productSocialCards.map((product) => (
+        <article>
+          <DeliveryFrame format="og" label={`${product.label} product social card`}>
+            <div class="hara-media-social-card" data-product={product.id} data-product-mark={productMarks[product.id]} data-social-card>
+              <header><span>HARA · {product.label.toUpperCase()}</span><span>{product.destination}</span></header>
+              <div><h2>{product.title}</h2><p>{product.summary}</p></div>
+              <footer><span>{product.sourceRevision}</span><span>{product.destination}</span></footer>
+            </div>
+          </DeliveryFrame>
+          <p><b>{product.label}</b><span>{product.altText}</span></p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="media-social-safe-zone-table" aria-labelledby="safe-zone-table-title">
+    <header><p class="hara-v2-kicker">Export geometry</p><h3 id="safe-zone-table-title">Safe zones are data, not eyeballed margins.</h3></header>
+    <div><table><caption>Social card canvas and crop-safe dimensions</caption><thead><tr><th>Format</th><th>Canvas</th><th>Horizontal inset</th><th>Vertical inset</th><th>Essential content</th></tr></thead><tbody>{Object.entries(safeZones).map(([id, safe]) => <tr><th>{safe.label}</th><td>{safe.width} × {safe.height}</td><td>{safe.insetX}px</td><td>{safe.insetY}px</td><td>Product/source, short title, one proof and destination</td></tr>)}</tbody></table></div>
+  </section>
+</section>

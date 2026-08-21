@@ -1,0 +1,114 @@
+---
+import DeliveryFrame from "../../../../src/astro/v2/DeliveryFrame.astro";
+import ArtifactProvenance from "../../../../src/astro/v2/ArtifactProvenance.astro";
+import {
+  artifactEnvelope,
+  artifactStates,
+  deliveryFormats,
+  plainTextProjection,
+  releaseStory,
+  worldDigest
+} from "../../lib/v2-media.mjs";
+
+const releaseEnvelope = artifactEnvelope(releaseStory);
+const feedItem = {
+  id: releaseStory.id,
+  url: releaseStory.canonicalUrl,
+  title: releaseStory.title,
+  content_text: releaseStory.deck,
+  date_published: releaseStory.generatedAt,
+  tags: ["package", "std.work", "release"],
+  _hara: releaseEnvelope
+};
+---
+<section class="media-guide-section" id="static" aria-labelledby="media-static-title">
+  <header class="media-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">05 · low-bandwidth and static</p>
+      <h2 id="media-static-title">No JavaScript and no image must still produce the useful artifact.</h2>
+      <p>The static projection begins with semantic HTML and exact links. Plain text, Markdown and feed representations preserve one reading order, while image-disabled mode removes atmosphere—not title, proof, state, source or canonical destination.</p>
+    </div>
+    <dl class="media-guide-fence">
+      <div><dt>JavaScript required</dt><dd>No</dd></div>
+      <div><dt>Images required</dt><dd>No</dd></div>
+      <div><dt>Canonical link</dt><dd>Always visible</dd></div>
+      <div><dt>Structured text</dt><dd>HTML · text · feed</dd></div>
+    </dl>
+  </header>
+
+  <div class="media-static-layout">
+    <div>
+      <div class="media-specimen-label"><span>Image-disabled semantic HTML</span><code>{releaseStory.sourceRevision}</code></div>
+      <DeliveryFrame format="static" label="Low-bandwidth package release projection" title="Low bandwidth · semantic HTML">
+        <article class="hara-media-low-bandwidth media-static-article">
+          <header><p>HARA PACKAGES · RELEASE</p><h1>{releaseStory.title}</h1><p>{releaseStory.deck}</p></header>
+          <dl><div><dt>{releaseStory.proofLabel}</dt><dd>{releaseStory.proofValue}</dd></div><div><dt>Status</dt><dd>{releaseStory.status}</dd></div><div><dt>Source</dt><dd><code>{releaseStory.sourceRevision}</code></dd></div><div><dt>Authority</dt><dd>{releaseStory.authority}</dd></div></dl>
+          <p><a href={releaseStory.canonicalUrl}>{releaseStory.callToAction}: {releaseStory.canonicalUrl}</a></p>
+          <details open><summary>Migration summary</summary><ol><li>Adopt explicit executor and store interfaces.</li><li>Pass runtime capabilities as ordinary data.</li><li>Preserve source, host and receipt revisions at every handoff.</li></ol></details>
+        </article>
+      </DeliveryFrame>
+      <ArtifactProvenance envelope={releaseEnvelope} compact={true} label="Static artifact provenance" />
+    </div>
+
+    <div class="media-static-text-stack">
+      <div class="media-specimen-label"><span>Plain text</span><code>text/plain; charset=utf-8</code></div>
+      <DeliveryFrame format="text" label="Plain-text package release projection"><pre class="hara-media-plain-text">{plainTextProjection(releaseStory)}</pre></DeliveryFrame>
+      <div class="media-specimen-label"><span>JSON Feed item</span><code>application/feed+json</code></div>
+      <DeliveryFrame format="text" label="JSON Feed representation of package release"><pre class="hara-media-plain-text">{JSON.stringify(feedItem, null, 2)}</pre></DeliveryFrame>
+    </div>
+  </div>
+
+  <section class="media-feed-projection" aria-labelledby="media-feed-title">
+    <header><div><p class="hara-v2-kicker">World digest as an open feed</p><h3 id="media-feed-title">The feed item retains source and revision for every entry.</h3></div><p>A feed reader may simplify presentation, but it must not discard the canonical source or merge distinct evidence states.</p></header>
+    <ol>{worldDigest.items.map((item, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><div><b>{item.title}</b><p>{item.summary}</p><code>{item.source} · {item.revision}</code></div></li>)}</ol>
+  </section>
+
+  <section class="media-artifact-states" id="states" aria-labelledby="media-artifact-states-title">
+    <header><div><p class="hara-v2-kicker">Artifact lifecycle</p><h3 id="media-artifact-states-title">Current, stale, unavailable and failed stay visibly different.</h3></div><p>The same format may move through these states. The artifact state never rewrites the underlying source result.</p></header>
+    <div>
+      {artifactStates.map((state) => (
+        <article data-artifact-state={state.id}>
+          <span data-line={state.line}>{state.symbol}</span><div><h4>{state.label}</h4><p>{state.meaning}</p><button type="button" class="hara-v2-button">{state.action}</button></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="media-export-manifest" aria-labelledby="media-manifest-title">
+    <header><p class="hara-v2-kicker">Artifact envelope</p><h3 id="media-manifest-title">Every export declares the same provenance fields.</h3></header>
+    <div><table><caption>Required delivery artifact envelope</caption><thead><tr><th>Field</th><th>Example</th><th>Authority</th></tr></thead><tbody>{Object.entries(releaseEnvelope).map(([field, value]) => <tr><th>{field}</th><td><code>{String(value)}</code></td><td>{["sourceRevision", "sourceIdentity", "authority", "status"].includes(field) ? "Source / registry / runtime" : "Artifact generator from supplied facts"}</td></tr>)}</tbody></table></div>
+  </section>
+</section>
+
+<section class="media-guide-section" id="contract" aria-labelledby="media-contract-title">
+  <header class="media-guide-section-heading">
+    <div><p class="hara-v2-kicker">06 · ownership and adoption</p><h2 id="media-contract-title">Visual Language controls projection; authorities control the facts.</h2><p>The package can ensure a source revision is visible. It cannot decide what revision is current, whether a package was accepted, whether a benchmark is valid or whether a recipient may publish an artifact.</p></div>
+  </header>
+
+  <div class="media-ownership-grid">
+    <article><span>Visual Language owns</span><h3>Projection contract</h3><p>Format geometry, hierarchy, safe zones, print pagination, email/static fallback, evidence-footer treatment, state presentation, forced colours and reduced motion.</p></article>
+    <article><span>Products own</span><h3>Artifact workflow</h3><p>Which artifact is generated, editorial selection, visible wording, recipient workflow, export command, preferences and local template composition.</p></article>
+    <article><span>Authorities own</span><h3>Source truth</h3><p>Identities, revisions, measurements, package/spec state, runtime receipts, review outcomes, publication decisions, permissions and expiry boundaries.</p></article>
+  </div>
+
+  <div class="media-adoption-table-wrap"><table class="media-adoption-table"><caption>Downstream delivery-media adoption map</caption><thead><tr><th>Target</th><th>Primary artifacts</th><th>Required authority</th></tr></thead><tbody>
+    <tr><th>WWW / Docs</th><td>Article print, PDF guide, link cards, release email</td><td>Published document revision and canonical URL</td></tr>
+    <tr><th>Benchmarks</th><td>Evidence report, comparison card, downloadable packet</td><td>Run matrix, uncertainty, environment and source revision</td></tr>
+    <tr><th>Playground</th><td>Session/share receipt, static runnable excerpt, failure packet</td><td>Session generation, source, backend, capabilities and receipt</td></tr>
+    <tr><th>Specs</th><td>Proposal/review PDF, decision alert, conformance packet</td><td>Proposal revision, reviewer decision and checker evidence</td></tr>
+    <tr><th>Packages</th><td>Release receipt, package sheet, compatibility digest</td><td>Registry coordinate, ownership, signature and compatibility evidence</td></tr>
+    <tr><th>World</th><td>What’s new/hot email, feed items, article cards</td><td>Editorial selection, source provenance and subscription preferences</td></tr>
+    <tr><th>Learn</th><td>Lesson printout, project brief, progress receipt</td><td>Curriculum revision and learner-owned progress facts</td></tr>
+    <tr><th>Hara Chrome</th><td>Diagnostics export, capability receipt, static issue packet</td><td>Extension/runtime state and exact host evidence</td></tr>
+  </tbody></table></div>
+
+  <ol class="media-adoption-steps">
+    <li><b>Resolve one semantic artifact.</b><span>Title, proof, canonical URL, authority, revision, locale, status and text equivalent come first.</span></li>
+    <li><b>Select the channel template.</b><span>Email, print, social and static projections consume the same envelope.</span></li>
+    <li><b>Inline or flatten deliberately.</b><span>Email resolves styles; print expands required URLs; static preserves semantic order.</span></li>
+    <li><b>Validate the target client.</b><span>Review crops, inbox clients, A4/Letter, image-disabled, forced-colour and no-JS modes.</span></li>
+    <li><b>Store exact evidence.</b><span>The product records the artifact revision, generator revision and source/authority receipts.</span></li>
+  </ol>
+
+  <footer class="media-format-inventory"><span>{deliveryFormats.length} format projections</span><span>One artifact envelope</span><span>No channel may invent source truth</span></footer>
+</section>

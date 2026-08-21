@@ -1,0 +1,78 @@
+---
+import DeliveryFrame from "../../../../src/astro/v2/DeliveryFrame.astro";
+import ArtifactProvenance from "../../../../src/astro/v2/ArtifactProvenance.astro";
+import {
+  artifactEnvelope,
+  packageReceipt,
+  plainTextProjection,
+  worldDigest
+} from "../../lib/v2-media.mjs";
+
+const digestEnvelope = artifactEnvelope(worldDigest);
+const receiptEnvelope = artifactEnvelope(packageReceipt);
+---
+<section class="media-guide-section" id="email" aria-labelledby="media-email-title">
+  <header class="media-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">02 · email</p>
+      <h2 id="media-email-title">Useful in a hostile client, complete without images.</h2>
+      <p>Editorial and transactional email use a 600px-safe single column, table-based structural fallback, system fonts, explicit preheader, canonical web link and plain-text companion. Decorative imagery is optional and never carries the only proof or state.</p>
+    </div>
+    <dl class="media-guide-fence">
+      <div><dt>Maximum column</dt><dd>600 px</dd></div>
+      <div><dt>JavaScript</dt><dd>None</dd></div>
+      <div><dt>Custom-font dependency</dt><dd>None</dd></div>
+      <div><dt>Plain-text companion</dt><dd>Required</dd></div>
+    </dl>
+  </header>
+
+  <div class="media-email-layout">
+    <div>
+      <div class="media-specimen-label"><span>Editorial digest</span><code>{worldDigest.sourceRevision}</code></div>
+      <DeliveryFrame format="email" label="World weekly digest email" title="World · What’s new email">
+        <div class="hara-media-email">
+          <span class="hara-media-email-preheader">{worldDigest.preheader}</span>
+          <table role="presentation"><tbody><tr><td><table role="presentation" class="hara-media-email-shell"><tbody>
+            <tr><td class="hara-media-email-header"><b>Hara World</b><p>{worldDigest.preheader}</p></td></tr>
+            <tr><td class="hara-media-email-body">
+              <p class="hara-media-email-meta">WEEK 34 · {worldDigest.items.length} USEFUL UPDATES</p>
+              <h1>What’s new in Hara.</h1>
+              {worldDigest.items.map((item, index) => (
+                <div class="hara-media-email-item">
+                  <p class="hara-media-email-meta">{String(index + 1).padStart(2, "0")} · {item.kind.toUpperCase()} · {item.source}</p>
+                  <h2>{item.title}</h2><p>{item.summary}</p><p class="hara-media-email-meta">{item.revision}</p>
+                </div>
+              ))}
+              <p><a class="hara-media-email-button" href={worldDigest.canonicalUrl}>Open the public digest</a></p>
+            </td></tr>
+            <tr><td class="hara-media-email-footer">Every item links to its canonical source. <a href={worldDigest.canonicalUrl}>View on the web</a> · <a href={worldDigest.preferencesUrl}>Preferences</a> · <a href={worldDigest.unsubscribeUrl}>Unsubscribe</a><br />{worldDigest.sourceRevision} · {worldDigest.authority}</td></tr>
+          </tbody></table></td></tr></tbody></table>
+        </div>
+      </DeliveryFrame>
+      <ArtifactProvenance envelope={digestEnvelope} compact={true} label="Digest provenance" />
+    </div>
+
+    <div>
+      <div class="media-specimen-label"><span>Transactional receipt</span><code>{packageReceipt.receipt}</code></div>
+      <DeliveryFrame format="email" label="Package publication receipt email" title="Packages · publication receipt">
+        <div class="hara-media-email">
+          <span class="hara-media-email-preheader">{packageReceipt.package} {packageReceipt.version} was accepted by the Hara package registry.</span>
+          <table role="presentation"><tbody><tr><td><table role="presentation" class="hara-media-email-shell"><tbody>
+            <tr><td class="hara-media-email-header"><b>Hara Packages</b><p>Publication receipt · {packageReceipt.receipt}</p></td></tr>
+            <tr><td class="hara-media-email-body"><p class="hara-media-email-meta">ACCEPTED</p><h1>{packageReceipt.title}</h1><h2>{packageReceipt.coordinate}</h2><p>The registry recorded the exact manifest, namespace ownership, compatibility evidence and signature below.</p>
+              <table role="presentation" class="media-email-checks"><tbody>{packageReceipt.checks.map(([label, status, evidence]) => <tr><td><b>{label}</b></td><td>{status}</td><td><code>{evidence}</code></td></tr>)}</tbody></table>
+              <p><a class="hara-media-email-button" href={packageReceipt.canonicalUrl}>Open the package record</a></p>
+            </td></tr>
+            <tr><td class="hara-media-email-footer">Receipt: {packageReceipt.receipt}<br />Source: {packageReceipt.sourceRevision}<br />Authority: {packageReceipt.authority}</td></tr>
+          </tbody></table></td></tr></tbody></table>
+        </div>
+      </DeliveryFrame>
+      <ArtifactProvenance envelope={receiptEnvelope} compact={true} label="Receipt provenance" />
+    </div>
+  </div>
+
+  <section class="media-email-text-pair" aria-labelledby="email-text-title">
+    <header><div><p class="hara-v2-kicker">Multipart companion</p><h3 id="email-text-title">The text part follows the same semantic order.</h3></div><p>Subject, preheader, headings, source revision, canonical link and preferences survive clients that strip CSS or images.</p></header>
+    <div><pre class="hara-media-plain-text">{plainTextProjection(worldDigest)}</pre><pre class="hara-media-plain-text">{plainTextProjection(packageReceipt)}</pre></div>
+  </section>
+</section>
