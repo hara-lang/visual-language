@@ -12,19 +12,19 @@ const tone = (value) => ({ stable: "success", preview: "signal", deprecated: "wa
 ---
 <section class="packages-hero" id="discover" aria-labelledby="packages-title">
   <div class="packages-hero-copy">
-    <p class="hara-v2-kicker">Application buildout · Packages</p>
-    <h1 id="packages-title">Find the exact thing you can trust.</h1>
-    <p>Search packages and namespaces together, then evaluate exact releases through compatibility, maintenance, ownership, artifacts, and reproducibility. Usage is useful context; it never replaces provenance.</p>
+    <p class="hara-v2-kicker">Package and namespace reference</p>
+    <h1 id="packages-title">Packages and namespaces are versioned registry records.</h1>
+    <p>A package is a versioned distribution unit containing artifacts and one or more namespaces. A namespace is a named collection of Vars and public symbols. Search results retain the exact coordinate, release, ownership, compatibility, maintenance, artifact, and provenance records needed to evaluate a dependency.</p>
     <div class="packages-hero-actions">
-      <a class="packages-primary-link" href="#package">Inspect a package</a>
-      <a href="#publish">Publish a release</a>
-      <a href="#maintain">Open maintainer tools</a>
+      <a class="packages-primary-link" href="#package">View a package record</a>
+      <a href="#publish">Review publication fields</a>
+      <a href="#maintain">View maintainer records</a>
     </div>
     <dl class="packages-hero-facts">
       <div><dt>Content contract</dt><dd>{packagesSummary.contentTypes} hara.packages@2.2.0 types</dd></div>
       <div><dt>Fixture packages</dt><dd>{packagesSummary.packages} exact coordinates</dd></div>
       <div><dt>Namespaces</dt><dd>{packagesSummary.namespaces} registry references</dd></div>
-      <div><dt>Trust questions</dt><dd>{packagesSummary.provenanceQuestions} evidence-backed answers</dd></div>
+      <div><dt>Registry questions</dt><dd>{packagesSummary.provenanceQuestions} recorded answers</dd></div>
     </dl>
   </div>
 
@@ -38,14 +38,14 @@ const tone = (value) => ({ stable: "success", preview: "signal", deprecated: "wa
       <div><dt>Publisher</dt><dd class="packages-mono">identity:github:hoebat</dd></div>
       <div><dt>Compatibility</dt><dd>3 verified · 1 partial</dd></div>
     </dl>
-    <footer><a href={packageUrl}>Open exact package record →</a></footer>
+    <footer><a href={packageUrl}>Open package record →</a></footer>
   </article>
 </section>
 
 <section class="packages-section packages-discovery" aria-labelledby="packages-discovery-title">
   <header class="packages-section-heading">
-    <div><p class="hara-v2-kicker">Package discovery</p><h2 id="packages-discovery-title">Search by coordinate, namespace, purpose, or capability.</h2></div>
-    <p>Filters expose domain, runtime, stability, license, and compatibility independently. The result list retains exact release and maintenance state in every view.</p>
+    <div><p class="hara-v2-kicker">Registry search</p><h2 id="packages-discovery-title">Search by coordinate, namespace, purpose, or capability.</h2></div>
+    <p>Filters expose domain, runtime, stability, licence, and compatibility independently. Every result retains its exact release and maintenance state.</p>
   </header>
 
   <form class="packages-search-panel" role="search" onsubmit="return false">
@@ -55,13 +55,13 @@ const tone = (value) => ({ stable: "success", preview: "signal", deprecated: "wa
         <label><span>{id}</span><select data-package-filter={id}>{values.map((value) => <option value={value}>{value}</option>)}</select></label>
       ))}
     </div>
-    <div class="packages-view-switch" role="group" aria-label="Discovery ordering">
+    <div class="packages-view-switch" role="group" aria-label="Registry result ordering">
       {discoveryViews.map((view, index) => <button type="button" data-package-view={view.id} aria-pressed={index === 0 ? "true" : "false"}><strong>{view.label}</strong><small>{view.description}</small></button>)}
     </div>
-    <footer><output data-package-count>{packageCards.length} packages</output><button type="button" data-package-reset>Reset discovery</button></footer>
+    <footer><output data-package-count>{packageCards.length} packages</output><button type="button" data-package-reset>Clear filters</button></footer>
   </form>
 
-  <div class="packages-discovery-states" role="group" aria-label="Discovery service states">
+  <div class="packages-discovery-states" role="group" aria-label="Registry service states">
     {discoveryStates.map((state, index) => <button type="button" data-discovery-state={state.id} aria-pressed={index === 0 ? "true" : "false"}><span class="packages-state" data-tone={state.tone}>{state.label}</span></button>)}
   </div>
   <div class="packages-discovery-state-panels" aria-live="polite">
@@ -79,9 +79,9 @@ const tone = (value) => ({ stable: "success", preview: "signal", deprecated: "wa
         <div class="packages-card-states"><span class="packages-state" data-tone={tone(item.stability)}>{item.stability}</span><span class="packages-state" data-tone={tone(item.compatibility)}>{item.compatibility}</span><code>{item.license}</code></div>
         <div class="packages-namespace-chips" aria-label={`${item.coordinate} namespaces`}>{item.namespaces.slice(0, 3).map((namespace) => <span data-identity-kind="namespace">{namespace}</span>)}{item.namespaces.length > 3 && <span>+{item.namespaces.length - 3}</span>}</div>
         <dl><div><dt>Runtimes</dt><dd>{item.runtimes.join(" · ")}</dd></div><div><dt>Dependants</dt><dd>{item.dependants}</dd></div><div><dt>Updated</dt><dd><time datetime={item.updatedAt}>{item.updatedAt.slice(0, 10)}</time></dd></div><div><dt>Release revision</dt><dd class="packages-mono">{item.releaseRevision}</dd></div></dl>
-        <footer><span>{item.maintenance}</span><a href={item.id === "package-hara-std-typed" ? packageUrl : "#package"}>Inspect package →</a></footer>
+        <footer><span>{item.maintenance}</span><a href={item.id === "package-hara-std-typed" ? packageUrl : "#package"}>View package →</a></footer>
       </article>
     ))}
   </div>
-  <div class="packages-empty" data-package-empty hidden><strong>No package matches this exact query and filter set.</strong><p>Reset one filter or keep the coordinate for a future registry refresh. No approximate result is substituted.</p><button type="button" data-package-reset>Reset discovery</button></div>
+  <div class="packages-empty" data-package-empty hidden><strong>No package matches this query and filter set.</strong><p>Clear one filter or retain the coordinate for a later registry refresh. The interface does not substitute an approximate result.</p><button type="button" data-package-reset>Clear filters</button></div>
 </section>
