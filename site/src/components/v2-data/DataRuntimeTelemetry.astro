@@ -1,0 +1,59 @@
+---
+import { runtimeTelemetry } from "../../lib/v2-data-visualisation.mjs";
+const tone = (state) => state === "success" || state === "ready" ? "success" : state === "active" || state === "queued" ? "signal" : state === "partial" || state === "stale" ? "warning" : state === "unsupported" ? "error" : "muted";
+---
+<section class="data-guide-section" id="telemetry" aria-labelledby="data-telemetry-title">
+  <header class="data-guide-heading">
+    <div><p class="hara-v2-kicker">Reference composition 03 · Runtime</p><h2 id="data-telemetry-title">Telemetry reads as a monotonic event record.</h2></div>
+    <p>Sequence, generation, source revision, backend and capability fence stay visible while dense observations scroll locally. High-frequency telemetry is not announced as a continuous live region.</p>
+  </header>
+
+  <article class="data-evidence-panel data-runtime-panel">
+    <header class="data-evidence-header">
+      <div><span>Session telemetry</span><h3>{runtimeTelemetry.session} · generation {runtimeTelemetry.generation}</h3><p>{runtimeTelemetry.backend} · sequence {runtimeTelemetry.sequenceRange[0]}–{runtimeTelemetry.sequenceRange[1]} · {runtimeTelemetry.window}</p></div>
+      <code>{runtimeTelemetry.sourceRevision}</code>
+    </header>
+
+    <div class="data-telemetry-summary">
+      {runtimeTelemetry.summary.map((metric) => (
+        <article data-state={metric.state}>
+          <span>{metric.label}</span>
+          <strong>{metric.value == null ? "×" : metric.value}{metric.unit && <small> {metric.unit}</small>}</strong>
+          <span class="data-state-word">{metric.state}</span>
+        </article>
+      ))}
+    </div>
+
+    <div class="data-event-timeline" aria-label="Runtime event sequence">
+      <div class="data-event-scale" aria-hidden="true"><span>0 ms</span><span>250</span><span>500</span><span>750</span><span>1000 ms</span></div>
+      <ol>
+        {runtimeTelemetry.events.map((event) => (
+          <li data-state={event.state} style={`--data-offset:${Math.min(100, event.offset / 10)}%`}>
+            <span class="data-event-sequence">{event.sequence}</span>
+            <i aria-hidden="true"></i>
+            <div><strong>{event.type}</strong><small>+{event.offset} ms · {event.state}</small><p>{event.detail}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <details class="data-accessible-table" open>
+      <summary>Accessible event table and session fence</summary>
+      <dl class="data-session-fence">
+        <div><dt>Session</dt><dd>{runtimeTelemetry.session}</dd></div>
+        <div><dt>Generation</dt><dd>{runtimeTelemetry.generation}</dd></div>
+        <div><dt>Source revision</dt><dd><code>{runtimeTelemetry.sourceRevision}</code></dd></div>
+        <div><dt>Backend</dt><dd>{runtimeTelemetry.backend}</dd></div>
+        <div><dt>Capability revision</dt><dd><code>{runtimeTelemetry.capabilityRevision}</code></dd></div>
+        <div><dt>Sequence range</dt><dd>{runtimeTelemetry.sequenceRange.join("–")}</dd></div>
+      </dl>
+      <div tabindex="0" aria-label="Runtime telemetry table; horizontally scrollable at narrow widths">
+        <table>
+          <caption>Monotonic event sequence for {runtimeTelemetry.session}, generation {runtimeTelemetry.generation}</caption>
+          <thead><tr><th>Sequence</th><th>Offset</th><th>Event</th><th>State</th><th>Detail</th></tr></thead>
+          <tbody>{runtimeTelemetry.events.map((event) => <tr><th scope="row">{event.sequence}</th><td>+{event.offset} ms</td><td><code>{event.type}</code></td><td><span class="guide-state" data-tone={tone(event.state)}>{event.state}</span></td><td>{event.detail}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </details>
+  </article>
+</section>
