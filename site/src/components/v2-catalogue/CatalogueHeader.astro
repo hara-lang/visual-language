@@ -24,7 +24,7 @@ const resolvedActivePath = activePath ?? pathname;
 const deepRoute = resolvedActivePath !== "/v2/";
 const componentCatalogue = resolvedActivePath.replace(/\/+$/, "") === "/v2/components";
 const RenderedComponentGallery = componentCatalogue
-  ? (await import("./RenderedComponentGallery.astro")).default
+  ? (await import("./RenderedComponentGalleryEntry.astro")).default
   : null;
 ---
 <CatalogueMasthead
