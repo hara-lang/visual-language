@@ -1,6 +1,6 @@
 # Hara v2 front matter content contract
 
-The front matter contract is the executable metadata registry behind the `/v2/frontmatter/` review laboratory. It is published from the package so WWW, Docs, Benchmarks, Specs, Packages, World, and Learn can consume the same accepted definitions without copying laboratory data.
+The front matter contract is the executable metadata registry behind the `/v2/frontmatter/` review reference. It is published from the package so WWW, Docs, Benchmarks, Specs, Packages, World, and Learn can consume the same accepted definitions without copying reference data.
 
 ```js
 import {
@@ -24,7 +24,7 @@ The registry defines:
 - seven application-family contracts: WWW, Docs, Benchmarks, Specs, Packages, World, and Learn;
 - thirty concrete content types;
 - eighteen shared fields;
-- product-specific field inventories;
+- application-specific field inventories;
 - required, optional, and deprecated requirements;
 - author, derived, identity, registry, source, reviewer, and runtime control boundaries;
 - draft, proposed, reviewed, published, superseded, and withdrawn lifecycle states;
@@ -78,7 +78,7 @@ schema namespace · schema version · publication paths
 registry owner · product fields · concrete types
 ```
 
-The common envelope does not erase product semantics. Benchmark evidence, a package namespace, a World canonical source, and a Learn prerequisite remain distinct fields with distinct owners.
+The common envelope does not erase route semantics. Benchmark evidence, a package namespace, a World canonical source, and a Learn prerequisite remain distinct fields with distinct owners.
 
 ### `contentTypeInventory`
 
@@ -163,7 +163,7 @@ console.log(guide.version); // 2.1.0
 
 ### `fieldInventoryForContract(family)`
 
-Combine shared fields with the product-specific fields for one family.
+Combine shared fields with the application-specific fields for one family.
 
 ### `fieldInventoryForType(contentType)`
 
@@ -262,7 +262,7 @@ The package contract owns:
 
 Applications own:
 
-- product navigation and composition;
+- route navigation and composition;
 - authoring workflow;
 - ranking and search policy;
 - review and moderation policy;

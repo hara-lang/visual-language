@@ -8,7 +8,7 @@ The guide uses deterministic benchmark, package-compatibility and runtime fixtur
 
 ## Purpose
 
-Hara products need one evidence grammar for charts, matrices, distributions, timelines and operational telemetry. The grammar must make uncertainty and evidence boundaries easier to inspect, not merely make data look technical.
+Hara sites and tools need one evidence grammar for charts, matrices, distributions, timelines and operational telemetry. The grammar must make uncertainty and evidence boundaries easier to inspect, not merely make data look technical.
 
 ## Non-negotiable rules
 

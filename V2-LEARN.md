@@ -2,9 +2,9 @@
 
 ## Status
 
-The detailed Learn application laboratory lives at `/v2/learn/`. It is the visual acceptance surface for a future `learn.hara-lang.org` product: experience-aware arrival, curriculum and concept graphs, lesson reading, executable practice, projects, revision-aware progress, teaching workflows, and the explicit boundary with World.
+The detailed Learn application reference lives at `/v2/learn/`. It is the visual acceptance surface for a future `learn.hara-lang.org` product: experience-aware arrival, curriculum and concept graphs, lesson reading, executable practice, projects, revision-aware progress, teaching workflows, and the explicit boundary with World.
 
-The laboratory uses deterministic design-review fixtures. It is not a production learner database, live curriculum registry, evaluator, or completion authority.
+The reference uses deterministic design-review fixtures. It is not a production learner database, live curriculum registry, evaluator, or completion authority.
 
 ## Product principle
 
@@ -160,7 +160,7 @@ Owns semantic tokens, typography, material, status, form, table, focus, responsi
 
 ### Learn application
 
-Owns experience entrances, track browsing, curriculum navigation, lesson composition, practice commands, project milestones, notes, privacy, teaching tools, and product-local navigation.
+Owns experience entrances, track browsing, curriculum navigation, lesson composition, practice commands, project milestones, notes, privacy, teaching tools, and application-local navigation.
 
 ### Curriculum and progress registries
 
@@ -206,7 +206,7 @@ Fixture identities, dates, revisions, attempts, completion claims, and progress 
 
 ## Adoption checklist
 
-Before adopting this laboratory into `learn.hara-lang.org`:
+Before adopting this reference into `learn.hara-lang.org`:
 
 1. pin a merged Visual Language revision;
 2. bind every lesson, concept, exercise, project, and progress view to exact canonical identities and revisions;

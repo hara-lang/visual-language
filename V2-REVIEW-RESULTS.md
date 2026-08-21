@@ -24,7 +24,7 @@ At compact and phone widths, shared family tabs, parent links, section disclosur
 
 ### ANCHOR-001 — sticky navigation could cover fragment targets
 
-Deep route headings selected through product-local links could settle beneath the stacked sticky catalogue and section navigation. Shared route-owned section and article IDs now receive a scroll margin, with a smaller compact-width offset.
+Deep route headings selected through application-local links could settle beneath the stacked sticky catalogue and section navigation. Shared route-owned section and article IDs now receive a scroll margin, with a smaller compact-width offset.
 
 ### EVIDENCE-001 — review decisions were not exportable
 
@@ -52,7 +52,7 @@ Every one of the 140 targets remains `review-required` for manual observation un
 5. no document-level horizontal overflow;
 6. contrast and non-colour state cues;
 7. reduced-motion behavior;
-8. loading, empty, error, disabled, success and product-specific states;
+8. loading, empty, error, disabled, success and application-specific states;
 9. exact source, revision, authority and receipt claims;
 10. assistive-technology names and announced state where applicable.
 

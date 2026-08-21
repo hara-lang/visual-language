@@ -2,7 +2,7 @@
 
 ## Status
 
-The executable guide lives at `/v2/guide/`. It is the architecture, validation and adoption surface for the complete v2 catalogue. It does not replace product laboratories, external accessibility testing, durable screenshot evidence or downstream integration tests.
+The executable guide lives at `/v2/guide/`. It is the architecture, validation and adoption surface for the complete v2 catalogue. It does not replace product references, external accessibility testing, durable screenshot evidence or downstream integration tests.
 
 The guide is part of issue #44 through focused issue #90. Follow-on expansion domains are tracked by #89.
 
@@ -11,7 +11,7 @@ The guide is part of issue #44 through focused issue #90. Follow-on expansion do
 Hara v2 has two kinds of material:
 
 1. **Shared interface language** — identity, tokens, typography, material, components, UI patterns, content contracts, workbench geometry, responsive behavior and accessibility.
-2. **Focused application laboratories** — WWW, Docs, Benchmarks, Playground, Specs, Packages, World and Learn, each with its own information architecture and complete states.
+2. **Focused application references** — WWW, Docs, Benchmarks, Playground, Specs, Packages, World and Learn, each with its own information architecture and complete states.
 
 The catalogue makes those contracts reviewable together without pretending they are one product.
 
@@ -27,7 +27,7 @@ The catalogue makes those contracts reviewable together without pretending they 
 - route breadcrumbs, family tabs, neighbours and parent targets;
 - issue-backed links for routes that are not yet implemented.
 
-A page owns only its local section anchors and demonstrated product navigation. It must not duplicate the global catalogue array.
+A page owns only its local section anchors and demonstrated route navigation. It must not duplicate the global catalogue array.
 
 The issue #44 closeout inventory is:
 
@@ -60,9 +60,9 @@ Visual Language owns the block-H masthead, Browse launcher, Source and theme con
 
 The manifest owns breadcrumb/location, family sibling tabs, route status, parent, previous/next and the catalogue page footer.
 
-### Product-local navigation
+### Application-local navigation
 
-Each application owns its own task structure: Registry, Checker, Feed, Lesson, Practice, Workspace, Publish, Maintainer or equivalent. Product-local navigation does not become another catalogue group.
+Each application owns its own task structure: Registry, Checker, Feed, Lesson, Practice, Workspace, Publish, Maintainer or equivalent. Application-local navigation does not become another catalogue group.
 
 ### Demonstrated product chrome
 
@@ -84,7 +84,7 @@ Does not own production accounts, authoritative content, moderation, evaluation,
 
 ### Product application
 
-Owns information architecture, commands, preferences, local forms, local navigation and product-specific composition.
+Owns information architecture, commands, preferences, local forms, local navigation and application-specific composition.
 
 Does not own facts controlled by identity, source, registry, reviewer or runtime authorities.
 
@@ -147,7 +147,7 @@ Every current route must expose, where relevant:
 - recoverable and fatal error;
 - disabled or unavailable action;
 - success or accepted state;
-- product-specific lifecycle and degraded states;
+- application-specific lifecycle and degraded states;
 - exact authority and provenance for claims.
 
 Unavailable must not silently become failure. Missing must not become zero. Historical must not become current. A fixture must not become a production claim.
@@ -174,11 +174,11 @@ A replaced study remains useful for comparison or teaching. It is clearly labell
 
 The route or contract names a replacement, migration path, compatibility period and eventual removal release.
 
-## Adding a new application buildout
+## Adding a new application reference
 
 1. Create an executable issue with Outcome, Scope, Acceptance criteria, Validation, Relationships, Readiness and Delivery.
 2. Add one typed manifest record. A planned route points to the issue until the detailed route exists.
-3. Declare the product boundary, local information architecture, authoritative sources and downstream target.
+3. Declare the route boundary, local information architecture, authoritative sources and downstream target.
 4. Consume shared components, UI patterns and content contracts without redefining protected tokens.
 5. Build realistic landing, deep-work, degraded, responsive, light/dark, keyboard and reduced-motion states.
 6. Add focused tests, package-documentation impact and downstream adoption notes.
@@ -247,7 +247,7 @@ Focused tests cover:
 - exact required-route inventory and uniqueness;
 - manifest relationships and active guide route;
 - light/dark and five-width matrix dimensions;
-- complete common and product-specific state inventories;
+- complete common and application-specific state inventories;
 - current extension versus historical route labels;
 - navigation and ownership layers;
 - route lifecycle and new-application procedure;

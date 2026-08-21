@@ -2,7 +2,7 @@
 
 This field study narrows Hara World into a public reading and discussion layer for the programming language. It is designed for an incoming visitor who does not yet know which repository, package, project, or community channel to follow.
 
-The primary study lives at `/v2/world/feed/`. `/v2/world/` advances to that route so the existing World launcher in the v2 document laboratory becomes feed-first.
+The primary study lives at `/v2/world/feed/`. `/v2/world/` advances to that route so the existing World launcher in the v2 document reference becomes feed-first.
 
 ## Product shape
 
