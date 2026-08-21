@@ -34,3 +34,4 @@ source = source
 await fs.writeFile(migration, source);
 process.argv.push("--apply");
 await import(`${pathToFileURL(migration).href}?run=${Date.now()}`);
+await import(`${pathToFileURL(path.join(scripts, "issue-110-contract-fixes.mjs")).href}?run=${Date.now()}`);
