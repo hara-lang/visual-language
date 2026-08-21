@@ -1,0 +1,51 @@
+---
+import {
+  matrixRegressionFindings,
+  matrixReviewRun,
+  matrixReviewSummary
+} from "../../lib/v2-review-results.mjs";
+
+const tone = (severity) => severity === "high" ? "error" : severity === "medium" ? "warning" : "signal";
+---
+<section class="guide-section guide-regression-report" id="regressions" aria-labelledby="guide-regressions-title">
+  <header class="guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">Issue 44 · first matrix pass</p>
+      <h2 id="guide-regressions-title">Record defects before declaring routes accepted.</h2>
+    </div>
+    <p>{matrixReviewRun.summary}</p>
+  </header>
+
+  <div class="guide-regression-summary" aria-label="Matrix review coverage">
+    <article><span>Required routes</span><strong>{matrixReviewSummary.routes}</strong><small>Manifest-backed</small></article>
+    <article><span>Review cells</span><strong>{matrixReviewSummary.cells}</strong><small>{matrixReviewSummary.themes} themes × {matrixReviewSummary.viewports} viewports</small></article>
+    <article><span>Common checks</span><strong>{matrixReviewSummary.commonChecks}</strong><small>Per exact target</small></article>
+    <article><span>First defects</span><strong>{matrixReviewSummary.findings}</strong><small>{matrixReviewSummary.resolvedInPr} resolved in this PR</small></article>
+    <article><span>Manual observations</span><strong>{matrixReviewSummary.manualCellsRemaining}</strong><small>Still required for #44 closeout</small></article>
+  </div>
+
+  <div class="guide-regression-list">
+    {matrixRegressionFindings.map((finding) => (
+      <article data-severity={finding.severity} data-status={finding.status}>
+        <header>
+          <span class="guide-state" data-tone={tone(finding.severity)}>{finding.severity}</span>
+          <code>{finding.id}</code>
+          <span>{finding.check}</span>
+          <span class="guide-state" data-tone="success">{finding.status}</span>
+        </header>
+        <h3>{finding.scope}</h3>
+        <p>{finding.finding}</p>
+        <dl>
+          <div><dt>Resolution</dt><dd>{finding.resolution}</dd></div>
+          <div><dt>Evidence</dt><dd class="guide-mono">{finding.evidence}</dd></div>
+        </dl>
+      </article>
+    ))}
+  </div>
+
+  <aside class="guide-regression-boundary" role="note">
+    <strong>Review boundary.</strong>
+    <span>This pass records source-auditable and interaction-contract defects. It does not substitute for the remaining manual light/dark, pixel, keyboard, contrast, zoom/reflow and assistive-technology observations.</span>
+    <code>{matrixReviewRun.id} · base {matrixReviewRun.baseRevision.slice(0, 12)}</code>
+  </aside>
+</section>

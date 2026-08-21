@@ -6,6 +6,7 @@ import CatalogueSectionNav from "./CatalogueSectionNav.astro";
 import "../../../../src/v2/catalogue-navigation.css";
 import "../../styles/v2-navigation-tighten.css";
 import "../../styles/v2-navigation-mobile-polish.css";
+import "../../styles/v2-matrix-regression-fixes.css";
 
 const {
   basePath,
@@ -24,7 +25,7 @@ const resolvedActivePath = activePath ?? pathname;
 const deepRoute = resolvedActivePath !== "/v2/";
 const componentCatalogue = resolvedActivePath.replace(/\/+$/, "") === "/v2/components";
 const RenderedComponentGallery = componentCatalogue
-  ? (await import("./RenderedComponentGallery.astro")).default
+  ? (await import("./RenderedComponentGalleryEntry.astro")).default
   : null;
 ---
 <CatalogueMasthead
@@ -85,3 +86,4 @@ const RenderedComponentGallery = componentCatalogue
   })();
 </script>
 <CataloguePageFooter basePath={basePath} activePath={pageFooter ? resolvedActivePath : "/v2/"} />
+<span id="v2-catalogue-content" class="v2-catalogue-content-target" tabindex="-1" aria-label="Route content begins"></span>

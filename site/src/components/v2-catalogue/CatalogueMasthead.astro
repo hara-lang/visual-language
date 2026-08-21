@@ -22,6 +22,7 @@ const context = catalogueRouteContext(activePath);
 const launcherContext = context?.group.label ?? "Catalogue";
 ---
 <header class="v2-catalogue-masthead" data-catalogue-masthead data-launcher-open="false">
+  <a class="v2-catalogue-skip-link" href="#v2-catalogue-content">Skip to route content</a>
   <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
     <HaraMark size={27} />
     <span>
