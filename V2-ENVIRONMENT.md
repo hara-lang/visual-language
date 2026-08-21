@@ -171,7 +171,7 @@ capabilities remain necessary on smaller screens.
 
 ## Adoption sequence
 
-1. Build and review the environment in the visual-language laboratory.
+1. Build and review the environment in the visual-language reference.
 2. Attach application behaviour without changing the shared CSS or component
    markup.
 3. Verify only supported sections and capability groups are present.

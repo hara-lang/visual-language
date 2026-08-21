@@ -3,10 +3,12 @@ export const componentShowcaseGroups = [
     id: "identity-atmosphere",
     eyebrow: "Support layer",
     title: "Identity and atmosphere",
-    description: "Brand, theme, surface, motif, and procedural visual primitives rendered together.",
+    description: "Identity, theme, surface, motif, and procedural visual primitives rendered together.",
     components: [
       { name: "ThemeToggle", path: "src/astro/ThemeToggle.astro" },
       { name: "HaraMark", path: "src/astro/HaraMark.astro" },
+      { name: "HaraIcon", path: "src/astro/HaraIcon.astro" },
+      { name: "HaraGlyph", path: "src/astro/HaraGlyph.astro" },
       { name: "Motif", path: "src/astro/Motif.astro" },
       { name: "Backdrop", path: "src/astro/Backdrop.astro" },
       { name: "Surface", path: "src/astro/Surface.astro" },

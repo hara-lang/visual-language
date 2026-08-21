@@ -30,46 +30,55 @@ const homeHref = withBasePath(basePath, "/v2/www/");
 const docsHref = withBasePath(basePath, "/v2/www/docs/");
 const selectedState = `runtime=all&category=dispatch&confidence=high&selected=integer-call:hara`;
 const shareHref = `${pageUrl.pathname}?${selectedState}`;
+const resultStateLabel = (state) => ({
+  advantage: "comparable",
+  selected: "selected",
+  baseline: "baseline",
+  comparable: "comparable",
+  incomparable: "incomparable",
+  missing: "missing",
+  "low-confidence": "low confidence"
+}[state] ?? state.replace("-", " "));
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="The detailed Hara v2 benchmark family: overview insights, comparison matrix, selected evidence, methods, history, confidence states, and accessible source tables." />
+    <meta name="description" content="Hara benchmark reference with workload definitions, methods, environments, source revisions, samples, uncertainty, comparison limits, result history, and raw-evidence records." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Benchmarks" />
-    <meta property="og:title" content="Hara Benchmarks · Evidence before ranking" />
+    <meta property="og:title" content="Hara benchmark results and methods" />
     <meta property="og:description" content={benchmarkReport.question} />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara benchmark evidence family" />
+    <meta name="twitter:title" content="Hara benchmark results and methods" />
     <meta name="twitter:description" content={benchmarkReport.question} />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara Benchmarks · Insights, matrices, and exact evidence</title>
+    <title>Hara benchmark results and methods</title>
   </head>
   <body class="hara-v2 www-family-page www-benchmarks-page">
-    <WwwFamilyHeader basePath={basePath} activeRoute="benchmarks" searchLabel="Search evidence" />
+    <WwwFamilyHeader basePath={basePath} activeRoute="benchmarks" searchLabel="Search benchmark records" />
     <WwwSubnav label="Benchmarks" items={benchmarkSectionNavigation} activeId="insights">
       <span slot="identity">{benchmarkReport.schema} · {benchmarkReport.schemaVersion}</span>
-      <a class="hara-v2-button" href="#selected-result">Selected evidence</a>
+      <a class="hara-v2-button" href="#selected-result">Selected result</a>
       <button class="hara-v2-button" data-copy-benchmark-view data-share-href={shareHref} type="button">Copy view link</button>
     </WwwSubnav>
 
     <main class="www-main">
       <aside class="www-fixture-banner" role="note">
         <span>Interface fixture</span>
-        <p>Numbers on this route are realistic review data for the visual-language buildout, not published Hara performance claims. Production adoption must replace every result with registry-backed evidence.</p>
+        <p>The numbers on this route are realistic review data for the Visual Language specimen, not published Hara performance results. A production benchmark site must replace every value with registry-backed measurements.</p>
         <code>{benchmarkReport.comparability}</code>
       </aside>
 
       <section class="www-benchmark-hero" aria-labelledby="benchmarks-title">
         <div>
-          <p class="hara-v2-kicker">Benchmark evidence family</p>
-          <h1 id="benchmarks-title">Start with the insight. Keep the method beside it.</h1>
+          <p class="hara-v2-kicker">Measurements · Methods · Limitations</p>
+          <h1 id="benchmarks-title">A benchmark result is meaningful only within its workload, method, and environment.</h1>
           <p>{benchmarkReport.question}</p>
           <div class="www-contract-line">
             <span>{benchmarkReport.contentType}</span>
@@ -87,8 +96,8 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
 
       <section class="www-section" id="insights">
         <header class="www-section-head">
-          <div><p class="hara-v2-kicker">01 · Overview and top insights first</p><h2>Tell the reader what matters before presenting the table.</h2></div>
-          <p>Each insight states confidence, interpretation, and an evidence reference. Missing or incomparable workloads are not silently removed from the summary.</p>
+          <div><p class="hara-v2-kicker">01 · Result summary</p><h2>Begin with the measured observations and their confidence.</h2></div>
+          <p>Each summary states the comparison, confidence, interpretation, and evidence reference. Missing or incomparable workloads remain visible and are not converted into a ranking.</p>
         </header>
 
         <div class="www-benchmark-insight-grid">
@@ -98,7 +107,7 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
               <p class="hara-v2-kicker">{insight.label}</p>
               <strong>{insight.value}</strong>
               <p>{insight.summary}</p>
-              <footer><span>Evidence</span><code>{insight.evidence}</code></footer>
+              <footer><span>Evidence record</span><code>{insight.evidence}</code></footer>
             </article>
           ))}
         </div>
@@ -106,8 +115,8 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
 
       <section class="www-section" id="matrix" data-benchmark-matrix>
         <header class="www-section-head">
-          <div><p class="hara-v2-kicker">02 · Workload and category matrix</p><h2>Every cell can open its exact comparison context.</h2></div>
-          <p>Filters produce a shareable state. Cells preserve missing, incomparable, selected, baseline, and low-confidence semantics without relying on colour alone.</p>
+          <div><p class="hara-v2-kicker">02 · Workload matrix</p><h2>Each value resolves to its exact comparison context.</h2></div>
+          <p>Filters produce a shareable state. Cells preserve selected, baseline, comparable, missing, incomparable, and low-confidence meanings without relying on colour alone.</p>
         </header>
 
         <form class="www-benchmark-filters" onsubmit="return false" aria-label="Benchmark filters">
@@ -120,7 +129,7 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
 
         <div class="www-benchmark-matrix-wrap">
           <table class="www-benchmark-matrix">
-            <caption>Runtime dispatch and collection workload fixture. Lower values are better within comparable rows.</caption>
+            <caption>Runtime dispatch and collection workload fixture. Lower values are better only within comparable rows.</caption>
             <thead>
               <tr><th scope="col">Workload</th><th scope="col">Category</th>{benchmarkColumns.map((column) => <th scope="col">{column.label}</th>)}</tr>
             </thead>
@@ -131,11 +140,12 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
                   <td>{row.category}</td>
                   {benchmarkColumns.map((column) => {
                     const result = row.results[column.id];
+                    const stateLabel = resultStateLabel(result.state);
                     return (
                       <td data-result-state={result.state} data-confidence={result.confidence}>
-                        <button type="button" data-benchmark-cell={`${row.id}:${column.id}`} aria-label={`${row.label}, ${column.label}, ${result.display} ${row.unit}, ${result.state}`}>
+                        <button type="button" data-benchmark-cell={`${row.id}:${column.id}`} aria-label={`${row.label}, ${column.label}, ${result.display} ${row.unit}, ${stateLabel}`}>
                           <strong>{result.display}</strong>
-                          <small>{result.state.replace("-", " ")}</small>
+                          <small>{stateLabel}</small>
                         </button>
                       </td>
                     );
@@ -150,25 +160,25 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
           {benchmarkRows.map((row) => (
             <article>
               <header><div><p class="hara-v2-kicker">{row.category}</p><h3>{row.label}</h3></div><span>{row.unit}</span></header>
-              <dl>{benchmarkColumns.map((column) => <div data-result-state={row.results[column.id].state}><dt>{column.label}</dt><dd>{row.results[column.id].display}<small>{row.results[column.id].state.replace("-", " ")}</small></dd></div>)}</dl>
-              <a href="#selected-result">Inspect evidence →</a>
+              <dl>{benchmarkColumns.map((column) => <div data-result-state={row.results[column.id].state}><dt>{column.label}</dt><dd>{row.results[column.id].display}<small>{resultStateLabel(row.results[column.id].state)}</small></dd></div>)}</dl>
+              <a href="#selected-result">View method and source →</a>
             </article>
           ))}
         </div>
 
         <aside class="www-benchmark-legend" aria-label="Matrix state legend">
-          <div><span data-legend="selected"></span><b>Selected</b><p>Current evidence detail.</p></div>
+          <div><span data-legend="selected"></span><b>Selected</b><p>Current result detail.</p></div>
           <div><span data-legend="baseline"></span><b>Baseline</b><p>Named comparison configuration.</p></div>
           <div><span data-legend="missing"></span><b>Missing</b><p>No successful evidence receipt.</p></div>
           <div><span data-legend="incomparable"></span><b>Incomparable</b><p>Semantics or environment do not support a ratio.</p></div>
-          <div><span data-legend="low-confidence"></span><b>Low confidence</b><p>Visible but excluded from promoted insight.</p></div>
+          <div><span data-legend="low-confidence"></span><b>Low confidence</b><p>Visible but excluded from summary conclusions.</p></div>
         </aside>
       </section>
 
       <section class="www-section" id="selected-result">
         <header class="www-section-head">
-          <div><p class="hara-v2-kicker">03 · Selected benchmark detail</p><h2>Samples, baseline, environment, revision, and method remain adjacent.</h2></div>
-          <p>A selected cell is not a tooltip. It resolves into a complete evidence object with source and harness revisions, raw path, confidence, and reviewed methodology.</p>
+          <div><p class="hara-v2-kicker">03 · Selected result</p><h2>Samples, baseline, environment, revisions, and method remain adjacent.</h2></div>
+          <p>A selected matrix cell resolves to a complete measurement record with source and harness revisions, raw path, confidence, environment, and methodology.</p>
         </header>
 
         <div class="www-selected-benchmark" data-selected-benchmark>
@@ -193,17 +203,17 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
 
           <aside class="www-selected-benchmark__method">
             <section>
-              <header><p class="hara-v2-kicker">Exact environment</p><h3>Run context</h3></header>
+              <header><p class="hara-v2-kicker">Environment</p><h3>Run context</h3></header>
               <ul>{selectedBenchmark.environment.map((item) => <li>{item}</li>)}</ul>
             </section>
             <section>
-              <header><p class="hara-v2-kicker">Named baseline</p><h3>Rust full</h3></header>
+              <header><p class="hara-v2-kicker">Baseline configuration</p><h3>Rust full</h3></header>
               <ul>{selectedBenchmark.baselineConfig.map((item) => <li>{item}</li>)}</ul>
             </section>
             <section>
-              <header><p class="hara-v2-kicker">Methodology beside result</p><h3>runtime-shootout/v3</h3></header>
+              <header><p class="hara-v2-kicker">Method</p><h3>runtime-shootout/v3</h3></header>
               <ol>{selectedBenchmark.method.map((item) => <li>{item}</li>)}</ol>
-              <a href="#source-table">Inspect full method and exclusions →</a>
+              <a href="#source-table">View full method and exclusions →</a>
             </section>
           </aside>
         </div>
@@ -211,8 +221,8 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
 
       <section class="www-section" id="history">
         <header class="www-section-head">
-          <div><p class="hara-v2-kicker">04 · Regression and improvement history</p><h2>A result is a point in a source-revision history.</h2></div>
-          <p>History separates measured movement from explanation. Each note remains tied to a commit and harness-compatible evidence bundle.</p>
+          <div><p class="hara-v2-kicker">04 · Revision history</p><h2>A result belongs to a sequence of source and harness revisions.</h2></div>
+          <p>History separates measured movement from its proposed explanation. Each note remains tied to a commit and a method-compatible evidence bundle.</p>
         </header>
 
         <div class="www-benchmark-history">
@@ -235,8 +245,8 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
 
       <section class="www-section" id="result-states">
         <header class="www-section-head">
-          <div><p class="hara-v2-kicker">05 · Missing, incomparable, and low-confidence states</p><h2>No result is forced into a winner.</h2></div>
-          <p>The matrix keeps incomplete evidence visible and names the exact reason a ratio, ranking, or insight is withheld.</p>
+          <div><p class="hara-v2-kicker">05 · Missing, incomparable, and low-confidence results</p><h2>Incomplete evidence remains visible without producing a conclusion.</h2></div>
+          <p>The matrix names why a ratio or comparison is withheld instead of assigning a placeholder value or removing the workload.</p>
         </header>
         <div class="www-state-grid">
           {benchmarkResultStates.map((state) => (
@@ -244,32 +254,32 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
           ))}
         </div>
         <dl class="www-benchmark-state-counts">
-          {Object.entries(benchmarkStateCounts).map(([state, count]) => <div><dt>{state.replace("-", " ")}</dt><dd>{count}</dd></div>)}
+          {Object.entries(benchmarkStateCounts).map(([state, count]) => <div><dt>{resultStateLabel(state)}</dt><dd>{count}</dd></div>)}
         </dl>
       </section>
 
       <section class="www-section" id="responsive-benchmarks">
         <header class="www-section-head">
-          <div><p class="hara-v2-kicker">06 · Desktop, tablet, and mobile evidence layouts</p><h2>Collapse the comparison without losing the accessible table.</h2></div>
-          <p>The desktop matrix remains the canonical table. Narrow screens gain workload cards for scanning while the table stays available to assistive technology and horizontal inspection.</p>
+          <div><p class="hara-v2-kicker">06 · Desktop, tablet, and mobile layouts</p><h2>Narrow layouts preserve the accessible comparison table.</h2></div>
+          <p>The desktop matrix remains the canonical table. Narrow screens add workload cards for scanning while the table remains available to assistive technology and horizontal inspection.</p>
         </header>
         <div class="www-viewport-grid">
-          <ViewportSpecimen viewport="desktop" label="Desktop" width="1440" note="Matrix + selected inspector">
-            <div class="www-mini-benchmark" data-size="wide"><header>Insights first</header><main><span>5 × 4 matrix</span><b>Selected: integer-call</b></main><aside>Method</aside></div>
+          <ViewportSpecimen viewport="desktop" label="Desktop" width="1440" note="Matrix + selected result">
+            <div class="www-mini-benchmark" data-size="wide"><header>Summary</header><main><span>5 × 4 matrix</span><b>Selected: integer-call</b></main><aside>Method</aside></div>
           </ViewportSpecimen>
           <ViewportSpecimen viewport="tablet" label="Tablet" width="900" note="Matrix scroll + method below">
-            <div class="www-mini-benchmark" data-size="medium"><header>Insights</header><main><span>Scrollable matrix</span><b>Evidence below</b></main></div>
+            <div class="www-mini-benchmark" data-size="medium"><header>Summary</header><main><span>Scrollable matrix</span><b>Method below</b></main></div>
           </ViewportSpecimen>
           <ViewportSpecimen viewport="mobile" label="Mobile" width="390" note="Workload cards + table alternative">
-            <div class="www-mini-benchmark" data-size="narrow"><span>Dispatch</span><h3>integer-call</h3><b>18.4 ns/op</b><small>High confidence · inspect context</small></div>
+            <div class="www-mini-benchmark" data-size="narrow"><span>Dispatch</span><h3>integer-call</h3><b>18.4 ns/op</b><small>High confidence · view context</small></div>
           </ViewportSpecimen>
         </div>
       </section>
 
       <section class="www-section" id="source-table">
         <header class="www-section-head">
-          <div><p class="hara-v2-kicker">07 · Compact source table later</p><h2>The dense ledger belongs after interpretation and selected evidence.</h2></div>
-          <p>This table provides audit navigation: exact source, Hara revision, baseline version, methodology, evidence digest, and review state.</p>
+          <div><p class="hara-v2-kicker">07 · Source and evidence table</p><h2>The complete record follows the readable summary and selected result.</h2></div>
+          <p>This table provides exact source, Hara revision, baseline version, methodology, evidence digest, and review state for every workload.</p>
         </header>
         <div class="www-source-table-wrap">
           <table class="www-source-table">
@@ -280,7 +290,7 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
         </div>
 
         <aside class="www-contract-note" id="benchmarks-contract">
-          <div><p class="hara-v2-kicker">Contract consumed</p><h3>{wwwContracts.benchmarks.schemaNamespace}@{wwwContracts.benchmarks.schemaVersion}</h3></div>
+          <div><p class="hara-v2-kicker">Content contract</p><h3>{wwwContracts.benchmarks.schemaNamespace}@{wwwContracts.benchmarks.schemaVersion}</h3></div>
           <p>{wwwContracts.benchmarks.summary}</p>
           <code>{wwwContracts.benchmarks.types.map(({ id }) => id).join(" · ")}</code>
         </aside>
@@ -288,8 +298,8 @@ const shareHref = `${pageUrl.pathname}?${selectedState}`;
     </main>
 
     <footer class="www-family-footer">
-      <div><strong>Hara Benchmarks</strong><span>Evidence, context, and comparability before ranking.</span></div>
-      <nav aria-label="WWW family footer"><a href={homeHref}>Home</a><a href={docsHref}>Docs</a><a href="#benchmarks-contract">Contract</a></nav>
+      <div><strong>Hara Benchmarks</strong><span>Measurements, methods, revisions, and stated comparison limits.</span></div>
+      <nav aria-label="WWW family footer"><a href={homeHref}>Overview</a><a href={docsHref}>Docs</a><a href="#benchmarks-contract">Content contract</a></nav>
       <code>{benchmarkReport.revision}</code>
     </footer>
 

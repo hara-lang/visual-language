@@ -299,7 +299,7 @@ With `prefers-reduced-motion: reduce`:
 ### Product applications own
 
 - which diagram belongs in a workflow;
-- product-local navigation and commands;
+- application-local navigation and commands;
 - selection and progressive disclosure behavior;
 - user preferences;
 - handoffs to source, Specs, Packages, Playground, World or Learn.

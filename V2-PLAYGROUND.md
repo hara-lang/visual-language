@@ -2,7 +2,7 @@
 
 ## Status
 
-The first Playground application laboratory lives at `/v2/playground/`. It is an interactive protocol and responsive-layout specimen, not a connected Hara evaluator. Its controls model lifecycle transitions so downstream implementations can adopt one visible contract without treating the design site as a runtime host.
+The first Playground application reference lives at `/v2/playground/`. It is an interactive protocol and responsive-layout specimen, not a connected Hara evaluator. Its controls model lifecycle transitions so downstream implementations can adopt one visible contract without treating the design site as a runtime host.
 
 The route starts issue #39. It deliberately builds on the shared v2 catalogue, UI-pattern, front-matter, component, and tool-workbench layers rather than creating a separate editor system.
 
@@ -51,7 +51,7 @@ The application contract requires the following behavior:
 7. Interpreter- and HBC-specific observations may differ, but both use the same lifecycle and event envelope.
 8. Sequence numbers are monotonic within the session envelope and remain visible in output, console, status, and receipts.
 
-The laboratory script simulates these transitions for interaction review. A production Playground must bind the same presentation to the browser live-session API.
+The reference script simulates these transitions for interaction review. A production Playground must bind the same presentation to the browser live-session API.
 
 ## Main studio composition
 

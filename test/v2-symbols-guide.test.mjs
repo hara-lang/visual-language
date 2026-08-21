@@ -32,7 +32,7 @@ test("the symbols guide route renders the public Symbol component and complete i
   assert.ok((page.match(/<Symbol /g) ?? []).length >= 45, "guide must render realistic symbols directly");
 });
 
-test("guide compositions cover every semantic family and Hara product boundary", async () => {
+test("guide compositions cover every semantic family and Hara route boundary", async () => {
   const page = await read(pagePath);
   for (const family of symbolFamilies) assert.match(page, new RegExp(`symbol-family-\\$\\{family\\.id\\}`));
   for (const product of ["www", "docs", "benchmarks", "playground", "specs", "packages", "world", "learn"])

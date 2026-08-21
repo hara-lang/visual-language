@@ -14,7 +14,7 @@ const readSpecimens = async () => (await Promise.all(
   specimenNames.map((name) => read(`../site/src/components/v2-tool/${name}.astro`))
 )).join("\n");
 
-test("Hara Chrome has a dedicated v2 tool laboratory route", async () => {
+test("Hara Chrome has a dedicated v2 tool reference route", async () => {
   const [page, toolPage] = await Promise.all([
     read("../site/src/pages/v2/tool/hara-chrome/index.astro"),
     read("../site/src/pages/v2/tool/index.astro")
@@ -93,7 +93,7 @@ test("individual apps represent current authority boundaries", async () => {
   assert.match(diagnostics, /No content script · no Runtime\.evaluate/);
 });
 
-test("the laboratory CSS covers popup, app, state, and responsive review widths", async () => {
+test("the reference CSS covers popup, app, state, and responsive review widths", async () => {
   const entry = await read("../site/src/styles/v2-hara-chrome-lab.css");
   const css = (await Promise.all([
     "foundation",
@@ -121,10 +121,10 @@ test("the laboratory CSS covers popup, app, state, and responsive review widths"
     assert.match(css, new RegExp(`max-width:\\s*${width}`));
   assert.match(css, /focus-visible/);
   assert.match(css, /prefers-reduced-motion/);
-  assert.doesNotMatch(css, /--hara-[\w-]+\s*:/, "laboratory CSS must not redefine protected Hara tokens");
+  assert.doesNotMatch(css, /--hara-[\w-]+\s*:/, "reference CSS must not redefine protected Hara tokens");
 });
 
-test("the screen laboratory does not implement runtime behaviour", async () => {
+test("the screen reference does not implement runtime behaviour", async () => {
   const [page, specimens] = await Promise.all([
     read("../site/src/pages/v2/tool/hara-chrome/index.astro"),
     readSpecimens()

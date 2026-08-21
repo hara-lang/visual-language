@@ -13,13 +13,13 @@ import {
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
-test("the catalogue has three scalable groups and the complete top-level application family", () => {
+test("the catalogue has three scalable groups and the complete language and community family", () => {
   assert.deepEqual(catalogueGroups.map(({ id }) => id), ["foundations", "library", "applications"]);
 
   const applications = catalogueGroups.find(({ id }) => id === "applications");
   assert.ok(applications);
   assert.deepEqual(applications.items.map(({ label }) => label), [
-    "WWW", "Playground", "Specs", "Packages", "World", "Learn"
+    "Hara overview", "Playground", "Specifications", "Packages", "World", "Learn"
   ]);
 
   const www = catalogueItemById("www");
@@ -32,7 +32,7 @@ test("the catalogue has three scalable groups and the complete top-level applica
 
   const learn = catalogueItemById("learn");
   assert.deepEqual(learn?.children?.map(({ label }) => label), [
-    "Start here", "Agent-first Start", "World interface examples", "Community reader study", "Programmer onboarding study"
+    "Start here", "Repository-guided start", "World interface examples", "Community reader study", "Programmer onboarding study"
   ]);
 });
 
@@ -79,7 +79,7 @@ test("planned routes resolve to implementation issues while current routes use t
   assert.deepEqual(Object.keys(catalogueStatusLabels), ["planned", "active", "settled"]);
 });
 
-test("every implemented laboratory advertised by the manifest exists", async () => {
+test("every implemented reference advertised by the manifest exists", async () => {
   for (const path of [
     "../site/src/pages/v2/foundations/index.astro",
     "../site/src/pages/v2/components/index.astro",
@@ -135,8 +135,8 @@ test("the catalogue home preserves four references and Learn owns the guided Wor
 
   assert.match(page, /import CatalogueHeader/);
   assert.match(page, /catalogueGroups\.map/);
-  assert.match(page, /Shared foundations first\. Product detail where it belongs\./);
-  assert.match(page, /Planned routes lead to their implementation issue/);
+  assert.match(page, /Shared rules and route-specific examples\./);
+  assert.match(page, /A planned route links to its implementation issue/);
   assert.doesNotMatch(page, /const ecosystem = \[/);
 
   for (const name of ["WwwSpecimen", "DocsSpecimen", "SpecsSpecimen", "BenchmarksSpecimen"])
@@ -149,9 +149,9 @@ test("the catalogue home preserves four references and Learn owns the guided Wor
   assert.match(page, /const learnLab = `\$\{basePath\}v2\/learn\/`/);
   assert.match(page, /const worldDiscussionLab = `\$\{basePath\}v2\/world\/discussion\/`/);
   assert.match(page, /const worldAroundLab = `\$\{basePath\}v2\/world\/around\/`/);
-  assert.match(page, /Open Learn/);
-  assert.match(page, /Focused World discussion/);
-  assert.match(page, /Around Hara feed explorer/);
+  assert.match(page, /Read Learn/);
+  assert.match(page, /Read World discussion/);
+  assert.match(page, /View Around Hara/);
 });
 
 test("catalogue styling includes the launcher, compact layers and responsive contracts", async () => {

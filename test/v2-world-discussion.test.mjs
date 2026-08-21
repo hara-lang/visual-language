@@ -6,7 +6,7 @@ const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-test("the focused World laboratory is linked from the v2 review surface", async () => {
+test("the focused World reference is linked from the v2 review surface", async () => {
   const [index, page] = await Promise.all([
     read("../site/src/pages/v2/index.astro"),
     read("../site/src/pages/v2/world/discussion/index.astro")
@@ -14,7 +14,7 @@ test("the focused World laboratory is linked from the v2 review surface", async 
 
   assert.match(index, /const worldDiscussionLab = `\$\{basePath\}v2\/world\/discussion\/`/);
   assert.match(index, /<strong>Focused World discussion<\/strong>/);
-  assert.match(page, /Focused product study · World v2/);
+  assert.match(page, /Community reader · World v2/);
 });
 
 test("the focused route covers front page, thread, clipping, presence, profile, and scope", async () => {
@@ -44,7 +44,7 @@ test("the front page centers articles, feeds, clippings, comments, presence, and
   const page = await read("../site/src/pages/v2/world/discussion/index.astro");
 
   for (const phrase of [
-    "Ranked community index",
+    "Article and discussion index",
     "Package feed",
     "Snippet of the day",
     "Online now",
@@ -100,7 +100,7 @@ test("profiles center packages, contributions, evidence-linked badges, comments,
   assert.match(page, /class="hara-v2-table world-package-table"/);
 });
 
-test("the product boundary moves structured learning to learn.hara-lang.org", async () => {
+test("the route boundary moves structured learning to learn.hara-lang.org", async () => {
   const page = await read("../site/src/pages/v2/world/discussion/index.astro");
 
   assert.match(page, /All learning materials live at learn\.hara-lang\.org\./);

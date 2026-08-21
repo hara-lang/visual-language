@@ -62,7 +62,7 @@ const tokenFamilies = [
   {
     name: "Shell dimensions",
     variables: ["--hara-v2-header-height", "--hara-v2-context-height", "--hara-v2-context-offset", "--hara-v2-rail-width", "--hara-v2-inspector-width"],
-    contract: "Keeps ecosystem chrome and product-local chrome measurable, composable, and independently collapsible."
+    contract: "Keeps ecosystem chrome and application-local chrome measurable, composable, and independently collapsible."
   },
   {
     name: "Reading widths",
@@ -124,7 +124,7 @@ const productRoutePattern = "site/src/pages/v2/{product}";
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
     <meta property="og:title" content="Hara v2 foundations" />
-    <meta property="og:description" content="A visual source of truth for the shared interface language beneath every Hara product." />
+    <meta property="og:description" content="A visual source of truth for the shared interface language beneath every Hara site and tool." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
@@ -142,8 +142,8 @@ const productRoutePattern = "site/src/pages/v2/{product}";
       <section class="foundations-hero" aria-labelledby="foundations-title">
         <div class="foundations-hero-copy">
           <p class="hara-v2-kicker">Shared language · Foundations</p>
-          <h1 id="foundations-title">The interface before the interface.</h1>
-          <p>Hara products may have different information architectures, but they should feel related before a user reads a label. This catalogue makes the protected identity, material, rhythm, image, state, and accessibility contracts visible in one place.</p>
+          <h1 id="foundations-title">Shared interface foundations.</h1>
+          <p>Hara sites and tools may have different information architectures while sharing identity, typography, colour, geometry, state, motion, and accessibility rules. This page records those rules and their source tokens.</p>
           <div class="foundations-hero-actions">
             <a class="hara-v2-button hara-v2-button--primary" href="#identity">Start with identity</a>
             <a class="hara-v2-button" href={themeContract}>Read the written contract</a>
@@ -151,7 +151,7 @@ const productRoutePattern = "site/src/pages/v2/{product}";
           <dl class="foundations-hero-facts">
             <div><dt>Scope</dt><dd>Shared v2 document layer</dd></div>
             <div><dt>Applies to</dt><dd>WWW · Docs · Specs · Packages · World · Learn</dd></div>
-            <div><dt>Does not replace</dt><dd>Product information architecture or tool-only chrome</dd></div>
+            <div><dt>Does not replace</dt><dd>Application information architecture or tool-only chrome</dd></div>
           </dl>
         </div>
         <div class="foundations-hero-field">
@@ -440,18 +440,18 @@ const productRoutePattern = "site/src/pages/v2/{product}";
 
       <section class="foundations-section foundations-ownership" id="ownership">
         <header class="foundations-section-head">
-          <div><p class="hara-v2-kicker">08 · Ownership</p><h2>Shared contract, product composition, laboratory annotation.</h2></div>
+          <div><p class="hara-v2-kicker">08 · Ownership</p><h2>Shared contract, product composition, reference annotation.</h2></div>
           <p>The catalogue must make it obvious which rules downstream products inherit and which presentation exists only to explain the system.</p>
         </header>
 
         <div class="foundations-ownership-grid">
           <article data-owner="shared"><span>Shared package contract</span><h3>Protected</h3><ul><li>Block-H identity and signal</li><li>Theme, colour, state, type, and motion tokens</li><li>Shell and component geometry</li><li>Focus, responsive, and reduced-motion behavior</li></ul><code>src/v2/* · src/astro/v2/*</code></article>
-          <article data-owner="product"><span>Product-owned composition</span><h3>Flexible</h3><ul><li>Information architecture and local navigation</li><li>Real data, workflows, and product terminology</li><li>Screen composition and task prioritisation</li><li>Product-specific imagery that explains the task</li></ul><code>{productRoutePattern}</code></article>
+          <article data-owner="product"><span>Product-owned composition</span><h3>Flexible</h3><ul><li>Information architecture and local navigation</li><li>Real data, workflows, and product terminology</li><li>Screen composition and task prioritisation</li><li>Application-specific imagery that explains the task</li></ul><code>{productRoutePattern}</code></article>
           <article data-owner="lab"><span>Catalogue-only framing</span><h3>Not exported</h3><ul><li>Specimen labels and measurement overlays</li><li>Do/avoid comparisons</li><li>Side-by-side theme previews</li><li>Annotation grids used for review</li></ul><code>site/src/styles/v2-foundations.css</code></article>
         </div>
 
         <div class="foundations-closeout">
-          <div><p class="hara-v2-kicker">Adoption rule</p><h3>Consume the contract. Do not copy the laboratory.</h3><p>Downstream products import `v2.css` and shared Astro components, then own their application composition. They should never copy catalogue CSS or redefine protected Hara tokens locally.</p></div>
+          <div><p class="hara-v2-kicker">Adoption rule</p><h3>Consume the contract. Do not copy the reference.</h3><p>Downstream products import `v2.css` and shared Astro components, then own their application composition. They should never copy catalogue CSS or redefine protected Hara tokens locally.</p></div>
           <div><a class="hara-v2-button hara-v2-button--primary" href={catalogueHome}>Return to catalogue</a><a class="hara-v2-button" href={v1Reference}>View the v1 historical reference</a></div>
         </div>
       </section>

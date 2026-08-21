@@ -54,7 +54,7 @@ The family does not duplicate front-matter fields locally. Editable narrative in
 - `StateSpecimen.astro` — visible unavailable, error, stale, missing, incomparable, and low-confidence outcomes; and
 - `ViewportSpecimen.astro` — explicit desktop, tablet, and mobile review frames.
 
-`site/src/styles/v2-www.css` owns composition for this family. It does not move product-specific layout into global v2 primitives until another product demonstrates the same need.
+`site/src/styles/v2-www.css` owns composition for this family. It does not move application-specific layout into global v2 primitives until another product demonstrates the same need.
 
 ## Home contract
 

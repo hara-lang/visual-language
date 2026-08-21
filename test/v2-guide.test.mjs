@@ -219,7 +219,7 @@ test("documentation is packaged and linked from the README and catalogue footer"
     read("site/src/components/v2-catalogue/CataloguePageFooter.astro")
   ]);
   assert.ok(packageJson.files.includes("V2-GUIDE.md"));
-  for (const phrase of ["Route manifest contract", "Navigation ownership", "Screenshot and accessibility review procedure", "Adding a new application buildout", "Downstream adoption map", "Expansion beyond the initial catalogue"])
+  for (const phrase of ["Route manifest contract", "Navigation ownership", "Screenshot and accessibility review procedure", "Adding a new application reference", "Downstream adoption map", "Expansion beyond the initial catalogue"])
     assert.match(document, new RegExp(phrase, "i"));
   assert.match(readme, /v2 catalogue guide/i);
   assert.match(footer, /Catalogue guide/);

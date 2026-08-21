@@ -25,7 +25,7 @@ test("the retune strengthens operational seams without importing tool-only token
   assert.doesNotMatch(css, /--hara-tool-/);
 });
 
-test("four catalogue references and the Learn World example use the retuned laboratory frame", async () => {
+test("four catalogue references and the Learn World example use the retuned reference frame", async () => {
   const [page, learn, lab] = await Promise.all([
     read("../site/src/pages/v2/index.astro"),
     read("../site/src/pages/v2/learn/index.astro"),

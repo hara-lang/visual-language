@@ -1,16 +1,23 @@
 # @hara-lang/visual-language
 
-Hara's shared precision-material design system. It contains brand tokens,
-cross-domain light/dark theme handling, responsive motifs, maximum-resolution
-vector backgrounds, restrained field effects, document/product shells, and an
-opt-in tool/workbench chrome for Astro and framework-free surfaces.
+This repository contains the shared interface rules used by Hara sites and
+tools. It publishes theme tokens, light and dark themes, motifs, vector
+backgrounds, optional field effects, document shells, data and diagram styles,
+semantic symbols, and stateless Astro components for workbench and runtime
+surfaces.
 
-This package owns the **visual and semantic contract**. Product state, docking
-engines, graph manipulation, drag-and-drop, command dispatch, and other
-behaviour-rich editor systems remain application concerns or belong in
-`@hara-lang/ui`.
+The package owns **presentation and semantic interface contracts**. An
+application continues to own its language and domain data, commands, focus
+movement, persistence, docking, graph manipulation, drag and drop, runtime
+providers, permissions, and other behaviour. Those concerns may also belong in
+`@hara-lang/ui` or the relevant Hara application.
 
-**[View the published visual language laboratory](https://hara-lang.github.io/visual-language/)**
+**[Open the published reference](https://hara-lang.github.io/visual-language/)**  
+**[Open the v2 catalogue](https://hara-lang.github.io/visual-language/v2/)**
+
+Public copy follows [`V2-EDITORIAL.md`](./V2-EDITORIAL.md): describe before
+evaluating, define Hara terms on introductory pages, state implementation status
+plainly, and point claims to source, revisions, specifications, or evidence.
 
 Consumers should pin a release tag exactly:
 
@@ -18,15 +25,18 @@ Consumers should pin a release tag exactly:
 "@hara-lang/visual-language": "github:hara-lang/visual-language#v1.0.0"
 ```
 
-Import `theme.css`, `motifs.css`, and `theme.js` before using the existing Astro
-components. Edge, Aperture, and Rack use the original restored 4096px masters
-and responsive AVIF/WebP delivery assets. Rack is the material reference used by
-the Hara benchmarks hero. Run `npm run assets:build` after a master changes.
+## Version 1 themes, motifs, and backgrounds
 
-The Hara material field system adds five adaptive SVG backgrounds on a
-`4096 × 2304` canvas and five reusable effects. It uses frost, graphite,
-brushed-metal structure, gothic vault geometry, and one functional blue signal;
-there are no decorative multi-colour fields. Import it with:
+Import `theme.css`, `motifs.css`, and `theme.js` before using the version 1 Astro
+components. Edge, Aperture, and Rack use the retained 4096-pixel masters and
+responsive AVIF/WebP delivery assets. Run `npm run assets:build` after a master
+changes.
+
+The field layer adds five adaptive SVG backgrounds on a `4096 × 2304` canvas and
+five reusable effects for evaluation, syntax, symbols, dataflow, and runtime
+contexts. Motion is disabled by default. When enabled, it is limited to
+calibration scans and stepped indicators and must respect reduced-motion
+preferences.
 
 ```astro
 ---
@@ -35,57 +45,55 @@ import "@hara-lang/visual-language/theme.css";
 import "@hara-lang/visual-language/effects.css";
 ---
 
-<section class="hero">
+<section class="runtime-status">
   <Backdrop effect="kernel" intensity="quiet" />
-  <h1>Precision under load.</h1>
+  <h1>Runtime session states</h1>
 </section>
 ```
 
-Motion is off by default. See [`HARA-IMAGERY.md`](./HARA-IMAGERY.md) for the
-complete material, motion, accessibility, and composition rules.
+See [`HARA-IMAGERY.md`](./HARA-IMAGERY.md) for the material, motion,
+accessibility, and composition rules.
 
-## Experimental interface language v2
+## Visual Language v2
 
-V2 has two related entry points. Both preserve the current block-H mark, signal
-dot, theme storage, and heading family. Both now follow a calm-surface rule:
-**precision without armour**. Common controls use quieter seams, restrained
-rounding, sentence-case labels, and smooth state transitions; chamfers and
-strong material effects are reserved for rare identity moments.
+Version 2 adds shared document, application, tool, data, diagram, and symbol
+contracts while preserving the existing Hara mark, signal colour, theme
+storage, and heading family. Common controls use readable labels, consistent
+focus treatment, restrained borders and rounding, and explicit state language.
+Strong material effects remain secondary to content.
 
-**[Open the v2 catalogue guide and live review matrix](https://hara-lang.github.io/visual-language/v2/guide/)**
+**[Open the v2 catalogue guide and review matrix](https://hara-lang.github.io/visual-language/v2/guide/)**
 
-The guide documents the route manifest, global versus product-local navigation,
-shared versus product-owned boundaries, route lifecycle, screenshot and
-accessibility review procedure, and downstream adoption map. See
+The guide records the route manifest, global and route-local navigation, shared
+and application-owned boundaries, route lifecycle, viewport and accessibility
+review procedure, and downstream adoption map. See
 [`V2-GUIDE.md`](./V2-GUIDE.md) for the written contract.
 
 | Entry point | Use it for | Contract |
 | --- | --- | --- |
-| `v2.css` | WWW, Docs, Specs, Benchmarks, World, data products, and content-heavy application shells | [`V2-THEME.md`](./V2-THEME.md) |
+| `v2.css` | Language overview, Docs, Specifications, Benchmarks, World, data products, and content-heavy application shells | [`V2-THEME.md`](./V2-THEME.md) |
 | `v2-tool.css` | Toolbars, docks, inspectors, palettes, viewports, timelines, consoles, editor workbenches, and compact browser-runtime chrome | [`V2-TOOL.md`](./V2-TOOL.md), [`V2-RUNTIME.md`](./V2-RUNTIME.md) |
-| `v2-data.css` | Benchmark evidence, uncertainty, compatibility, telemetry, missing and incomparable values | [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md) |
-| `v2-diagrams.css` | Architecture, runtime flow, sequence, lifecycle, package graphs and complete textual alternatives | [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md) |
-| `v2-icons.css` | Primary current iconography, capability glyphs, product glyphs and accessible compositions | [`V2-ICONS.md`](./V2-ICONS.md) |
-| `v2-symbols.css` | Compatibility semantic-symbol inventory retained for existing adopters | [`V2-SYMBOLS.md`](./V2-SYMBOLS.md) |
-| `v2-media.css` | Email, print/PDF, social cards, artifact provenance, plain text and low-bandwidth projections | [`V2-MEDIA.md`](./V2-MEDIA.md) |
+| `v2-data.css` | Benchmark measurements, uncertainty, compatibility, telemetry, and missing or incomparable values | [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md) |
+| `v2-diagrams.css` | Architecture, runtime flow, sequence, lifecycle, package graphs, and complete text alternatives | [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md) |
+| `v2-symbols.css` | Navigation, action, state, capability, route, authority, and evidence symbols | [`V2-SYMBOLS.md`](./V2-SYMBOLS.md) |
 
 `v2-tool.css` imports `v2.css`, so a workbench consumer imports only the tool
 entry point and places both `hara-v2` and `hara-v2-tool` on its interface root.
-The additive data, diagrams, iconography, compatibility-symbol, and delivery
-media layers share identity, state colours, typography, and responsive
-priorities while products retain authority over facts and behaviour.
+The additive data, diagram, and symbol layers share identity, state colours,
+typography, and responsive priorities while applications retain authority over
+facts and behaviour.
 
-### Evidence graphics and system diagrams
+### Data visualisation and system diagrams
 
 The document layer has two additive explanation grammars:
 
-- **[Data visualisation](https://hara-lang.github.io/visual-language/v2/data/)** — benchmark comparisons, uncertainty, compatibility, runtime telemetry and evidence states through `v2-data.css` and [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md).
-- **[Diagrams and system maps](https://hara-lang.github.io/visual-language/v2/diagrams/)** — architecture, runtime flow, exact sequence, lifecycle and package/namespace relationships through `v2-diagrams.css` and [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md).
+- **[Data visualisation](https://hara-lang.github.io/visual-language/v2/data/)** — benchmark comparisons, uncertainty, compatibility, runtime telemetry, and evidence states through `v2-data.css` and [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md).
+- **[Diagrams and system maps](https://hara-lang.github.io/visual-language/v2/diagrams/)** — architecture, runtime flow, exact sequence, lifecycle, and package or namespace relationships through `v2-diagrams.css` and [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md).
 
-Both are presentation contracts. Downstream products provide the authoritative
-measurements, identities, revisions, events, transitions, dependencies and
-receipts. Every diagram has a relation list, event table, transition table or
-adjacency table that remains complete without the visual.
+Both are presentation contracts. Downstream applications provide the
+authoritative measurements, identities, revisions, events, transitions,
+dependencies, and receipts. Every diagram has a relation list, event table,
+transition table, or adjacency table that remains complete without the visual.
 
 ```astro
 ---
@@ -95,82 +103,47 @@ import "@hara-lang/visual-language/v2-diagrams.css";
 
 <figure class="diagram-figure">
   <figcaption>Session lifecycle · source revision 4f31d2c8</figcaption>
-  <!-- product-owned diagram data and composition -->
+  <!-- application-owned diagram data and composition -->
 </figure>
 ```
 
-### Iconography and semantic-symbol compatibility
+### Semantic symbols and capability iconography
 
-**[Open the current Iconography guide](https://hara-lang.github.io/visual-language/v2/icons/)**
+**[Open the v2 symbols and iconography reference](https://hara-lang.github.io/visual-language/v2/symbols/)**
 
-The primary current iconography layer separates 24 × 24 interface icons from
-32 × 32 runtime capability and product glyphs. It provides original Hara
-geometry, `currentColor`, accessible decorative/meaningful defaults, RTL-aware
-directional controls, forced-colour behavior and 16/20/24/32/48 pixel review.
+The public symbol layer provides 65 stable semantic identifiers across
+navigation, actions, state, runtime capabilities, Hara routes, authority, and
+evidence. Symbols use one `0 0 24 24` geometry system, `currentColor`, and
+16/20/24/32-pixel optical sizes. They do not depend on an icon font or raster
+asset. Unfamiliar, destructive, capability, route, and evidence meanings remain
+supported by text.
 
 ```astro
 ---
-import HaraIcon from "@hara-lang/visual-language/astro/HaraIcon.astro";
-import HaraGlyph from "@hara-lang/visual-language/astro/HaraGlyph.astro";
+import Symbol from "@hara-lang/visual-language/astro/v2/Symbol.astro";
 import "@hara-lang/visual-language/v2.css";
-import "@hara-lang/visual-language/v2-icons.css";
+import "@hara-lang/visual-language/v2-symbols.css";
 ---
 
-<button class="hara-v2-button hara-icon-label" type="button">
-  <HaraIcon name="run" size={20} decorative />
-  <span>Run source</span>
+<button class="hara-v2-symbol-button" type="button" aria-label="Run example">
+  <Symbol name="action-run" size={20} />
 </button>
 
-<a class="hara-product-launcher" href="https://world.hara-lang.org" aria-label="Open Hara World">
-  <HaraGlyph name="product-world" size={48} decorative />
-  <span>World</span>
-</a>
+<span class="hara-v2-symbol-state" data-state="unavailable">
+  <Symbol name="state-unavailable" size={16} />
+  Network unavailable
+</span>
 ```
 
-The already-published **[Semantic symbols guide](https://hara-lang.github.io/visual-language/v2/symbols/)**
-remains available as a compatibility surface. It provides 65 stable 24 × 24
-semantic identifiers through `Symbol.astro`, `v2-symbols.css` and
-`v2/symbols.js`. No public Symbols or Iconography export is removed by the
-catalogue hierarchy; a later compatibility issue may define an explicit
-migration map after downstream usage is known.
+Framework-free consumers may import the inventory from
+`@hara-lang/visual-language/v2/symbols.js`. The package owns names, geometry,
+optical sizing, and accessibility defaults; applications still own commands,
+capability availability, state, permissions, ownership, revisions, and receipts.
+See [`V2-SYMBOLS.md`](./V2-SYMBOLS.md).
 
-Visual Language owns names, geometry, optical sizing and accessibility defaults.
-Products still own commands, capability availability, state, permissions,
-ownership, revisions and receipts. See [`V2-ICONS.md`](./V2-ICONS.md) and
-[`V2-SYMBOLS.md`](./V2-SYMBOLS.md).
+### Document and application shells
 
-### Delivery media
-
-**[Open the delivery-media guide](https://hara-lang.github.io/visual-language/v2/media/)**
-
-The delivery layer projects one semantic artifact into email, print/PDF, Open
-Graph, square, portrait, story, plain-text, feed and low-bandwidth forms without
-rewriting source identity, revision, authority, state or canonical destination.
-It exports `DeliveryFrame.astro`, `ArtifactProvenance.astro` and
-`v2-media.css`.
-
-```astro
----
-import DeliveryFrame from "@hara-lang/visual-language/astro/v2/DeliveryFrame.astro";
-import ArtifactProvenance from "@hara-lang/visual-language/astro/v2/ArtifactProvenance.astro";
-import "@hara-lang/visual-language/v2.css";
-import "@hara-lang/visual-language/v2-media.css";
----
-
-<DeliveryFrame format="print" state="current" label="Package release PDF">
-  <article>...</article>
-</DeliveryFrame>
-
-<ArtifactProvenance envelope={artifactEnvelope} />
-```
-
-Products own which artifact is generated and its editorial workflow. Sources,
-registries, runtimes and reviewers own the exact facts and receipts carried by
-the artifact. See [`V2-MEDIA.md`](./V2-MEDIA.md).
-
-### Document and product shells
-
-**[Open the five-layout v2 laboratory](https://hara-lang.github.io/visual-language/v2/)**
+**[Open the v2 route and layout reference](https://hara-lang.github.io/visual-language/v2/)**
 
 ```astro
 ---
@@ -181,20 +154,20 @@ import "@hara-lang/visual-language/v2.css";
 ---
 
 <Shell sidebar={false}>
-  <Header slot="header" section="Specs" nav={ecosystemNav} />
+  <Header slot="header" section="Specifications" nav={ecosystemNav} />
   <ContextNav slot="context" items={workflowNav} />
   <section class="hara-v2-panel">...</section>
 </Shell>
 ```
 
-The document contract is intentionally additive: v1 tokens and motifs are
-unchanged, so sites can migrate layout family by layout family. See
-[`V2-THEME.md`](./V2-THEME.md) for identity invariants, surface rhythm, site
-anatomy, responsive behaviour, and adoption order.
+The document contract is additive: version 1 tokens and motifs remain unchanged,
+so sites can migrate one layout family at a time. See [`V2-THEME.md`](./V2-THEME.md)
+for identity invariants, surface rhythm, site anatomy, responsive behaviour, and
+adoption order.
 
-### Tool, editor, live-environment, and browser-runtime workbenches
+### Tool, editor, environment, and browser-runtime workbenches
 
-**[Open the environment, 3D, node, and animation workbench laboratory](https://hara-lang.github.io/visual-language/v2/tool/)**
+**[Open the environment, 3D, node, and animation workbench reference](https://hara-lang.github.io/visual-language/v2/tool/)**
 
 ```astro
 ---
@@ -223,7 +196,7 @@ import "@hara-lang/visual-language/v2-tool.css";
 ```
 
 The package exports twenty-six stateless Astro primitives and composites plus
-its public Symbols, Iconography and Delivery Media primitives:
+the public `Symbol` primitive:
 
 - controls: `Toolbar`, `ToolGroup`, `ToolButton`, `ToolToggle`, `ToolSelect`,
   `ToolNumberField`, `TabStrip`, `IconRail`, and `StatusBar`;
@@ -233,8 +206,7 @@ its public Symbols, Iconography and Delivery Media primitives:
   `ResourceList`, `CapabilityPane`, and `EnvironmentWorkbench`;
 - browser runtime: `StatusLamp`, `RuntimeSwitch`, `ConnectionRow`,
   `CompactRuntimeShell`, and `RuntimeAppShell`;
-- symbols and identity: `Symbol`, `HaraIcon`, and `HaraGlyph`;
-- delivery: `DeliveryFrame` and `ArtifactProvenance`.
+- semantics: `Symbol`, with its public `v2/symbols.js` inventory.
 
 The environment layer supplies the standard **Nav / Frontmatter / Graphics /
 Code** content series and capability-aware **Sessions / Files / Canvas / 3D**
@@ -245,16 +217,16 @@ state, responsive, and adoption contract.
 The browser-runtime layer separates requested switch state from actual runtime
 state and adds compact popup and application-shell geometry for extension
 toolbars, REPL hosts, diagnostics, and site-specific browser tools. It contains
-no browser APIs or product behaviour. See [`V2-RUNTIME.md`](./V2-RUNTIME.md).
+no browser APIs or application behaviour. See [`V2-RUNTIME.md`](./V2-RUNTIME.md).
 
 All v2 tool components provide geometry, theme, semantic roles, and initial
 state markers. Applications still own event handling, focus movement,
-persistence, drag/dock behaviour, command execution, provider discovery, and
-domain data. See [`V2-TOOL.md`](./V2-TOOL.md) for the complete token reference,
-component inventory, composition patterns, accessibility requirements, and
-responsive collapse order.
+persistence, drag and dock behaviour, command execution, provider discovery,
+and domain data. See [`V2-TOOL.md`](./V2-TOOL.md) for the complete token
+reference, component inventory, composition patterns, accessibility
+requirements, and responsive collapse order.
 
-The shared Open Graph system adds six `3840 × 2016` material masters and twelve
+The shared Open Graph system adds six `3840 × 2016` masters and twelve
 site-specific cards with deterministic typography. See
 [`OG-IMAGERY.md`](./OG-IMAGERY.md) and rebuild them with `npm run assets:og`.
 

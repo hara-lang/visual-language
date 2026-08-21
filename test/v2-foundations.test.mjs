@@ -205,7 +205,7 @@ test("foundations are proven through realistic compositions and explicit ownersh
     "composition-community"
   ]) assert.match(page, new RegExp(`id="${id}"`), `missing ${id}`);
 
-  assert.match(page, /Consume the contract\. Do not copy the laboratory\./);
+  assert.match(page, /Consume the contract\. Do not copy the reference\./);
   assert.match(page, /Downstream products import `v2\.css`/);
   assert.match(page, /View the v1 historical reference/);
   assert.match(page, /Product-owned composition/);

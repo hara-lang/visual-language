@@ -44,7 +44,7 @@ const importedSpecimen = specimens.find(({ id }) => id === "imported-world-clipp
 const migratedSpecimen = specimens.find(({ id }) => id === "migrated-package-release");
 
 if (!authoringSpecimen || !invalidSpecimen || !importedSpecimen || !migratedSpecimen) {
-  throw new Error("Front matter laboratory specimens are incomplete.");
+  throw new Error("Front matter reference specimens are incomplete.");
 }
 
 const editable = browserEditableFields(authoringSpecimen.contentType);
@@ -64,20 +64,20 @@ const issueHref = (issue) => `https://github.com/hara-lang/visual-language/issue
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hara v2 front matter and content-contract laboratory: schemas, controlled fields, authoring, previews, lifecycle, migration, and provenance." />
+    <meta name="description" content="Hara v2 front matter and content contracts: schemas, controlled fields, authoring, previews, lifecycle, migration, and provenance." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara v2 front matter laboratory" />
+    <meta property="og:title" content="Hara v2 front matter reference" />
     <meta property="og:description" content="Inspectable content contracts for WWW, Docs, Benchmarks, Specs, Packages, World, and Learn." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara v2 front matter laboratory" />
+    <meta name="twitter:title" content="Hara v2 front matter reference" />
     <meta name="twitter:description" content="Content metadata becomes visible interface and durable publication evidence." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara v2 front matter and content-contract laboratory</title>
+    <title>Hara v2 front matter and content contracts</title>
   </head>
   <body class="hara-v2 frontmatter-page">
     <CatalogueHeader basePath={basePath} activePath="/v2/frontmatter/" />
@@ -86,10 +86,9 @@ const issueHref = (issue) => `https://github.com/hara-lang/visual-language/issue
       <section class="frontmatter-hero" aria-labelledby="frontmatter-title">
         <div class="frontmatter-hero-copy">
           <p class="hara-v2-kicker">Shared foundation · Content contract</p>
-          <h1 id="frontmatter-title">Front matter is a public interface, not a hidden preamble.</h1>
+          <h1 id="frontmatter-title">Front matter is typed content metadata.</h1>
           <p>
-            One typed registry drives authoring boundaries, route identity, cards, feeds, search, social metadata,
-            machine endpoints, migrations, and publication receipts across every Hara application family.
+            One typed registry records author-editable, controlled, and derived fields for route identity, cards, feeds, search, social metadata, machine endpoints, migrations, and publication receipts.
           </p>
           <div class="frontmatter-hero-actions">
             <a class="hara-v2-button" data-variant="primary" href="#schema-registry">Inspect schemas</a>
@@ -97,7 +96,7 @@ const issueHref = (issue) => `https://github.com/hara-lang/visual-language/issue
             <a class="hara-v2-button" data-variant="ghost" href="#adoption">Application map</a>
           </div>
           <dl class="frontmatter-hero-ledger" aria-label="Front matter registry inventory">
-            <div><dt>{registryStats.families}</dt><dd>product families</dd></div>
+            <div><dt>{registryStats.families}</dt><dd>route families</dd></div>
             <div><dt>{registryStats.types}</dt><dd>content types</dd></div>
             <div><dt>{registryStats.sharedFields}</dt><dd>shared fields</dd></div>
             <div><dt>{registryStats.lifecycleStates}</dt><dd>lifecycle states</dd></div>
@@ -125,7 +124,7 @@ const issueHref = (issue) => `https://github.com/hara-lang/visual-language/issue
         </div>
       </section>
 
-      <nav class="frontmatter-section-nav" aria-label="Front matter laboratory sections">
+      <nav class="frontmatter-section-nav" aria-label="Front matter reference sections">
         {sectionLinks.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
       </nav>
 
@@ -133,7 +132,7 @@ const issueHref = (issue) => `https://github.com/hara-lang/visual-language/issue
         <header class="frontmatter-section-head">
           <div>
             <p class="hara-v2-kicker">01 · Schema registry</p>
-            <h2>Shared metadata stays common. Product semantics stay precise.</h2>
+            <h2>Shared metadata stays common while each route keeps its own semantics.</h2>
           </div>
           <p>
             Every type has an exact version, required and optional fields, a publication path, and a named registry owner.
@@ -534,7 +533,7 @@ const issueHref = (issue) => `https://github.com/hara-lang/visual-language/issue
           </div>
           <p>
             Shared field semantics and control boundaries stay here. Each application owns realistic domain composition,
-            business rules, and product-specific workflows while linking back to the exact content families it consumes.
+            business rules, and application-specific workflows while linking back to the exact content families it consumes.
           </p>
         </header>
 
@@ -565,7 +564,7 @@ const issueHref = (issue) => `https://github.com/hara-lang/visual-language/issue
             <ul>
               <li>field callouts, device frames, relationship diagrams, and specimen ledgers</li>
               <li>invalid, deprecated, migrated, and imported comparison arrangements</li>
-              <li>laboratory labels that explain ownership and responsive behaviour</li>
+              <li>reference labels that explain ownership and responsive behaviour</li>
             </ul>
           </article>
         </div>

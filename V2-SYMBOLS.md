@@ -313,7 +313,7 @@ Visual Language owns:
 Products own:
 
 - available commands and capabilities;
-- product-local labels and information architecture;
+- application-local labels and information architecture;
 - command dispatch and lifecycle transitions;
 - authorization, moderation and publication rules;
 - identity and ownership facts;

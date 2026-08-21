@@ -2,9 +2,9 @@
 
 ## Status
 
-The detailed Packages application laboratory lives at `/v2/packages/`. It is the visual acceptance surface for the future packages/registry product: package and namespace discovery, exact release evaluation, install handoff, publishing, maintenance, compatibility, signing, provenance, and reproduction.
+The detailed Packages application reference lives at `/v2/packages/`. It is the visual acceptance surface for the future packages/registry product: package and namespace discovery, exact release evaluation, install handoff, publishing, maintenance, compatibility, signing, provenance, and reproduction.
 
-The laboratory uses deterministic design-review fixtures. The shown versions, coordinates, maintainers, signatures, digests, dates, compatibility results, and receipts are not live package-registry records.
+The reference uses deterministic design-review fixtures. The shown versions, coordinates, maintainers, signatures, digests, dates, compatibility results, and receipts are not live package-registry records.
 
 ## Product principle
 
@@ -76,7 +76,7 @@ A package detail surface includes:
 - release history, migration notes, deprecations, supersession, withdrawal, and revocation;
 - Docs, Playground, Specs, World, source, license, receipt, and reproduction links.
 
-The visual laboratory may show an illustrative CLI projection. The resolver and package runtime own executable install syntax, dependency resolution, artifact download, verification, installation, and install-attempt receipts.
+The visual reference may show an illustrative CLI projection. The resolver and package runtime own executable install syntax, dependency resolution, artifact download, verification, installation, and install-attempt receipts.
 
 Install failure is not release revocation. A resolver or mirror failure may produce an install-attempt receipt while the release remains current. A revoked release is a registry lifecycle decision backed by verification or authority evidence and blocks installation under registry policy.
 
@@ -199,7 +199,7 @@ Fixture records must not be presented as current package-registry data.
 
 ## Adoption checklist
 
-Before adopting the laboratory into the packages/registry product:
+Before adopting the reference into the packages/registry product:
 
 1. pin a merged Visual Language revision;
 2. bind package, release, namespace, maintainer, and compatibility views to exact canonical references;

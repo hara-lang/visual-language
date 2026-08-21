@@ -20,7 +20,7 @@ The catalogue and components are dependency-free. Downstream products do not cop
 
 ## Purpose
 
-Hara products need one coherent symbol language for:
+Hara sites and tools need one coherent symbol language for:
 
 - navigation and disclosure;
 - editing and operational commands;
@@ -51,7 +51,7 @@ focusable child: false
 
 Supported review scales are 16, 20, 24, 32 and 48 pixels. The `size` prop is authoritative and renders explicit pixel dimensions.
 
-### Capability and product glyphs
+### Capability and route glyphs
 
 Capability and product identity use a `32 × 32` grid with a default stroke width of `1.6`.
 
@@ -221,9 +221,9 @@ Requested
 filesystem:pending
 ```
 
-## Product glyphs
+## Route glyphs
 
-The Hara family has six primary product glyphs:
+The Hara family has six primary route glyphs:
 
 - `product-www`
 - `product-playground`
@@ -232,7 +232,7 @@ The Hara family has six primary product glyphs:
 - `product-world`
 - `product-learn`
 
-Product glyphs identify destinations in launchers, catalogue cards, favicons/app icons and compact product navigation.
+Route glyphs identify destinations in launchers, catalogue cards, favicons/app icons and compact route navigation.
 
 They must not be reused as:
 
@@ -328,7 +328,7 @@ Only direction-sensitive interface icons mirror beneath `[dir="rtl"]`:
 - forward;
 - up where product direction semantics require it.
 
-Fixed-orientation state, evidence, capability and product glyphs do not mirror automatically.
+Fixed-orientation state, evidence, capability and route glyphs do not mirror automatically.
 
 Products remain responsible for choosing the correct visible label and route direction.
 
@@ -352,7 +352,7 @@ Products remain responsible for choosing the correct visible label and route dir
 - visible labels and accessible names;
 - command dispatch and shortcuts;
 - selected, disabled and destructive behavior;
-- product-local composition;
+- application-local composition;
 - whether a glyph is the correct identity for a destination.
 
 ### Runtimes, registries and identity authorities own
@@ -430,7 +430,7 @@ Focused tests cover:
 - authoritative pixel sizing;
 - route sections and shared catalogue shell;
 - state/evidence distinctions and capability lifecycle;
-- six product glyphs and their destination-only rule;
+- six route glyphs and their destination-only rule;
 - package exports and documentation;
 - 44px controls, RTL mirroring, forced colours and reduced motion;
 - protected-token ownership;

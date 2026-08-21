@@ -8,7 +8,7 @@ It is not a second brand or a replacement for [`v2.css`](./V2-THEME.md).
 `v2-tool.css` imports the document foundation, then adds tool material tokens,
 control primitives, and a viewport-first workbench shell.
 
-**Reference laboratory:**
+**Reference reference:**
 [3D, node/material, and animation workbenches](https://hara-lang.github.io/visual-language/v2/tool/)
 
 ## Boundary
@@ -279,7 +279,7 @@ embedded REPL, graph, timeline, or editor.
 
 This is an additive v2 capability release. It introduces `v2-tool.css`, fifteen
 stateless Astro primitives, framework-free material classes, and the `/v2/tool/`
-reference laboratory. Existing v1 imports and existing `v2.css` document-shell
+reference reference. Existing v1 imports and existing `v2.css` document-shell
 imports remain valid and unchanged. No docking engine, editor runtime, or
 product behaviour is added to this package.
 
@@ -293,7 +293,7 @@ product behaviour is added to this package.
 - [ ] Verify the `1120px`, `820px`, and `640px` collapse states.
 - [ ] Verify explicit light, explicit dark, system theme, focus, disabled, and reduced-motion states.
 - [ ] Keep prose and editorial content on the document surface language.
-- [ ] Record any product-specific extension rather than silently forking shared tokens.
+- [ ] Record any application-specific extension rather than silently forking shared tokens.
 
 See [`README.md`](./README.md) for package imports,
 [`V2-THEME.md`](./V2-THEME.md) for the shared document and identity foundation,

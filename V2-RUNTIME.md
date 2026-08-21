@@ -147,8 +147,8 @@ Applications provide explicit commands for hidden capabilities.
 ## Adoption sequence
 
 1. Compose and review the compact popup and browser applications in the
-   visual-language v2 laboratory.
-2. Verify real product states without implying unsupported providers.
+   visual-language v2 reference.
+2. Verify real route states without implying unsupported providers.
 3. Import or vendor the accepted framework-free contract downstream.
 4. Attach existing runtime behaviour without changing its authority boundary.
 5. Remove local tokens and chrome only after light, dark, focus, disabled,

@@ -56,7 +56,7 @@ The document component contract is deliberately small:
 
 - `Shell` owns header, context, rail, main, inspector, and footer slots.
 - `Header` owns the persistent Hara identity and ecosystem navigation.
-- `ContextNav` owns product-local navigation and command actions.
+- `ContextNav` owns application-local navigation and command actions.
 - `Sidebar` owns grouped, count-aware navigation.
 - `PageHeader` owns page title, actions, metadata, and optional illustration.
 - `FleetField` is an original monochrome command-deck illustration that follows
@@ -175,8 +175,8 @@ The tool extension has its own viewport-first collapse order in
 7. Promote v2 from experimental only after screenshots, keyboard navigation,
    reduced-motion behaviour, and both themes are verified across all families.
 
-See the [five-layout document laboratory](https://hara-lang.github.io/visual-language/v2/)
-and the [tool workbench laboratory](https://hara-lang.github.io/visual-language/v2/tool/)
+See the [five-layout document reference](https://hara-lang.github.io/visual-language/v2/)
+and the [tool workbench reference](https://hara-lang.github.io/visual-language/v2/tool/)
 for the executable reference compositions.
 
 Use the [v2 catalogue guide and live route review matrix](https://hara-lang.github.io/visual-language/v2/guide/)

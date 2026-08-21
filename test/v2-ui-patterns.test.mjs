@@ -57,7 +57,7 @@ test("the UI pattern route is active, internal, and discoverable from the catalo
   assert.equal(catalogueLinkIsExternal(ui), false);
 });
 
-test("the laboratory covers every required interaction family using shared v2 framing", async () => {
+test("the reference covers every required interaction family using shared v2 framing", async () => {
   const page = await read(pagePath);
 
   assert.match(page, /import CatalogueHeader/);
@@ -177,7 +177,7 @@ test("responsive, keyboard, touch, and reduced-motion contracts are visible and 
   assert.match(css, /@media \(max-width: 420px\)/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(css, /min-height: 44px/);
-  assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/, "laboratory CSS must not redefine protected Hara tokens");
+  assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/, "reference CSS must not redefine protected Hara tokens");
 });
 
 test("the ownership boundary keeps shared interaction grammar separate from product business rules", async () => {
@@ -189,5 +189,5 @@ test("the ownership boundary keeps shared interaction grammar separate from prod
   assert.match(page, /responsive collapse order/);
   assert.match(page, /which actions a role may perform/);
   assert.match(page, /moderation and publication policy/);
-  assert.match(page, /do not turn a product-specific state machine into a new global primitive/i);
+  assert.match(page, /do not turn a application-specific state machine into a new global primitive/i);
 });

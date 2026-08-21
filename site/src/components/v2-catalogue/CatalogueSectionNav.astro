@@ -56,7 +56,7 @@ const {
         const source = anchor.closest("nav");
         const aria = source?.getAttribute("aria-label") ?? "";
         const preferred = source?.matches(".foundations-section-nav, .components-section-nav, .ui-section-nav, .playground-local-nav, .start-journey")
-          || /section|journey|laboratory/i.test(aria);
+          || /section|journey|reference/i.test(aria);
         const candidate = { text, score: preferred ? 0 : 1 };
         const existing = labelCandidates.get(id);
         if (!existing || candidate.score < existing.score || (candidate.score === existing.score && text.length < existing.text.length)) {

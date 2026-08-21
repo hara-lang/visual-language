@@ -106,12 +106,12 @@ const sectionLinks = [
       <section class="components-hero" aria-labelledby="components-title">
         <div>
           <p class="hara-v2-kicker">Shared library · Components</p>
-          <h1 id="components-title">The reusable parts, with their boundaries intact.</h1>
-          <p>This catalogue answers four questions for every component: what it means, where it is exported, which states it owns, and where product-specific composition begins. The visual framing belongs to this laboratory; the component geometry and behaviour remain in the package.</p>
+          <h1 id="components-title">Reusable components and their ownership boundaries.</h1>
+          <p>For each component, this catalogue records its semantic role, export path, owned states, accessibility contract, responsive behaviour, and the point where application-specific composition begins.</p>
           <div class="components-hero-actions">
             <a class="hara-v2-button" data-variant="primary" href="#inventory">Browse all exports</a>
             <a class="hara-v2-button" href={foundationsRoute}>Review foundations</a>
-            <a class="hara-v2-button" data-variant="ghost" href={toolRoute}>Open tool laboratory</a>
+            <a class="hara-v2-button" data-variant="ghost" href={toolRoute}>Inspect tool workbenches</a>
           </div>
           <div class="components-hero-stats" aria-label="Component inventory counts">
             <div><strong>{publicComponentInventory.length}</strong><span>public Astro exports</span></div>
@@ -136,7 +136,7 @@ const sectionLinks = [
       <section class="components-section" id="inventory">
         <header class="components-section-head">
           <div><p class="hara-v2-kicker">01 · Public inventory</p><h2>Exports and semantics stay in sync.</h2></div>
-          <p>The visible ledger is backed by a dedicated inventory module and tested directly against package exports. A component is not considered public merely because a class happens to exist in a laboratory.</p>
+          <p>The visible ledger is backed by a dedicated inventory module and tested directly against package exports. A component is not considered public merely because a class happens to exist in a reference.</p>
         </header>
 
         <div class="components-inventory-groups">
@@ -165,7 +165,7 @@ const sectionLinks = [
 
       <section class="components-section" id="shell-navigation">
         <header class="components-section-head">
-          <div><p class="hara-v2-kicker">02 · Shell and navigation</p><h2>Global catalogue, product context, local work.</h2></div>
+          <div><p class="hara-v2-kicker">02 · Shell and navigation</p><h2>Global reference, application context, and local work remain distinct.</h2></div>
           <p>The global catalogue header identifies the design review surface. Product headers and context navigation sit below it. Sidebars and inspectors are optional supporting regions; they never redefine the global route inventory.</p>
         </header>
 
@@ -192,7 +192,7 @@ const sectionLinks = [
         </article>
 
         <div class="components-do-dont">
-          <article data-guidance="do"><span>Do</span><strong>Keep route layers distinct.</strong><p>Catalogue navigation, product navigation, page tabs, and section outlines each have one scope.</p></article>
+          <article data-guidance="do"><span>Do</span><strong>Keep route layers distinct.</strong><p>Catalogue navigation, route navigation, page tabs, and section outlines each have one scope.</p></article>
           <article data-guidance="avoid"><span>Avoid</span><strong>Put every destination in one top row.</strong><p>A flat global menu becomes crowded and removes the distinction between ecosystem, product, and document context.</p></article>
         </div>
       </section>
@@ -369,7 +369,7 @@ const sectionLinks = [
         <div class="components-closeout"><div><p class="hara-v2-kicker">Adoption rule</p><h3>Import the primitive; compose the product.</h3><p>Do not copy catalogue CSS into downstream sites. Import <code>v2.css</code> or <code>v2-tool.css</code>, use the public Astro export when its structure matches, and keep application-specific workflow logic local.</p></div><div><a class="hara-v2-button" data-variant="primary" href={catalogueHome}>Return to catalogue</a><a class="hara-v2-button" href={foundationsRoute}>Review foundations</a></div></div>
       </section>
 
-      <footer class="components-footer"><span>Hara v2 component catalogue · implementation issue <a href="https://github.com/hara-lang/visual-language/issues/35">#35</a></span><span><a href={`${sourceRoot}package.json`}>Package exports</a> · <a href={`${sourceRoot}src/v2/components.css`}>Document components</a> · <a href={`${sourceRoot}src/v2/tool-controls.css`}>Tool controls</a> · <a href={toolRoute}>Tool laboratory</a></span></footer>
+      <footer class="components-footer"><span>Hara v2 component catalogue · implementation issue <a href="https://github.com/hara-lang/visual-language/issues/35">#35</a></span><span><a href={`${sourceRoot}package.json`}>Package exports</a> · <a href={`${sourceRoot}src/v2/components.css`}>Document components</a> · <a href={`${sourceRoot}src/v2/tool-controls.css`}>Tool controls</a> · <a href={toolRoute}>Tool reference</a></span></footer>
     </main>
   </body>
 </html>

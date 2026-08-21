@@ -29,7 +29,7 @@ const localNav = [
   { href: "#overview", label: "Overview" },
   { href: "#optical", label: "Optical sizes" },
   { href: "#inventory", label: "Inventory" },
-  { href: "#products", label: "Product use" },
+  { href: "#products", label: "Route use" },
   { href: "#accessibility", label: "Accessibility" },
   { href: "#adoption", label: "Adoption" }
 ];
@@ -40,7 +40,7 @@ const firstSymbol = symbolInventory[0];
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="The Hara v2 semantic iconography and capability-symbol guide: stable names, optical sizing, currentColor SVG, accessibility, product use and authority boundaries." />
+    <meta name="description" content="The Hara v2 semantic symbol guide: stable names, optical sizing, currentColor SVG, accessibility, route use, and authority boundaries." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
     <meta property="og:title" content="Hara v2 symbols and iconography" />
@@ -49,7 +49,7 @@ const firstSymbol = symbolInventory[0];
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Hara v2 symbols and iconography" />
-    <meta name="twitter:description" content="A shared semantic symbol contract for Hara products, tools and documentation." />
+    <meta name="twitter:description" content="A shared semantic symbol contract for Hara sites, tools and documentation." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
@@ -80,7 +80,7 @@ const firstSymbol = symbolInventory[0];
           <p>Hara symbols identify navigation, commands, state, runtime capabilities, products and evidence. They stay monochrome by default, inherit current colour, and keep unfamiliar, destructive, capability and authority meaning supported by ordinary text.</p>
           <div class="symbol-guide-actions">
             <a href="#inventory">Browse the inventory</a>
-            <a href="#products">Review product compositions</a>
+            <a href="#products">Review route compositions</a>
             <a href="#accessibility">Read accessibility rules</a>
           </div>
         </div>
@@ -99,7 +99,7 @@ const firstSymbol = symbolInventory[0];
               <div><dt>ViewBox</dt><dd>24²</dd></div>
             </dl>
           </div>
-          <footer><span>currentColor SVG</span><span>Products retain behaviour</span></footer>
+          <footer><span>currentColor SVG</span><span>Applications retain behaviour</span></footer>
         </aside>
       </section>
 
@@ -131,8 +131,8 @@ const firstSymbol = symbolInventory[0];
 
       <section class="symbol-guide-section" id="inventory" aria-labelledby="symbol-inventory-title">
         <header class="symbol-guide-section-head">
-          <div><p class="hara-v2-kicker">02 · Semantic inventory</p><h2 id="symbol-inventory-title">A glyph cannot silently acquire a second job.</h2></div>
-          <p>Every symbol has a stable family-prefixed identifier, label, usage boundary and text rule. Select a specimen to inspect the exact public metadata; the product still decides whether that command, capability or state actually exists.</p>
+          <div><p class="hara-v2-kicker">02 · Semantic inventory</p><h2 id="symbol-inventory-title">Each symbol has one recorded semantic role.</h2></div>
+          <p>Every symbol has a stable family-prefixed identifier, label, usage boundary, and text rule. Select a specimen to inspect its public metadata; the application still decides whether a command, capability, or state exists.</p>
         </header>
         <div class="symbol-inspector-layout">
           <div>
@@ -182,7 +182,7 @@ const firstSymbol = symbolInventory[0];
 
       <section class="symbol-guide-section" id="products" aria-labelledby="symbol-products-title">
         <header class="symbol-guide-section-head">
-          <div><p class="hara-v2-kicker">03 · Product compositions</p><h2 id="symbol-products-title">Symbols reinforce the product contract; they do not replace it.</h2></div>
+          <div><p class="hara-v2-kicker">03 · Route compositions</p><h2 id="symbol-products-title">Symbols accompany route labels and state; they do not replace them.</h2></div>
           <p>These compositions use realistic Hara actions, capabilities, states, products and evidence. The visible words remain authoritative for the reader, while products continue to own commands, permissions, lifecycle, data and moderation.</p>
         </header>
         <div class="symbol-composition-grid">

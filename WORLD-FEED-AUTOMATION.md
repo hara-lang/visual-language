@@ -1,6 +1,6 @@
 # Hara World feed explorer and relay contract
 
-This document defines the product boundary visualized by the World v2 laboratory. It is an implementation contract for a future Hara World ingestion service and Hara Bot relay worker; it does not activate production social accounts from the visual-language repository.
+This document defines the route boundary visualized by the World v2 reference. It is an implementation contract for a future Hara World ingestion service and Hara Bot relay worker; it does not activate production social accounts from the visual-language repository.
 
 ## Product role
 

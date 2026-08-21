@@ -2,9 +2,9 @@
 
 ## Status
 
-The detailed Specs application laboratory lives at `/v2/specs/`. It is an interactive registry, checker, proposal, and change-review specimen. The fixture data is deterministic and explicitly marked as non-production; the route does not claim to be connected to the `hara-lang/hara-specs` registry or a live conformance service.
+The detailed Specs application reference lives at `/v2/specs/`. It is an interactive registry, checker, proposal, and change-review specimen. The fixture data is deterministic and explicitly marked as non-production; the route does not claim to be connected to the `hara-lang/hara-specs` registry or a live conformance service.
 
-The laboratory completes issue #40 inside `hara-lang/visual-language`. It consumes the shared catalogue, component, UI-pattern, theme, and front-matter contracts instead of creating a separate standards design system.
+The reference completes issue #40 inside `hara-lang/visual-language`. It consumes the shared catalogue, component, UI-pattern, theme, and front-matter contracts instead of creating a separate standards design system.
 
 ## Product principle
 
@@ -143,7 +143,7 @@ Owns semantic tokens, typography, material, table/form/status presentation, focu
 
 ### Specs application
 
-Owns registry search, product navigation, exact-version composition, checker transport selection, authoring assistance, proposal queue, digest filters, and subscription preferences.
+Owns registry search, route navigation, exact-version composition, checker transport selection, authoring assistance, proposal queue, digest filters, and subscription preferences.
 
 ### `hara-lang/hara-specs`
 
@@ -161,7 +161,7 @@ Fixture labels, identifiers, counts, dates, receipts, and implementation claims 
 
 ## Adoption checklist
 
-Before adopting the laboratory into `hara-lang/hara-specs`:
+Before adopting the reference into `hara-lang/hara-specs`:
 
 1. pin a merged Visual Language revision;
 2. bind registry rows to exact canonical identifiers, versions, and revisions;

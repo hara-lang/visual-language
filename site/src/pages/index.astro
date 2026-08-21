@@ -11,13 +11,14 @@ import "../../../src/theme.js";
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
 const pagesUrl = "https://hara-lang.github.io/visual-language/";
+const v2Url = `${basePath}v2/`;
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site).toString();
 const fields = [
-  { id: "evaluation", file: "evaluation-field.svg", title: "Armour seam", description: "Evaluation state held on an exact machined boundary." },
-  { id: "syntax", file: "ast-field.svg", title: "Syntax conduits", description: "Compiler and AST paths routed through a lancet frame." },
-  { id: "lattice", file: "symbol-lattice.svg", title: "Machined tracery", description: "Repeatable gothic structure for sections, covers, and large surfaces." },
-  { id: "flow", file: "dataflow-orbit.svg", title: "Instrument aperture", description: "Observable state entering a calibrated inspection assembly." },
-  { id: "kernel", file: "kernel-depth.svg", title: "Rack vault", description: "Runtime and stack depth expressed as receding engineered structure." },
+  { id: "evaluation", file: "evaluation-field.svg", title: "Evaluation field", description: "A background specimen for evaluation state, boundaries, and status overlays." },
+  { id: "syntax", file: "ast-field.svg", title: "Syntax field", description: "A background specimen for syntax trees, compiler paths, and related source structure." },
+  { id: "lattice", file: "symbol-lattice.svg", title: "Symbol lattice", description: "A repeatable geometric field for sections, covers, and large reference surfaces." },
+  { id: "flow", file: "dataflow-orbit.svg", title: "Dataflow field", description: "A background specimen for observable state, data movement, and inspection controls." },
+  { id: "kernel", file: "kernel-depth.svg", title: "Runtime field", description: "A depth field for runtime, stack, session, and infrastructure references." },
 ] as const;
 ---
 <!doctype html>
@@ -25,23 +26,23 @@ const fields = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hara visual language: precision-engineered material, gothic structure, adaptive themes, motifs, and components." />
+    <meta name="description" content="Reference implementation for Hara interface tokens, themes, motifs, backgrounds, effects, components, and application specimens." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
     <meta property="og:title" content="Hara Visual Language" />
-    <meta property="og:description" content="Alien precision grounded in frost, graphite, machined structure, and one functional signal." />
+    <meta property="og:description" content="Shared interface rules and reusable specimens for Hara language, documentation, tools, packages, specifications, learning, and community pages." />
     <meta property="og:url" content={pagesUrl} />
     <meta property="og:image" content={socialImage} />
     <meta property="og:image:secure_url" content={socialImage} />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="3840" />
     <meta property="og:image:height" content="2016" />
-    <meta property="og:image:alt" content="Hara visual language — precision material and rack geometry" />
+    <meta property="og:image:alt" content="Hara visual language interface field and rack geometry" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Hara Visual Language" />
-    <meta name="twitter:description" content="Precision material. Exact behavior." />
+    <meta name="twitter:description" content="Interface tokens, themes, components, backgrounds, and route specimens for Hara." />
     <meta name="twitter:image" content={socialImage} />
-    <meta name="twitter:image:alt" content="Hara visual language — precision material and rack geometry" />
+    <meta name="twitter:image:alt" content="Hara visual language interface field and rack geometry" />
     <link rel="canonical" href={pagesUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
     <title>Hara Visual Language</title>
@@ -50,6 +51,7 @@ const fields = [
     <header>
       <a href="./"><HaraMark size={28} /><b>Hara visual language</b></a>
       <nav>
+        <a href={v2Url}>V2 reference</a>
         <a href="#motifs">Motifs</a>
         <a href="#fields">Fields</a>
         <a href="#effects">Effects</a>
@@ -62,31 +64,31 @@ const fields = [
     <main>
       <Motif kind="rack" class="hero">
         <div class="hero-content">
-          <p class="hara-kicker">Material system · Version 1</p>
-          <h1>Precision<br />under load.</h1>
-          <p>Alien, gothic structure grounded in engineered light and dark materials. One signal. No spectacle.</p>
+          <p class="hara-kicker">Interface reference · Version 1</p>
+          <h1>Visual rules<br />for Hara.</h1>
+          <p>This repository defines shared themes, tokens, motifs, backgrounds, effects, and components. Version 2 also records how those rules apply to language, documentation, learning, package, specification, playground, and community routes.</p>
           <div class="hero-actions">
-            <a class="primary-action" href="#motifs">Inspect the system</a>
-            <a href={pagesUrl}>Published Pages site ↗</a>
+            <a class="primary-action" href={v2Url}>Open the v2 reference</a>
+            <a href="https://github.com/hara-lang/visual-language">View source ↗</a>
           </div>
         </div>
       </Motif>
 
       <section id="motifs">
-        <p class="hara-kicker">Primary environments</p>
-        <h2>Edge. Aperture. Rack.</h2>
-        <p class="section-intro">The original three motifs define Hara's material world. Rack is the benchmark hero reference: exact, severe, and built around engineered depth.</p>
+        <p class="hara-kicker">Composition motifs</p>
+        <h2>Edge, aperture, and rack.</h2>
+        <p class="section-intro">The original three motifs are retained as composition references. They describe boundary, inspection, and depth without assigning product meaning to the decoration itself.</p>
         <div class="motif-grid">
-          <Motif kind="edge"><div><b>Edge</b><span>Boundary / tolerance / force</span></div></Motif>
-          <Motif kind="aperture"><div><b>Aperture</b><span>Inspection / focus / instrument</span></div></Motif>
+          <Motif kind="edge"><div><b>Edge</b><span>Boundary / tolerance / state</span></div></Motif>
+          <Motif kind="aperture"><div><b>Aperture</b><span>Inspection / focus / control</span></div></Motif>
           <Motif kind="rack"><div><b>Rack</b><span>Structure / depth / runtime</span></div></Motif>
         </div>
       </section>
 
       <section id="fields">
-        <p class="hara-kicker">Maximum-resolution material fields</p>
-        <h2>Five engineered<br />environments.</h2>
-        <p class="section-intro">Each background is an adaptive `4096 × 2304` SVG built from armour seams, routed conduits, machined tracery, instrument rings, and rack vaults.</p>
+        <p class="hara-kicker">Background references</p>
+        <h2>Five adaptive<br />vector fields.</h2>
+        <p class="section-intro">Each background is a 4096 × 2304 adaptive SVG. The fields support evaluation, syntax, symbol, dataflow, and runtime contexts while remaining secondary to readable content.</p>
         <div class="field-grid">
           {fields.map((field) => (
             <article class="field-card">
@@ -103,9 +105,9 @@ const fields = [
       </section>
 
       <section id="effects">
-        <p class="hara-kicker">Restrained live effects</p>
-        <h2>Instrumentation,<br />not animation.</h2>
-        <p class="section-intro">The five fields are available as Astro backdrops. Motion is off by default and, when enabled, is limited to a small calibration scan and stepped indicators.</p>
+        <p class="hara-kicker">Optional motion states</p>
+        <h2>Motion remains<br />secondary.</h2>
+        <p class="section-intro">The five fields are available as Astro backdrops. Motion is disabled by default and, when enabled, is limited to calibration scans and stepped indicators. Reduced-motion preferences remain authoritative.</p>
         <div class="effect-grid">
           {fields.map((field) => (
             <article class="effect-card field-stage">
@@ -117,8 +119,9 @@ const fields = [
       </section>
 
       <section id="tokens">
-        <p class="hara-kicker">Stable interface</p>
-        <h2>One signal.<br />Two material worlds.</h2>
+        <p class="hara-kicker">Shared interface tokens</p>
+        <h2>One token set,<br />light and dark themes.</h2>
+        <p class="section-intro">Semantic tokens name the page ground, surfaces, recesses, signal colour, and text. Components consume these names rather than embedding route-specific colour values.</p>
         <div class="token-grid">
           <article><i style="background:var(--hara-bg)"></i><b>Ground</b><code>--hara-bg</code></article>
           <article><i style="background:var(--hara-surface-solid)"></i><b>Surface</b><code>--hara-surface-solid</code></article>
@@ -141,7 +144,7 @@ import "@hara-lang/visual-language/effects.css";
         <span aria-hidden="true">·</span>
         <a href="https://github.com/hara-lang/visual-language/blob/main/LICENSE">MIT</a>
       </span>
-      <a href={pagesUrl}>hara-lang.github.io/visual-language/</a>
+      <a href={v2Url}>Hara visual language v2 reference</a>
     </footer>
   </body>
 </html>

@@ -35,63 +35,63 @@ export const catalogueGroups = [
   {
     id: "foundations",
     label: "Foundations",
-    summary: "Identity, materials, tokens, typography, imagery, motion, and content contracts.",
+    summary: "Shared visual, content, accessibility, evidence, and diagram conventions.",
     items: [
       {
         id: "design-system",
         label: "Design system",
         path: "/v2/foundations/",
         href: "/v2/foundations/",
-        summary: "Identity, colour, material, typography, geometry, imagery, motion, and accessibility foundations.",
+        summary: "Reference values for identity, colour, typography, spacing, geometry, imagery, motion, and accessibility.",
         status: "active",
         issue: 34,
-        eyebrow: "Shared language"
+        eyebrow: "Shared interface rules"
       },
       {
         id: "graphics",
         label: "Graphics",
         path: "/v2/graphics/",
         href: "/v2/graphics/",
-        summary: "Cinematic material atmospheres, adaptive fields, repeatable textures, and progressive WebGL shader surfaces.",
+        summary: "Background, texture, field, and shader specimens with fallback and reduced-motion states.",
         status: "active",
-        eyebrow: "Imagery and shaders"
+        eyebrow: "Images and shaders"
       },
       {
         id: "frontmatter",
         label: "Front matter",
         path: "/v2/frontmatter/",
         href: "/v2/frontmatter/",
-        summary: "Cross-product content metadata, controlled fields, lifecycle states, previews, and provenance.",
+        summary: "Typed content metadata, controlled fields, lifecycle states, previews, revisions, and provenance.",
         status: "active",
         issue: 37,
-        eyebrow: "Content contract"
+        eyebrow: "Content metadata"
       },
       {
         id: "catalogue-guide",
         label: "Catalogue guide",
         path: "/v2/guide/",
         href: "/v2/guide/",
-        summary: "Route architecture, live theme and viewport review, state coverage, validation, lifecycle, and downstream adoption.",
+        summary: "Route structure, theme and viewport review, state coverage, validation, lifecycle, and adoption notes.",
         status: "active",
         issue: 90,
-        eyebrow: "Architecture and validation"
+        eyebrow: "Architecture and review"
       },
       {
         id: "data-visualisation",
         label: "Data visualisation",
         path: "/v2/data/",
         href: "/v2/data/",
-        summary: "Accessible benchmark comparisons, uncertainty, compatibility matrices, runtime telemetry and evidence-state guidance.",
+        summary: "Benchmark comparisons, uncertainty, compatibility matrices, runtime telemetry, and missing-data states.",
         status: "active",
         issue: 91,
-        eyebrow: "Evidence graphics"
+        eyebrow: "Measurements and evidence"
       },
       {
         id: "diagrams",
         label: "Diagrams",
         path: "/v2/diagrams/",
         href: "/v2/diagrams/",
-        summary: "Accessible architecture, runtime flow, sequence, lifecycle and package or namespace maps with exact evidence and textual alternatives.",
+        summary: "Architecture, runtime flow, sequence, lifecycle, package, and namespace diagrams with complete text alternatives.",
         status: "active",
         issue: 100,
         eyebrow: "Systems and relationships"
@@ -101,93 +101,70 @@ export const catalogueGroups = [
         label: "Iconography",
         path: "/v2/icons/",
         href: "/v2/icons/",
-        summary: "Original Hara interface icons, evidence symbols, runtime capability glyphs and the WWW, Playground, Specs, Packages, World and Learn product family.",
+        summary: "Interface symbols for actions, state, evidence, runtime capabilities, and the public Hara route families.",
         status: "active",
         issue: 106,
-        eyebrow: "Symbols and product identity",
-        children: [
-          {
-            id: "symbols",
-            label: "Semantic symbols",
-            path: "/v2/symbols/",
-            href: "/v2/symbols/",
-            summary: "The merged 24 × 24 semantic symbol inventory retained as a compatibility surface while Iconography remains the primary current destination.",
-            status: "settled",
-            issue: 102,
-            kind: "compatibility",
-            tabLabel: "Semantic symbols"
-          }
-        ]
-      },
-      {
-        id: "media",
-        label: "Delivery media",
-        path: "/v2/media/",
-        href: "/v2/media/",
-        summary: "Email, print/PDF, social-card, plain-text, open-feed and low-bandwidth projections that preserve source revision, authority, state and canonical destination.",
-        status: "active",
-        issue: 108,
-        eyebrow: "Email, print, social and static"
+        eyebrow: "Symbols and route identity"
       }
     ]
   },
   {
     id: "library",
     label: "Library",
-    summary: "Reusable components, complete interaction patterns, and operational workbench chrome.",
+    summary: "Reusable interface specimens, interaction states, and workbench structures.",
     items: [
       {
         id: "components",
         label: "Components",
         path: "/v2/components/",
         href: "/v2/components/",
-        summary: "Primitive, compound, document, data, profile, feed, form, tool, environment, and runtime component specimens.",
+        summary: "Primitive, compound, document, data, profile, feed, form, tool, environment, and runtime specimens.",
         status: "active",
         issue: 35,
-        eyebrow: "Reusable inventory"
+        eyebrow: "Component reference"
       },
       {
         id: "ui-patterns",
         label: "UI patterns",
         path: "/v2/ui/",
         href: "/v2/ui/",
-        summary: "Navigation, workflows, loading, empty, error, permission, responsive, and input states.",
+        summary: "Navigation, workflow, loading, empty, error, permission, responsive, and input-state references.",
         status: "active",
         issue: 36,
-        eyebrow: "Behaviour over time"
+        eyebrow: "Behaviour and state"
       },
       {
         id: "tool-workbenches",
         label: "Tool workbenches",
         path: "/v2/tool/",
         href: "/v2/tool/",
-        summary: "3D, node/material, animation, dock, inspector, toolbar, overlay, and status surfaces.",
+        summary: "Reference compositions for 3D, node, material, animation, dock, inspector, toolbar, overlay, and status surfaces.",
         status: "settled",
-        eyebrow: "Operational chrome"
+        eyebrow: "Workbench reference"
       }
     ]
   },
   {
     id: "applications",
-    label: "Applications",
-    summary: "Focused product laboratories with distinct information architecture and complete workflow states.",
+    label: "Language and community",
+    summary: "Public language, documentation, learning, package, specification, playground, and community routes.",
     items: [
       {
         id: "www",
-        label: "WWW",
+        label: "Hara overview",
         path: "/v2/www/",
         href: "/v2/www/",
-        summary: "The public language site family: narrative, proof, executable examples, Docs, and Benchmarks.",
+        summary: "A plain-language introduction to Hara forms, runtimes, libraries, source, documentation, and benchmark evidence.",
         status: "active",
         issue: 38,
-        eyebrow: "Public language family",
+        eyebrow: "Programming language",
         children: [
           {
             id: "www-docs",
             label: "Docs",
             path: "/v2/www/docs/",
             href: "/v2/www/docs/",
-            summary: "Guides, reference, search, live examples, version selection, and embedded runtime states.",
+            summary: "Task guides, reference material, search, versions, examples, and explicit runtime states.",
             status: "active",
             issue: 38
           },
@@ -196,7 +173,7 @@ export const catalogueGroups = [
             label: "Benchmarks",
             path: "/v2/www/benchmarks/",
             href: "/v2/www/benchmarks/",
-            summary: "Overview, insights, workload matrix, selected evidence, exact context, and methodology.",
+            summary: "Workload results with method, runtime, revision, uncertainty, history, and source tables.",
             status: "active",
             issue: 38
           }
@@ -207,47 +184,47 @@ export const catalogueGroups = [
         label: "Playground",
         path: "/v2/playground/",
         href: "/v2/playground/",
-        summary: "Samples, studio editor, live sessions, optional control panes, embeds, sharing, and mobile execution.",
+        summary: "Editor, sample, runtime-session, control-pane, embed, sharing, and mobile execution references.",
         status: "active",
         issue: 39,
-        eyebrow: "Executable workspace"
+        eyebrow: "Runnable examples"
       },
       {
         id: "specs",
-        label: "Specs",
+        label: "Specifications",
         path: "/v2/specs/",
         href: "/v2/specs/",
-        summary: "Registry, detail, checker, conformance, proposal, review, publication, and change digest.",
+        summary: "Versioned specifications, conformance results, proposals, reviews, publication records, and change history.",
         status: "active",
         issue: 40,
-        eyebrow: "Standards and checking"
+        eyebrow: "Required behaviour"
       },
       {
         id: "packages",
         label: "Packages",
         path: "/v2/packages/",
         href: "/v2/packages/",
-        summary: "Package discovery, namespace stewardship, compatibility, publishing, provenance, and maintenance.",
+        summary: "Package and namespace records covering ownership, versions, compatibility, artifacts, provenance, and maintenance.",
         status: "active",
         issue: 41,
-        eyebrow: "Distribution and ownership"
+        eyebrow: "Distribution and stewardship"
       },
       {
         id: "world",
         label: "World",
         path: "/v2/world/",
         href: "/v2/world/",
-        summary: "Cross-source feeds, clippings, comments, external signals, presence, contributor profiles, packages, and accountable bots.",
+        summary: "Articles, discussions, external references, contributor profiles, package activity, presence, and owner-attributed bot comments.",
         status: "active",
         issue: 42,
-        eyebrow: "Community reader",
+        eyebrow: "Hara community",
         children: [
           {
             id: "world-discussion",
             label: "Discussion",
             path: "/v2/world/discussion/",
             href: "/v2/world/discussion/",
-            summary: "Articles, feeds, clippings, comments, presence, contributor identity, and the World/Learn boundary.",
+            summary: "Articles, clippings, comments, contributor identity, presence, attribution, and moderation states.",
             status: "active",
             issue: 42,
             tabLabel: "Discussion"
@@ -257,7 +234,7 @@ export const catalogueGroups = [
             label: "Around Hara",
             path: "/v2/world/around/",
             href: "/v2/world/around/",
-            summary: "External signal discovery, curation, source provenance, moderation, and review-first relay workflows.",
+            summary: "External project and article references with source provenance, curation, moderation, and relay review.",
             status: "active",
             issue: 42
           }
@@ -268,30 +245,30 @@ export const catalogueGroups = [
         label: "Learn",
         path: "/v2/learn/",
         href: "/v2/learn/",
-        summary: "Curriculum, runnable lessons, guided product examples, projects, progress, and teaching contracts.",
+        summary: "Introductory explanations, runnable lessons, exercises, projects, progress records, and teaching guidance.",
         status: "active",
         issue: 43,
-        eyebrow: "Structured learning",
+        eyebrow: "Learning Hara",
         children: [
           {
             id: "learn-start",
             label: "Start here",
             path: "/v2/learn/start/",
             href: "/v2/learn/#start",
-            summary: "A short path from the first runnable form to a useful Hara project.",
+            summary: "Read and run a first Hara form, then change it and inspect the result.",
             status: "active",
             issue: 43
           },
           {
             id: "start",
-            label: "Agent-first Start",
+            label: "Repository-guided start",
             path: "/v2/start/",
             href: "/v2/start/",
             canonicalPath: "/v2/learn/start/agent-first/",
             aliases: ["/v2/start/"],
-            summary: "Point an agent at Hara, inspect the evidence behind its recommendation, build a living Habitat, and make one visible mutation.",
+            summary: "Use an agent or inspect the repository directly to choose a verified example, run it, and make one visible change.",
             status: "active",
-            tabLabel: "Agent-first"
+            tabLabel: "Repository guide"
           },
           {
             id: "learn-world-examples",
@@ -310,7 +287,7 @@ export const catalogueGroups = [
             href: "/v2/world/community/",
             canonicalPath: "/v2/learn/studies/world-community/",
             aliases: ["/v2/world/community/"],
-            summary: "The earlier focused community interface retained as a Learn example rather than a World menu destination.",
+            summary: "An earlier community interface retained as a historical Learn example rather than a current World destination.",
             status: "settled",
             kind: "historical",
             tabLabel: "Community study"
@@ -322,7 +299,7 @@ export const catalogueGroups = [
             href: "/v2/world/onboarding/",
             canonicalPath: "/v2/learn/studies/programmer-onboarding/",
             aliases: ["/v2/world/onboarding/"],
-            summary: "The executable-feed acquisition study retained under Learn for comparison and teaching.",
+            summary: "An earlier executable-feed onboarding study retained for comparison and teaching.",
             status: "settled",
             kind: "historical",
             tabLabel: "Onboarding study"
@@ -334,14 +311,14 @@ export const catalogueGroups = [
 ];
 
 export const catalogueStatusLabels = {
-  planned: "Planned buildout",
-  active: "Active study",
-  settled: "Settled contract"
+  planned: "Planned",
+  active: "Implemented",
+  settled: "Reference"
 };
 
 export const catalogueKindLabels = {
   current: "Current route",
-  historical: "Historical study",
+  historical: "Historical",
   compatibility: "Compatibility route"
 };
 
@@ -466,12 +443,10 @@ export function catalogueRouteContext(activePath) {
   const isAlias = active !== canonicalPath && catalogueRoutePaths(item).includes(active);
   const statusLabel = item.kind === "historical"
     ? catalogueKindLabels.historical
-    : item.kind === "compatibility"
-      ? catalogueKindLabels.compatibility
-      : catalogueStatusLabels[item.status];
+    : catalogueStatusLabels[item.status];
 
   const crumbs = [
-    { id: "catalogue", label: "Catalogue", path: "/v2/" },
+    { id: "catalogue", label: "V2 reference", path: "/v2/" },
     { id: group.id, label: group.label, path: `/v2/#catalogue-${group.id}` }
   ];
   if (parent) crumbs.push({ id: family.id, label: family.label, path: family.path });
@@ -486,7 +461,7 @@ export function catalogueRouteContext(activePath) {
     siblings,
     previous: currentIndex > 0 ? siblings[currentIndex - 1] : null,
     next: currentIndex >= 0 && currentIndex < siblings.length - 1 ? siblings[currentIndex + 1] : null,
-    parentTarget: parent ?? { id: "catalogue", label: "Catalogue", path: "/v2/", href: "/v2/", status: "active" },
+    parentTarget: parent ?? { id: "catalogue", label: "V2 reference", path: "/v2/", href: "/v2/", status: "active" },
     crumbs,
     canonicalPath,
     isAlias,

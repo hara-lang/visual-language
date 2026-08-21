@@ -9,7 +9,7 @@ hero. Edge, Aperture, and Rack remain the three primary environments. New
 backgrounds and effects extend their material grammar; they do not replace or
 reinterpret them.
 
-## Live laboratory
+## Live reference
 
 The published visual language is available at:
 

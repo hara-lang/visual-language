@@ -19,9 +19,9 @@ if (!wwwAdoptionContract) throw new Error("Missing issue #38 application contrac
 export const familyRoutes = [
   {
     id: "home",
-    label: "Home",
+    label: "Overview",
     path: "/v2/www/",
-    summary: "Language proposition, proof, ecosystem orientation, releases, and first actions.",
+    summary: "Language model, first form, runtime choices, libraries, source records, and current changes.",
     schemaNamespace: wwwContracts.www.schemaNamespace,
     schemaVersion: wwwContracts.www.schemaVersion
   },
@@ -29,7 +29,7 @@ export const familyRoutes = [
     id: "docs",
     label: "Docs",
     path: "/v2/www/docs/",
-    summary: "Task-oriented guides, references, search, versions, and bounded executable examples.",
+    summary: "Task-oriented guides, reference material, search, versions, and bounded executable examples.",
     schemaNamespace: wwwContracts.docs.schemaNamespace,
     schemaVersion: wwwContracts.docs.schemaVersion
   },
@@ -37,19 +37,19 @@ export const familyRoutes = [
     id: "benchmarks",
     label: "Benchmarks",
     path: "/v2/www/benchmarks/",
-    summary: "Insights, comparison matrices, selected evidence, methods, and result history.",
+    summary: "Workload results, comparison matrices, selected evidence, methods, uncertainty, and result history.",
     schemaNamespace: wwwContracts.benchmarks.schemaNamespace,
     schemaVersion: wwwContracts.benchmarks.schemaVersion
   }
 ];
 
 export const homeSectionNavigation = [
-  { id: "first-example", label: "First example" },
-  { id: "capabilities", label: "Capabilities" },
-  { id: "proof", label: "Proof" },
+  { id: "first-example", label: "First form" },
+  { id: "capabilities", label: "Language model" },
+  { id: "proof", label: "Projects and records" },
   { id: "changes", label: "Changes" },
-  { id: "start", label: "Get started" },
-  { id: "states", label: "States" }
+  { id: "start", label: "Run or install" },
+  { id: "states", label: "Unavailable states" }
 ];
 
 export const docsSectionNavigation = [
@@ -62,7 +62,7 @@ export const docsSectionNavigation = [
 ];
 
 export const benchmarkSectionNavigation = [
-  { id: "insights", label: "Insights" },
+  { id: "insights", label: "Summary" },
   { id: "matrix", label: "Matrix" },
   { id: "selected-result", label: "Selected result" },
   { id: "history", label: "History" },
@@ -74,9 +74,9 @@ export const homeNarrative = {
   contentType: "www.narrative-page",
   schema: "hara.www/narrative-page",
   schemaVersion: wwwContracts.www.schemaVersion,
-  title: "A small language with the whole system still visible.",
-  summary: "Hara keeps forms, libraries, runtime boundaries, generated code, and operational evidence inspectable from the first browser evaluation through native delivery.",
-  eyebrow: "Hara language · public family",
+  title: "Hara is a programming language built from readable forms.",
+  summary: "A form is a Hara data structure that can represent code or data and can be inspected before evaluation. Explicit runtimes evaluate or lower forms on browser Wasm, JVM, and Rust hosts; libraries, capabilities, revisions, and results remain named at those boundaries.",
+  eyebrow: "Hara programming language",
   revision: "sha256:www-family-issue-38",
   proofRefs: [
     "benchmark:runtime-dispatch/2026-08",
@@ -86,43 +86,43 @@ export const homeNarrative = {
 };
 
 export const homeProofLedger = [
-  { label: "Runtime paths", value: "Wasm · JVM · Rust", detail: "One source model, explicit host capabilities." },
-  { label: "First useful surface", value: "Browser session", detail: "No install required for the first bounded evaluation." },
-  { label: "Tooling boundary", value: "Language values", detail: "Analysis, generation, work, and deployment stay composable." },
-  { label: "Evidence contract", value: "Exact revision", detail: "Claims name methods, source, runtime, and receipts." }
+  { label: "Language unit", value: "Readable forms", detail: "Code and data share an inspectable representation." },
+  { label: "Runtime hosts", value: "Wasm · JVM · Rust", detail: "Each executable surface names its host and capabilities." },
+  { label: "Library model", value: "Namespaces and packages", detail: "Public symbols resolve to versioned, maintained records." },
+  { label: "Evidence record", value: "Revision and method", detail: "Measurements and results name their source and context." }
 ];
 
 export const capabilitySections = [
   {
     id: "portability",
     number: "01",
-    title: "Portable forms, not a lowest-common-denominator language.",
-    summary: "The same authored form can be interpreted, lowered, generated, or hosted while capability boundaries remain explicit.",
+    title: "Forms can be interpreted, lowered, generated, or hosted.",
+    summary: "The authored form remains available for inspection while an explicit runtime chooses how to evaluate or translate it.",
     proof: "Representative source revisions are attached to runtime and benchmark records.",
     items: ["Browser Wasm sessions", "JVM and Truffle hosts", "Rust-native lowering", "Generated target code"]
   },
   {
     id: "tooling",
     number: "02",
-    title: "Tools remain ordinary program surfaces.",
-    summary: "Filesystem, compiler, lint, migration, work, package, and deployment APIs stay inspectable and compose through Hara values.",
-    proof: "Namespace references resolve to packages and exact releases instead of generic logo walls.",
+    title: "Libraries and tools use ordinary Hara values.",
+    summary: "Filesystem, compiler, lint, migration, work, package, and deployment interfaces compose through named namespaces and data values.",
+    proof: "Namespace references resolve to packages and exact releases.",
     items: ["std.lib.* foundations", "tool.lint facts", "code.migrate ledger", "work algebra"]
   },
   {
     id: "runtimes",
     number: "03",
-    title: "Runtime state is visible before it becomes surprising.",
-    summary: "Session identity, backend, generation, capabilities, and degraded states appear beside every executable surface.",
-    proof: "The documentation specimen separates static source from executable runtime state.",
+    title: "Executable examples identify their runtime session.",
+    summary: "A session is one runtime context with an identity, backend, generation, capabilities, and an explicit unavailable or degraded state.",
+    proof: "The documentation specimen keeps static source separate from executable runtime state.",
     items: ["Isolated sessions", "Shared groups", "Capability fencing", "Execution receipts"]
   },
   {
     id: "interop",
     number: "04",
-    title: "Interop is an explicit edge, not hidden glue.",
-    summary: "Host values, native interfaces, package coordinates, and generated outputs retain their source and ownership boundaries.",
-    proof: "References point to registry-owned package, namespace, specification, and evidence records.",
+    title: "Host interop is represented at an explicit boundary.",
+    summary: "Host values, native interfaces, package coordinates, and generated outputs retain their source and ownership information.",
+    proof: "References point to package, namespace, specification, and evidence records.",
     items: ["JVM libraries", "Rust native ABI", "JavaScript hosts", "PostgreSQL and service tooling"]
   }
 ];
@@ -131,8 +131,8 @@ export const ecosystemMap = [
   { id: "language", label: "Language", title: "Forms and semantics", summary: "Evaluation, macros, namespaces, schemas, and portable code." },
   { id: "runtime", label: "Runtime", title: "Sessions and execution", summary: "Wasm, JVM, Rust, native interfaces, and explicit capabilities." },
   { id: "library", label: "Library", title: "Reusable systems", summary: "std.lib.*, std.work, code.*, tool.*, and packageable facilities." },
-  { id: "evidence", label: "Evidence", title: "Specs and measurements", summary: "Conformance, benchmarks, exact revisions, and reproducibility receipts." },
-  { id: "community", label: "Community", title: "World and Learn", summary: "Articles, discussions, examples, curriculum, and contributor handoffs." }
+  { id: "evidence", label: "Records", title: "Specifications and measurements", summary: "Conformance, benchmarks, exact revisions, and reproducibility receipts." },
+  { id: "community", label: "Community", title: "World and Learn", summary: "Articles, discussions, examples, curriculum, packages, and contributor records." }
 ];
 
 export const projectProof = [
@@ -172,36 +172,36 @@ export const projectProof = [
 
 export const releaseSummary = [
   { date: "20 Aug 2026", kind: "Runtime", title: "Session controls become a shared interface contract", revision: "rev:runtime-ui-88", impact: "Docs and Playground can expose the same lifecycle states." },
-  { date: "19 Aug 2026", kind: "Content", title: "Front matter registry reaches seven application families", revision: "rev:content-428e", impact: "WWW, Docs, and Benchmarks now consume shared typed metadata." },
+  { date: "19 Aug 2026", kind: "Content", title: "Front matter registry reaches seven route families", revision: "rev:content-428e", impact: "Overview, Docs, and Benchmarks now consume shared typed metadata." },
   { date: "18 Aug 2026", kind: "Language", title: "Schema becomes a first-class typed primitive", revision: "rev:schema-71c4", impact: "Reference, checking, lint, and publication can share one semantic boundary." }
 ];
 
 export const handoffs = [
-  { id: "learn", label: "Learn", title: "Follow a structured path", summary: "Move from the first runnable form into concepts, exercises, and useful projects.", action: "Open Learn", href: "/v2/learn/" },
-  { id: "world", label: "World", title: "See what people are building", summary: "Read articles, clippings, discussions, package updates, and accountable bot contributions.", action: "Open World", href: "/v2/world/" }
+  { id: "learn", label: "Learn", title: "Study the language in sequence", summary: "Continue from the first form into concepts, exercises, projects, and curriculum revisions.", action: "Read Learn", href: "/v2/learn/" },
+  { id: "world", label: "World", title: "Read community work and discussion", summary: "Read articles, clippings, discussions, package changes, and owner-attributed bot contributions.", action: "Read World", href: "/v2/world/" }
 ];
 
 export const gettingStartedChoices = [
   {
     id: "browser",
-    label: "No install",
-    title: "Run the browser session",
-    command: "Open the executable example",
+    label: "Browser",
+    title: "Run the first form",
+    command: "Open the runnable example",
     summary: "Use a capability-fenced Wasm session and inspect the exact source revision before running."
   },
   {
     id: "brew",
     label: "Local CLI",
-    title: "Install with Homebrew",
+    title: "Install Hara locally",
     command: "brew install hara-lang/tap/hara",
-    summary: "Create a local project, run the REPL, and choose a JVM or native host explicitly."
+    summary: "Create a local project, run the REPL, and select a JVM or native host explicitly."
   },
   {
     id: "agent",
-    label: "Agent first",
-    title: "Point an agent at Hara",
-    command: "Tell me what I can build with Hara",
-    summary: "Ask for a recommendation, require evidence, and start from an exact repository revision."
+    label: "Repository guide",
+    title: "Use an agent to inspect the repository",
+    command: "Read the Hara repository and suggest a verified first example",
+    summary: "Require exact files, implementation status, and a verification command before running an example."
   }
 ];
 
@@ -286,7 +286,7 @@ export const benchmarkReport = {
   schema: "hara.benchmarks/report",
   schemaVersion: wwwContracts.benchmarks.schemaVersion,
   title: "Runtime dispatch and collection workloads",
-  question: "Where does Hara retain competitive steady-state performance while preserving inspectable runtime boundaries?",
+  question: "How do selected Hara runtime paths compare with the named baselines under this method and environment?",
   revision: "sha256:bench-2026-08-19-b19e",
   methodology: "methodology:runtime-shootout/v3",
   evidence: "evidence:runtime-shootout/2026-08-19",
@@ -299,7 +299,7 @@ export const benchmarkInsights = [
     label: "Steady call path",
     value: "1.00× baseline",
     confidence: "high fixture",
-    summary: "The selected integer call fixture lands on the Rust-full baseline after warm-up.",
+    summary: "The selected integer call fixture matches the Rust-full baseline after warm-up.",
     evidence: "evidence:int-call/b19e"
   },
   {
@@ -307,7 +307,7 @@ export const benchmarkInsights = [
     label: "Persistent collection path",
     value: "1.05–1.31×",
     confidence: "mixed fixture",
-    summary: "Map and parser workloads remain close, while allocation-sensitive paths need separate interpretation.",
+    summary: "Map and parser workloads remain close in this fixture, while allocation-sensitive paths require separate interpretation.",
     evidence: "evidence:collections/b19e"
   },
   {
@@ -315,7 +315,7 @@ export const benchmarkInsights = [
     label: "Cold start",
     value: "Not comparable",
     confidence: "excluded",
-    summary: "Wasm download, JVM startup, and native process launch answer different questions and are not collapsed.",
+    summary: "Wasm download, JVM startup, and native process launch answer different questions and are not combined.",
     evidence: "review:comparability/cold-start"
   }
 ];
@@ -444,7 +444,7 @@ export const benchmarkResultStates = [
     tone: "danger",
     eyebrow: "Low confidence",
     title: "FFI variance exceeds the review threshold",
-    summary: "Values remain inspectable, but insight cards and ranking surfaces do not promote the result.",
+    summary: "Values remain inspectable, but summary and ranking surfaces do not promote the result.",
     details: ["RSD: 12.8%", "Threshold: 5%", "Affinity investigation open"]
   }
 ];
@@ -460,16 +460,16 @@ export const benchmarkSourceRows = [
 export const sharedOwnership = [
   { layer: "Shared visual language", owns: "Theme, tokens, buttons, fields, tables, badges, tool chrome, responsive primitives", source: "src/v2.css + src/astro/v2/*" },
   { layer: "Shared content contract", owns: "Schema namespaces, required fields, controlled facts, exact revision, evidence and receipts", source: "site/src/lib/v2-frontmatter.mjs" },
-  { layer: "WWW family", owns: "Family header, local navigation, narrative ordering, docs reading shell, benchmark evidence composition", source: "site/src/components/v2-www/*" },
-  { layer: "Product adopter", owns: "Production data, authentication, search index, runtime provider, benchmark registry and canonical domains", source: "hara-www / hara-docs / hara-benchmarks" }
+  { layer: "Hara public site", owns: "Family header, local navigation, overview ordering, docs reading shell, benchmark evidence composition", source: "site/src/components/v2-www/*" },
+  { layer: "Downstream implementation", owns: "Production data, authentication, search index, runtime provider, benchmark registry and canonical domains", source: "hara-www / hara-docs / hara-benchmarks" }
 ];
 
 export const adoptionNotes = [
   {
     product: "hara-www",
-    consume: ["WwwFamilyHeader", "WwwSubnav", "hara.www contracts", "home narrative order"],
-    replace: ["Fixture release feed", "Fixture package proof", "Demo runtime adapter"],
-    preserve: "Explanation → proof → action hierarchy and degraded demo state."
+    consume: ["WwwFamilyHeader", "WwwSubnav", "hara.www contracts", "overview reading order"],
+    replace: ["Fixture release feed", "Fixture package records", "Example runtime adapter"],
+    preserve: "Definition → example → reference hierarchy and unavailable runtime state."
   },
   {
     product: "hara-docs",
@@ -479,9 +479,9 @@ export const adoptionNotes = [
   },
   {
     product: "hara-benchmarks",
-    consume: ["Insight ordering", "Evidence matrix", "selected-result ledger", "hara.benchmarks contracts"],
+    consume: ["Result-summary ordering", "Evidence matrix", "selected-result ledger", "hara.benchmarks contracts"],
     replace: ["All numeric fixtures", "Evidence files", "Comparison review state"],
-    preserve: "Every claim exposes method, environment, samples, baseline, revision, and comparability."
+    preserve: "Every result exposes method, environment, samples, baseline, revision, and comparability."
   }
 ];
 

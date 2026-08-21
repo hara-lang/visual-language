@@ -5,7 +5,7 @@ export const diagramFixtureNotice = {
   label: "Design-review fixtures",
   sourceRevision: "diagram-fixture:4d3d7a2c1f6b9e08",
   productionAuthority: false,
-  summary: "The diagrams use deterministic Hara-shaped fixtures to review visual grammar. Product repositories, runtimes, registries and specifications remain authoritative for architecture, events, states, dependencies and receipts."
+  summary: "The diagrams use deterministic Hara-shaped fixtures to review visual grammar. Application repositories, runtimes, registries and specifications remain authoritative for architecture, events, states, dependencies and receipts."
 };
 
 export const diagramRelationKinds = [

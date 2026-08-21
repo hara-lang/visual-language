@@ -25,31 +25,31 @@ const basePath = base.endsWith("/") ? base : `${base}/`;
 const pageUrl = new URL(`${basePath}v2/world/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
 const documentLab = `${basePath}v2/`;
-const onboardingLab = `${basePath}v2/world/onboarding/`;
+const onboardingLab = `${basePath}v2/learn/`;
 
 const ecosystemNav = [
-  { href: "#feed-explorer", label: "Home" },
+  { href: "#feed-explorer", label: "Overview" },
   { href: "#feed-explorer", label: "World", current: true },
-  { href: "#feed-explorer", label: "Specs" },
-  { href: "#feed-explorer", label: "Packages" },
-  { href: "#feed-explorer", label: "Identity" }
+  { href: `${basePath}v2/specs/`, label: "Specifications" },
+  { href: `${basePath}v2/packages/`, label: "Packages" },
+  { href: "#conversation", label: "People" }
 ];
 
 const worldNav = (current) => [
-  { href: "#feed-explorer", label: "Feed", current: current === "feed" },
-  { href: "#feed-explorer", label: "What’s new", current: current === "new" },
-  { href: "#conversation", label: "Conversations", current: current === "conversation" },
+  { href: "#feed-explorer", label: "Articles", current: current === "feed" },
+  { href: "#feed-explorer", label: "Recent", current: current === "new" },
+  { href: "#conversation", label: "Discussions", current: current === "conversation" },
   { href: "#conversation", label: "People", current: current === "people" },
   { href: "#sources", label: "Sources", current: current === "sources" }
 ];
 
 const feedSidebar = [
-  { label: "Explore", items: [
-    { href: "#feed-explorer", label: "Hot", current: true, badge: 42 },
-    { href: "#feed-explorer", label: "New", badge: 18 },
+  { label: "Read", items: [
+    { href: "#feed-explorer", label: "Current", current: true, badge: 42 },
+    { href: "#feed-explorer", label: "Recent", badge: 18 },
     { href: "#feed-explorer", label: "Following", badge: 9 },
     { href: "#feed-explorer", label: "Releases", badge: 6 },
-    { href: "#feed-explorer", label: "Snippet of the day" }
+    { href: "#feed-explorer", label: "Example of the day" }
   ] },
   { label: "Sources", items: [
     { href: "#sources", label: "Hara World", badge: 8 },
@@ -62,9 +62,9 @@ const feedSidebar = [
 ];
 
 const sourceSidebar = [
-  { label: "Source control", items: [
+  { label: "Source records", items: [
     { href: "#sources", label: "Providers", current: true, badge: 7 },
-    { href: "#sources", label: "Search rules", badge: 12 },
+    { href: "#sources", label: "Inclusion rules", badge: 12 },
     { href: "#sources", label: "Feeds", badge: 12 },
     { href: "#sources", label: "Review queue", badge: 4 }
   ] },
@@ -76,8 +76,8 @@ const sourceSidebar = [
 ];
 
 const conversationSidebar = [
-  { label: "Conversation", items: [
-    { href: "#conversation", label: "Canonical story", current: true },
+  { label: "Discussion", items: [
+    { href: "#conversation", label: "Canonical article", current: true },
     { href: "#conversation", label: "All discussion", badge: 69 },
     { href: "#conversation", label: "World context", badge: 4 },
     { href: "#conversation", label: "Related Hara work", badge: 4 }
@@ -98,7 +98,7 @@ const relaySidebar = [
   ] },
   { label: "Control", items: [
     { href: "#relay", label: "Destinations", badge: 5 },
-    { href: "#relay", label: "Ranking policy" },
+    { href: "#relay", label: "Selection policy" },
     { href: "#relay", label: "Delivery receipts" }
   ] }
 ];
@@ -108,33 +108,33 @@ const relaySidebar = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hara World v2 feed explorer: an attributed reading layer across Hara World, GitHub, Reddit, X, Hacker News, Substack, RSS, and review-gated Hara Bot relays." />
+    <meta name="description" content="Hara World community reader for attributed articles, discussions, package changes, external references, contributor profiles, source subscriptions, moderation, and owner-attributed bot relays." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara World v2 feed explorer" />
-    <meta property="og:description" content="Cross-source Hara discovery, canonical conversations, source management, and receipt-backed relay review." />
+    <meta property="og:title" content="Hara World community reader" />
+    <meta property="og:description" content="Read Hara articles, releases, discussions, and external references while retaining original authorship, canonical links, provider context, and moderation records." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara World v2 feed explorer" />
-    <meta name="twitter:description" content="A focused reader for Hara posts, repositories, discussions, and independent writing." />
+    <meta name="twitter:title" content="Hara World community reader" />
+    <meta name="twitter:description" content="Attributed articles, discussions, package changes, people, sources, and reviewed bot relays around Hara." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara World v2 feed explorer</title>
+    <title>Hara World community reader</title>
   </head>
   <body class="hara-v2 world-feed-lab">
     <header class="v2-lab-header">
       <a class="v2-lab-brand" href={documentLab}>
         <HaraMark size={28} />
         <b>Hara visual language</b>
-        <small>World feed field test</small>
+        <small>World community reference</small>
       </a>
-      <nav aria-label="World feed prototype screens">
-        <a href="#feed-explorer">Feed</a>
+      <nav aria-label="World reference screens">
+        <a href="#feed-explorer">Articles</a>
         <a href="#sources">Sources</a>
-        <a href="#conversation">Conversation</a>
-        <a href="#relay">Hara Bot</a>
+        <a href="#conversation">Discussion</a>
+        <a href="#relay">Bot review</a>
       </nav>
       <ThemeToggle />
     </header>
@@ -142,17 +142,17 @@ const relaySidebar = [
     <main class="v2-lab-main world-feed-lab-main">
       <section class="world-feed-lab-hero">
         <div>
-          <p class="hara-v2-kicker">World feed explorer · Version 2</p>
-          <h1>Hara World listens to the open web.</h1>
-          <p>Incoming users should be able to see what people are building, saying, releasing, and asking about Hara without knowing which repository, subreddit, account, newsletter, or feed to follow first. World gathers those public trails into one attributed, inspectable reading surface.</p>
+          <p class="hara-v2-kicker">Hara community reader · Interface reference</p>
+          <h1>World collects attributed articles, discussions, package changes, and external references.</h1>
+          <p>Each item retains its author, canonical link, source provider, publication time, and moderation state. Readers can follow current work without creating an account; an identity is used only for saved sources, comments, submissions, or maintained profiles.</p>
           <div class="world-feed-lab-hero-actions">
-            <a class="hara-v2-button" data-variant="primary" href="#feed-explorer">Explore what’s hot</a>
-            <a class="hara-v2-button" href="#sources">See the sources</a>
-            <a class="hara-v2-button" href={onboardingLab}>New programmer journey</a>
-            <a class="world-feed-lab-back-link" href={documentLab}>← Back to the v2 laboratory</a>
+            <a class="hara-v2-button" data-variant="primary" href="#feed-explorer">Read current articles</a>
+            <a class="hara-v2-button" href="#sources">View source records</a>
+            <a class="hara-v2-button" href={onboardingLab}>Read Learn</a>
+            <a class="world-feed-lab-back-link" href={documentLab}>← V2 reference</a>
           </div>
         </div>
-        <div class="world-feed-radar" aria-label="Hara World collecting seven public source types">
+        <div class="world-feed-radar" aria-label="Hara World source summary">
           <div class="world-feed-radar-core"><strong>World</strong><small>31 clusters</small></div>
           <span class="world-feed-radar-node world-feed-radar-node--github" data-source="github"><i></i>GitHub · 11</span>
           <span class="world-feed-radar-node world-feed-radar-node--reddit" data-source="reddit"><i></i>Reddit · 6</span>
@@ -160,21 +160,21 @@ const relaySidebar = [
           <span class="world-feed-radar-node world-feed-radar-node--hn" data-source="hacker-news"><i></i>Hacker News · 3</span>
           <span class="world-feed-radar-node world-feed-radar-node--substack" data-source="substack"><i></i>Substack · 5</span>
           <span class="world-feed-radar-node world-feed-radar-node--rss" data-source="rss"><i></i>RSS · 12 feeds</span>
-          <div class="world-feed-radar-pulse"><strong>42</strong><span>incoming today</span></div>
+          <div class="world-feed-radar-pulse"><strong>42</strong><span>items today</span></div>
         </div>
       </section>
 
-      <nav class="world-feed-lab-index" aria-label="World feed screen catalogue">
-        <a href="#feed-explorer"><strong>Feed explorer</strong><span>A calm Reddit-like front page across Hara World, repositories, social posts, discussions, and independent feeds.</span><code>hot / new / following / releases</code></a>
-        <a href="#sources"><strong>Source manager</strong><span>Provider health, relevance rules, review queues, RSS, JSON Feed, and OPML portability.</span><code>listen / normalize / review</code></a>
-        <a href="#conversation"><strong>Canonical conversation</strong><span>Cluster one story across platforms while preserving every original author, link, and discussion context.</span><code>source / cluster / discuss</code></a>
-        <a href="#relay"><strong>Hara Bot relay</strong><span>Ranked candidates, attributed drafts, human review, cooldowns, deduplication, and delivery receipts.</span><code>rank / review / receipt</code></a>
+      <nav class="world-feed-lab-index" aria-label="World reference screen index">
+        <a href="#feed-explorer"><strong>Article reader</strong><span>A front page for Hara World posts, repositories, external discussions, and independent feeds.</span><code>current / recent / following / releases</code></a>
+        <a href="#sources"><strong>Source records</strong><span>Provider health, inclusion rules, review queues, RSS, JSON Feed, and OPML portability.</span><code>fetch / normalize / review</code></a>
+        <a href="#conversation"><strong>Discussion cluster</strong><span>Relate one article across platforms while retaining each original author, link, and discussion context.</span><code>source / relation / discussion</code></a>
+        <a href="#relay"><strong>Owner-attributed bot relay</strong><span>Candidate selection, attributed drafts, human review, cooldowns, deduplication, and delivery receipts.</span><code>select / review / receipt</code></a>
       </nav>
 
       <section class="world-feed-lab-screen" id="feed-explorer">
         <header class="world-feed-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 01 · Incoming users</p><h2>A front page for the Hara conversation.</h2></div>
-          <p>World should become useful before somebody creates an account. The first view answers “what is happening around Hara?” and keeps every external source visible rather than flattening the web into anonymous cards.</p>
+          <div><p class="hara-v2-kicker">Screen 01 · Public reading</p><h2>Read current Hara activity without creating an account.</h2></div>
+          <p>The first view answers what has changed, what is being discussed, and where the canonical material lives. External sources remain identified rather than being flattened into anonymous cards.</p>
         </header>
         <div class="world-feed-lab-canvas">
           <Shell embedded={true} sidebar={true} aside={true} mainId="world-feed-content">
@@ -184,18 +184,18 @@ const relaySidebar = [
               <ThemeToggle />
             </Header>
             <ContextNav slot="context" items={worldNav("feed")}>
-              <a class="hara-v2-button" href="#sources">Add a source</a>
-              <a class="hara-v2-button" data-variant="primary" href="#feed-explorer">Submit a link ↗</a>
+              <a class="hara-v2-button" href="#sources">Add source</a>
+              <a class="hara-v2-button" data-variant="primary" href="#feed-explorer">Submit link ↗</a>
             </ContextNav>
             <Sidebar slot="sidebar" title="World" groups={feedSidebar}>
-              <span>Open RSS, JSON Feed, and OPML remain first-class. Structured learning lives on Learn.</span>
+              <span>RSS, JSON Feed, and OPML remain first-class. Structured lessons and progress remain in Learn.</span>
             </Sidebar>
 
             <FeedExplorer />
 
             <div slot="aside" class="world-feed-aside-stack">
               <section class="hara-v2-panel">
-                <header class="hara-v2-panel-header"><h2>Top conversations</h2><a href="#conversation">View all</a></header>
+                <header class="hara-v2-panel-header"><h2>Current discussions</h2><a href="#conversation">View all</a></header>
                 <div class="hara-v2-panel-body world-feed-aside-list">
                   <a href="#conversation"><b>Schema becomes a runtime value</b><span>4 sources</span><small>69 responses · active 8 min ago</small></a>
                   <a href="#conversation"><b>What is bare-metal work?</b><span>3 sources</span><small>41 responses · active 21 min ago</small></a>
@@ -203,30 +203,30 @@ const relaySidebar = [
                 </div>
               </section>
               <section class="hara-v2-panel">
-                <header class="hara-v2-panel-header"><h2>New to Hara?</h2></header>
+                <header class="hara-v2-panel-header"><h2>New to Hara</h2></header>
                 <div class="hara-v2-panel-body">
-                  <p>Start with one runnable form, then follow the people and projects around it. No account is required for the first run.</p>
-                  <a class="hara-v2-button" data-variant="primary" href={onboardingLab}>Open newcomer path</a>
-                  <a class="hara-v2-button" href="#feed-explorer">See Snippet of the Day</a>
+                  <p>Learn defines forms, values, runtimes, namespaces, packages, and capabilities before introducing larger projects.</p>
+                  <a class="hara-v2-button" data-variant="primary" href={onboardingLab}>Read the first lesson</a>
+                  <a class="hara-v2-button" href="#feed-explorer">View example of the day</a>
                 </div>
               </section>
               <section class="hara-v2-panel">
                 <header class="hara-v2-panel-header"><h2>What’s New</h2><span class="hara-v2-badge">Weekly</span></header>
                 <div class="hara-v2-panel-body">
-                  <p>A portable digest of releases, discussions, projects, and community posts selected from the same attributed feed.</p>
-                  <button class="hara-v2-button">Join the mailing list</button>
+                  <p>A weekly list of releases, discussions, projects, and community posts selected from the same attributed sources.</p>
+                  <button class="hara-v2-button">Subscribe by email</button>
                 </div>
               </section>
             </div>
           </Shell>
         </div>
-        <div class="world-feed-lab-notes"><article><b>Read before joining</b><p>The public feed is immediately useful. Sign-in appears for saving, following, submitting, or adding World context.</p></article><article><b>Source stays visible</b><p>Reddit, X, Hacker News, Substack, GitHub, and open feeds retain their own authorship and engagement context.</p></article><article><b>Inspectable heat</b><p>Every rank can expose a score receipt. Popularity is a discovery signal, not an endorsement or hidden authority.</p></article></div>
+        <div class="world-feed-lab-notes"><article><b>Read before signing in</b><p>Sign-in is used for saving, following, submitting, commenting, or adding World context; it is not required to read.</p></article><article><b>Source remains visible</b><p>Reddit, X, Hacker News, Substack, GitHub, and open feeds retain their own authorship and discussion context.</p></article><article><b>Ranking is inspectable</b><p>A rank can expose its inputs and revision. Popularity is a sorting signal, not an endorsement or authority claim.</p></article></div>
       </section>
 
       <section class="world-feed-lab-screen" id="sources">
         <header class="world-feed-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 02 · Source control</p><h2>Open feeds with deliberate relevance.</h2></div>
-          <p>“Hara” is an overloaded word. The source layer needs explicit context, provider health, reviewable exclusions, and portable subscriptions rather than one opaque keyword search.</p>
+          <div><p class="hara-v2-kicker">Screen 02 · Source records</p><h2>Sources remain independent and portable.</h2></div>
+          <p>“Hara” is an overloaded word, so inclusion requires explicit context, provider health, reviewable exclusions, and portable subscriptions rather than one opaque keyword query.</p>
         </header>
         <div class="world-feed-lab-canvas">
           <Shell embedded={true} sidebar={true} aside={true} mainId="world-source-content">
@@ -239,7 +239,7 @@ const relaySidebar = [
               <a class="hara-v2-button" data-variant="primary" href="#sources">Add source ↗</a>
             </ContextNav>
             <Sidebar slot="sidebar" title="Sources" groups={sourceSidebar}>
-              <span>Provider payloads remain auditable. Ranking consumes one normalized, attributed item envelope.</span>
+              <span>Provider payloads remain auditable. Ranking reads one normalized, attributed item envelope.</span>
             </Sidebar>
 
             <SourceManager />
@@ -250,24 +250,24 @@ const relaySidebar = [
                 <div class="hara-v2-panel-body world-feed-aside-list">
                   <div><b>Identity</b><span>required</span><small>source, author, canonical URL, published time</small></div>
                   <div><b>Content</b><span>required</span><small>title, summary, kind, public state</small></div>
-                  <div><b>Signals</b><span>derived</span><small>relevance, velocity, trust, freshness, depth, novelty</small></div>
+                  <div><b>Signals</b><span>derived</span><small>relevance, freshness, source confidence, discussion depth, novelty</small></div>
                   <div><b>Receipt</b><span>retained</span><small>provider snapshot and normalization version</small></div>
                 </div>
               </section>
               <section class="hara-v2-panel">
-                <header class="hara-v2-panel-header"><h2>Source principle</h2></header>
-                <div class="hara-v2-panel-body"><p>World links outward. It does not make a permanent unattributed copy of somebody else’s post, comments, or newsletter.</p></div>
+                <header class="hara-v2-panel-header"><h2>Source rule</h2></header>
+                <div class="hara-v2-panel-body"><p>World links to canonical material. It does not create a permanent unattributed copy of another person’s post, comments, or newsletter.</p></div>
               </section>
             </div>
           </Shell>
         </div>
-        <div class="world-feed-lab-notes"><article><b>Provider boundary</b><p>Each API or feed adapter only fetches and normalizes. It does not own ranking, clustering, or publication decisions.</p></article><article><b>False-positive review</b><p>Weak “Hara” keyword matches cannot trend automatically. Strong language and repository evidence can enter normally.</p></article><article><b>Portable follows</b><p>RSS, JSON Feed, and OPML let community subscriptions outlive a World account or implementation.</p></article></div>
+        <div class="world-feed-lab-notes"><article><b>Provider boundary</b><p>An API or feed adapter fetches and normalizes. It does not own ranking, clustering, or publication decisions.</p></article><article><b>False-positive review</b><p>Weak keyword matches require review. Strong language, package, and repository references may enter normally.</p></article><article><b>Portable subscriptions</b><p>RSS, JSON Feed, and OPML let community subscriptions outlive a World account or implementation.</p></article></div>
       </section>
 
       <section class="world-feed-lab-screen" id="conversation">
         <header class="world-feed-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 03 · Cross-platform discussion</p><h2>One story, many original conversations.</h2></div>
-          <p>A release can be linked from X, submitted to Hacker News, discussed on Reddit, and annotated in World. Clustering should reduce duplicate feed noise without erasing those distinct communities.</p>
+          <div><p class="hara-v2-kicker">Screen 03 · Related discussions</p><h2>One article may have several original discussions.</h2></div>
+          <p>A release can be linked from X, submitted to Hacker News, discussed on Reddit, and annotated in World. Clustering reduces duplicate entries without erasing the distinct communities or their source-local measures.</p>
         </header>
         <div class="world-feed-lab-canvas">
           <Shell embedded={true} sidebar={true} aside={false} mainId="world-conversation-content">
@@ -277,28 +277,28 @@ const relaySidebar = [
               <ThemeToggle />
             </Header>
             <ContextNav slot="context" items={worldNav("conversation")}>
-              <a class="hara-v2-button" href="#feed-explorer">← Feed</a>
-              <a class="hara-v2-button" href="#conversation">Report cluster</a>
+              <a class="hara-v2-button" href="#feed-explorer">← Articles</a>
+              <a class="hara-v2-button" href="#conversation">Report relation</a>
               <a class="hara-v2-button" data-variant="primary" href="#conversation">Add World context ↗</a>
             </ContextNav>
-            <Sidebar slot="sidebar" title="Conversation" groups={conversationSidebar}>
-              <span>World comments add ecosystem context; they do not replace discussion on the canonical source.</span>
+            <Sidebar slot="sidebar" title="Discussion" groups={conversationSidebar}>
+              <span>World comments add Hara-specific context; they do not replace discussion on the canonical source.</span>
             </Sidebar>
 
             <ConversationCluster />
           </Shell>
         </div>
-        <div class="world-feed-lab-notes"><article><b>Canonical first</b><p>The underlying release or article remains the primary object. Cross-posts become members of its conversation cluster.</p></article><article><b>No metric flattening</b><p>Likes, points, upvotes, replies, and comments retain source-local labels rather than becoming a fake universal count.</p></article><article><b>Merge receipts</b><p>Moderators can inspect why items were joined and split a cluster when evidence was wrong.</p></article></div>
+        <div class="world-feed-lab-notes"><article><b>Canonical material first</b><p>The underlying release or article remains the primary object. Cross-posts become related discussion records.</p></article><article><b>Source-local measures</b><p>Likes, points, upvotes, replies, and comments retain their original labels rather than becoming a universal count.</p></article><article><b>Relation receipts</b><p>Moderators can inspect why items were related and separate them when the evidence was incorrect.</p></article></div>
       </section>
 
       <section class="world-feed-lab-screen" id="relay">
         <header class="world-feed-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 04 · Operator automation</p><h2>Hara Bot is a relay with receipts.</h2></div>
-          <p>Top-performing work can be proposed for X, Reddit, community channels, and the What’s New digest. Community and third-party material remains human-reviewed; only narrow Hara-owned facts can update World’s internal hot list automatically.</p>
+          <div><p class="hara-v2-kicker">Screen 04 · Bot review</p><h2>Bot contributions name their owner, source, and delivery receipt.</h2></div>
+          <p>Public Hara releases or selected community material may be drafted for a digest or external channel. Community and third-party material remains human-reviewed; narrow Hara-owned facts may update World’s internal recent list automatically.</p>
         </header>
         <div class="world-feed-lab-canvas">
           <Shell embedded={true} sidebar={true} aside={false} mainId="world-relay-content">
-            <Header slot="header" section="World ops" nav={ecosystemNav}>
+            <Header slot="header" section="World operations" nav={ecosystemNav}>
               <span class="hara-v2-badge" data-tone="warning">Review mode</span>
               <button class="hara-v2-icon-button" aria-label="Operator account">◎</button>
               <ThemeToggle />
@@ -309,23 +309,23 @@ const relaySidebar = [
               <a class="hara-v2-button" data-variant="primary" href="#relay">Review next ↗</a>
             </ContextNav>
             <Sidebar slot="sidebar" title="Relay" groups={relaySidebar}>
-              <span>Replies, comments, private or deleted content, unattributed quotes, and duplicate receipts are blocked.</span>
+              <span>Replies, comments, private or deleted content, unattributed quotations, and duplicate receipts are blocked.</span>
             </Sidebar>
 
             <RelayConsole />
           </Shell>
         </div>
-        <div class="world-feed-lab-notes"><article><b>Proposal, not personality</b><p>The bot drafts attributed relays from public facts. It does not manufacture opinions or autonomously join conversations.</p></article><article><b>Narrow auto path</b><p>Hara-owned releases, advisories, and scheduled snippets may auto-enter World’s own hot module. External posts remain reviewable.</p></article><article><b>Idempotent effects</b><p>Each destination receives one immutable publication receipt. A retry reuses it instead of creating a duplicate post.</p></article></div>
+        <div class="world-feed-lab-notes"><article><b>Attributed drafts</b><p>The bot drafts relays from public facts and names its owner. It does not invent opinions or autonomously join discussions.</p></article><article><b>Narrow automatic path</b><p>Hara-owned releases, advisories, and scheduled examples may enter World’s own recent module. External posts remain reviewable.</p></article><article><b>Idempotent delivery</b><p>Each destination receives one immutable publication receipt. A retry reuses it instead of creating a duplicate post.</p></article></div>
       </section>
 
       <section class="world-feed-lab-conclusion">
-        <div><p class="hara-v2-kicker">Proposed World grammar</p><h2>Feed · What’s new · Conversations · People · Sources</h2><p>World becomes the Hara ecosystem’s focused public reader: discover work across the open web, follow the people and repositories behind it, discuss with context, and amplify responsibly. Structured learning stays on Learn; production relay credentials stay outside visual-language.</p></div>
-        <a class="hara-v2-button" href={documentLab}>Return to v2 laboratory</a>
+        <div><p class="hara-v2-kicker">World route structure</p><h2>Articles · Recent changes · Discussions · People · Sources</h2><p>World is a public reader for work around Hara. It preserves canonical sources, supports maintained profiles and package records, and provides contextual discussion without turning community activity into a popularity score. Structured learning remains in Learn; relay credentials remain outside Visual Language.</p></div>
+        <a class="hara-v2-button" href={documentLab}>Return to V2 reference</a>
       </section>
 
       <footer class="v2-lab-footer">
-        <span>Experimental World feed and relay study · Hara visual language v2</span>
-        <span><a href={documentLab}>Document laboratory</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+        <span>Hara World community reference · Visual language v2</span>
+        <span><a href={documentLab}>V2 reference</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>
   </body>

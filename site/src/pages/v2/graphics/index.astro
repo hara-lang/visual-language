@@ -31,17 +31,17 @@ const themeImages = Object.fromEntries(backgrounds.map((asset) => [asset.theme, 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Hara v2 graphics laboratory: six original 4K raster backgrounds, four 4K raster textures, six material atmospheres, and six live WebGL shaders." />
+    <meta name="description" content="Hara v2 graphics reference: six 4K raster backgrounds, four 4K raster textures, six material atmospheres, and six WebGL shader fields." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara v2 graphics laboratory" />
-    <meta property="og:description" content="Monumental painterly-industrial raster backgrounds, tactile 4K materials, and live shader fields within the Hara identity." />
+    <meta property="og:title" content="Hara v2 graphics reference" />
+    <meta property="og:description" content="Raster backgrounds, material textures, and WebGL fields with documented fallbacks, motion, and theme behaviour." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara v2 graphics laboratory</title>
+    <title>Hara v2 graphics reference</title>
   </head>
   <body class="hara-v2 hara-v2-graphics graphics-lab" data-atmosphere="monolith">
     <CatalogueHeader basePath={basePath} activePath="/v2/graphics/" />
@@ -49,9 +49,9 @@ const themeImages = Object.fromEntries(backgrounds.map((asset) => [asset.theme, 
     <main class="v2-lab-main">
       <section class="graphics-lab-hero">
         <div class="graphics-lab-hero-copy">
-          <p class="hara-v2-kicker">Cinematic raster material layer · Version 2</p>
-          <h1>Technology with scale, grain, and consequence.</h1>
-          <p>Ten real image assets combine monumental spatial pressure, dry mineral atmosphere, painterly industrial texture, weathered machinery, and restrained functional signal. The masters are delivered as high-resolution WebP files for heroes, editor canvases, covers, documentation, and long-running tools.</p>
+          <p class="hara-v2-kicker">Raster and shader reference · Version 2</p>
+          <h1>Raster backgrounds, material textures, and WebGL fields.</h1>
+          <p>The reference contains six 4096 × 2304 WebP backgrounds and four 4096 × 4096 material textures for page headers, editor canvases, covers, documentation, fallbacks, and long-running tools.</p>
           <p class="graphics-lab-hero-links"><a href={`${basePath}v2/`}>← Interface catalogue</a><a href={`${basePath}v2/tool/`}>Tool workbenches →</a></p>
         </div>
         <div class="graphics-lab-stage">
@@ -81,7 +81,7 @@ const themeImages = Object.fromEntries(backgrounds.map((asset) => [asset.theme, 
 
       <nav class="graphics-lab-index" aria-label="Graphics catalogue">
         <a href="#atmospheres"><strong>6 atmospheres</strong><span>Material pressure and lighting without replacing the Hara identity.</span><code>theme / token / surface</code></a>
-        <a href="#imagery"><strong>6 raster backgrounds</strong><span>Wide cinematic WebP masters for heroes, product surfaces, and editorial imagery.</span><code>4096 × 2304 / WebP</code></a>
+        <a href="#imagery"><strong>6 raster backgrounds</strong><span>Wide WebP masters for page headers, application surfaces, and documentation imagery.</span><code>4096 × 2304 / WebP</code></a>
         <a href="#textures"><strong>4 raster textures</strong><span>Square mineral, metal, carbon, and optical material masters.</span><code>4096 × 4096 / WebP</code></a>
         <a href="#shaders"><strong>6 WebGL effects</strong><span>Real fragment shaders with motion, pointer input, visibility pausing, and raster fallbacks.</span><code>webgl / progressive</code></a>
       </nav>
@@ -147,7 +147,7 @@ const themeImages = Object.fromEntries(backgrounds.map((asset) => [asset.theme, 
       </section>
 
       <section class="graphics-lab-contract hara-v2-material-surface">
-        <div><p class="hara-v2-kicker">Implementation contract</p><h2>Raster imagery carries meaning. Motion deepens it.</h2></div>
+        <div><p class="hara-v2-kicker">Implementation contract</p><h2>Raster imagery remains primary; motion is optional.</h2></div>
         <dl>
           <div><dt>Backgrounds</dt><dd>Six 4096 × 2304 WebP masters</dd></div>
           <div><dt>Textures</dt><dd>Four 4096 × 4096 WebP masters</dd></div>

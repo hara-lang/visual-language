@@ -2,7 +2,7 @@
 
 The v2 graphics layer adds original monumental, painterly-industrial technology to Hara without turning the interface language into entertainment artwork or generic science-fiction UI.
 
-Published laboratory:
+Published reference:
 
 **https://hara-lang.github.io/visual-language/v2/graphics/**
 
