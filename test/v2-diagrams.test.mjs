@@ -37,6 +37,7 @@ const componentPaths = [
 
 test("diagram fixtures are deterministic and explicitly non-authoritative", () => {
   assert.equal(diagramFixtureNotice.productionAuthority, false);
+  assert.equal(diagramFixtureNotice.label, "Design-review fixtures");
   assert.match(diagramFixtureNotice.summary, /deterministic Hara-shaped fixtures/i);
   assert.match(diagramFixtureNotice.summary, /remain authoritative/i);
   assert.match(diagramFixtureNotice.sourceRevision, /^diagram-fixture:[a-f0-9]{16}$/);
@@ -143,6 +144,7 @@ test("the diagrams route is active in the Foundations catalogue and uses the sha
   const page = await read(pagePath);
   assert.match(page, /import CatalogueHeader/);
   assert.match(page, /activePath="\/v2\/diagrams\/"/);
+  assert.match(page, /src\/v2-diagrams\.css/);
   assert.match(page, /initialiseDiagrams/);
   for (const component of ["DiagramArchitecture", "DiagramSequenceState", "DiagramPackageGraph", "DiagramGrammar"]) {
     assert.match(page, new RegExp(`import ${component} from`));
@@ -183,12 +185,17 @@ test("interaction helper supports selection, exact state stepping and non-persis
 });
 
 test("public diagrams stylesheet is packaged, responsive, print-safe and reduced-motion aware", async () => {
-  const [css, packageJson] = await Promise.all([
+  const [entry, core, accessibility, packageJson] = await Promise.all([
+    read("src/v2-diagrams.css"),
     read("src/v2/diagrams.css"),
+    read("src/v2/diagrams-accessibility.css"),
     read("package.json").then(JSON.parse)
   ]);
-  assert.equal(packageJson.exports["./v2-diagrams.css"], "./src/v2/diagrams.css");
+  const css = `${core}\n${accessibility}`;
+  assert.equal(packageJson.exports["./v2-diagrams.css"], "./src/v2-diagrams.css");
   assert.ok(packageJson.files.includes("V2-DIAGRAMS.md"));
+  assert.match(entry, /@import "\.\/v2\/diagrams\.css"/);
+  assert.match(entry, /@import "\.\/v2\/diagrams-accessibility\.css"/);
   for (const selector of [
     ".diagram-architecture-visual",
     ".diagram-flow-visual",
@@ -204,9 +211,13 @@ test("public diagrams stylesheet is packaged, responsive, print-safe and reduced
   assert.match(css, /\.diagram-visual\s*\{\s*display:\s*none/);
   assert.match(css, /@media print/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(accessibility, /var\(--hara-v2-header-height\)/);
+  assert.match(accessibility, /min-height:\s*44px/);
+  assert.match(accessibility, /@media \(forced-colors: active\)/);
+  assert.match(accessibility, /HighlightText/);
   assert.doesNotMatch(css, /perspective\s*:/i);
   assert.doesNotMatch(css, /transform:\s*rotate[XY]/i);
-  assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/, "diagram stylesheet must consume protected Hara tokens rather than redefine them");
+  assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/, "diagram stylesheets must consume protected Hara tokens rather than redefine them");
 });
 
 test("written contract covers evidence, accessibility, responsive delivery, ownership and downstream adoption", async () => {
