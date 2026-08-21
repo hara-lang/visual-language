@@ -135,7 +135,7 @@ test("the detailed page composes landing, course, lesson, practice, project, pro
   const all = [page, ...(await Promise.all(componentPaths.map(read)))].join("\n");
   for (const id of ["start", "tracks", "course", "lesson", "practice", "project", "progress", "teaching", "world-examples", "adoption"]) assert.match(all, new RegExp(`id=\\"${id}\\"`));
   for (const type of learnContentTypes.map(({ id }) => id)) assert.match(page, new RegExp(type.replace(".", "\\.")));
-  assert.match(all, /Application buildout · Learn/);
+  assert.match(all, /Application reference · Learn/);
   assert.match(all, /Learn by running something real/);
   assert.match(page, /Programmer onboarding/);
   assert.match(page, /Earlier community reader/);

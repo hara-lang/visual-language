@@ -103,7 +103,7 @@ test("environment CSS preserves calm hierarchy, state, and responsive yielding",
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
 });
 
-test("the tool laboratory demonstrates the upstream environment composition", async () => {
+test("the tool reference demonstrates the upstream environment composition", async () => {
   const [page, specimen, contract] = await Promise.all([
     read("../site/src/pages/v2/tool/index.astro"),
     read("../site/src/components/v2-tool/EnvironmentWorkbenchSpecimen.astro"),

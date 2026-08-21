@@ -17,7 +17,7 @@ export const DEFAULT_PENALTIES = Object.freeze({
 });
 
 /**
- * Adapt the shared World fixture/source envelope to the data-driven feed laboratory.
+ * Adapt the shared World fixture/source envelope to the data-driven feed reference.
  * Provider-owned facts remain unchanged; UI conveniences are derived rather than
  * creating a second incompatible source schema.
  *

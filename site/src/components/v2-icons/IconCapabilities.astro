@@ -59,7 +59,7 @@ const stateById = new Map(capabilityStates.map((state) => [state.id, state]));
     <div>
       <p class="hara-v2-kicker">04 · Hara product family</p>
       <h2 id="icon-products-title">Six products, one family, no borrowed logos.</h2>
-      <p>Product glyphs derive from Hara’s frame, signal aperture, lanes, brackets and connected nodes. They identify destinations in launchers, catalogue cards and compact navigation. They are never reused as generic commands.</p>
+      <p>Route glyphs derive from Hara’s frame, signal aperture, lanes, brackets and connected nodes. They identify destinations in launchers, catalogue cards and compact navigation. They are never reused as generic commands.</p>
     </div>
     <dl class="icon-guide-fence">
       <div><dt>Products</dt><dd>{productGlyphs.length}</dd></div>
@@ -86,7 +86,7 @@ const stateById = new Map(capabilityStates.map((state) => [state.id, state]));
         <div class="icon-product-scales" aria-label={`${product.label} glyph at review sizes`}>
           {[16, 24, 32, 48].map((size) => <span><HaraGlyph name={product.glyph} size={size} decorative={true} /><small>{size}px</small></span>)}
         </div>
-        <dl><div><dt>Destination</dt><dd>{product.route}</dd></div><div><dt>Use</dt><dd>Launcher, catalogue, app icon and product navigation</dd></div><div><dt>Not for</dt><dd>Generic commands or runtime state</dd></div></dl>
+        <dl><div><dt>Destination</dt><dd>{product.route}</dd></div><div><dt>Use</dt><dd>Launcher, catalogue, app icon and route navigation</dd></div><div><dt>Not for</dt><dd>Generic commands or runtime state</dd></div></dl>
       </article>
     ))}
   </div>

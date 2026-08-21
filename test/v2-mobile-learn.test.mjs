@@ -12,7 +12,7 @@ test("Learn owns runnable onboarding and guided World examples", async () => {
   ]);
   const combined = `${page}\n${landing}`;
 
-  assert.match(combined, /Application buildout · Learn/);
+  assert.match(combined, /Application reference · Learn/);
   assert.match(combined, /Learn by running something real/);
   assert.match(combined, /id="start"/);
   assert.match(combined, /id="tracks"/);
@@ -45,7 +45,7 @@ test("the shared theme control is a direct light-dark switch with a readable mob
   assert.match(responsive, /\.hara-v2 \.hara-theme-toggle \[data-hara-theme-label\] \{ display: inline; \}/);
 });
 
-test("mobile catalogue and laboratory spacing is compact and motion-safe", async () => {
+test("mobile catalogue and reference spacing is compact and motion-safe", async () => {
   const css = await read("../site/src/styles/v2-mobile-polish.css");
 
   assert.match(css, /\.v2-lab-quick-links/);

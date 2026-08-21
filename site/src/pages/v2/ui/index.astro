@@ -120,17 +120,17 @@ const workflows = [
     <meta name="description" content="Hara v2 interaction patterns: navigation, mutation, loading, failure, permission, responsive behaviour, and complete workflow states." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara v2 UI pattern laboratory" />
+    <meta property="og:title" content="Hara v2 UI pattern reference" />
     <meta property="og:description" content="Reusable interaction contracts across workflow state, viewport, input, identity, and failure conditions." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara v2 UI pattern laboratory" />
+    <meta name="twitter:title" content="Hara v2 UI pattern reference" />
     <meta name="twitter:description" content="Behaviour over time for the Hara interface ecosystem." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara v2 UI pattern laboratory</title>
+    <title>Hara v2 UI pattern reference</title>
   </head>
   <body class="hara-v2 ui-pattern-page">
     <CatalogueHeader basePath={basePath} activePath="/v2/ui/" />
@@ -139,14 +139,14 @@ const workflows = [
       <section class="ui-hero" aria-labelledby="ui-title">
         <div class="ui-hero-copy">
           <p class="hara-v2-kicker">Shared library · Behaviour over time</p>
-          <h1 id="ui-title">Patterns are contracts between states, not screenshots.</h1>
-          <p>This laboratory shows how shared Hara interfaces move through search, mutation, loading, permission, failure, recovery, and responsive collapse. Product repositories own their business rules; this route owns the reusable interaction grammar.</p>
+          <h1 id="ui-title">Interaction patterns define transitions between interface states.</h1>
+          <p>This reference records how shared Hara interfaces move through search, mutation, loading, permission, failure, recovery, and responsive collapse. Application repositories retain their domain rules and authoritative state.</p>
           <div class="ui-hero-actions">
             <a class="hara-v2-button" data-variant="primary" href="#workflow-studies">Inspect workflows</a>
             <a class="hara-v2-button" href={componentsRoute}>Component inventory</a>
             <a class="hara-v2-button" data-variant="ghost" href={foundationsRoute}>Foundation rules</a>
           </div>
-          <dl class="ui-hero-ledger" aria-label="UI laboratory scope">
+          <dl class="ui-hero-ledger" aria-label="UI pattern scope">
             <div><dt>5</dt><dd>end-to-end workflows</dd></div>
             <div><dt>12</dt><dd>data and degraded states</dd></div>
             <div><dt>8</dt><dd>identity / permission states</dd></div>
@@ -169,7 +169,7 @@ const workflows = [
       <section class="ui-section" id="navigation-discovery">
         <header class="ui-section-head">
           <div><p class="hara-v2-kicker">01 · Navigation and discovery</p><h2>Scope stays visible while the result set changes.</h2></div>
-          <p>Global catalogue, product context, local tabs, search filters, selection, and result counts each keep one job. Keyboard users can traverse the same hierarchy without hover-only controls.</p>
+          <p>Global catalogue, application context, local tabs, search filters, selection, and result counts each keep one job. Keyboard users can traverse the same hierarchy without hover-only controls.</p>
         </header>
 
         <div class="ui-pattern-grid ui-pattern-grid--navigation">
@@ -323,13 +323,13 @@ const workflows = [
       <section class="ui-section" id="ownership">
         <header class="ui-section-head">
           <div><p class="hara-v2-kicker">07 · Ownership boundary</p><h2>Share behaviour; keep business semantics local.</h2></div>
-          <p>The UI laboratory is an acceptance surface, not a replacement application framework. Downstream products consume the shared geometry, components, and state grammar without copying catalogue-only framing.</p>
+          <p>The UI reference is an acceptance surface, not a replacement application framework. Downstream products consume the shared geometry, components, and state grammar without copying catalogue-only framing.</p>
         </header>
         <div class="ui-ownership-grid">
           <article><span>Shared interaction contract</span><h3>Visual Language owns</h3><ul><li>focus and keyboard behaviour</li><li>loading, empty, success, warning, and failure envelopes</li><li>responsive collapse order</li><li>validation presentation and recovery affordances</li><li>identity and automation attribution patterns</li></ul></article>
           <article><span>Product-owned business rules</span><h3>Applications own</h3><ul><li>which actions a role may perform</li><li>package, spec, runtime, feed, or benchmark semantics</li><li>moderation and publication policy</li><li>durability and server-side receipt meaning</li><li>domain-specific navigation and information architecture</li></ul></article>
         </div>
-        <p class="ui-closing-note"><b>Rule:</b> consume shared components from the component catalogue; do not turn a product-specific state machine into a new global primitive until more than one application proves the need.</p>
+        <p class="ui-closing-note"><b>Rule:</b> consume shared components from the component catalogue; do not turn a application-specific state machine into a new global primitive until more than one application proves the need.</p>
       </section>
     </main>
   </body>

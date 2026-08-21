@@ -18,7 +18,7 @@ export const guideFixtureNotice = {
 };
 
 export const reviewViewports = [
-  { id: "desktop", label: "Desktop", width: 1440, height: 900, purpose: "Full shell, product navigation, inspectors, dense tables and workbenches." },
+  { id: "desktop", label: "Desktop", width: 1440, height: 900, purpose: "Full shell, route navigation, inspectors, dense tables and workbenches." },
   { id: "tablet", label: "Tablet", width: 1024, height: 900, purpose: "Inspector yielding, compact route chrome and two-column product layouts." },
   { id: "compact", label: "680 px", width: 680, height: 860, purpose: "Rail collapse, contained overflow and single-primary-task transition." },
   { id: "phone", label: "390 px", width: 390, height: 844, purpose: "Touch controls, explicit disclosures and phone reading order." },
@@ -39,7 +39,7 @@ export const requiredReviewRoutes = [
     path: "/v2/",
     group: "Catalogue",
     shell: "Catalogue landing",
-    primaryTask: "Understand the route families and choose a detailed laboratory.",
+    primaryTask: "Understand the route families and choose a detailed reference.",
     states: ["loading", "empty", "error", "disabled", "success", "planned-route", "active-route", "settled-route"],
     provenance: "Typed route manifest and implementation issue relationships.",
     downstream: "All Hara interface consumers"
@@ -71,7 +71,7 @@ export const requiredReviewRoutes = [
     label: "UI patterns",
     path: "/v2/ui/",
     group: "Library",
-    shell: "Workflow laboratory",
+    shell: "Workflow reference",
     primaryTask: "Review reusable behavior over time without importing product business rules.",
     states: [...coreStates, "partial", "stale", "offline", "reconnecting", "permission-denied", "revoked"],
     provenance: "Shared interaction contract and product-owned rule boundary.",
@@ -205,7 +205,7 @@ export const historicalReviewRoutes = [
 
 export const reviewChecks = [
   { id: "route", label: "Route and manifest", question: "Does the static route build and resolve from the shared manifest?" },
-  { id: "navigation", label: "Navigation ownership", question: "Are catalogue, product-local and prototype controls visibly distinct?" },
+  { id: "navigation", label: "Navigation ownership", question: "Are catalogue, application-local and prototype controls visibly distinct?" },
   { id: "theme", label: "Light and dark", question: "Do hierarchy, focus and state remain equivalent in both explicit themes?" },
   { id: "responsive", label: "Five widths", question: "Does the primary task survive 1440, 1024, 680, 390 and 320 pixels?" },
   { id: "keyboard", label: "Keyboard and focus", question: "Can every control be reached and is focus visibly distinct?" },
@@ -213,14 +213,14 @@ export const reviewChecks = [
   { id: "overflow", label: "Contained overflow", question: "Do tables, code and workbenches scroll locally rather than widening the document?" },
   { id: "motion", label: "Reduced motion", question: "Does reduced motion preserve feedback and state without decorative displacement?" },
   { id: "contrast", label: "Contrast and cues", question: "Are state words, icons or structure present in addition to colour?" },
-  { id: "states", label: "Product states", question: "Are loading, empty, error, disabled, success and required domain states represented?" },
+  { id: "states", label: "Route states", question: "Are loading, empty, error, disabled, success and required domain states represented?" },
   { id: "provenance", label: "Authority and provenance", question: "Do claims expose their exact source, revision, authority and receipt boundary?" }
 ];
 
 export const navigationLayers = [
   { id: "global", label: "Global catalogue", owner: "Visual Language", surface: "Block-H masthead and Browse launcher", rule: "Knows route groups and current location; never absorbs product workflows." },
   { id: "route", label: "Route and family", owner: "Visual Language manifest", surface: "Breadcrumb, family tabs, status, neighbours and footer", rule: "Derived from one route manifest rather than page-local arrays." },
-  { id: "local", label: "Product-local", owner: "Application laboratory", surface: "Registry, lesson, checker, feed, editor or publishing sections", rule: "Names only the workflow owned by that product." },
+  { id: "local", label: "Application-local", owner: "Application reference", surface: "Registry, lesson, checker, feed, editor or publishing sections", rule: "Names only the workflow owned by that product." },
   { id: "prototype", label: "Demonstrated product", owner: "Downstream product", surface: "Embedded app toolbar, tabs, inspector and commands", rule: "Must be framed as specimen chrome and cannot masquerade as catalogue navigation." }
 ];
 
@@ -242,7 +242,7 @@ export const routeLifecycle = [
 export const newApplicationSteps = [
   "Create an executable issue with outcome, scope, acceptance criteria, validation, relationships, readiness and delivery.",
   "Add one typed manifest record; planned routes point to the issue until a detailed route exists.",
-  "Declare the product boundary, local information architecture, authoritative data sources and downstream target.",
+  "Declare the route boundary, local information architecture, authoritative data sources and downstream target.",
   "Consume shared components, UI patterns and content contracts without redefining protected tokens.",
   "Build realistic landing, deep-work, degraded, responsive, light/dark, keyboard and reduced-motion states.",
   "Add focused contract tests, package documentation impact and a downstream adoption note.",

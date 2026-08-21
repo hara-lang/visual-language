@@ -42,7 +42,7 @@ test("the tool layer becomes roomier, quieter, and continuous", async () => {
   assert.match(css, /\.hara-tool-surface--cut,[\s\S]*clip-path:\s*none/);
 });
 
-test("both laboratories load the calm presentation and describe the refinement", async () => {
+test("both references load the calm presentation and describe the refinement", async () => {
   const [documentLab, toolLab, labCss] = await Promise.all([
     read("../site/src/pages/v2/index.astro"),
     read("../site/src/pages/v2/tool/index.astro"),

@@ -32,11 +32,11 @@ import {
   </div>
 
   <section class="guide-anatomy" aria-labelledby="guide-anatomy-title">
-    <header><div><span>Page anatomy</span><h3 id="guide-anatomy-title">The same route shown as responsibility bands</h3></div><p>Product-local navigation may look different across Specs, Playground, World and Learn. Its placement in the ownership stack does not change.</p></header>
-    <div role="img" aria-label="Catalogue masthead, route context, product-local navigation, primary task, secondary inspector and authoritative facts">
+    <header><div><span>Page anatomy</span><h3 id="guide-anatomy-title">The same route shown as responsibility bands</h3></div><p>Application-local navigation may look different across Specs, Playground, World and Learn. Its placement in the ownership stack does not change.</p></header>
+    <div role="img" aria-label="Catalogue masthead, route context, application-local navigation, primary task, secondary inspector and authoritative facts">
       <span data-band="global"><b>Global</b> Block-H · Browse · Source · Theme</span>
       <span data-band="route"><b>Route</b> Breadcrumb · Family tabs · Status · Product actions</span>
-      <span data-band="local"><b>Product-local</b> Registry / Lesson / Feed / Workspace / Publish</span>
+      <span data-band="local"><b>Application-local</b> Registry / Lesson / Feed / Workspace / Publish</span>
       <span data-band="primary"><b>Primary task</b> The route’s durable reading, editing, comparing or execution surface</span>
       <span data-band="secondary"><b>Secondary</b> Outline · Inspector · Capability pane · Evidence ledger</span>
       <span data-band="authority"><b>Authority</b> Identity · Source · Registry · Reviewer · Runtime · Receipt</span>
@@ -49,7 +49,7 @@ import {
       <ol>{routeLifecycle.map((state, index) => <li data-state={state.id}><span>{String(index + 1).padStart(2, "0")}</span><div><strong>{state.label}</strong><p>{state.behavior}</p></div><dl><div><dt>Entry</dt><dd>{state.entry}</dd></div><div><dt>Exit</dt><dd>{state.exit}</dd></div></dl></li>)}</ol>
     </section>
     <section class="guide-new-application" id="adding" aria-labelledby="guide-adding-title">
-      <header><span>Adding an application</span><h3 id="guide-adding-title">One route record, one product boundary, one complete state model.</h3></header>
+      <header><span>Adding an application</span><h3 id="guide-adding-title">One route record, one route boundary, one complete state model.</h3></header>
       <ol>{newApplicationSteps.map((step, index) => <li><span>{String(index + 1).padStart(2, "0")}</span><p>{step}</p></li>)}</ol>
     </section>
   </div>

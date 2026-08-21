@@ -93,7 +93,7 @@ export const componentGroups = [
         states: ["anonymous", "signed in", "current route"],
         accessibility: "Uses the banner landmark and labelled primary navigation."
       }),
-      shared("ContextNav", "Product-local route or task navigation below the global header.", {
+      shared("ContextNav", "Application-local route or task navigation below the global header.", {
         states: ["default", "current page", "overflow"],
         responsive: "Becomes a horizontally reachable scroll row rather than hiding destinations."
       }),

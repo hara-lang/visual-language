@@ -136,7 +136,7 @@ test("workbench CSS preserves the viewport while secondary regions collapse", as
   assert.match(css, /grid-area:\s*viewport/);
 });
 
-test("the tool laboratory covers 3D, node/material, and animation workbenches", async () => {
+test("the tool reference covers 3D, node/material, and animation workbenches", async () => {
   const [page, documentLab, specimens] = await Promise.all([
     read("../site/src/pages/v2/tool/index.astro"),
     read("../site/src/pages/v2/index.astro"),
@@ -157,7 +157,7 @@ test("the tool laboratory covers 3D, node/material, and animation workbenches", 
   for (const primitive of [
     "WorkbenchShell", "Toolbar", "DockPanel", "PanelHeader", "InspectorSection",
     "ViewportOverlay", "StatusBar"
-  ]) assert.match(specimens, new RegExp(primitive), `laboratory does not use ${primitive}`);
+  ]) assert.match(specimens, new RegExp(primitive), `reference does not use ${primitive}`);
 
   assert.match(page, /v2-tool\.css/);
   assert.match(page, /class="hara-v2 hara-v2-tool"/);

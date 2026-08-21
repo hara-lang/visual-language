@@ -114,7 +114,7 @@ const boundarySidebar = [
     { href: "#scope", label: "Presence" },
     { href: "#scope", label: "Profiles" }
   ] },
-  { label: "Separate product", items: [
+  { label: "Separate route", items: [
     { href: learnUrl, label: "learn.hara-lang.org ↗" }
   ] }
 ];
@@ -124,27 +124,27 @@ const boundarySidebar = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Focused Hara World v2 discussion laboratory: ranked articles and feeds, clippings, threaded comments, online presence, accountable bots, contributor profiles, and a separate Learn product." />
+    <meta name="description" content="Focused Hara World v2 discussion reference: ranked articles and feeds, clippings, threaded comments, online presence, accountable bots, contributor profiles, and a separate Learn product." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara World discussion and presence laboratory" />
+    <meta property="og:title" content="Hara World discussion and presence reference" />
     <meta property="og:description" content="A smaller Hara World focused on sources, clippings, comments, people, packages, and visible community presence." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara World discussion and presence laboratory" />
+    <meta name="twitter:title" content="Hara World discussion and presence reference" />
     <meta name="twitter:description" content="Articles, feeds, clippings, comments, presence, and contribution identity in Hara v2." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara World discussion and presence laboratory</title>
+    <title>Hara World discussion and presence reference</title>
   </head>
   <body class="hara-v2">
     <header class="v2-lab-header">
       <a class="v2-lab-brand" href={worldLab}>
         <HaraMark size={28} />
         <b>Hara visual language</b>
-        <small>Focused World field test</small>
+        <small>World community reference</small>
       </a>
       <nav aria-label="Focused World prototype screens">
         <a href="#front-page">Front page</a>
@@ -160,9 +160,9 @@ const boundarySidebar = [
     <main class="v2-lab-main world-lab-main">
       <section class="world-discussion-hero">
         <div>
-          <p class="hara-v2-kicker">Focused product study · World v2</p>
-          <h1>A front page for the Hara community.</h1>
-          <p>World becomes deliberately smaller: a ranked index of articles and feeds, portable clippings, durable comment threads, visible community presence, and contributor profiles grounded in packages and reviewed work. Learning moves out to its own product.</p>
+          <p class="hara-v2-kicker">Community reader · World v2</p>
+          <h1>Articles, discussions, and contributor records for Hara.</h1>
+          <p>World becomes deliberately smaller: a ranked index of articles and feeds, portable clippings, durable comment threads, visible community presence, and contributor profiles grounded in packages and reviewed work. Learning moves out to its own route.</p>
           <div class="world-lab-hero-actions">
             <a class="hara-v2-button" data-variant="primary" href="#front-page">Open the front page</a>
             <a class="hara-v2-button" href="#thread">Inspect a discussion</a>
@@ -191,7 +191,7 @@ const boundarySidebar = [
 
       <section class="world-discussion-screen" id="front-page">
         <header class="world-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 01 · Ranked community index</p><h2>Articles and feeds are the centre.</h2></div>
+          <div><p class="hara-v2-kicker">Screen 01 · Article and discussion index</p><h2>Articles and feeds are the centre.</h2></div>
           <p>The home page behaves like a small technical Reddit: sources first, visible provenance, compact ranking, and discussion counts. It does not attempt to be a course, project manager, or game hub.</p>
         </header>
         <div class="world-discussion-canvas">
@@ -761,8 +761,8 @@ const boundarySidebar = [
 
       <section class="world-discussion-screen" id="scope">
         <header class="world-lab-screen-head">
-          <div><p class="hara-v2-kicker">Screen 06 · Product boundary</p><h2>World discusses Hara. Learn teaches it.</h2></div>
-          <p>The products remain connected through links and snippets, but they no longer compete for the same navigation, information architecture, or account progression.</p>
+          <div><p class="hara-v2-kicker">Screen 06 · Route boundary</p><h2>World discusses Hara. Learn teaches it.</h2></div>
+          <p>The routes remain connected through links and snippets, but they no longer compete for the same navigation, information architecture, or account progression.</p>
         </header>
         <div class="world-discussion-canvas world-discussion-canvas--scope">
           <Shell embedded={true} sidebar={true} aside={false} mainId="world-scope-content">
@@ -773,12 +773,12 @@ const boundarySidebar = [
             <ContextNav slot="context" items={worldNav("hot")}>
               <a class="hara-v2-button" data-variant="primary" href={learnUrl} target="_blank" rel="noreferrer">Open Learn ↗</a>
             </ContextNav>
-            <Sidebar slot="sidebar" title="Product boundary" groups={boundarySidebar}>
+            <Sidebar slot="sidebar" title="Route boundary" groups={boundarySidebar}>
               <span>Learn is an ecosystem destination, not a World section.</span>
             </Sidebar>
 
             <div class="world-boundary-heading">
-              <p class="hara-v2-kicker">One language · two focused products</p>
+              <p class="hara-v2-kicker">One language · two focused routes</p>
               <h1>All learning materials live at learn.hara-lang.org.</h1>
               <p>World can surface a snippet, article, clipping, or comment that sparks curiosity. Structured instruction and progress continue on Learn.</p>
             </div>

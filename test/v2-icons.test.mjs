@@ -57,7 +57,7 @@ const allDefinitions = [
   ...haraGlyphNames.map((name) => [name, haraGlyphCatalog[name]])
 ];
 
-test("the public catalogue has stable interface, capability and product families", () => {
+test("the public catalogue has stable interface, capability and route families", () => {
   assert.equal(haraIconNames.length, 41);
   assert.equal(haraGlyphNames.length, 22);
   assert.deepEqual(haraIconCategories.map(({ id }) => id), ["navigation", "action", "state", "evidence"]);
@@ -74,7 +74,7 @@ test("the public catalogue has stable interface, capability and product families
   assert.equal(haraGlyphDefinition("not-a-glyph"), null);
 });
 
-test("all public names and aliases are unique and product glyphs have distinct geometry", () => {
+test("all public names and aliases are unique and route glyphs have distinct geometry", () => {
   const names = [...haraIconNames, ...haraGlyphNames];
   assert.equal(new Set(names).size, names.length);
 
@@ -144,7 +144,7 @@ test("guide fixtures distinguish state evidence and capability lifecycle without
   assert.equal(iconSummary.productGlyphs, 6);
 });
 
-test("product glyphs identify destinations and never appear in the action catalogue", () => {
+test("route glyphs identify destinations and never appear in the action catalogue", () => {
   assert.deepEqual(productGlyphs.map(({ id }) => id), ["www", "playground", "specs", "packages", "world", "learn"]);
   for (const product of productGlyphs) {
     assert.equal(haraGlyphCatalog[product.glyph].category, "product");
@@ -152,7 +152,7 @@ test("product glyphs identify destinations and never appear in the action catalo
     assert.match(product.function, /\S/);
     assert.equal(haraIconCatalog[product.glyph], undefined);
   }
-  assert.ok(iconPrinciples.some((principle) => /Product glyphs identify surfaces/i.test(principle)));
+  assert.ok(iconPrinciples.some((principle) => /Route glyphs identify surfaces/i.test(principle)));
 });
 
 test("public Astro renderers enforce decorative and meaningful accessibility defaults", async () => {
@@ -273,7 +273,7 @@ test("package exports and written contract expose the complete additive iconogra
     "Naming contract",
     "State and evidence vocabulary",
     "Runtime capability glyphs",
-    "Product glyphs",
+    "Route glyphs",
     "Accessibility contract",
     "RTL contract",
     "Ownership boundary",

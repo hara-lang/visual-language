@@ -110,7 +110,7 @@ test("one typed registry covers every required application family and concrete c
   ]) assert.ok(contentTypeById(id), `missing ${id}`);
 });
 
-test("required fields resolve through shared and product-specific inventories", () => {
+test("required fields resolve through shared and application-specific inventories", () => {
   const sharedIds = new Set(sharedFields.map(({ id }) => id));
   assert.equal(sharedIds.size, sharedFields.length, "shared field IDs must be unique");
 
@@ -207,7 +207,7 @@ test("metadata drives route, card, feed, search, social, and machine previews", 
   assert.equal(preview.machine.revision, "sha256:72a194a3");
 });
 
-test("the laboratory contains every required screen, family, and ownership boundary", async () => {
+test("the reference contains every required screen, family, and ownership boundary", async () => {
   const page = await read(pagePath);
 
   assert.match(page, /import CatalogueHeader/);
@@ -223,7 +223,7 @@ test("the laboratory contains every required screen, family, and ownership bound
 
   for (const phrase of [
     "Front matter is a public interface, not a hidden preamble",
-    "Shared metadata stays common. Product semantics stay precise",
+    "Shared metadata stays common. Route semantics stay precise",
     "Reference the owner of truth. Do not copy its record",
     "Editable intent is visibly separated from controlled fact",
     "One canonical object. Multiple inspectable authoring paths",
@@ -325,5 +325,5 @@ test("responsive, keyboard, narrow-width, theme-parity, and reduced-motion contr
   assert.match(css, /data-preview-theme="light"/);
   assert.match(css, /data-preview-theme="dark"/);
   assert.match(css, /data-preview-width="narrow"/);
-  assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/, "laboratory CSS must not redefine protected Hara tokens");
+  assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/, "reference CSS must not redefine protected Hara tokens");
 });

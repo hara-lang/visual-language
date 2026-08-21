@@ -11,7 +11,8 @@ const extensions = new Set([".astro", ".mjs"]);
 const sourceRoots = [
   path.join(root, "site", "src", "pages"),
   path.join(root, "site", "src", "components"),
-  path.join(root, "site", "src", "lib")
+  path.join(root, "site", "src", "lib"),
+  path.join(root, "test")
 ];
 
 const replacements = [
@@ -152,8 +153,6 @@ const replacements = [
   ["Hara sites and tools need one visual grammar for architecture, runtime flow, sequence, lifecycle and package relationships. The guide combines direction, line style, symbols and words, then pairs every visual with an equivalent relation list, event table, transition table or adjacency table.", "The guide records a shared grammar for architecture, runtime flow, sequence, lifecycle, and package relationships. Every visual is paired with an equivalent relation list, event table, transition table, or adjacency table."],
 
   // Route icon and symbol terminology.
-  ["Products", "Routes"],
-  ["products", "routes"],
   ["Hara v2 iconography and route glyphs", "Hara v2 iconography and route glyphs"],
   ["Original Hara geometry for interface controls, evidence states, runtime capabilities and the six route families.", "Original Hara geometry for interface controls, evidence states, runtime capabilities, and six public route families."],
   ["A stable, accessible symbol language for Hara routes and tools.", "A stable, accessible symbol language for Hara routes and tools."],
@@ -212,7 +211,7 @@ async function walk(directory) {
   return files;
 }
 
-const files = (await Promise.all(sourceRoots.map(walk))).flat();
+const files = (await Promise.all(sourceRoots.map(walk))).flat().filter((file) => !file.endsWith("v2-editorial.test.mjs"));
 let changedFiles = 0;
 let replacementCount = 0;
 
@@ -237,7 +236,7 @@ if (apply) {
 }
 
 const violations = [];
-for (const file of files) {
+for (const file of files.filter((file) => !file.includes(`${path.sep}test${path.sep}`))) {
   const source = await fs.readFile(file, "utf8");
   for (const phrase of bannedPhrases) {
     if (!source.includes(phrase)) continue;

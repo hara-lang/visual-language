@@ -29,7 +29,7 @@ const [focusedPage, canonicalPage, styles, sharedCalmStyles, policyText, feedTex
 const policy = JSON.parse(policyText);
 const feed = JSON.parse(feedText);
 
-test("World keeps its canonical cross-source route and a focused data-driven feed laboratory", () => {
+test("World keeps its canonical cross-source route and a focused data-driven feed reference", () => {
   for (const anchor of ["feed-explorer", "sources", "conversation", "relay"])
     assert.match(canonicalPage, new RegExp(`id=\\"${anchor}\\"`));
 
@@ -83,7 +83,7 @@ test("the ingestion and relay policy is explicit and complete data", () => {
   assert.ok(policy.relay.autoEligible.includes("hara-owned-release"));
 });
 
-test("feed normalization retains source facts while deriving laboratory conveniences", () => {
+test("feed normalization retains source facts while deriving reference conveniences", () => {
   const release = feed.find((item) => item.id === "github-schema-release");
   const normalized = normaliseFeedItem(release);
 

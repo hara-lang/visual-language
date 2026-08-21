@@ -111,7 +111,7 @@ export const compositionExamples = [
 
 export const iconPrinciples = [
   "Use original Hara geometry; do not copy vendor, operating-system, franchise or third-party icon silhouettes.",
-  "Interface icons describe actions and navigation. Product glyphs identify surfaces. Capability glyphs identify runtime boundaries.",
+  "Interface icons describe actions and navigation. Route glyphs identify surfaces. Capability glyphs identify runtime boundaries.",
   "Visible text is preferred when a command can be misunderstood; icon-only controls still require an accessible name.",
   "State combines written language, enclosing shape and line treatment. Colour reinforces but never owns meaning.",
   "The SVG never receives keyboard focus. The parent link, button, row or card owns interaction and focus.",
