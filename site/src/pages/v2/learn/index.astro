@@ -55,30 +55,30 @@ const localNav = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Detailed Hara Learn v2 application laboratory covering experience-aware arrival, curriculum graphs, lesson reading, executable practice, projects, progress, teaching metadata, and the World/Learn boundary." />
+    <meta name="description" content="Introductory Hara material covering forms, values, functions, namespaces, capabilities, runnable exercises, projects, progress records, and teaching metadata." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara v2 Learn application laboratory" />
-    <meta property="og:description" content="Learn Hara through visible outcomes, exact curriculum revisions, executable practice, complete projects, and meaningful progress evidence." />
+    <meta property="og:title" content="Learn the Hara programming language" />
+    <meta property="og:description" content="Read and run a first Hara form, then continue through functions, namespaces, capabilities, packages, exercises, and projects." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara v2 Learn application laboratory" />
-    <meta name="twitter:description" content="Runnable lessons, curriculum, koans, projects, progress, and teaching contracts for learn.hara-lang.org." />
+    <meta name="twitter:title" content="Learn the Hara programming language" />
+    <meta name="twitter:description" content="Lessons, exercises, projects, curriculum revisions, and explicit runtime states for learning Hara." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara v2 Learn application laboratory</title>
+    <title>Learn the Hara programming language</title>
   </head>
   <body class="hara-v2 hara-v2-tool learn-page">
-    <CatalogueHeader basePath={basePath} activePath="/v2/learn/" label="Learn laboratory">
-      <a slot="route-actions" href="#lesson">Run first lesson</a>
+    <CatalogueHeader basePath={basePath} activePath="/v2/learn/" label="Learn Hara">
+      <a slot="route-actions" href="#lesson">Run the first form</a>
     </CatalogueHeader>
 
-    <nav class="learn-local-nav" aria-label="Learn laboratory sections">
+    <nav class="learn-local-nav" aria-label="Learn sections">
       <span>Learn</span>
       <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
-      <a href="https://github.com/hara-lang/visual-language/issues/43">Issue 43 ↗</a>
+      <a href="https://github.com/hara-lang/visual-language/issues/43">Implementation record ↗</a>
     </nav>
 
     <main class="learn-main">
@@ -106,21 +106,21 @@ const localNav = [
 
       <section class="learn-section learn-world-boundary" id="world-examples" aria-labelledby="learn-world-title">
         <header class="learn-section-heading">
-          <div><p class="hara-v2-kicker">World / Learn boundary</p><h2 id="learn-world-title">Discussion can surround a lesson without owning its progress.</h2></div>
-          <p>World owns articles, clippings, comments, contributor identity, presence, and accountable bots. Learn owns structured explanation, exercises, projects, attempts, and curriculum state.</p>
+          <div><p class="hara-v2-kicker">World and Learn</p><h2 id="learn-world-title">Lessons and public discussion keep separate records.</h2></div>
+          <p>World records articles, clippings, comments, contributor identity, presence, and owner-attributed bots. Learn records explanations, exercises, projects, attempts, and curriculum state.</p>
         </header>
 
         <div class="learn-world-boundary-grid">
-          <article><span>Learn owns</span><p>Objectives, prerequisite sequence, runnable lesson placement, practice contracts, project milestones, private notes, attempts, completion evidence, and exact curriculum revisions.</p><a href="#course">Inspect curriculum →</a></article>
-          <article><span>World owns</span><p>Public discussion, canonical source links, comments, participants, clippings, package release conversation, and Snippet of the day as a social object.</p><a href={worldDiscussionLab}>Open focused World →</a></article>
-          <article><span>Shared identity, separate navigation</span><p>The same Hara or GitHub identity may connect both products. Learn progress never becomes a World profile score and World popularity never unlocks a lesson.</p><a href={worldAroundLab}>Open Around Hara →</a></article>
+          <article><span>Learn records</span><p>Objectives, prerequisite sequence, runnable lesson placement, practice contracts, project milestones, private notes, attempts, completion evidence, and exact curriculum revisions.</p><a href="#course">View the curriculum →</a></article>
+          <article><span>World records</span><p>Public discussion, canonical source links, comments, participants, clippings, package-release discussion, and shared code examples.</p><a href={worldDiscussionLab}>Read World discussion →</a></article>
+          <article><span>Shared identity, separate navigation</span><p>The same Hara or GitHub identity may appear in both routes. Learn progress does not become a public profile score, and World activity does not unlock a lesson.</p><a href={worldAroundLab}>View Around Hara references →</a></article>
         </div>
 
         <div class="learn-world-examples">
-          <a href={onboardingStudy}><small>Programmer onboarding</small><strong>Earlier executable-feed study</strong><span>Retained as a Learn teaching comparison →</span></a>
-          <a href={communityStudy}><small>Earlier community reader</small><strong>Historical World interface study</strong><span>Open community study →</span></a>
-          <a href={worldDiscussionLab}><small>Active product</small><strong>Focused World discussion</strong><span>Read articles, clippings, comments, profiles, and presence →</span></a>
-          <a href={worldAroundLab}><small>Open web</small><strong>Around Hara</strong><span>Inspect provenance, ranking, moderation, and relay receipts →</span></a>
+          <a href={onboardingStudy}><small>Historical onboarding study</small><strong>Earlier executable-feed example</strong><span>Read the retained teaching comparison →</span></a>
+          <a href={communityStudy}><small>Historical community study</small><strong>Earlier World interface example</strong><span>Open the retained study →</span></a>
+          <a href={worldDiscussionLab}><small>Implemented route</small><strong>World discussion</strong><span>Read articles, clippings, comments, profiles, and presence →</span></a>
+          <a href={worldAroundLab}><small>External references</small><strong>Around Hara</strong><span>Inspect provenance, moderation, and relay records →</span></a>
         </div>
       </section>
 
@@ -128,22 +128,22 @@ const localNav = [
 
       <section class="learn-section learn-adoption" id="adoption" aria-labelledby="learn-adoption-title">
         <header class="learn-section-heading">
-          <div><p class="hara-v2-kicker">Ownership and downstream adoption</p><h2 id="learn-adoption-title">Visual Language composes. Learn, registries, and runtimes remain authoritative.</h2></div>
-          <p>The future `learn.hara-lang.org` implementation can adopt these surfaces without copying another product’s navigation or turning the catalogue into a production learner database.</p>
+          <div><p class="hara-v2-kicker">Ownership and adoption</p><h2 id="learn-adoption-title">The interface reference does not own curriculum or learner data.</h2></div>
+          <p>A future `learn.hara-lang.org` implementation may use these interface specimens while keeping curriculum, progress, runtime, and identity records in their authoritative systems.</p>
         </header>
         <div class="learn-adoption-grid">
-          <article><span>Shared visual-language package</span><p>Shell geometry, typography, state, form, workbench, focus, responsive, and receipt presentation.</p></article>
+          <article><span>Visual Language</span><p>Shell geometry, typography, state, form, workbench, focus, responsive, and receipt presentation.</p></article>
           <article><span>Learn application</span><p>Experience entrances, curriculum browsing, lesson composition, practice commands, project milestones, notes, privacy, and teaching workflows.</p></article>
           <article><span>Curriculum and progress registries</span><p>Content identities, concept graph, revisions, attempts, completion evidence, migration relations, and account-scoped progress.</p></article>
           <article><span>Playground and runtimes</span><p>Sessions, source fences, backends, capabilities, observations, checks, execution receipts, and exact share links.</p></article>
-          <article><span>World</span><p>Public discussion, clippings, comments, contributors, presence, and social discovery around learning material.</p></article>
+          <article><span>World</span><p>Public discussion, clippings, comments, contributors, presence, and references around learning material.</p></article>
         </div>
-        <p>Review the <a href={frontmatterLab}>front-matter contract</a>, <a href={toolLab}>shared workbenches</a>, <a href={playgroundUrl}>exact Playground handoff</a>, and <code>V2-LEARN.md</code> before downstream adoption. The fixture exposes {learnContentTypes.length} hara.learn content types and does not contain production learner data.</p>
+        <p>Review the <a href={frontmatterLab}>front-matter contract</a>, <a href={toolLab}>workbench reference</a>, <a href={playgroundUrl}>exact Playground handoff</a>, and <code>V2-LEARN.md</code> before adoption. This fixture contains {learnContentTypes.length} hara.learn content types and no production learner data.</p>
       </section>
 
       <footer class="v2-lab-footer learn-footer">
-        <span>Detailed Learn application laboratory · Hara visual language v2</span>
-        <span><a href={catalogueHome}>V2 catalogue</a> · <a href={worldDiscussionLab}>World</a> · <a href={playgroundUrl}>Playground</a> · <a href="https://github.com/hara-lang/visual-language/issues/43">Issue 43</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+        <span>Hara learning reference · Visual language v2</span>
+        <span><a href={catalogueHome}>V2 reference</a> · <a href={worldDiscussionLab}>World</a> · <a href={playgroundUrl}>Playground</a> · <a href="https://github.com/hara-lang/visual-language/issues/43">Implementation record</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>
 
