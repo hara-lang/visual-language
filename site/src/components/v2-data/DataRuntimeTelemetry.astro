@@ -1,6 +1,7 @@
 ---
 import { runtimeTelemetry } from "../../lib/v2-data-visualisation.mjs";
 const tone = (state) => state === "success" || state === "ready" ? "success" : state === "active" || state === "queued" ? "signal" : state === "partial" || state === "stale" ? "warning" : state === "unsupported" ? "error" : "muted";
+const eventTop = (offset) => Math.min(432, Math.round(offset * .42) + 12);
 ---
 <section class="data-guide-section" id="telemetry" aria-labelledby="data-telemetry-title">
   <header class="data-guide-heading">
@@ -28,7 +29,7 @@ const tone = (state) => state === "success" || state === "ready" ? "success" : s
       <div class="data-event-scale" aria-hidden="true"><span>0 ms</span><span>250</span><span>500</span><span>750</span><span>1000 ms</span></div>
       <ol>
         {runtimeTelemetry.events.map((event) => (
-          <li data-state={event.state} style={`--data-offset:${Math.min(100, event.offset / 10)}%`}>
+          <li data-state={event.state} style={`top:${eventTop(event.offset)}px`}>
             <span class="data-event-sequence">{event.sequence}</span>
             <i aria-hidden="true"></i>
             <div><strong>{event.type}</strong><small>+{event.offset} ms · {event.state}</small><p>{event.detail}</p></div>
