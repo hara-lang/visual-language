@@ -2,13 +2,16 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { publicComponentInventory } from "../site/src/lib/v2-component-inventory.mjs";
+import { ensureFoundationComponentInventory } from "../site/src/lib/v2-foundation-component-inventory.mjs";
 import { ensureSymbolComponentInventory } from "../site/src/lib/v2-symbol-component-inventory.mjs";
 import { componentShowcaseGroups, showcasedComponentNames } from "../site/src/lib/v2-component-showcase.mjs";
 
+ensureFoundationComponentInventory();
 ensureSymbolComponentInventory();
 
 const galleryPath = new URL("../site/src/components/v2-catalogue/RenderedComponentGallery.astro", import.meta.url);
 const entryPath = new URL("../site/src/components/v2-catalogue/RenderedComponentGalleryEntry.astro", import.meta.url);
+const foundationSpecimenPath = new URL("../site/src/components/v2-catalogue/RenderedFoundationExtensionsSpecimen.astro", import.meta.url);
 const symbolSpecimenPath = new URL("../site/src/components/v2-catalogue/RenderedSymbolSpecimen.astro", import.meta.url);
 const headerPath = new URL("../site/src/components/v2-catalogue/CatalogueHeader.astro", import.meta.url);
 const stylesheetPath = new URL("../site/src/styles/v2-component-showcase.css", import.meta.url);
@@ -17,18 +20,19 @@ const supportStylesheetPath = new URL("../site/src/styles/v2-component-showcase-
 const normalise = (values) => [...values].sort((left, right) => left.localeCompare(right));
 
 test("the rendered gallery covers every public Astro export exactly once", () => {
-  assert.equal(componentShowcaseGroups.length, 7);
+  assert.equal(componentShowcaseGroups.length, 8);
   assert.equal(new Set(showcasedComponentNames).size, showcasedComponentNames.length, "showcase coverage contains duplicate exports");
   assert.deepEqual(normalise(showcasedComponentNames), normalise(publicComponentInventory.map((component) => component.name)));
 });
 
-test("the gallery imports and renders the public component implementations", async () => {
-  const [gallery, entry, symbolSpecimen] = await Promise.all([
+test("the gallery imports and renders every public component implementation", async () => {
+  const [gallery, entry, foundationSpecimen, symbolSpecimen] = await Promise.all([
     readFile(galleryPath, "utf8"),
     readFile(entryPath, "utf8"),
+    readFile(foundationSpecimenPath, "utf8"),
     readFile(symbolSpecimenPath, "utf8")
   ]);
-  const source = [gallery, entry, symbolSpecimen].join("\n");
+  const source = [gallery, entry, foundationSpecimen, symbolSpecimen].join("\n");
 
   for (const component of publicComponentInventory) {
     assert.match(source, new RegExp(`import\\s+${component.name}\\s+from\\s+[\"'][^\"']*${component.name}\\.astro[\"']`), `${component.name} must be imported from its Astro implementation`);
@@ -37,17 +41,20 @@ test("the gallery imports and renders the public component implementations", asy
 
   assert.match(gallery, /data-rendered-component-gallery/);
   assert.match(gallery, /These are the components\./);
+  assert.match(entry, /RenderedFoundationExtensionsSpecimen/);
   assert.match(entry, /RenderedSymbolSpecimen/);
-  assert.match(entry, /const componentCount = 39/);
+  assert.match(entry, /const componentCount = 43/);
   assert.match(entry, /\$\{componentCount\} public exports/);
+  assert.match(foundationSpecimen, /data-component-specimen=\{foundationComponentShowcaseGroup\.id\}/);
   assert.match(symbolSpecimen, /data-component-specimen=\{symbolGroup\.id\}/);
   assert.doesNotMatch(source, /components-mini-/i, "the gallery must not fall back to catalogue-only component lookalikes");
 });
 
-test("the components route mounts the rendered gallery directly after its hero", async () => {
+test("the components route registers both merged extension inventories before mounting the gallery", async () => {
   const source = await readFile(headerPath, "utf8");
 
   assert.match(source, /RenderedComponentGallery/);
+  assert.match(source, /ensureFoundationComponentInventory/);
   assert.match(source, /ensureSymbolComponentInventory/);
   assert.match(source, /resolvedActivePath.*v2\/components/s);
   assert.match(source, /data-components-showcase-mount/);
@@ -71,8 +78,16 @@ test("the rendered gallery has bounded responsive canvases and focus treatment",
     ".v2-component-specimen__canvas--runtime"
   ]) assert.ok(source.includes(selector), `missing ${selector}`);
 
-  assert.match(support, /\.v2-component-specimen__canvas--symbols/);
+  for (const selector of [
+    ".v2-component-specimen__canvas--foundation-extensions",
+    ".v2-component-showcase__iconography",
+    ".v2-component-showcase__delivery",
+    ".v2-component-specimen__canvas--symbols"
+  ]) assert.ok(support.includes(selector), `missing ${selector}`);
+
   assert.match(support, /@import "\.\.\/\.\.\/\.\.\/src\/v2\/symbols\.css"/);
+  assert.match(support, /@import "\.\.\/\.\.\/\.\.\/src\/v2-icons\.css"/);
+  assert.match(support, /@import "\.\.\/\.\.\/\.\.\/src\/v2-media\.css"/);
   assert.match(source, /:focus-visible/);
   assert.match(source, /@media \(max-width: 720px\)/);
   assert.match(source, /@media \(prefers-reduced-motion: reduce\)/);
@@ -109,8 +124,9 @@ const compileAstroSource = async (path) => {
   }
 };
 
-test("the rendered gallery compiles to parseable Astro modules", async () => {
+test("the rendered gallery entry and extension specimens compile to parseable Astro modules", async () => {
   await compileAstroSource(galleryPath);
   await compileAstroSource(entryPath);
+  await compileAstroSource(foundationSpecimenPath);
   await compileAstroSource(symbolSpecimenPath);
 });

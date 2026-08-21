@@ -37,12 +37,14 @@ const receiptEnvelope = artifactEnvelope(packageReceipt);
             <tr><td class="hara-media-email-body">
               <p class="hara-media-email-meta">WEEK 34 · {worldDigest.items.length} USEFUL UPDATES</p>
               <h1>What’s new in Hara.</h1>
-              {worldDigest.items.map((item, index) => (
-                <div class="hara-media-email-item">
-                  <p class="hara-media-email-meta">{String(index + 1).padStart(2, "0")} · {item.kind.toUpperCase()} · {item.source}</p>
-                  <h2>{item.title}</h2><p>{item.summary}</p><p class="hara-media-email-meta">{item.revision}</p>
-                </div>
-              ))}
+              <table role="presentation" class="media-email-items"><tbody>
+                {worldDigest.items.map((item, index) => (
+                  <tr><td class="hara-media-email-item">
+                    <p class="hara-media-email-meta">{String(index + 1).padStart(2, "0")} · {item.kind.toUpperCase()} · {item.source}</p>
+                    <h2>{item.title}</h2><p>{item.summary}</p><p class="hara-media-email-meta">{item.revision}</p>
+                  </td></tr>
+                ))}
+              </tbody></table>
               <p><a class="hara-media-email-button" href={worldDigest.canonicalUrl}>Open the public digest</a></p>
             </td></tr>
             <tr><td class="hara-media-email-footer">Every item links to its canonical source. <a href={worldDigest.canonicalUrl}>View on the web</a> · <a href={worldDigest.preferencesUrl}>Preferences</a> · <a href={worldDigest.unsubscribeUrl}>Unsubscribe</a><br />{worldDigest.sourceRevision} · {worldDigest.authority}</td></tr>

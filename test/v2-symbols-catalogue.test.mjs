@@ -19,31 +19,41 @@ import {
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
 
-test("symbols route is registered once with the shared catalogue arrays", () => {
-  const before = catalogueGroups.find(({ id }) => id === "foundations")?.items.filter(({ id }) => id === "symbols").length ?? 0;
+test("symbols route is registered once beneath the primary Iconography route", () => {
   const first = ensureSymbolsCatalogueRoute();
   const second = ensureSymbolsCatalogueRoute();
   const foundations = catalogueGroups.find(({ id }) => id === "foundations");
+  const icons = foundations?.items.find(({ id }) => id === "icons");
+
   assert.equal(first, symbolsCatalogueItem);
   assert.equal(second, symbolsCatalogueItem);
-  assert.equal(foundations?.items.filter(({ id }) => id === "symbols").length, 1);
-  assert.ok(before === 0 || before === 1);
-  assert.equal(catalogueItemById("symbols")?.path, "/v2/symbols/");
-  assert.equal(catalogueItemById("symbols")?.status, "active");
-  assert.equal(catalogueItemById("symbols")?.issue, 102);
+  assert.equal(foundations?.items.filter(({ id }) => id === "symbols").length, 0);
+  assert.equal(icons?.children?.filter(({ id }) => id === "symbols").length, 1);
+
+  const symbols = catalogueItemById("symbols");
+  assert.equal(symbols?.path, "/v2/symbols/");
+  assert.equal(symbols?.status, "settled");
+  assert.equal(symbols?.kind, "compatibility");
+  assert.equal(symbols?.issue, 102);
+  assert.equal(symbols?.parentId, "icons");
+  assert.equal(symbols?.parentLabel, "Iconography");
 });
 
-test("symbols route resolves through standard catalogue href, current and route-context APIs", () => {
+test("symbols route resolves through standard href, current and family-context APIs", () => {
   const route = ensureSymbolsCatalogueRoute();
   assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/v2/symbols/");
   assert.equal(catalogueItemIsCurrent(route, "/v2/symbols/"), true);
+
   const context = catalogueRouteContext("/v2/symbols/");
   assert.equal(context?.item.id, "symbols");
   assert.equal(context?.group.id, "foundations");
-  assert.equal(context?.family.id, "symbols");
+  assert.equal(context?.family.id, "icons");
+  assert.equal(context?.parent?.id, "icons");
+  assert.equal(context?.statusLabel, "Compatibility route");
+  assert.deepEqual(context?.siblings.map(({ id }) => id), ["icons", "symbols"]);
 });
 
-test("every shared CatalogueHeader registers the additive symbols route before rendering navigation", async () => {
+test("every shared CatalogueHeader reconciles the Symbols route before rendering navigation", async () => {
   const header = await read("site/src/components/v2-catalogue/CatalogueHeader.astro");
   assert.match(header, /import \{ ensureSymbolsCatalogueRoute \} from "\.\.\/\.\.\/lib\/v2-symbols-catalogue\.mjs"/);
   const importIndex = header.indexOf("ensureSymbolsCatalogueRoute");

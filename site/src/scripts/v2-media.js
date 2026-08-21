@@ -1,3 +1,5 @@
+const artifactStateAttribute = "data-artifact-state";
+
 function setPressed(buttons, selected) {
   buttons.forEach((button) => button.setAttribute("aria-pressed", String(button === selected)));
 }
@@ -25,7 +27,10 @@ function initialiseFormatProjection(root) {
     select.dataset.ready = "true";
     select.addEventListener("change", () => {
       root.querySelectorAll("[data-media-stage] .hara-delivery-frame").forEach((frame) => {
-        if (frame instanceof HTMLElement) frame.dataset.artifactState = select.value;
+        if (frame instanceof HTMLElement) {
+          frame.dataset.artifactState = select.value;
+          frame.toggleAttribute(artifactStateAttribute, true);
+        }
       });
     });
   });

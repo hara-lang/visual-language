@@ -1,0 +1,85 @@
+---
+import HaraIcon from "../../../../src/astro/HaraIcon.astro";
+import HaraGlyph from "../../../../src/astro/HaraGlyph.astro";
+import DeliveryFrame from "../../../../src/astro/v2/DeliveryFrame.astro";
+import ArtifactProvenance from "../../../../src/astro/v2/ArtifactProvenance.astro";
+import { foundationComponentShowcaseGroup } from "../../lib/v2-foundation-component-inventory.mjs";
+
+const sourceRoot = "https://github.com/hara-lang/visual-language/blob/main/";
+const envelope = {
+  artifactType: "component-catalogue-record",
+  template: "rendered-public-export",
+  canonicalUrl: "https://hara-lang.github.io/visual-language/v2/components/",
+  sourceIdentity: "visual-language:component-catalogue",
+  sourceRevision: "component-union:43",
+  authority: "Hara Visual Language package manifest",
+  status: "current",
+  locale: "en-AU",
+  direction: "ltr",
+  generatedAt: "2026-08-21T12:00:00+10:00",
+  staleAfter: null,
+  textEquivalent: "Four merged foundation exports: HaraIcon, HaraGlyph, DeliveryFrame, and ArtifactProvenance."
+};
+---
+<article
+  class="v2-component-specimen"
+  id={foundationComponentShowcaseGroup.id}
+  data-component-specimen={foundationComponentShowcaseGroup.id}
+>
+  <header class="v2-component-specimen__header">
+    <div>
+      <p>{foundationComponentShowcaseGroup.eyebrow}</p>
+      <h3>{foundationComponentShowcaseGroup.title}</h3>
+      <span>{foundationComponentShowcaseGroup.description}</span>
+    </div>
+    <div class="v2-component-specimen__exports">
+      {foundationComponentShowcaseGroup.components.map((component) => (
+        <a href={`${sourceRoot}${component.path}`}><code>{component.name}</code></a>
+      ))}
+    </div>
+  </header>
+
+  <div class="v2-component-specimen__canvas v2-component-specimen__canvas--foundation-extensions">
+    <section class="v2-component-showcase__iconography" aria-labelledby="rendered-iconography-title">
+      <header>
+        <p class="hara-v2-kicker">Public symbol primitives</p>
+        <h4 id="rendered-iconography-title">Interface command and product identity remain separate.</h4>
+      </header>
+      <div class="v2-component-showcase__icon-row">
+        <button type="button" class="hara-icon-button" aria-label="Run source">
+          <HaraIcon name="run" size={20} decorative={true} />
+        </button>
+        <button type="button" class="hara-icon-button" aria-label="Search Hara">
+          <HaraIcon name="search" size={20} decorative={true} />
+        </button>
+        <span class="hara-state-symbol" data-state="partial">
+          <HaraIcon name="partial" size={16} decorative={true} /> Partial
+        </span>
+      </div>
+      <a class="hara-product-launcher v2-component-showcase__product-launcher" href="#foundation-extensions" aria-label="Open Hara World specimen">
+        <HaraGlyph name="product-world" size={44} decorative={true} />
+        <div><b>World</b><p>Articles, feeds, clippings and contributor identity.</p></div>
+        <small>world.hara-lang.org</small>
+      </a>
+    </section>
+
+    <section class="v2-component-showcase__delivery" aria-labelledby="rendered-delivery-title">
+      <header>
+        <p class="hara-v2-kicker">Artifact projection</p>
+        <h4 id="rendered-delivery-title">The frame carries format; provenance carries source truth.</h4>
+      </header>
+      <DeliveryFrame
+        format="static"
+        state="current"
+        label="Static component-catalogue artifact"
+        title="Static delivery frame"
+      >
+        <article class="v2-component-showcase__delivery-content">
+          <b>Rendered public component union</b>
+          <p>Iconography and delivery primitives are inspectable beside the earlier document, workbench, runtime and compatibility-symbol exports.</p>
+        </article>
+      </DeliveryFrame>
+      <ArtifactProvenance envelope={envelope} compact={true} label="Component specimen provenance" />
+    </section>
+  </div>
+</article>

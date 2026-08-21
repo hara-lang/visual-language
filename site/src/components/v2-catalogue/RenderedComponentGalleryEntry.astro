@@ -1,14 +1,20 @@
 ---
 import "../../styles/v2-component-showcase-support.css";
+import { ensureFoundationComponentInventory } from "../../lib/v2-foundation-component-inventory.mjs";
 import { ensureSymbolComponentInventory } from "../../lib/v2-symbol-component-inventory.mjs";
 import RenderedComponentGallery from "./RenderedComponentGallery.astro";
+import RenderedFoundationExtensionsSpecimen from "./RenderedFoundationExtensionsSpecimen.astro";
 import RenderedSymbolSpecimen from "./RenderedSymbolSpecimen.astro";
 import "../../styles/v2-component-showcase-responsive.css";
 
+ensureFoundationComponentInventory();
 ensureSymbolComponentInventory();
-const componentCount = 39;
+const componentCount = 43;
 ---
 <RenderedComponentGallery />
+<div class="v2-component-showcase v2-component-showcase--foundation-extensions">
+  <RenderedFoundationExtensionsSpecimen />
+</div>
 <div class="v2-component-showcase v2-component-showcase--semantic">
   <RenderedSymbolSpecimen />
 </div>
