@@ -1,6 +1,21 @@
 ---
 import "../../styles/v2-component-showcase-support.css";
+import { ensureSymbolComponentInventory } from "../../lib/v2-symbol-component-inventory.mjs";
 import RenderedComponentGallery from "./RenderedComponentGallery.astro";
+import RenderedSymbolSpecimen from "./RenderedSymbolSpecimen.astro";
 import "../../styles/v2-component-showcase-responsive.css";
+
+const componentCount = ensureSymbolComponentInventory() ? 39 : 38;
 ---
 <RenderedComponentGallery />
+<div class="v2-component-showcase v2-component-showcase--semantic">
+  <RenderedSymbolSpecimen />
+</div>
+<script is:inline define:vars={{ componentCount }}>
+  const syncRenderedComponentCount = () => {
+    const kicker = document.querySelector("[data-rendered-component-gallery] .v2-component-showcase__intro .hara-v2-kicker");
+    if (kicker instanceof HTMLElement) kicker.textContent = `Rendered catalogue · ${componentCount} public exports`;
+  };
+  syncRenderedComponentCount();
+  document.addEventListener("astro:page-load", syncRenderedComponentCount);
+</script>
