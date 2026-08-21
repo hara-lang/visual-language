@@ -5,40 +5,46 @@ import {
 
 export const symbolsCatalogueItem = Object.freeze({
   id: "symbols",
-  label: "Symbols",
+  label: "Semantic symbols",
   path: "/v2/symbols/",
   href: "/v2/symbols/",
-  summary: "Semantic navigation, action, state, runtime capability, product and evidence symbols with optical sizing and accessible text boundaries.",
-  status: "active",
+  summary: "The merged 24 × 24 semantic symbol inventory retained as a compatibility surface while Iconography remains the primary current destination.",
+  status: "settled",
   issue: 102,
-  eyebrow: "Iconography and capabilities"
+  kind: "compatibility",
+  tabLabel: "Semantic symbols"
 });
 
 /**
- * Register the additive symbols guide with the settled catalogue arrays.
- *
- * `catalogueGroups` and `catalogueItems` are exported mutable arrays even
- * though their bindings are constant. This bounded extension keeps issue #102
- * independent from unrelated catalogue-file churn while preserving the same
- * route-context and navigation APIs for every consumer of CatalogueHeader.
+ * Register the Symbols compatibility route beneath Iconography without adding
+ * a duplicate permanent Foundations destination. The mutation remains
+ * idempotent for pages that load CatalogueHeader from independent route trees.
  */
 export function ensureSymbolsCatalogueRoute() {
   const foundations = catalogueGroups.find(({ id }) => id === "foundations");
   if (!foundations) throw new Error("Hara v2 catalogue is missing the Foundations group");
+  const icons = foundations.items.find(({ id }) => id === "icons");
+  if (!icons) throw new Error("Hara v2 catalogue is missing the Iconography route");
 
-  if (!foundations.items.some(({ id }) => id === symbolsCatalogueItem.id)) {
-    foundations.items.push(symbolsCatalogueItem);
-  }
+  // Remove a legacy top-level registration left by the independent Symbols
+  // branch before the catalogue relationship was reconciled.
+  foundations.items = foundations.items.filter(({ id }) => id !== symbolsCatalogueItem.id);
 
-  if (!catalogueItems.some(({ id }) => id === symbolsCatalogueItem.id)) {
-    catalogueItems.push({
-      ...symbolsCatalogueItem,
-      groupId: foundations.id,
-      groupLabel: foundations.label,
-      parentId: null,
-      parentLabel: null
-    });
-  }
+  if (!icons.children) icons.children = [];
+  const existingChildIndex = icons.children.findIndex(({ id }) => id === symbolsCatalogueItem.id);
+  if (existingChildIndex < 0) icons.children.push(symbolsCatalogueItem);
+  else icons.children[existingChildIndex] = { ...icons.children[existingChildIndex], ...symbolsCatalogueItem };
+
+  const existingItemIndex = catalogueItems.findIndex(({ id }) => id === symbolsCatalogueItem.id);
+  const flattened = {
+    ...symbolsCatalogueItem,
+    groupId: foundations.id,
+    groupLabel: foundations.label,
+    parentId: icons.id,
+    parentLabel: icons.label
+  };
+  if (existingItemIndex < 0) catalogueItems.push(flattened);
+  else catalogueItems[existingItemIndex] = flattened;
 
   return symbolsCatalogueItem;
 }
