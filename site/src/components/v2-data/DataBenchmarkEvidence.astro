@@ -1,0 +1,77 @@
+---
+import {
+  benchmarkComparison,
+  benchmarkDistribution,
+  benchmarkSmallMultiples,
+  percentage
+} from "../../lib/v2-data-visualisation.mjs";
+
+const pct = (value, domain = benchmarkComparison.domain) => percentage(value, domain) ?? 0;
+---
+<section class="data-guide-section" id="benchmarks" aria-labelledby="data-benchmark-title">
+  <header class="data-guide-heading">
+    <div><p class="hara-v2-kicker">Reference composition 01 · Benchmarks</p><h2 id="data-benchmark-title">Lead with the metric, then expose the evidence.</h2></div>
+    <p>Bars communicate ordered magnitude. Confidence ranges, sample count, baseline, environment, methodology and exact evidence revision remain adjacent rather than hidden behind a tooltip.</p>
+  </header>
+
+  <article class="data-evidence-panel data-benchmark-panel">
+    <header class="data-evidence-header">
+      <div><span>{benchmarkComparison.metric} · {benchmarkComparison.unit}</span><h3>{benchmarkComparison.title}</h3><p>{benchmarkComparison.direction.replaceAll("-", " ")} · baseline {benchmarkComparison.baseline} {benchmarkComparison.unit} · domain {benchmarkComparison.domain[0]}–{benchmarkComparison.domain[1]} {benchmarkComparison.unit}</p></div>
+      <code>{benchmarkComparison.sourceRevision}</code>
+    </header>
+
+    <div class="data-comparison-chart" role="img" aria-label={`${benchmarkComparison.title}. ${benchmarkComparison.metric} in ${benchmarkComparison.unit}; lower is better.`}>
+      <div class="data-axis" aria-hidden="true"><span>0</span><span>4</span><span>8</span><span>12</span><span>16 ms</span></div>
+      {benchmarkComparison.series.map((entry) => entry.value == null ? (
+        <article class="data-comparison-row" data-state={entry.state}>
+          <div><strong>{entry.label}</strong><small>{entry.evidence}</small></div>
+          <div class="data-unavailable-mark"><span>≠</span><strong>Incomparable</strong><small>No equivalent process-start boundary</small></div>
+        </article>
+      ) : (
+        <article class="data-comparison-row" data-state="measured">
+          <div><strong>{entry.label}</strong><small>{entry.samples} samples · {entry.evidence}</small></div>
+          <div class="data-comparison-track">
+            <i class="data-comparison-bar" style={`--data-value:${pct(entry.value)}%`}><span>{entry.value.toFixed(1)} {benchmarkComparison.unit}</span></i>
+            <i class="data-confidence-range" style={`--data-low:${pct(entry.low)}%;--data-high:${pct(entry.high)}%`} aria-hidden="true"></i>
+          </div>
+          <span class="data-confidence-label">95% CI {entry.low?.toFixed(1)}–{entry.high?.toFixed(1)} {benchmarkComparison.unit}</span>
+        </article>
+      ))}
+    </div>
+
+    <div class="data-method-strip">
+      <div><span>Samples</span><strong>{benchmarkComparison.sampleCount} per measured series</strong></div>
+      <div><span>Confidence</span><strong>{benchmarkComparison.confidence}</strong></div>
+      <div><span>Environment</span><strong>{benchmarkComparison.environment}</strong></div>
+      <div><span>Generated</span><strong>{benchmarkComparison.generatedAt}</strong></div>
+    </div>
+
+    <details class="data-accessible-table" open>
+      <summary>Accessible data table and methodology</summary>
+      <p>{benchmarkComparison.methodology}</p>
+      <div tabindex="0" aria-label="Benchmark comparison data table; horizontally scrollable at narrow widths">
+        <table>
+          <caption>{benchmarkComparison.title} — {benchmarkComparison.metric}; {benchmarkComparison.unit}; lower is better.</caption>
+          <thead><tr><th>Implementation</th><th>Median</th><th>95% interval</th><th>Samples</th><th>State</th><th>Evidence</th></tr></thead>
+          <tbody>{benchmarkComparison.series.map((entry) => <tr><th scope="row">{entry.label}</th><td>{entry.value == null ? "Not comparable" : `${entry.value.toFixed(1)} ${benchmarkComparison.unit}`}</td><td>{entry.low == null ? "Not available" : `${entry.low.toFixed(1)}–${entry.high?.toFixed(1)} ${benchmarkComparison.unit}`}</td><td>{entry.samples}</td><td>{entry.state ?? "Measured"}</td><td><code>{entry.evidence}</code></td></tr>)}</tbody>
+        </table>
+      </div>
+    </details>
+  </article>
+
+  <div class="data-small-multiples" aria-label="Three benchmark workload comparisons">
+    {benchmarkSmallMultiples.map((workload) => (
+      <article>
+        <header><div><span>{workload.unit}</span><h3>{workload.label}</h3></div><code>{workload.sourceRevision.split(":").at(-1)}</code></header>
+        <div class="data-mini-bars">{workload.values.map((entry) => entry.value == null ? <div data-state={entry.state}><strong>{entry.label}</strong><span>— Missing</span></div> : <div data-state="measured"><strong>{entry.label}</strong><i style={`--data-value:${pct(entry.value, workload.domain)}%`}><span>{entry.value} {workload.unit}</span></i></div>)}</div>
+        <footer><span>Baseline {workload.domain[0]} {workload.unit}</span><span>Scale ends {workload.domain[1]} {workload.unit}</span></footer>
+      </article>
+    ))}
+  </div>
+
+  <article class="data-distribution-panel">
+    <header><div><span>Distribution, not only a point estimate</span><h3>{benchmarkDistribution.label}</h3></div><code>{benchmarkDistribution.sourceRevision}</code></header>
+    <div class="data-distribution-bars" role="img" aria-label={`${benchmarkDistribution.label}; histogram counts by ${benchmarkDistribution.unit} range.`}>{benchmarkDistribution.bins.map((bin) => <div><i style={`--data-count:${bin.count}`}><span>{bin.count}</span></i><strong>{bin.range}</strong></div>)}</div>
+    <table><caption>Histogram counts for {benchmarkDistribution.label}</caption><thead><tr><th>Range ({benchmarkDistribution.unit})</th><th>Count</th></tr></thead><tbody>{benchmarkDistribution.bins.map((bin) => <tr><th scope="row">{bin.range}</th><td>{bin.count}</td></tr>)}</tbody></table>
+  </article>
+</section>
