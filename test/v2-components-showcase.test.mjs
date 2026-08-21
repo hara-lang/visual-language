@@ -38,7 +38,7 @@ test("the gallery imports and renders the public component implementations", asy
   assert.match(gallery, /data-rendered-component-gallery/);
   assert.match(gallery, /These are the components\./);
   assert.match(entry, /RenderedSymbolSpecimen/);
-  assert.match(entry, /const componentCount = 39/);
+  assert.match(entry, /const componentCount = 41/);
   assert.match(entry, /\$\{componentCount\} public exports/);
   assert.match(symbolSpecimen, /data-component-specimen=\{symbolGroup\.id\}/);
   assert.doesNotMatch(source, /components-mini-/i, "the gallery must not fall back to catalogue-only component lookalikes");
