@@ -1,0 +1,93 @@
+---
+import HaraGlyph from "../../../../src/astro/HaraGlyph.astro";
+import HaraIcon from "../../../../src/astro/HaraIcon.astro";
+import {
+  capabilityExamples,
+  capabilityStates,
+  productGlyphs
+} from "../../lib/v2-icons.mjs";
+
+const stateById = new Map(capabilityStates.map((state) => [state.id, state]));
+---
+<section class="icon-guide-section" id="capabilities" aria-labelledby="icon-capability-title">
+  <header class="icon-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">03 · runtime capabilities</p>
+      <h2 id="icon-capability-title">The glyph identifies the capability. The host supplies its state.</h2>
+      <p>Capability glyphs use the 32 × 32 identity grid and may carry one Hara signal aperture. They are stable names for sessions, files, canvas, storage and hosts—not proof that a capability is available or attached.</p>
+    </div>
+    <dl class="icon-guide-fence">
+      <div><dt>Glyph grid</dt><dd>32 × 32</dd></div>
+      <div><dt>Capabilities</dt><dd>{capabilityExamples.length}</dd></div>
+      <div><dt>State classes</dt><dd>{capabilityStates.length}</dd></div>
+      <div><dt>Authority</dt><dd>Runtime / provider</dd></div>
+    </dl>
+  </header>
+
+  <div class="icon-capability-controls">
+    <label><span>Preview state</span><select class="hara-v2-select" data-capability-filter><option value="all">All capability states</option>{capabilityStates.map((state) => <option value={state.id}>{state.label}</option>)}</select></label>
+    <p>Filtering changes only the guide view. It does not mutate or infer a capability.</p>
+  </div>
+
+  <div class="icon-capability-grid">
+    {capabilityExamples.map((capability) => {
+      const state = stateById.get(capability.state);
+      return (
+        <article class="hara-capability-card" data-capability-card data-capability-state={capability.state} tabindex="0">
+          <HaraGlyph name={capability.glyph} size={40} decorative={true} />
+          <div><b>{capability.label}</b><p>{capability.description}</p><code>{capability.revision}</code></div>
+          <span class="hara-state-symbol" data-state={capability.state === "attached" || capability.state === "available" ? "success" : capability.state}>
+            <HaraIcon name={state?.icon ?? "pending"} size={15} decorative={true} />{state?.label}
+          </span>
+        </article>
+      );
+    })}
+  </div>
+
+  <section class="icon-capability-state-contract" aria-labelledby="capability-state-contract-title">
+    <header><p class="hara-v2-kicker">Capability lifecycle</p><h3 id="capability-state-contract-title">Availability, request and attachment are separate facts.</h3></header>
+    <ol>
+      {capabilityStates.map((state, index) => (
+        <li data-state={state.id}><span>{String(index + 1).padStart(2, "0")}</span><HaraIcon name={state.icon} size={19} decorative={true} /><div><b>{state.label}</b><p>{state.description}</p></div></li>
+      ))}
+    </ol>
+  </section>
+</section>
+
+<section class="icon-guide-section" id="products" aria-labelledby="icon-products-title">
+  <header class="icon-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">04 · Hara product family</p>
+      <h2 id="icon-products-title">Six products, one family, no borrowed logos.</h2>
+      <p>Product glyphs derive from Hara’s frame, signal aperture, lanes, brackets and connected nodes. They identify destinations in launchers, catalogue cards and compact navigation. They are never reused as generic commands.</p>
+    </div>
+    <dl class="icon-guide-fence">
+      <div><dt>Products</dt><dd>{productGlyphs.length}</dd></div>
+      <div><dt>Identity grid</dt><dd>32 × 32</dd></div>
+      <div><dt>Accent</dt><dd>One signal aperture</dd></div>
+      <div><dt>Generic-action reuse</dt><dd>Forbidden</dd></div>
+    </dl>
+  </header>
+
+  <div class="icon-product-launcher-grid">
+    {productGlyphs.map((product) => (
+      <a class="hara-product-launcher" href={`#product-${product.id}`} data-product={product.id}>
+        <HaraGlyph name={product.glyph} size={48} decorative={true} />
+        <div><b>{product.label}</b><p>{product.description}</p></div>
+        <small>{product.route}</small>
+      </a>
+    ))}
+  </div>
+
+  <div class="icon-product-scale-grid">
+    {productGlyphs.map((product) => (
+      <article id={`product-${product.id}`}>
+        <header><div><HaraGlyph name={product.glyph} size={32} decorative={true} /><h3>{product.label}</h3></div><span>{product.function}</span></header>
+        <div class="icon-product-scales" aria-label={`${product.label} glyph at review sizes`}>
+          {[16, 24, 32, 48].map((size) => <span><HaraGlyph name={product.glyph} size={size} decorative={true} /><small>{size}px</small></span>)}
+        </div>
+        <dl><div><dt>Destination</dt><dd>{product.route}</dd></div><div><dt>Use</dt><dd>Launcher, catalogue, app icon and product navigation</dd></div><div><dt>Not for</dt><dd>Generic commands or runtime state</dd></div></dl>
+      </article>
+    ))}
+  </div>
+</section>
