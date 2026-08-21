@@ -1,0 +1,117 @@
+---
+import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
+import DiagramArchitecture from "../../../components/v2-diagrams/DiagramArchitecture.astro";
+import DiagramSequenceState from "../../../components/v2-diagrams/DiagramSequenceState.astro";
+import DiagramPackageGraph from "../../../components/v2-diagrams/DiagramPackageGraph.astro";
+import DiagramGrammar from "../../../components/v2-diagrams/DiagramGrammar.astro";
+import {
+  diagramFixtureNotice,
+  diagramSummary
+} from "../../../lib/v2-diagrams.mjs";
+import "../../../../../src/v2.css";
+import "../../../../../src/v2/diagrams.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-lab.css";
+import "../../../styles/v2-calm-lab.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/diagrams/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const catalogueUrl = `${basePath}v2/`;
+const guideUrl = `${basePath}v2/guide/`;
+const dataUrl = `${basePath}v2/data/`;
+const issueUrl = "https://github.com/hara-lang/visual-language/issues/100";
+const localNav = [
+  { href: "#overview", label: "Overview" },
+  { href: "#architecture", label: "Architecture" },
+  { href: "#flow", label: "Flow" },
+  { href: "#sequence", label: "Sequence" },
+  { href: "#state", label: "State" },
+  { href: "#graph", label: "Graphs" },
+  { href: "#grammar", label: "Grammar" },
+  { href: "#adoption", label: "Adoption" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="The Hara v2 diagrams and system-mapping guide for architecture, runtime flow, sequence, state machines, package graphs, evidence fences and accessible textual alternatives." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara v2 diagrams and system maps" />
+    <meta property="og:description" content="Accessible architecture, flow, sequence, lifecycle and package-graph patterns with explicit authority and revision boundaries." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara v2 diagrams and system maps" />
+    <meta name="twitter:description" content="A shared diagram grammar for Hara products, documentation and operational surfaces." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara v2 diagrams and system maps</title>
+  </head>
+  <body class="hara-v2 hara-v2-diagram-guide">
+    <CatalogueHeader basePath={basePath} activePath="/v2/diagrams/" label="Diagrams and system-mapping guide">
+      <a slot="route-actions" href="#architecture">Inspect system maps</a>
+    </CatalogueHeader>
+
+    <nav class="diagram-guide-local-nav" aria-label="Diagrams guide sections">
+      <span>Diagrams</span>
+      <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+      <a href={issueUrl}>Issue 100 ↗</a>
+    </nav>
+
+    <main class="diagram-guide-main">
+      <aside class="diagram-guide-fixture-notice" role="note">
+        <strong>{diagramFixtureNotice.label}</strong>
+        <span>{diagramFixtureNotice.summary}</span>
+        <code>{diagramFixtureNotice.id} · {diagramFixtureNotice.sourceRevision}</code>
+      </aside>
+
+      <section class="diagram-guide-hero" id="overview" aria-labelledby="diagram-guide-title">
+        <div>
+          <p class="hara-v2-kicker">Issue 100 · relationships before decoration</p>
+          <h1 id="diagram-guide-title">Explain what connects, what changes, and who controls the facts.</h1>
+          <p>Hara products need one visual grammar for architecture, runtime flow, sequence, lifecycle and package relationships. The guide combines direction, line style, symbols and words, then pairs every visual with an equivalent relation list, event table, transition table or adjacency table.</p>
+          <div class="diagram-guide-hero-actions">
+            <a href="#architecture">Inspect architecture boundaries</a>
+            <a href="#sequence">Read an exact sequence</a>
+            <a href="#graph">Explore package relations</a>
+          </div>
+        </div>
+        <aside class="diagram-guide-hero-ledger" aria-label="Diagram guide fixture summary">
+          <header><span>Guide inventory</span><span class="diagram-status-word" data-status="current">Additive v2 grammar</span></header>
+          <div>
+            <p class="diagram-guide-mono">v2/diagrams@1</p>
+            <h2>{diagramSummary.architectureRelations + diagramSummary.sequenceEvents + diagramSummary.stateTransitions + diagramSummary.graphEdges} explicit relations</h2>
+            <p>Five Hara-shaped reference compositions with exact source/revision fences and complete textual alternatives.</p>
+            <dl>
+              <div><dt>Architecture nodes</dt><dd>{diagramSummary.architectureNodes}</dd></div>
+              <div><dt>Runtime flow stages</dt><dd>{diagramSummary.flowStages}</dd></div>
+              <div><dt>Sequence events</dt><dd>{diagramSummary.sequenceEvents}</dd></div>
+              <div><dt>State transitions</dt><dd>{diagramSummary.stateTransitions}</dd></div>
+              <div><dt>Graph nodes / edges</dt><dd>{diagramSummary.graphNodes} / {diagramSummary.graphEdges}</dd></div>
+              <div><dt>Boundary states</dt><dd>{diagramSummary.relationKinds}</dd></div>
+            </dl>
+          </div>
+          <footer><span>No decorative perspective</span><span>Textual equivalence is mandatory</span></footer>
+        </aside>
+      </section>
+
+      <DiagramArchitecture />
+      <DiagramSequenceState />
+      <DiagramPackageGraph />
+      <DiagramGrammar />
+
+      <footer class="v2-lab-footer">
+        <span>Hara v2 diagrams and system-mapping guide</span>
+        <span><a href={catalogueUrl}>Catalogue home</a> · <a href={guideUrl}>Catalogue guide</a> · <a href={dataUrl}>Data visualisation</a> · <a href={issueUrl}>Issue 100</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script src="../../../scripts/v2-diagrams.js"></script>
+  </body>
+</html>
