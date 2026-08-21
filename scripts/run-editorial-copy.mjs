@@ -13,7 +13,15 @@ let source = await fs.readFile(migration, "utf8");
 // and public symbol IDs whose CSS and runtime contracts must remain stable.
 source = source
   .replace('  ["Products", "Routes"],\n', "")
-  .replace('  ["products", "routes"],\n', "");
+  .replace('  ["products", "routes"],\n', "")
+  .replace(
+    '  path.join(root, "site", "src", "lib")\n];',
+    '  path.join(root, "site", "src", "lib"),\n  path.join(root, "test")\n];'
+  )
+  .replace(
+    'const files = (await Promise.all(sourceRoots.map(walk))).flat();',
+    'const files = (await Promise.all(sourceRoots.map(walk))).flat().filter((file) => !file.endsWith("v2-editorial.test.mjs"));'
+  );
 
 await fs.writeFile(migration, source);
 process.argv.push("--apply");
