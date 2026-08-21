@@ -23,6 +23,10 @@ source = source
     'const files = (await Promise.all(sourceRoots.map(walk))).flat().filter((file) => !file.endsWith("v2-editorial.test.mjs"));'
   )
   .replace(
+    'const files = (await Promise.all(sourceRoots.map(walk))).flat().filter((file) => !file.endsWith("v2-editorial.test.mjs"));',
+    'const rootMarkdownFiles = (await fs.readdir(root, { withFileTypes: true }))\n  .filter((entry) => entry.isFile() && entry.name.endsWith(".md") && !["AGENTS.md", "V2-EDITORIAL.md"].includes(entry.name))\n  .map((entry) => path.join(root, entry.name));\nconst files = [...(await Promise.all(sourceRoots.map(walk))).flat(), ...rootMarkdownFiles]\n  .filter((file) => !file.endsWith("v2-editorial.test.mjs"));'
+  )
+  .replace(
     'const violations = [];\nfor (const file of files) {',
     'const violations = [];\nfor (const file of files.filter((file) => !file.includes(`${path.sep}test${path.sep}`))) {'
   );
