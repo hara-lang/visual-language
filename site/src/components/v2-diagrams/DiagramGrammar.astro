@@ -1,0 +1,113 @@
+---
+import {
+  diagramPrinciples,
+  diagramRelationKinds
+} from "../../lib/v2-diagrams.mjs";
+
+const annotationLayers = [
+  { id: "title", label: "Title", owns: "What relationship or lifecycle is being explained.", required: "Plain-language purpose." },
+  { id: "caption", label: "Caption", owns: "How to read the visual and what not to infer.", required: "Direction, status and scope." },
+  { id: "legend", label: "Legend", owns: "Node, edge, symbol and state vocabulary.", required: "Words plus shape/line treatment." },
+  { id: "fence", label: "Evidence fence", owns: "Source, exact revision, authority and generated-at context.", required: "No unfenced current claims." },
+  { id: "callout", label: "Callout", owns: "A bounded exception, risk or handoff.", required: "Numbered and source-linked." },
+  { id: "alternative", label: "Textual alternative", owns: "Equivalent relations, events, transitions or adjacency.", required: "Complete without the visual." }
+];
+
+const adoptionTargets = [
+  ["WWW / Docs", "Architecture explanations, concept maps and static low-bandwidth fallbacks."],
+  ["Playground", "Session flow, runtime sequence, lifecycle and capability maps."],
+  ["Specs", "Normative state machines, conformance flow and proposal lifecycle."],
+  ["Packages", "Dependency, namespace, compatibility and stewardship graphs."],
+  ["World", "Source, relay, moderation, ownership and accountable-bot diagrams."],
+  ["Learn", "Concept maps and progressive explanations, never hidden prerequisite authority."]
+];
+---
+<section class="diagram-guide-section" id="grammar" aria-labelledby="diagram-grammar-title">
+  <header class="diagram-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">06 · shared grammar</p>
+      <h2 id="diagram-grammar-title">Use one relation language across products.</h2>
+      <p>Node shape, line treatment and annotation hierarchy are shared. Product-specific identities, events, transitions and dependency facts remain under their own authority.</p>
+    </div>
+  </header>
+
+  <div class="diagram-grammar-grid">
+    <section class="diagram-legend-card" aria-labelledby="diagram-relation-legend-title">
+      <header><h3 id="diagram-relation-legend-title">Boundary and confidence legend</h3><p>Every state combines words, symbols and line treatment.</p></header>
+      <div>
+        {diagramRelationKinds.map((kind) => (
+          <article data-kind={kind.id}>
+            <span class="diagram-legend-symbol" aria-hidden="true">{kind.symbol}</span>
+            <i class="diagram-legend-line" data-line={kind.line} aria-hidden="true"></i>
+            <div><b>{kind.label}</b><p>{kind.description}</p><code>{kind.id}</code></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="diagram-annotation-card" aria-labelledby="diagram-annotation-title">
+      <header><h3 id="diagram-annotation-title">Annotation stack</h3><p>Do not ask arrows and boxes to carry source or authority facts silently.</p></header>
+      <ol>
+        {annotationLayers.map((layer, index) => (
+          <li><span>{String(index + 1).padStart(2, "0")}</span><div><b>{layer.label}</b><p>{layer.owns}</p><small>{layer.required}</small></div></li>
+        ))}
+      </ol>
+    </section>
+  </div>
+
+  <div class="diagram-principles">
+    {diagramPrinciples.map((principle, index) => <article><span>{String(index + 1).padStart(2, "0")}</span><p>{principle}</p></article>)}
+  </div>
+
+  <section class="diagram-delivery-contract" aria-labelledby="diagram-delivery-title">
+    <div>
+      <p class="hara-v2-kicker">Delivery behavior</p>
+      <h3 id="diagram-delivery-title">The same explanation must survive screen, print and reduced capability.</h3>
+      <p>Visual diagrams may use progressive disclosure on capable screens. Printed, low-bandwidth and narrow views use the exact title, evidence fence and textual alternative rather than a raster screenshot of tiny labels.</p>
+    </div>
+    <dl>
+      <div><dt>Wide screen</dt><dd>Overview visual + selected evidence inspector + textual equivalent.</dd></div>
+      <div><dt>680 px</dt><dd>Visual simplifies; labels remain outside edges; alternative moves directly below.</dd></div>
+      <div><dt>390 / 320 px</dt><dd>Ordered text, events, transitions or adjacency become primary; visual may be omitted.</dd></div>
+      <div><dt>Print / PDF</dt><dd>Static line treatment, numbered callouts, caption and source revision on the same page.</dd></div>
+      <div><dt>Reduced motion</dt><dd>No animated travel along edges; selection and state change use immediate structural feedback.</dd></div>
+      <div><dt>Machine projection</dt><dd>Expose stable node IDs, edge kinds, direction, state, revision and authority.</dd></div>
+    </dl>
+  </section>
+</section>
+
+<section class="diagram-guide-section" id="adoption" aria-labelledby="diagram-adoption-title">
+  <header class="diagram-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">07 · ownership and adoption</p>
+      <h2 id="diagram-adoption-title">Adopt the grammar; do not copy the fixture facts.</h2>
+      <p>The public CSS supplies shared diagram semantics and responsive behavior. Each downstream product supplies its own exact node identities, relations, revisions, evidence, accessible alternative and publication decision.</p>
+    </div>
+  </header>
+
+  <div class="diagram-ownership-grid">
+    <article><span>Visual Language owns</span><h3>Presentation grammar</h3><p>Node and edge roles, line/symbol vocabulary, titles, captions, legends, evidence fences, focus, responsive transformation, print and reduced-motion treatment.</p></article>
+    <article><span>Products own</span><h3>Task composition</h3><p>Which diagram belongs in a page or workflow, what can be selected, how detail is disclosed, and which user action follows inspection.</p></article>
+    <article><span>Authorities own</span><h3>Facts and receipts</h3><p>Architecture, identities, versions, events, transitions, dependencies, compatibility, ownership, source revisions, receipts and current/proposed decisions.</p></article>
+  </div>
+
+  <div class="diagram-adoption-table-wrap">
+    <table class="diagram-table">
+      <caption>Downstream diagram adoption map</caption>
+      <thead><tr><th>Product family</th><th>Primary diagram use</th><th>Required authority input</th><th>Required accessible equivalent</th></tr></thead>
+      <tbody>
+        {adoptionTargets.map(([product, use]) => (
+          <tr><td>{product}</td><td>{use}</td><td>Exact identity, relation/state facts and source revision from the product authority.</td><td>Relation list, event table, transition table or adjacency table.</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <ol class="diagram-adoption-steps">
+    <li><b>Pin a merged Visual Language revision.</b><span>Import `v2.css` and `v2-diagrams.css` without copying protected tokens.</span></li>
+    <li><b>Model stable identities first.</b><span>Give every node, edge, lane, state and annotation a machine-readable ID.</span></li>
+    <li><b>Fence authority.</b><span>Record source revision, registry/runtime authority and whether facts are current, proposed or unavailable.</span></li>
+    <li><b>Provide equivalence.</b><span>Ship the relation/event/transition/adjacency alternative in the same release as the visual.</span></li>
+    <li><b>Review five widths and two themes.</b><span>Use `/v2/guide/` and record route/theme/viewport evidence before downstream adoption.</span></li>
+  </ol>
+</section>
