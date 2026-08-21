@@ -1,0 +1,33 @@
+@import "../../../src/effects.css";
+@import "../../../src/motifs.css";
+@import "../../../src/v2/graphics.css";
+
+/*
+ * The rendered catalogue composes exports from the legacy support layer,
+ * document v2, and v2-tool. Keep the support and graphics entry points local
+ * to this route instead of expanding the public v2-tool bundle for every
+ * downstream consumer.
+ *
+ * These aliases are scoped to the specimen composition. They resolve the
+ * catalogue's presentation tokens onto the authoritative v2 token contract;
+ * no global identity or theme token is redefined.
+ */
+.v2-component-showcase {
+  --hara-text-soft: var(--hara-v2-muted);
+  --hara-ink: var(--hara-v2-ink);
+  --hara-canvas: var(--hara-v2-canvas);
+  --hara-background: var(--hara-v2-panel-recess);
+}
+
+/* A visible static field remains underneath WebGL while it loads or when a
+ * context cannot be created. The signal aperture prevents the fallback from
+ * collapsing into an undifferentiated black rectangle in dark mode. */
+.v2-component-showcase__shader {
+  --hara-shader-fallback:
+    radial-gradient(
+      circle at 64% 36%,
+      color-mix(in srgb, var(--hara-v2-signal) 24%, transparent),
+      transparent 38%
+    ),
+    linear-gradient(135deg, var(--hara-graphics-ground), var(--hara-graphics-plate));
+}
