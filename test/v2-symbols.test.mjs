@@ -125,7 +125,7 @@ test("symbol stylesheet preserves currentColor, focus, touch, responsive and non
   assert.doesNotMatch(css, /--hara-[A-Za-z0-9_-]+\s*:/, "symbols may consume but not redefine protected Hara tokens");
 });
 
-test("written contract covers semantics, accessibility, optical sizing, authority and adoption", async () => {
+test("written contract covers semantics, accessibility, optical sizing, authority and compatibility adoption", async () => {
   const document = await read("V2-SYMBOLS.md");
   for (const phrase of [
     "Meaning before glyph",
@@ -142,7 +142,7 @@ test("written contract covers semantics, accessibility, optical sizing, authorit
     "merged Visual Language revision"
   ]) assert.match(document, new RegExp(phrase, "i"));
   assert.match(document, /`?Unavailable`? is not a synonym for `error`/);
-  assert.match(document, /Product symbols never replace the protected Hara block-H identity/i);
+  assert.match(document, /Product symbols (?:do not|never) replace the protected Hara block-H identity/i);
 });
 
 test("the Astro Symbol primitive compiles to a parseable module", async () => {
