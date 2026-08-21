@@ -141,7 +141,7 @@ test("written contract covers semantics, accessibility, optical sizing, authorit
     "v2-symbols.css",
     "merged Visual Language revision"
   ]) assert.match(document, new RegExp(phrase, "i"));
-  assert.match(document, /Unavailable is not a synonym for `error`/);
+  assert.match(document, /`?Unavailable`? is not a synonym for `error`/);
   assert.match(document, /Product symbols never replace the protected Hara block-H identity/i);
 });
 
