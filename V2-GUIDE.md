@@ -48,7 +48,7 @@ The issue #44 closeout inventory is:
 /v2/learn/
 ```
 
-Current extension routes such as Graphics, Agent-first Start, Around Hara, World Discussion and Hara Chrome remain inspectable in the guide. Historical World community, onboarding and feed studies remain secondary and must not compete with the current product route.
+Current extension routes such as Graphics, Data visualisation, Diagrams, Agent-first Start, Around Hara, World Discussion and Hara Chrome remain inspectable alongside the closeout matrix. Historical World community, onboarding and feed studies remain secondary and must not compete with the current product route.
 
 ## Navigation ownership
 
@@ -190,6 +190,8 @@ The package owns:
 
 - `v2.css` for document and product shells;
 - `v2-tool.css` for viewport-first workbenches;
+- `v2-data.css` for accessible evidence graphics;
+- `v2-diagrams.css` for architecture, flow, sequence, lifecycle and relationship grammar;
 - exported stateless Astro components;
 - protected `--hara-*` semantic tokens;
 - responsive and focus-visible base behavior.
@@ -202,6 +204,8 @@ The guide route owns only guide composition and local review interactions. It ad
 
 | Visual route | Intended target | Guide |
 | --- | --- | --- |
+| `/v2/data/` | Evidence-bearing surfaces across Hara products | `V2-DATA-VISUALISATION.md` |
+| `/v2/diagrams/` | Architecture, runtime, package and explanatory surfaces across Hara products | `V2-DIAGRAMS.md` |
 | `/v2/www/` | `hara-www` | `V2-WWW.md` |
 | `/v2/www/docs/` | `hara-docs` | `V2-WWW.md` |
 | `/v2/www/benchmarks/` | `hara-benchmarks` | `V2-WWW.md` |
@@ -215,21 +219,21 @@ Downstream pull requests are independent and pin only merged Visual Language rev
 
 ## Release impact
 
-This is an additive guide release:
+The catalogue guide is additive:
 
-- adds `/v2/guide/`;
-- adds `V2-GUIDE.md` to the published documentation set;
-- adds no public runtime or Astro component export;
-- preserves v1 and all existing v2 imports and routes;
-- preserves historical studies;
-- adds a permanent Catalogue guide link to route footers.
+- `/v2/guide/` remains the closeout and adoption review route;
+- `V2-GUIDE.md` remains part of the published documentation set;
+- current shared-domain routes such as `/v2/data/` and `/v2/diagrams/` consume the same review grammar;
+- v1 and all existing v2 imports and routes remain available;
+- historical studies remain available;
+- every current route retains a Catalogue guide relationship in its footer or route context.
 
 ## Expansion beyond the initial catalogue
 
 Issue #89 tracks the next shared visual-language domains:
 
-- data visualisation and evidence graphics;
-- architecture and explanatory diagrams;
+- data visualisation and evidence graphics — active at `/v2/data/`;
+- architecture and explanatory diagrams — active at `/v2/diagrams/`;
 - iconography and product/capability symbols;
 - email, print, social and low-bandwidth delivery media;
 - shared motion choreography and reduced-motion equivalents.
