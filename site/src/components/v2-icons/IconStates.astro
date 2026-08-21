@@ -1,0 +1,67 @@
+---
+import HaraIcon from "../../../../src/astro/HaraIcon.astro";
+import {
+  evidenceExamples,
+  stateExamples
+} from "../../lib/v2-icons.mjs";
+---
+<section class="icon-guide-section" id="states" aria-labelledby="icon-state-title">
+  <header class="icon-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">02 · state and evidence</p>
+      <h2 id="icon-state-title">A symbol reinforces the written fact; it never replaces it.</h2>
+      <p>State rows combine an icon, explicit wording, enclosing treatment and an evidence revision. Missing, measured zero, unsupported, unavailable and failed remain different facts even when a compact table needs to carry them.</p>
+    </div>
+    <dl class="icon-guide-fence">
+      <div><dt>State symbols</dt><dd>{stateExamples.length}</dd></div>
+      <div><dt>Evidence distinctions</dt><dd>{evidenceExamples.length}</dd></div>
+      <div><dt>Colour-only states</dt><dd>0</dd></div>
+      <div><dt>Tooltip-only facts</dt><dd>0</dd></div>
+    </dl>
+  </header>
+
+  <div class="icon-state-layout">
+    <section class="icon-state-list" aria-labelledby="icon-shared-state-title">
+      <header><h3 id="icon-shared-state-title">Shared state vocabulary</h3><p>Products may add local states, but must define their written meaning and evidence boundary.</p></header>
+      <div>
+        {stateExamples.map((example) => (
+          <article data-state={example.state}>
+            <span class="hara-state-symbol" data-state={example.state}><HaraIcon name={example.icon} size={17} decorative={true} /><b>{example.label}</b></span>
+            <p>{example.meaning}</p>
+            <code>{example.evidence}</code>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="icon-evidence-card" aria-labelledby="icon-evidence-title">
+      <header><h3 id="icon-evidence-title">Evidence is not one empty state.</h3><p>The visible value and state word survive when icon colour is removed.</p></header>
+      <div class="icon-evidence-table-wrap">
+        <table class="icon-evidence-table">
+          <caption>Missing, zero, unsupported, unavailable and failed evidence</caption>
+          <thead><tr><th>Symbol</th><th>State</th><th>Value</th><th>Meaning</th></tr></thead>
+          <tbody>
+            {evidenceExamples.map((example) => (
+              <tr data-state={example.state}>
+                <td><HaraIcon name={example.icon} size={20} label={example.label} decorative={false} /></td>
+                <th>{example.label}</th>
+                <td><code>{example.value}</code></td>
+                <td>{example.meaning}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <section class="icon-state-contexts" aria-labelledby="icon-state-context-title">
+    <header><p class="hara-v2-kicker">Contextual use</p><h3 id="icon-state-context-title">Keep state beside the object it qualifies.</h3></header>
+    <div>
+      <article><div><HaraIcon name="success" size={20} decorative={true} /><b>std.work 0.4.2</b></div><span class="hara-state-symbol" data-state="success"><HaraIcon name="success" size={15} decorative={true} />Current</span><p>Published package coordinate · registry receipt 204</p></article>
+      <article><div><HaraIcon name="partial" size={20} decorative={true} /><b>Browser / Wasm</b></div><span class="hara-state-symbol" data-state="partial"><HaraIcon name="partial" size={15} decorative={true} />Partial</span><p>Portable subset only · target revision 9</p></article>
+      <article><div><HaraIcon name="external-state" size={20} decorative={true} /><b>@mina</b></div><span class="hara-state-symbol" data-state="external"><HaraIcon name="external-state" size={15} decorative={true} />External authority</span><p>GitHub-backed identity · owner record</p></article>
+      <article><div><HaraIcon name="unavailable" size={20} decorative={true} /><b>Share receipt</b></div><span class="hara-state-symbol" data-state="unavailable"><HaraIcon name="unavailable" size={15} decorative={true} />Unavailable</span><p>Execution succeeded; network capability is offline.</p></article>
+    </div>
+  </section>
+</section>

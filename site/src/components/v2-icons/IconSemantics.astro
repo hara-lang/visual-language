@@ -1,0 +1,95 @@
+---
+import HaraGlyph from "../../../../src/astro/HaraGlyph.astro";
+import HaraIcon from "../../../../src/astro/HaraIcon.astro";
+import {
+  compositionExamples,
+  iconPrinciples
+} from "../../lib/v2-icons.mjs";
+
+const adoptionTargets = [
+  ["WWW / Docs", "Navigation, external links, evidence states and product-family wayfinding."],
+  ["Playground", "Run/stop/retry commands, session/file/canvas/3D capabilities and host state."],
+  ["Specs", "Checker outcomes, proposal/current/historical state and publication commands."],
+  ["Packages", "Package/namespace glyphs, compatibility state, publishing and stewardship actions."],
+  ["World", "Feed actions, source/external state, presence, comments and accountable-bot capability."],
+  ["Learn", "Lesson navigation, practice commands, progress state and product examples."],
+  ["Tool workbenches", "Dense icon-only controls with labels, shortcuts and 44px touch alternatives."],
+  ["Hara Chrome", "Compact extension chrome, runtime capability state and host identity." ]
+];
+---
+<section class="icon-guide-section" id="semantics" aria-labelledby="icon-semantics-title">
+  <header class="icon-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">05 · semantics and composition</p>
+      <h2 id="icon-semantics-title">Accessible meaning belongs to the composition, not the path.</h2>
+      <p>The same SVG can be decorative inside a labelled button or meaningful when it stands alone. The parent control owns focus, command state and accessible naming; the icon renderer owns deterministic geometry and safe defaults.</p>
+    </div>
+  </header>
+
+  <div class="icon-semantic-grid">
+    {compositionExamples.map((example) => (
+      <article data-example={example.id}>
+        <div class="icon-semantic-demo">
+          {example.id === "visible-label" && <button type="button" class="hara-v2-button hara-icon-label"><HaraIcon name={example.icon} size={19} decorative={true} /><span>Run source</span></button>}
+          {example.id === "icon-only" && <button type="button" class="hara-icon-button" aria-label="Search Hara"><HaraIcon name={example.icon} size={20} decorative={true} /></button>}
+          {example.id === "standalone-meaning" && <HaraIcon name={example.icon} size={28} label="Warning" decorative={false} />}
+          {example.id === "state-row" && <span class="hara-state-symbol" data-state="partial"><HaraIcon name={example.icon} size={16} decorative={true} />Partial · target:wasm@9</span>}
+          {example.id === "product-link" && <a class="icon-semantic-product" href="#products" aria-label="Open Hara World"><HaraGlyph name={example.glyph} size={42} decorative={true} /><span>World</span></a>}
+        </div>
+        <div><span>{example.label}</span><p>{example.rule}</p></div>
+      </article>
+    ))}
+  </div>
+
+  <section class="icon-accessibility-contract" aria-labelledby="icon-accessibility-title">
+    <div>
+      <p class="hara-v2-kicker">Accessibility contract</p>
+      <h3 id="icon-accessibility-title">The SVG is never the keyboard target.</h3>
+      <p>Focus stays on the link, button, row or card. Decorative icons use `aria-hidden="true"`; meaningful standalone symbols use `role="img"` and an explicit label.</p>
+    </div>
+    <dl>
+      <div><dt>Visible-label control</dt><dd>Icon decorative; visible text names the command.</dd></div>
+      <div><dt>Icon-only control</dt><dd>Parent button or link requires an accessible name.</dd></div>
+      <div><dt>Standalone symbol</dt><dd>Meaningful SVG uses role=img and a label.</dd></div>
+      <div><dt>State</dt><dd>Symbol pairs with written state and, where relevant, evidence.</dd></div>
+      <div><dt>Forced colours</dt><dd>Geometry uses currentColor; signal accent yields to system colours.</dd></div>
+      <div><dt>Motion</dt><dd>No animation is required to identify any icon or glyph.</dd></div>
+    </dl>
+  </section>
+
+  <div class="icon-principle-grid">
+    {iconPrinciples.map((principle, index) => <article><span>{String(index + 1).padStart(2, "0")}</span><p>{principle}</p></article>)}
+  </div>
+</section>
+
+<section class="icon-guide-section" id="adoption" aria-labelledby="icon-adoption-title">
+  <header class="icon-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">06 · ownership and adoption</p>
+      <h2 id="icon-adoption-title">Import the shared names and geometry; keep product semantics local.</h2>
+      <p>Downstream products consume the public catalogue, Astro components and CSS. They decide where a command appears, which visible label it needs and what authoritative state or capability receipt it reflects.</p>
+    </div>
+  </header>
+
+  <div class="icon-ownership-grid">
+    <article><span>Visual Language owns</span><h3>Geometry and rendering</h3><p>Stable names, aliases, path data, grid, stroke weight, optical balance, decorative defaults, focus composition, forced-colour behavior and product-family identity.</p></article>
+    <article><span>Products own</span><h3>Commands and labels</h3><p>Where icons appear, visible wording, command dispatch, shortcuts, selected/disabled behavior, local navigation and product composition.</p></article>
+    <article><span>Authorities own</span><h3>State and evidence</h3><p>Capability availability, runtime attachment, package status, proposal lifecycle, identity, permission, receipts and publication decisions.</p></article>
+  </div>
+
+  <div class="icon-adoption-table-wrap">
+    <table class="icon-adoption-table">
+      <caption>Downstream iconography adoption map</caption>
+      <thead><tr><th>Target</th><th>Primary use</th><th>Required local input</th></tr></thead>
+      <tbody>{adoptionTargets.map(([target, use]) => <tr><td>{target}</td><td>{use}</td><td>Visible label, command/state authority and exact product context.</td></tr>)}</tbody>
+    </table>
+  </div>
+
+  <ol class="icon-adoption-steps">
+    <li><b>Pin a merged revision.</b><span>Import `icons.js`, `v2-icons.css`, `HaraIcon.astro` and `HaraGlyph.astro` from the package.</span></li>
+    <li><b>Choose by semantic name.</b><span>Use the catalogue name rather than copying SVG path data into a product.</span></li>
+    <li><b>Write the label first.</b><span>Decide whether the symbol is decorative, parent-labelled or meaningful standalone.</span></li>
+    <li><b>Attach authoritative state.</b><span>Obtain capability, lifecycle or evidence state from the relevant product/runtime authority.</span></li>
+    <li><b>Review all scales and modes.</b><span>Verify 16–48px, light/dark, keyboard, forced colours, RTL and reduced motion.</span></li>
+  </ol>
+</section>
