@@ -65,13 +65,15 @@ accessibility review procedure, and downstream adoption map. See
 | `v2-tool.css` | Toolbars, docks, inspectors, palettes, viewports, timelines, consoles, editor workbenches, and compact browser-runtime chrome | [`V2-TOOL.md`](./V2-TOOL.md), [`V2-RUNTIME.md`](./V2-RUNTIME.md) |
 | `v2-data.css` | Benchmark evidence, uncertainty, compatibility, telemetry, missing and incomparable values | [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md) |
 | `v2-diagrams.css` | Architecture, runtime flow, sequence, lifecycle, package graphs and complete textual alternatives | [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md) |
-| `v2-symbols.css` | Semantic navigation, action, state, capability, product and evidence symbols | [`V2-SYMBOLS.md`](./V2-SYMBOLS.md) |
+| `v2-icons.css` | Primary current iconography, capability glyphs, product glyphs and accessible compositions | [`V2-ICONS.md`](./V2-ICONS.md) |
+| `v2-symbols.css` | Compatibility semantic-symbol inventory retained for existing adopters | [`V2-SYMBOLS.md`](./V2-SYMBOLS.md) |
+| `v2-media.css` | Email, print/PDF, social cards, artifact provenance, plain text and low-bandwidth projections | [`V2-MEDIA.md`](./V2-MEDIA.md) |
 
 `v2-tool.css` imports `v2.css`, so a workbench consumer imports only the tool
 entry point and places both `hara-v2` and `hara-v2-tool` on its interface root.
-The additive data, diagrams and symbols layers share identity, state colours,
-typography and responsive priorities while products retain authority over facts
-and behaviour.
+The additive data, diagrams, iconography, compatibility-symbol, and delivery
+media layers share identity, state colours, typography, and responsive
+priorities while products retain authority over facts and behaviour.
 
 ### Evidence graphics and system diagrams
 
@@ -97,39 +99,74 @@ import "@hara-lang/visual-language/v2-diagrams.css";
 </figure>
 ```
 
-### Semantic symbols and capability iconography
+### Iconography and semantic-symbol compatibility
 
-**[Open the v2 symbols and iconography guide](https://hara-lang.github.io/visual-language/v2/symbols/)**
+**[Open the current Iconography guide](https://hara-lang.github.io/visual-language/v2/icons/)**
 
-The public symbol layer provides 65 stable semantic identifiers across
-navigation, actions, state, runtime capabilities, Hara products, and authority
-or evidence. Symbols use one `0 0 24 24` geometry system, `currentColor`, and
-16/20/24/32 pixel optical sizes. They do not depend on an icon font or raster
-asset, and unfamiliar, destructive, capability, product and evidence meaning
-remains text-supported.
+The primary current iconography layer separates 24 × 24 interface icons from
+32 × 32 runtime capability and product glyphs. It provides original Hara
+geometry, `currentColor`, accessible decorative/meaningful defaults, RTL-aware
+directional controls, forced-colour behavior and 16/20/24/32/48 pixel review.
 
 ```astro
 ---
-import Symbol from "@hara-lang/visual-language/astro/v2/Symbol.astro";
+import HaraIcon from "@hara-lang/visual-language/astro/HaraIcon.astro";
+import HaraGlyph from "@hara-lang/visual-language/astro/HaraGlyph.astro";
 import "@hara-lang/visual-language/v2.css";
-import "@hara-lang/visual-language/v2-symbols.css";
+import "@hara-lang/visual-language/v2-icons.css";
 ---
 
-<button class="hara-v2-symbol-button" type="button" aria-label="Run example">
-  <Symbol name="action-run" size={20} />
+<button class="hara-v2-button hara-icon-label" type="button">
+  <HaraIcon name="run" size={20} decorative />
+  <span>Run source</span>
 </button>
 
-<span class="hara-v2-symbol-state" data-state="unavailable">
-  <Symbol name="state-unavailable" size={16} />
-  Network unavailable
-</span>
+<a class="hara-product-launcher" href="https://world.hara-lang.org" aria-label="Open Hara World">
+  <HaraGlyph name="product-world" size={48} decorative />
+  <span>World</span>
+</a>
 ```
 
-Framework-free consumers may import the inventory from
-`@hara-lang/visual-language/v2/symbols.js`. The package owns names, geometry,
-optical sizing and accessibility defaults; products still own commands,
-capability availability, state, permissions, ownership, revisions and receipts.
-See [`V2-SYMBOLS.md`](./V2-SYMBOLS.md).
+The already-published **[Semantic symbols guide](https://hara-lang.github.io/visual-language/v2/symbols/)**
+remains available as a compatibility surface. It provides 65 stable 24 × 24
+semantic identifiers through `Symbol.astro`, `v2-symbols.css` and
+`v2/symbols.js`. No public Symbols or Iconography export is removed by the
+catalogue hierarchy; a later compatibility issue may define an explicit
+migration map after downstream usage is known.
+
+Visual Language owns names, geometry, optical sizing and accessibility defaults.
+Products still own commands, capability availability, state, permissions,
+ownership, revisions and receipts. See [`V2-ICONS.md`](./V2-ICONS.md) and
+[`V2-SYMBOLS.md`](./V2-SYMBOLS.md).
+
+### Delivery media
+
+**[Open the delivery-media guide](https://hara-lang.github.io/visual-language/v2/media/)**
+
+The delivery layer projects one semantic artifact into email, print/PDF, Open
+Graph, square, portrait, story, plain-text, feed and low-bandwidth forms without
+rewriting source identity, revision, authority, state or canonical destination.
+It exports `DeliveryFrame.astro`, `ArtifactProvenance.astro` and
+`v2-media.css`.
+
+```astro
+---
+import DeliveryFrame from "@hara-lang/visual-language/astro/v2/DeliveryFrame.astro";
+import ArtifactProvenance from "@hara-lang/visual-language/astro/v2/ArtifactProvenance.astro";
+import "@hara-lang/visual-language/v2.css";
+import "@hara-lang/visual-language/v2-media.css";
+---
+
+<DeliveryFrame format="print" state="current" label="Package release PDF">
+  <article>...</article>
+</DeliveryFrame>
+
+<ArtifactProvenance envelope={artifactEnvelope} />
+```
+
+Products own which artifact is generated and its editorial workflow. Sources,
+registries, runtimes and reviewers own the exact facts and receipts carried by
+the artifact. See [`V2-MEDIA.md`](./V2-MEDIA.md).
 
 ### Document and product shells
 
@@ -186,7 +223,7 @@ import "@hara-lang/visual-language/v2-tool.css";
 ```
 
 The package exports twenty-six stateless Astro primitives and composites plus
-the public `Symbol` primitive:
+its public Symbols, Iconography and Delivery Media primitives:
 
 - controls: `Toolbar`, `ToolGroup`, `ToolButton`, `ToolToggle`, `ToolSelect`,
   `ToolNumberField`, `TabStrip`, `IconRail`, and `StatusBar`;
@@ -196,7 +233,8 @@ the public `Symbol` primitive:
   `ResourceList`, `CapabilityPane`, and `EnvironmentWorkbench`;
 - browser runtime: `StatusLamp`, `RuntimeSwitch`, `ConnectionRow`,
   `CompactRuntimeShell`, and `RuntimeAppShell`;
-- semantics: `Symbol`, with its public `v2/symbols.js` inventory.
+- symbols and identity: `Symbol`, `HaraIcon`, and `HaraGlyph`;
+- delivery: `DeliveryFrame` and `ArtifactProvenance`.
 
 The environment layer supplies the standard **Nav / Frontmatter / Graphics /
 Code** content series and capability-aware **Sessions / Files / Canvas / 3D**
