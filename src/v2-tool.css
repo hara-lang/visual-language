@@ -6,6 +6,7 @@
 @import "./v2/tool-calm.css";
 @import "./v2/tool-environment.css";
 @import "./v2/tool-runtime.css";
+@import "./v2/tool-responsive.css";
 
 /*
  * Hara interface language v2: tool and workbench layer.

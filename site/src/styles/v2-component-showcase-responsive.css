@@ -1,0 +1,86 @@
+/*
+ * Catalogue-only composition fixes.
+ *
+ * The public primitives keep their application semantics. This layer gives
+ * the rendered catalogue explicit flow for standalone panels and lets each
+ * specimen respond to its own canvas rather than the browser viewport.
+ */
+
+.v2-component-specimen__canvas--controls {
+  container-name: v2-showcase-controls;
+  container-type: inline-size;
+}
+
+.v2-component-specimen__canvas--environment {
+  container-name: v2-showcase-environment;
+  container-type: inline-size;
+}
+
+.v2-component-showcase__environment-primitives {
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+}
+
+.v2-component-showcase__environment-primitives > .hara-tool-section-navigator {
+  min-width: 0;
+}
+
+.v2-component-showcase__environment-primitives > .hara-tool-environment-section {
+  position: relative;
+  inset: auto;
+  min-height: 260px;
+}
+
+.v2-component-showcase__environment-primitives > .hara-tool-capability-pane {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  min-height: 260px;
+}
+
+@container v2-showcase-controls (max-width: 720px) {
+  .v2-component-showcase__control-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .v2-component-showcase__control-body > .hara-tool-icon-rail {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .v2-component-showcase__state-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .v2-component-showcase__state-row > :where(.hara-tool-button, .hara-tool-toggle) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .v2-component-showcase__state-row > .hara-tool-field {
+    width: 100%;
+    min-width: 0;
+    grid-column: 1 / -1;
+  }
+}
+
+@container v2-showcase-controls (max-width: 440px) {
+  .v2-component-showcase__state-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .v2-component-showcase__state-row > .hara-tool-field {
+    grid-column: auto;
+  }
+}
+
+@container v2-showcase-environment (max-width: 720px) {
+  .v2-component-showcase__environment-primitives {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .v2-component-showcase__environment-primitives > .hara-tool-environment-section,
+  .v2-component-showcase__environment-primitives > .hara-tool-capability-pane {
+    min-height: 220px;
+  }
+}
