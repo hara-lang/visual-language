@@ -5,59 +5,17 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.head_ref || github.ref_name }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Apply issue 110 editorial migration
-        if: github.head_ref == 'agent/issue-110-technical-editorial-voice'
-        run: node scripts/run-editorial-copy.mjs
-      - name: Commit the generated editorial tree
-        if: github.head_ref == 'agent/issue-110-technical-editorial-voice'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/src test scripts/editorial-copy.mjs scripts/issue-110-contract-fixes.mjs *.md
-          if git diff --cached --quiet; then
-            echo "Editorial tree is already materialised."
-          else
-            git commit -m "copy: complete the technical editorial sweep"
-            git push origin HEAD:${{ github.head_ref }}
-          fi
-      - name: Run tests
-        id: tests
-        shell: bash
-        run: |
-          set +e
-          npm test 2>&1 | tee /tmp/issue-110-test.log
-          status=${PIPESTATUS[0]}
-          if [ "$status" -ne 0 ]; then
-            node --test --test-reporter=./scripts/test-failure-reporter.mjs test/*.test.mjs > /tmp/issue-110-failure-details.log 2>&1 || true
-            {
-              echo '### Issue #110 exact assertion failures'
-              echo
-              echo '```text'
-              head -c 55000 /tmp/issue-110-failure-details.log
-              echo
-              echo '```'
-            } > /tmp/issue-110-test-comment.md
-          fi
-          exit "$status"
-      - name: Report issue 110 test failure
-        if: failure() && steps.tests.outcome == 'failure' && github.event_name == 'pull_request' && github.head_ref == 'agent/issue-110-technical-editorial-voice'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh pr comment "${{ github.event.pull_request.number }}" --body-file /tmp/issue-110-test-comment.md
+      - run: npm test
       - run: npm run site:build
