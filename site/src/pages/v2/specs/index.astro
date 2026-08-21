@@ -35,11 +35,11 @@ const selectedConformance = conformanceForSpecification("runtime.session@1.2.0")
 
 const localNav = [
   { href: "#registry", label: "Registry" },
-  { href: "#detail", label: "Detail" },
+  { href: "#detail", label: "Specification" },
   { href: "#checker", label: "Checker" },
   { href: "#proposal", label: "Proposal" },
-  { href: "#digest", label: "Digest" },
-  { href: "#adoption", label: "Adoption" }
+  { href: "#digest", label: "Changes" },
+  { href: "#adoption", label: "Ownership" }
 ];
 ---
 <!doctype html>
@@ -47,30 +47,30 @@ const localNav = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Detailed Hara Specs v2 application laboratory covering registry discovery, exact-version reading, checking, conformance, proposal review, publication, and change digest states." />
+    <meta name="description" content="Hara specifications reference covering identifiers, versions, normative requirements, explanatory notes, source revisions, conformance results, proposals, publication records, and supersession." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara v2 Specs application laboratory" />
-    <meta property="og:description" content="An evidence-first standards registry, checker, proposal workflow, and change digest built on the shared hara.specs content contract." />
+    <meta property="og:title" content="Hara specifications" />
+    <meta property="og:description" content="Versioned statements of required Hara language and interface behaviour, with source revisions, conformance results, proposals, and publication records." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara v2 Specs application laboratory" />
-    <meta name="twitter:description" content="Find, read, check, review, and publish exact Hara specification revisions." />
+    <meta name="twitter:title" content="Hara specifications" />
+    <meta name="twitter:description" content="Read exact specification revisions, inspect normative requirements, check inputs, and review conformance and change history." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara v2 Specs application laboratory</title>
+    <title>Hara specifications</title>
   </head>
   <body class="hara-v2 specs-page">
-    <CatalogueHeader basePath={basePath} activePath="/v2/specs/" label="Specs laboratory">
-      <a slot="route-actions" href="#proposal">Propose a specification</a>
+    <CatalogueHeader basePath={basePath} activePath="/v2/specs/" label="Specifications">
+      <a slot="route-actions" href="#proposal">Review proposal fields</a>
     </CatalogueHeader>
 
-    <nav class="specs-local-nav" aria-label="Specs laboratory sections">
-      <span>Specs</span>
+    <nav class="specs-local-nav" aria-label="Specification sections">
+      <span>Specifications</span>
       <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
-      <a href="https://github.com/hara-lang/visual-language/issues/40">Issue 40 ↗</a>
+      <a href="https://github.com/hara-lang/visual-language/issues/40">Implementation record ↗</a>
     </nav>
 
     <main class="specs-main">
@@ -82,13 +82,13 @@ const localNav = [
 
       <section class="specs-hero" aria-labelledby="specs-title">
         <div class="specs-hero-copy">
-          <p class="hara-v2-kicker">Application laboratory · Issue 40</p>
-          <h1 id="specs-title">Standards with an inspectable chain of authority.</h1>
-          <p>Specs is a public registry and checker, not a repository browser or generic documentation site. Every claim exposes its identifier, version, exact source revision, status, authority, and receipt.</p>
+          <p class="hara-v2-kicker">Versioned required behaviour</p>
+          <h1 id="specs-title">A specification states what an implementation must, should, or may do.</h1>
+          <p>The registry records a specification identifier, semantic version, exact source revision, status, authority, normative requirements, explanatory notes, related implementations, conformance results, and publication receipt. It complements documentation; it is not a replacement for it.</p>
           <div class="specs-hero-actions">
-            <a class="specs-primary-link" href="#registry">Browse the registry</a>
+            <a class="specs-primary-link" href="#registry">View the registry</a>
             <a href="#checker">Check an exact input</a>
-            <a href="#proposal">Review a proposal</a>
+            <a href="#proposal">Read the proposal workflow</a>
           </div>
           <div class="specs-contract-strip" aria-label="Consumed hara.specs content contracts">
             <span>{proposalType?.id}<b>@{proposalType?.version ?? specsContract?.schemaVersion}</b></span>
@@ -98,8 +98,8 @@ const localNav = [
           </div>
         </div>
 
-        <aside class="specs-hero-ledger" aria-label="Selected specification authority ledger">
-          <header><span>Registry authority</span><span class="specs-state" data-tone="success">Accepted</span></header>
+        <aside class="specs-hero-ledger" aria-label="Selected specification authority record">
+          <header><span>Registry record</span><span class="specs-state" data-tone="success">Accepted</span></header>
           <div>
             <p class="specs-mono">{selected?.id}</p>
             <h2>{selected?.identifier}</h2>
@@ -120,10 +120,10 @@ const localNav = [
       <section class="specs-section" id="detail" aria-labelledby="specs-detail-title">
         <header class="specs-section-heading">
           <div>
-            <p class="hara-v2-kicker">Specification detail</p>
-            <h2 id="specs-detail-title">Normative rules and explanation remain distinct.</h2>
+            <p class="hara-v2-kicker">Specification document</p>
+            <h2 id="specs-detail-title">Normative requirements and explanatory material remain distinct.</h2>
           </div>
-          <p>The reader keeps outline, status, version, revision, supersession, machine representation, related implementations, and conformance evidence within reach.</p>
+          <p>The reader retains access to the outline, status, version, source revision, supersession chain, machine representation, related implementations, and conformance records.</p>
         </header>
 
         <article class="specs-detail-shell">
@@ -161,7 +161,7 @@ const localNav = [
 
             <section class="specs-normative-block" id="normative-1">
               <header><span>Normative</span><strong>Requirements</strong></header>
-              <p>The following requirements are compatibility claims. “Must”, “should”, and “may” are words of authority rather than decorative emphasis.</p>
+              <p>The following statements are compatibility requirements. “Must”, “should”, and “may” express their defined normative levels.</p>
               <ol>
                 {selected?.requirements.map((requirement) => (
                   <li id={requirement.id.toLowerCase()}>
@@ -180,8 +180,8 @@ const localNav = [
 
             <section class="specs-explanatory-block" id="explanatory-1">
               <header><span>Explanatory</span><strong>Why the envelope is shared</strong></header>
-              <p>Browser, interpreter, compiled, and embedded products may expose different observations. They still need one lifecycle vocabulary so users can understand replacement, cancellation, backend availability, and receipt evidence without learning a new protocol for every host.</p>
-              <aside><strong>Non-normative note.</strong> Product examples may simplify the visible controls, but they cannot rewrite the exact backend, capability, revision, or lifecycle facts returned by the runtime.</aside>
+              <p>Browser, interpreter, compiled, and embedded implementations may expose different observations. They still require one lifecycle vocabulary so replacement, cancellation, backend availability, and receipt evidence have consistent meanings across hosts.</p>
+              <aside><strong>Non-normative note.</strong> An application may simplify its visible controls, but it cannot rewrite the backend, capability, revision, or lifecycle facts returned by the runtime.</aside>
             </section>
 
             <section class="specs-related-grid" id="detail-conformance">
@@ -204,7 +204,7 @@ const localNav = [
           <aside class="specs-detail-inspector" aria-label="Specification relationships">
             <section><span>Machine representation</span><code>{selected?.machineContract}</code><button type="button">Open JSON</button><button type="button">Open Hara form</button></section>
             <section><span>Conformance</span>{selectedConformance.map((claim) => <article data-state={claim.state}><strong>{claim.implementation}</strong><small>{claim.passed}/{claim.total} · {claim.revision}</small></article>)}</section>
-            <section><span>Related</span><a href="#checker">Check an input</a><a href="#proposal">Review proposal workflow</a><a href="#digest">Read change digest</a></section>
+            <section><span>Related</span><a href="#checker">Check an input</a><a href="#proposal">Read proposal workflow</a><a href="#digest">Read change digest</a></section>
           </aside>
         </article>
       </section>
@@ -215,34 +215,34 @@ const localNav = [
       <section class="specs-section specs-adoption" id="adoption" aria-labelledby="specs-adoption-title">
         <header class="specs-section-heading">
           <div>
-            <p class="hara-v2-kicker">Ownership and downstream adoption</p>
-            <h2 id="specs-adoption-title">The catalogue settles interaction. hara-specs owns authority.</h2>
+            <p class="hara-v2-kicker">Ownership and adoption</p>
+            <h2 id="specs-adoption-title">Visual Language presents specifications; hara-specs owns their authority.</h2>
           </div>
-          <p>The application can adopt these compositions without copying the global catalogue shell or moving canonical specification history into Visual Language.</p>
+          <p>An implementation may use these compositions without moving canonical source, version history, proposal review, or conformance records into this repository.</p>
         </header>
         <div class="specs-adoption-grid">
-          <article><span>Shared visual-language package</span><p>Table, form, inspector, status, navigation, focus, responsive, and receipt presentation contracts.</p></article>
-          <article><span>Specs application</span><p>Registry search, checker transport, proposal entry, review queue, digest subscription, and product-local information architecture.</p></article>
+          <article><span>Visual Language</span><p>Table, form, inspector, status, navigation, focus, responsive, and receipt presentation contracts.</p></article>
+          <article><span>Specifications application</span><p>Registry search, checker transport, proposal entry, review queue, change subscriptions, and route-local information architecture.</p></article>
           <article><span>hara-specs repository</span><p>Canonical source, identifiers, versions, normative text, Git history, review decisions, supersession, and machine representations.</p></article>
           <article><span>Runtime and conformance systems</span><p>Checker implementations, exact result receipts, implementation revisions, test vectors, and supported-target claims.</p></article>
         </div>
         <div class="specs-adoption-checklist">
-          <h3>Downstream adoption checklist</h3>
+          <h3>Adoption checklist</h3>
           <ol>
             <li>Pin a merged Visual Language revision rather than an unmerged branch.</li>
             <li>Resolve every registry card to an exact specification version and revision.</li>
             <li>Keep normative and explanatory regions semantically and visually distinct.</li>
             <li>Never convert checker unavailable into pass, warning, or failure.</li>
             <li>Preserve GitHub as canonical proposal and review history.</li>
-            <li>Verify keyboard, touch, reduced-motion, light/dark, and narrow-width behavior.</li>
+            <li>Verify keyboard, touch, reduced-motion, light/dark, and narrow-width behaviour.</li>
           </ol>
         </div>
-        <p>Review the <a href={frontmatterUrl}>front-matter contract</a>, <a href={componentsUrl}>component inventory</a>, <a href={uiUrl}>interaction patterns</a>, and <code>V2-SPECS.md</code> before adoption into <code>hara-lang/hara-specs</code>.</p>
+        <p>Review the <a href={frontmatterUrl}>front-matter contract</a>, <a href={componentsUrl}>component reference</a>, <a href={uiUrl}>interaction-state reference</a>, and <code>V2-SPECS.md</code> before adoption into <code>hara-lang/hara-specs</code>.</p>
       </section>
 
       <footer class="v2-lab-footer specs-footer">
-        <span>Detailed Specs application laboratory · Hara visual language v2</span>
-        <span><a href={catalogueUrl}>V2 catalogue</a> · <a href="https://github.com/hara-lang/visual-language/issues/40">Issue 40</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+        <span>Hara specifications reference · Visual language v2</span>
+        <span><a href={catalogueUrl}>V2 reference</a> · <a href="https://github.com/hara-lang/visual-language/issues/40">Implementation record</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>
 
