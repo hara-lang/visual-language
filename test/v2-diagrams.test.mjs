@@ -37,7 +37,7 @@ const componentPaths = [
 
 test("diagram fixtures are deterministic and explicitly non-authoritative", () => {
   assert.equal(diagramFixtureNotice.productionAuthority, false);
-  assert.match(diagramFixtureNotice.summary, /design-review fixtures/i);
+  assert.match(diagramFixtureNotice.summary, /deterministic Hara-shaped fixtures/i);
   assert.match(diagramFixtureNotice.summary, /remain authoritative/i);
   assert.match(diagramFixtureNotice.sourceRevision, /^diagram-fixture:[a-f0-9]{16}$/);
 });
@@ -100,7 +100,19 @@ test("package graph keeps package, namespace, runtime and maintainer identities 
   assert.deepEqual(new Set(packageGraph.edges.map(({ kind }) => kind)), new Set(["contains", "direct", "optional", "compatible", "partial", "incompatible", "superseded", "maintains"]));
   assert.ok(packageGraph.nodes.every(({ id, revision, owner, detail }) => id && revision && owner && detail));
   assert.ok(packageGraph.edges.every(({ id, from, to, direction, label }) => id && from && to && direction === "forward" && label));
-  assert.equal(packageRelationsFor("std-work").length, 5);
+  const stdWorkRelations = packageRelationsFor("std-work");
+  assert.equal(stdWorkRelations.length, 6);
+  assert.deepEqual(
+    new Set(stdWorkRelations.map(({ id }) => id)),
+    new Set([
+      "package-contains-core",
+      "package-contains-store",
+      "sqlite-depends-work",
+      "work-rust",
+      "work-wasm",
+      "mina-maintains-work"
+    ])
+  );
   assert.deepEqual(packageRelationsFor("missing"), []);
   assert.ok(packageGraph.edges.some(({ kind }) => kind === "incompatible"));
   assert.ok(packageGraph.edges.some(({ kind }) => kind === "superseded"));
