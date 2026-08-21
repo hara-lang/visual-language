@@ -36,13 +36,13 @@ const namespaceType = contentTypeById("packages.namespace");
 const maintainerType = contentTypeById("packages.maintainer");
 const compatibilityType = contentTypeById("packages.compatibility");
 const localNav = [
-  { href: "#discover", label: "Discover" },
+  { href: "#discover", label: "Registry" },
   { href: "#package", label: "Package" },
   { href: "#namespace", label: "Namespace" },
   { href: "#publish", label: "Publish" },
   { href: "#maintain", label: "Maintain" },
-  { href: "#trust", label: "Trust" },
-  { href: "#adoption", label: "Adoption" }
+  { href: "#trust", label: "Provenance" },
+  { href: "#adoption", label: "Ownership" }
 ];
 ---
 <!doctype html>
@@ -50,30 +50,30 @@ const localNav = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Detailed Hara Packages v2 application laboratory for package discovery, exact releases, namespace stewardship, publishing, maintainer workflows, compatibility, and provenance." />
+    <meta name="description" content="Hara package and namespace reference covering exact coordinates, releases, ownership, compatibility, artifacts, provenance, publication, and maintenance records." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara v2 Packages application laboratory" />
-    <meta property="og:description" content="Find, evaluate, install, publish, and maintain Hara packages without hiding exact identity, compatibility, maintenance state, or provenance." />
+    <meta property="og:title" content="Hara packages and namespaces" />
+    <meta property="og:description" content="Versioned package, namespace, release, maintainer, compatibility, artifact, and provenance records for Hara." />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara v2 Packages application laboratory" />
-    <meta name="twitter:description" content="Package discovery, namespace stewardship, publishing, compatibility, maintenance, and reproducible release evidence." />
+    <meta name="twitter:title" content="Hara packages and namespaces" />
+    <meta name="twitter:description" content="Package coordinates, namespace stewardship, releases, compatibility, artifacts, provenance, and maintenance." />
     <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara v2 Packages application laboratory</title>
+    <title>Hara packages and namespaces</title>
   </head>
   <body class="hara-v2 hara-v2-tool packages-page">
-    <CatalogueHeader basePath={basePath} activePath="/v2/packages/" label="Packages laboratory">
-      <a slot="route-actions" href="#publish">Publish release</a>
+    <CatalogueHeader basePath={basePath} activePath="/v2/packages/" label="Packages and namespaces">
+      <a slot="route-actions" href="#publish">Review publication fields</a>
     </CatalogueHeader>
 
-    <nav class="packages-local-nav" aria-label="Packages laboratory sections">
+    <nav class="packages-local-nav" aria-label="Package and namespace sections">
       <span>Packages</span>
       <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
-      <a href="https://github.com/hara-lang/visual-language/issues/41">Issue 41 ↗</a>
+      <a href="https://github.com/hara-lang/visual-language/issues/41">Implementation record ↗</a>
     </nav>
 
     <main class="packages-main">
@@ -100,22 +100,22 @@ const localNav = [
 
       <section class="packages-section packages-adoption" id="adoption" aria-labelledby="packages-adoption-title">
         <header class="packages-section-heading">
-          <div><p class="hara-v2-kicker">Ownership and downstream adoption</p><h2 id="packages-adoption-title">The application composes package truth; the registry and runtimes remain authoritative.</h2></div>
-          <p>The future packages/registry product can adopt these screens while preserving exact package coordinates, namespace stewardship, release evidence, runtime checks, and durable receipts.</p>
+          <div><p class="hara-v2-kicker">Ownership and adoption</p><h2 id="packages-adoption-title">The interface reads registry records; it does not define them.</h2></div>
+          <p>A package service may use these specimens while keeping coordinates, namespace stewardship, releases, artifacts, compatibility results, lifecycle decisions, signatures, and receipts in authoritative registries.</p>
         </header>
         <div class="packages-adoption-grid">
-          <article><span>Shared visual-language package</span><p>Shell, tables, filters, forms, status, identity labels, focus, responsive behavior, receipts, and degraded-state presentation.</p></article>
-          <article><span>Packages application</span><p>Discovery, comparison, install projection, package and namespace navigation, publish composition, maintainer queues, and cross-product handoffs.</p></article>
+          <article><span>Visual Language</span><p>Shell, tables, filters, forms, status, identity labels, focus, responsive behaviour, receipts, and unavailable-state presentation.</p></article>
+          <article><span>Packages application</span><p>Search, comparison, install projection, package and namespace navigation, publication forms, maintainer queues, and cross-route links.</p></article>
           <article><span>Package and namespace registries</span><p>Coordinates, stewardship, versions, maintainers, artifacts, compatibility evidence, lifecycle decisions, signatures, and receipts.</p></article>
           <article><span>Resolver and runtimes</span><p>Dependency resolution, download, verification, installation, execution, environment compatibility, reproduction, and attempt receipts.</p></article>
-          <article><span>Docs, Playground, Specs, World</span><p>Version-aware guidance, execution, formal contracts, and public discussion retain separate navigation and authority.</p></article>
+          <article><span>Docs, Playground, Specifications, and World</span><p>Version-aware guidance, execution, formal contracts, and public discussion retain separate navigation and authority.</p></article>
         </div>
-        <p>Review the <a href={frontmatterUrl}>front-matter contract</a>, <a href={componentsUrl}>shared component inventory</a>, <a href={uiUrl}>workflow patterns</a>, <a href={docsUrl}>Docs handoff</a>, <a href={playgroundUrl}>Playground handoff</a>, and <code>V2-PACKAGES.md</code> before downstream adoption. The fixture exposes {packageContentTypes.length} hara.packages types and no live registry records.</p>
+        <p>Review the <a href={frontmatterUrl}>front-matter contract</a>, <a href={componentsUrl}>component reference</a>, <a href={uiUrl}>workflow-state reference</a>, <a href={docsUrl}>Docs handoff</a>, <a href={playgroundUrl}>Playground handoff</a>, and <code>V2-PACKAGES.md</code> before adoption. This fixture exposes {packageContentTypes.length} hara.packages types and no live registry records.</p>
       </section>
 
       <footer class="v2-lab-footer packages-footer">
-        <span>Detailed Packages application laboratory · Hara visual language v2</span>
-        <span><a href={catalogueHome}>V2 catalogue</a> · <a href={docsUrl}>Docs</a> · <a href={playgroundUrl}>Playground</a> · <a href={specsUrl}>Specs</a> · <a href="https://github.com/hara-lang/visual-language/issues/41">Issue 41</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+        <span>Hara package and namespace reference · Visual language v2</span>
+        <span><a href={catalogueHome}>V2 reference</a> · <a href={docsUrl}>Docs</a> · <a href={playgroundUrl}>Playground</a> · <a href={specsUrl}>Specifications</a> · <a href="https://github.com/hara-lang/visual-language/issues/41">Implementation record</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
       </footer>
     </main>
 
