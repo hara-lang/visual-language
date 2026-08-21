@@ -85,6 +85,16 @@ export const catalogueGroups = [
         status: "active",
         issue: 91,
         eyebrow: "Evidence graphics"
+      },
+      {
+        id: "diagrams",
+        label: "Diagrams",
+        path: "/v2/diagrams/",
+        href: "/v2/diagrams/",
+        summary: "Accessible architecture, runtime flow, sequence, lifecycle and package or namespace maps with exact evidence and textual alternatives.",
+        status: "active",
+        issue: 100,
+        eyebrow: "Systems and relationships"
       }
     ]
   },

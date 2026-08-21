@@ -1,0 +1,157 @@
+---
+import {
+  sequenceDiagram,
+  sessionStateMachine
+} from "../../lib/v2-diagrams.mjs";
+
+const laneIndex = new Map(sequenceDiagram.lanes.map((lane, index) => [lane.id, index + 1]));
+const stateById = new Map(sessionStateMachine.states.map((state) => [state.id, state]));
+---
+<section class="diagram-guide-section" id="sequence" aria-labelledby="diagram-sequence-title">
+  <header class="diagram-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">03 · sequence and handoff</p>
+      <h2 id="diagram-sequence-title">Keep actors, event order and returned facts exact.</h2>
+      <p>A sequence view must preserve monotonic order, message class, source revision and timeout behavior. The event table is not a fallback of lesser value; it is the authoritative readable equivalent.</p>
+    </div>
+    <dl class="diagram-evidence-fence">
+      <div><dt>Sequence</dt><dd>{sequenceDiagram.events[0].sequence}–{sequenceDiagram.events.at(-1).sequence}</dd></div>
+      <div><dt>Revision</dt><dd><code>{sequenceDiagram.sourceRevision}</code></dd></div>
+      <div><dt>Lanes</dt><dd>{sequenceDiagram.lanes.length}</dd></div>
+      <div><dt>Events</dt><dd>{sequenceDiagram.events.length}</dd></div>
+    </dl>
+  </header>
+
+  <div class="diagram-sequence-controls" role="group" aria-label="Sequence scenario">
+    <button type="button" aria-pressed="true" data-sequence-mode="complete">Complete sequence</button>
+    <button type="button" aria-pressed="false" data-sequence-mode="unavailable">Unavailable handoff only</button>
+  </div>
+
+  <figure class="diagram-figure" data-sequence-figure data-mode="complete">
+    <figcaption><strong>{sequenceDiagram.title}</strong><span>Calls, messages, returned facts, receipts and timeouts use different line/symbol treatment.</span></figcaption>
+
+    <div class="diagram-sequence-visual diagram-visual" role="img" aria-label="A programmer asks the Playground to run source. The Playground creates a session generation, the host calls the runtime, the runtime returns a value, receipts are appended and confirmed, the result is shown, and the final share receipt is unavailable offline.">
+      <div class="diagram-sequence-lanes">
+        {sequenceDiagram.lanes.map((lane) => (
+          <div class="diagram-sequence-lane" data-lane={lane.kind}>
+            <b>{lane.label}</b><small>{lane.kind}</small><i aria-hidden="true"></i>
+          </div>
+        ))}
+      </div>
+      <div class="diagram-sequence-events">
+        {sequenceDiagram.events.map((event) => (
+          <article
+            class="diagram-sequence-event"
+            data-kind={event.kind}
+            data-state={event.state}
+            style={`--from:${laneIndex.get(event.from)};--to:${laneIndex.get(event.to)}`}
+          >
+            <span class="diagram-sequence-number">{event.sequence}</span>
+            <i class="diagram-sequence-message" aria-hidden="true"></i>
+            <div><b>{event.label}</b><small>{event.from} → {event.to} · {event.revision}</small></div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="diagram-alternative" aria-labelledby="sequence-table-title">
+      <h3 id="sequence-table-title">Equivalent monotonic event table</h3>
+      <div class="diagram-table-wrap">
+        <table class="diagram-table">
+          <caption>Playground session events in exact order</caption>
+          <thead><tr><th>Seq.</th><th>From</th><th>To</th><th>Class</th><th>Event</th><th>Revision</th><th>State</th></tr></thead>
+          <tbody>
+            {sequenceDiagram.events.map((event) => (
+              <tr data-state={event.state}>
+                <td><code>{event.sequence}</code></td><td>{event.from}</td><td>{event.to}</td><td>{event.kind}</td><td>{event.label}</td><td><code>{event.revision}</code></td><td>{event.state}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </figure>
+</section>
+
+<section class="diagram-guide-section" id="state" aria-labelledby="diagram-state-title">
+  <header class="diagram-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">04 · lifecycle and recovery</p>
+      <h2 id="diagram-state-title">Show terminal states, guards and forbidden transitions.</h2>
+      <p>State diagrams should answer what can happen next, why a transition is allowed, what evidence proves it, and what requires a replacement identity rather than a visual reset.</p>
+    </div>
+    <dl class="diagram-evidence-fence">
+      <div><dt>Initial</dt><dd>{sessionStateMachine.initial}</dd></div>
+      <div><dt>Revision</dt><dd><code>{sessionStateMachine.sourceRevision}</code></dd></div>
+      <div><dt>Allowed</dt><dd>{sessionStateMachine.transitions.length}</dd></div>
+      <div><dt>Forbidden</dt><dd>{sessionStateMachine.forbidden.length}</dd></div>
+    </dl>
+  </header>
+
+  <figure class="diagram-figure diagram-state-figure" data-state-machine data-current-state={sessionStateMachine.initial}>
+    <figcaption><strong>{sessionStateMachine.title}</strong><span>Use the step controls to demonstrate a legal path. Reduced motion changes feedback, not state meaning.</span></figcaption>
+
+    <div class="diagram-state-controls">
+      <div>
+        <span>Current state</span>
+        <strong data-state-current-label>Idle</strong>
+        <code data-state-current-id>idle</code>
+      </div>
+      <div role="group" aria-label="Session lifecycle actions">
+        <button type="button" data-state-action="create" data-from="idle" data-to="ready">Create</button>
+        <button type="button" data-state-action="run" data-from="ready" data-to="running" disabled>Run</button>
+        <button type="button" data-state-action="complete" data-from="running" data-to="completed" disabled>Complete</button>
+        <button type="button" data-state-action="dispose" data-from="completed" data-to="disposed" disabled>Dispose</button>
+        <button type="button" data-state-reset>Reset specimen</button>
+      </div>
+      <p data-state-feedback aria-live="polite">Idle has no session identity. Create is the only enabled transition in this specimen path.</p>
+    </div>
+
+    <div class="diagram-state-visual diagram-visual" role="img" aria-label="The session begins idle, becomes ready, runs, can complete or fail, may pass through cancelling, and ultimately disposes. Direct idle-to-running and terminal-to-running transitions are forbidden.">
+      {sessionStateMachine.states.map((state) => (
+        <div class="diagram-state-node" data-state-id={state.id} data-category={state.category} data-active={state.id === sessionStateMachine.initial ? "true" : "false"}>
+          <span aria-hidden="true">{state.terminal ? "■" : state.category === "degraded" ? "!" : "●"}</span>
+          <b>{state.label}</b>
+          <small>{state.description}</small>
+        </div>
+      ))}
+      <div class="diagram-state-arrows" aria-hidden="true">
+        {sessionStateMachine.transitions.map((transition) => <span data-transition={`${transition.from}-${transition.to}`}>{transition.label}</span>)}
+      </div>
+    </div>
+
+    <div class="diagram-state-ledger">
+      <section>
+        <h3>Allowed transitions</h3>
+        <ol>
+          {sessionStateMachine.transitions.map((transition) => (
+            <li><code>{transition.from}</code><span aria-hidden="true">→</span><code>{transition.to}</code><p><b>{transition.label}</b> · {transition.guard}</p><small>{transition.evidence}</small></li>
+          ))}
+        </ol>
+      </section>
+      <section>
+        <h3>Forbidden transitions</h3>
+        <ol>
+          {sessionStateMachine.forbidden.map((transition) => (
+            <li data-forbidden="true"><code>{transition.from}</code><span aria-hidden="true">×</span><code>{transition.to}</code><p>{transition.reason}</p></li>
+          ))}
+        </ol>
+      </section>
+    </div>
+
+    <div class="diagram-alternative" aria-labelledby="state-table-title">
+      <h3 id="state-table-title">Equivalent transition table</h3>
+      <div class="diagram-table-wrap">
+        <table class="diagram-table">
+          <caption>Allowed browser-session transitions, guards and evidence</caption>
+          <thead><tr><th>From</th><th>Action</th><th>To</th><th>Guard</th><th>Evidence</th></tr></thead>
+          <tbody>
+            {sessionStateMachine.transitions.map((transition) => (
+              <tr><td>{stateById.get(transition.from)?.label}</td><td>{transition.label}</td><td>{stateById.get(transition.to)?.label}</td><td>{transition.guard}</td><td>{transition.evidence}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </figure>
+</section>

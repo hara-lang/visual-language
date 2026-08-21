@@ -1,0 +1,153 @@
+---
+import {
+  architectureMap,
+  diagramRelationKinds,
+  runtimeFlow
+} from "../../lib/v2-diagrams.mjs";
+
+const architectureNode = (id) => architectureMap.nodes.find((node) => node.id === id);
+const architectureRows = [
+  ["source"],
+  ["front-end"],
+  ["catalog"],
+  ["tree", "fiber", "bytecode", "native", "wasm"],
+  ["packages", "remote"]
+];
+---
+<section class="diagram-guide-section" id="architecture" aria-labelledby="diagram-architecture-title">
+  <header class="diagram-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">01 · architecture and authority</p>
+      <h2 id="diagram-architecture-title">Make boundaries, ownership and confidence visible.</h2>
+      <p>An architecture map should explain what exists now, which relationships are proposals, and where authority leaves the illustrated product. The shape is never allowed to imply implementation status by itself.</p>
+    </div>
+    <dl class="diagram-evidence-fence">
+      <div><dt>Source revision</dt><dd><code>{architectureMap.sourceRevision}</code></dd></div>
+      <div><dt>Authority</dt><dd>{architectureMap.authority}</dd></div>
+      <div><dt>Nodes</dt><dd>{architectureMap.nodes.length}</dd></div>
+      <div><dt>Relations</dt><dd>{architectureMap.relations.length}</dd></div>
+    </dl>
+  </header>
+
+  <div class="diagram-view-switcher" role="group" aria-label="Architecture emphasis">
+    <button type="button" aria-pressed="true" data-architecture-mode="runtime">Runtime structure</button>
+    <button type="button" aria-pressed="false" data-architecture-mode="authority">Authority structure</button>
+  </div>
+
+  <figure class="diagram-figure" data-architecture-figure data-mode="runtime">
+    <figcaption>
+      <strong>{architectureMap.title}</strong>
+      <span>Current implementation is solid; external authority is doubled; proposals are dashed.</span>
+    </figcaption>
+
+    <div class="diagram-architecture-visual diagram-visual" role="img" aria-label="Hara source passes through the reader and direct callable catalog to five current execution hosts. Package identity is an external authority and a remote evaluator is proposed only.">
+      {architectureRows.map((row, rowIndex) => (
+        <div class="diagram-architecture-row" data-row={rowIndex + 1}>
+          {row.map((id) => {
+            const node = architectureNode(id);
+            return node && (
+              <button
+                type="button"
+                class="diagram-node"
+                data-node-id={node.id}
+                data-kind={node.kind}
+                data-status={node.status}
+                data-owner={node.owner}
+                data-detail={node.detail}
+                aria-pressed="false"
+              >
+                <span class="diagram-node-symbol" aria-hidden="true">{node.status === "proposed" ? "◇" : node.status === "external" ? "↗" : "●"}</span>
+                <b>{node.label}</b>
+                <small>{node.owner}</small>
+              </button>
+            );
+          })}
+        </div>
+      ))}
+      <div class="diagram-architecture-connectors" aria-hidden="true">
+        <span data-edge="source-front"></span>
+        <span data-edge="front-catalog"></span>
+        <span data-edge="catalog-hosts"></span>
+        <span data-edge="packages-source"></span>
+        <span data-edge="catalog-remote"></span>
+      </div>
+    </div>
+
+    <aside class="diagram-selection-inspector" data-architecture-inspector>
+      <span class="diagram-status-word" data-status="current">Current boundary</span>
+      <h3 data-architecture-node-label>Direct callable catalog</h3>
+      <p data-architecture-node-detail>Symbol, arity, feature availability, origin and direct implementation.</p>
+      <dl>
+        <div><dt>Owner</dt><dd data-architecture-node-owner>Hara runtime</dd></div>
+        <div><dt>Evidence</dt><dd data-architecture-node-evidence>catalog revision · runtime tests</dd></div>
+      </dl>
+    </aside>
+
+    <div class="diagram-alternative" aria-labelledby="architecture-relations-title">
+      <h3 id="architecture-relations-title">Equivalent relation list</h3>
+      <ol>
+        {architectureMap.relations.map((relation) => (
+          <li data-kind={relation.kind}>
+            <span aria-hidden="true">{diagramRelationKinds.find(({ id }) => id === relation.kind)?.symbol ?? "→"}</span>
+            <p><b>{architectureNode(relation.from)?.label}</b> <strong>{relation.label}</strong> <b>{architectureNode(relation.to)?.label}</b></p>
+            <small>{relation.kind} · {relation.evidence}</small>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </figure>
+</section>
+
+<section class="diagram-guide-section" id="flow" aria-labelledby="diagram-flow-title">
+  <header class="diagram-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">02 · runtime and data flow</p>
+      <h2 id="diagram-flow-title">Distinguish values, commands, observations, receipts and handoffs.</h2>
+      <p>Flow diagrams should make the session fence and the class of every movement inspectable. A returned value is not a command, and an unavailable handoff is not an execution failure.</p>
+    </div>
+    <dl class="diagram-evidence-fence">
+      <div><dt>Session</dt><dd><code>{runtimeFlow.fence.session}</code></dd></div>
+      <div><dt>Generation</dt><dd>{runtimeFlow.fence.generation}</dd></div>
+      <div><dt>Source</dt><dd><code>{runtimeFlow.fence.sourceRevision}</code></dd></div>
+      <div><dt>Backend</dt><dd>{runtimeFlow.fence.actualBackend}</dd></div>
+      <div><dt>Capabilities</dt><dd><code>{runtimeFlow.fence.capabilityRevision}</code></dd></div>
+    </dl>
+  </header>
+
+  <figure class="diagram-figure diagram-flow-figure">
+    <figcaption><strong>{runtimeFlow.title}</strong><span>Each stage names its output and state; the textual list remains the narrow-width primary view.</span></figcaption>
+    <div class="diagram-flow-visual diagram-visual" role="img" aria-label="Source is loaded, browser-safe capabilities are attached, a form runs, a result is observed, the boundary is checkpointed, and sharing is unavailable because network capability is missing.">
+      {runtimeFlow.stages.map((stage, index) => (
+        <div class="diagram-flow-stage" data-lane={stage.lane} data-status={stage.state}>
+          <span class="diagram-flow-index">{String(index + 1).padStart(2, "0")}</span>
+          <b>{stage.label}</b>
+          <small>{stage.output}</small>
+          {index < runtimeFlow.stages.length - 1 && <i class="diagram-flow-arrow" aria-hidden="true">→</i>}
+        </div>
+      ))}
+    </div>
+
+    <div class="diagram-flow-legend" aria-label="Flow classes">
+      {[
+        ["artifact", "Value / artifact"],
+        ["command", "Command"],
+        ["observation", "Observation"],
+        ["receipt", "Receipt"],
+        ["handoff", "Cross-product handoff"]
+      ].map(([id, label]) => <span data-lane={id}><i aria-hidden="true"></i>{label}</span>)}
+    </div>
+
+    <div class="diagram-alternative" aria-labelledby="runtime-flow-list-title">
+      <h3 id="runtime-flow-list-title">Equivalent ordered flow</h3>
+      <ol class="diagram-ordered-flow">
+        {runtimeFlow.stages.map((stage, index) => (
+          <li data-status={stage.state}>
+            <span>{index + 1}</span>
+            <div><b>{stage.label}</b><p>{stage.output}</p></div>
+            <small>{stage.lane} · {stage.state}</small>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </figure>
+</section>

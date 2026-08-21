@@ -1,0 +1,91 @@
+---
+import {
+  packageGraph
+} from "../../lib/v2-diagrams.mjs";
+
+const nodeById = new Map(packageGraph.nodes.map((node) => [node.id, node]));
+const initialNode = packageGraph.nodes[0];
+---
+<section class="diagram-guide-section" id="graph" aria-labelledby="diagram-graph-title">
+  <header class="diagram-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">05 · package and namespace graph</p>
+      <h2 id="diagram-graph-title">Keep dependency direction and stewardship distinct.</h2>
+      <p>Package, namespace, runtime and maintainer nodes carry different authority. Direct, optional, incompatible and superseded edges need words and evidence—not one generic line between circles.</p>
+    </div>
+    <dl class="diagram-evidence-fence">
+      <div><dt>Registry revision</dt><dd><code>{packageGraph.sourceRevision}</code></dd></div>
+      <div><dt>Nodes</dt><dd>{packageGraph.nodes.length}</dd></div>
+      <div><dt>Edges</dt><dd>{packageGraph.edges.length}</dd></div>
+      <div><dt>Selected</dt><dd data-graph-selected-fence><code>{initialNode.revision}</code></dd></div>
+    </dl>
+  </header>
+
+  <figure class="diagram-figure diagram-graph-figure" data-package-graph>
+    <figcaption><strong>{packageGraph.title}</strong><span>Select a node to inspect exact identity, ownership and adjacent relations.</span></figcaption>
+
+    <div class="diagram-graph-layout">
+      <div class="diagram-package-visual diagram-visual" role="img" aria-label="std.work contains work.core and work.store, std.work.sqlite depends on std.work, runtime support differs across Rust, Wasm and native image, an older runtime namespace is superseded, and Mina maintains both packages.">
+        <div class="diagram-graph-cluster" data-cluster="maintainers">
+          <span>Maintainer authority</span>
+          {packageGraph.nodes.filter(({ kind }) => kind === "maintainer").map((node) => (
+            <button type="button" class="diagram-graph-node" data-node-id={node.id} data-kind={node.kind} data-status={node.status} aria-pressed={node.id === initialNode.id ? "true" : "false"}><b>{node.label}</b><small>{node.revision}</small></button>
+          ))}
+        </div>
+        <div class="diagram-graph-cluster" data-cluster="packages">
+          <span>Packages</span>
+          {packageGraph.nodes.filter(({ kind }) => kind === "package").map((node) => (
+            <button type="button" class="diagram-graph-node" data-node-id={node.id} data-kind={node.kind} data-status={node.status} aria-pressed={node.id === initialNode.id ? "true" : "false"}><b>{node.label}</b><small>{node.revision}</small></button>
+          ))}
+        </div>
+        <div class="diagram-graph-cluster" data-cluster="namespaces">
+          <span>Namespaces</span>
+          {packageGraph.nodes.filter(({ kind }) => kind === "namespace").map((node) => (
+            <button type="button" class="diagram-graph-node" data-node-id={node.id} data-kind={node.kind} data-status={node.status} aria-pressed={node.id === initialNode.id ? "true" : "false"}><b>{node.label}</b><small>{node.revision}</small></button>
+          ))}
+        </div>
+        <div class="diagram-graph-cluster" data-cluster="runtimes">
+          <span>Runtime targets</span>
+          {packageGraph.nodes.filter(({ kind }) => kind === "runtime").map((node) => (
+            <button type="button" class="diagram-graph-node" data-node-id={node.id} data-kind={node.kind} data-status={node.status} aria-pressed={node.id === initialNode.id ? "true" : "false"}><b>{node.label}</b><small>{node.revision}</small></button>
+          ))}
+        </div>
+        <div class="diagram-graph-edge-ledger" aria-hidden="true">
+          {packageGraph.edges.map((edge) => <span data-edge-kind={edge.kind}>{edge.label}</span>)}
+        </div>
+      </div>
+
+      <aside class="diagram-selection-inspector diagram-graph-inspector" aria-live="polite">
+        <span class="diagram-status-word" data-graph-status={initialNode.status}>{initialNode.status}</span>
+        <p class="hara-v2-kicker" data-graph-kind>{initialNode.kind}</p>
+        <h3 data-graph-label>{initialNode.label}</h3>
+        <p data-graph-detail>{initialNode.detail}</p>
+        <dl>
+          <div><dt>Revision</dt><dd><code data-graph-revision>{initialNode.revision}</code></dd></div>
+          <div><dt>Owner</dt><dd data-graph-owner>{initialNode.owner}</dd></div>
+          <div><dt>Adjacent relations</dt><dd data-graph-relation-count>{packageGraph.edges.filter(({ from, to }) => from === initialNode.id || to === initialNode.id).length}</dd></div>
+        </dl>
+        <div class="diagram-graph-relations" data-graph-relations>
+          {packageGraph.edges.filter(({ from, to }) => from === initialNode.id || to === initialNode.id).map((edge) => (
+            <article data-kind={edge.kind}><b>{edge.label}</b><p>{nodeById.get(edge.from)?.label} → {nodeById.get(edge.to)?.label}</p></article>
+          ))}
+        </div>
+      </aside>
+    </div>
+
+    <div class="diagram-alternative" aria-labelledby="graph-adjacency-title">
+      <h3 id="graph-adjacency-title">Equivalent adjacency and evidence table</h3>
+      <div class="diagram-table-wrap">
+        <table class="diagram-table">
+          <caption>Package, namespace, runtime and maintainer relations</caption>
+          <thead><tr><th>From</th><th>Relation</th><th>To</th><th>Edge state</th><th>From revision</th><th>To revision</th></tr></thead>
+          <tbody>
+            {packageGraph.edges.map((edge) => (
+              <tr data-state={edge.kind}><td>{nodeById.get(edge.from)?.label}</td><td>{edge.label}</td><td>{nodeById.get(edge.to)?.label}</td><td>{edge.kind}</td><td><code>{nodeById.get(edge.from)?.revision}</code></td><td><code>{nodeById.get(edge.to)?.revision}</code></td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </figure>
+</section>

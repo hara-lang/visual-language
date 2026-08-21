@@ -70,6 +70,30 @@ The two layers deliberately share identity, state colours, typography, and
 responsive priorities. The tool layer adds denser controls and structural
 regions without making every surface visually heavier.
 
+### Evidence graphics and system diagrams
+
+The document layer has two additive explanation grammars:
+
+- **[Data visualisation](https://hara-lang.github.io/visual-language/v2/data/)** — benchmark comparisons, uncertainty, compatibility, runtime telemetry and evidence states through `v2-data.css` and [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md).
+- **[Diagrams and system maps](https://hara-lang.github.io/visual-language/v2/diagrams/)** — architecture, runtime flow, exact sequence, lifecycle and package/namespace relationships through `v2-diagrams.css` and [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md).
+
+Both are presentation contracts. Downstream products provide the authoritative
+measurements, identities, revisions, events, transitions, dependencies and
+receipts. Every diagram has a relation list, event table, transition table or
+adjacency table that remains complete without the visual.
+
+```astro
+---
+import "@hara-lang/visual-language/v2.css";
+import "@hara-lang/visual-language/v2-diagrams.css";
+---
+
+<figure class="diagram-figure">
+  <figcaption>Session lifecycle · source revision 4f31d2c8</figcaption>
+  <!-- product-owned diagram data and composition -->
+</figure>
+```
+
 ### Document and product shells
 
 **[Open the five-layout v2 laboratory](https://hara-lang.github.io/visual-language/v2/)**
