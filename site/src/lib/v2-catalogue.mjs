@@ -75,6 +75,16 @@ export const catalogueGroups = [
         status: "active",
         issue: 90,
         eyebrow: "Architecture and validation"
+      },
+      {
+        id: "data-visualisation",
+        label: "Data visualisation",
+        path: "/v2/data/",
+        href: "/v2/data/",
+        summary: "Accessible benchmark comparisons, uncertainty, compatibility matrices, runtime telemetry and evidence-state guidance.",
+        status: "active",
+        issue: 91,
+        eyebrow: "Evidence graphics"
       }
     ]
   },
