@@ -104,7 +104,30 @@ export const catalogueGroups = [
         summary: "Original Hara interface icons, evidence symbols, runtime capability glyphs and the WWW, Playground, Specs, Packages, World and Learn product family.",
         status: "active",
         issue: 106,
-        eyebrow: "Symbols and product identity"
+        eyebrow: "Symbols and product identity",
+        children: [
+          {
+            id: "symbols",
+            label: "Semantic symbols",
+            path: "/v2/symbols/",
+            href: "/v2/symbols/",
+            summary: "The merged 24 × 24 semantic symbol inventory retained as a compatibility surface while Iconography remains the primary current destination.",
+            status: "settled",
+            issue: 102,
+            kind: "compatibility",
+            tabLabel: "Semantic symbols"
+          }
+        ]
+      },
+      {
+        id: "media",
+        label: "Delivery media",
+        path: "/v2/media/",
+        href: "/v2/media/",
+        summary: "Email, print/PDF, social-card, plain-text, open-feed and low-bandwidth projections that preserve source revision, authority, state and canonical destination.",
+        status: "active",
+        issue: 108,
+        eyebrow: "Email, print, social and static"
       }
     ]
   },
@@ -443,7 +466,9 @@ export function catalogueRouteContext(activePath) {
   const isAlias = active !== canonicalPath && catalogueRoutePaths(item).includes(active);
   const statusLabel = item.kind === "historical"
     ? catalogueKindLabels.historical
-    : catalogueStatusLabels[item.status];
+    : item.kind === "compatibility"
+      ? catalogueKindLabels.compatibility
+      : catalogueStatusLabels[item.status];
 
   const crumbs = [
     { id: "catalogue", label: "Catalogue", path: "/v2/" },
