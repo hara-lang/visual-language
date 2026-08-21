@@ -29,7 +29,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/src test scripts/editorial-copy.mjs
+          git add site/src test scripts/editorial-copy.mjs *.md
           if git diff --cached --quiet; then
             echo "Editorial tree is already materialised."
           else
@@ -43,20 +43,17 @@ jobs:
           set +e
           npm test 2>&1 | tee /tmp/issue-110-test.log
           status=${PIPESTATUS[0]}
-          awk '
-            /^# Subtest:/ { subtest=$0 }
-            /^not ok / { print subtest; print; failed=1; next }
-            failed && /TestContext\.<anonymous>/ { print; print ""; failed=0 }
-          ' /tmp/issue-110-test.log > /tmp/issue-110-failures.log
-          {
-            echo '### Issue #110 failing assertions'
-            echo
-            echo '```text'
-            cat /tmp/issue-110-failures.log
-            echo
-            tail -n 10 /tmp/issue-110-test.log
-            echo '```'
-          } > /tmp/issue-110-test-comment.md
+          if [ "$status" -ne 0 ]; then
+            node --test --test-reporter=./scripts/test-failure-reporter.mjs test/*.test.mjs > /tmp/issue-110-failure-details.log 2>&1 || true
+            {
+              echo '### Issue #110 exact assertion failures'
+              echo
+              echo '```text'
+              head -c 55000 /tmp/issue-110-failure-details.log
+              echo
+              echo '```'
+            } > /tmp/issue-110-test-comment.md
+          fi
           exit "$status"
       - name: Report issue 110 test failure
         if: failure() && steps.tests.outcome == 'failure' && github.event_name == 'pull_request' && github.head_ref == 'agent/issue-110-technical-editorial-voice'
