@@ -63,12 +63,15 @@ accessibility review procedure, and downstream adoption map. See
 | --- | --- | --- |
 | `v2.css` | WWW, Docs, Specs, Benchmarks, World, data products, and content-heavy application shells | [`V2-THEME.md`](./V2-THEME.md) |
 | `v2-tool.css` | Toolbars, docks, inspectors, palettes, viewports, timelines, consoles, editor workbenches, and compact browser-runtime chrome | [`V2-TOOL.md`](./V2-TOOL.md), [`V2-RUNTIME.md`](./V2-RUNTIME.md) |
+| `v2-data.css` | Benchmark evidence, uncertainty, compatibility, telemetry, missing and incomparable values | [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md) |
+| `v2-diagrams.css` | Architecture, runtime flow, sequence, lifecycle, package graphs and complete textual alternatives | [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md) |
+| `v2-symbols.css` | Semantic navigation, action, state, capability, product and evidence symbols | [`V2-SYMBOLS.md`](./V2-SYMBOLS.md) |
 
 `v2-tool.css` imports `v2.css`, so a workbench consumer imports only the tool
 entry point and places both `hara-v2` and `hara-v2-tool` on its interface root.
-The two layers deliberately share identity, state colours, typography, and
-responsive priorities. The tool layer adds denser controls and structural
-regions without making every surface visually heavier.
+The additive data, diagrams and symbols layers share identity, state colours,
+typography and responsive priorities while products retain authority over facts
+and behaviour.
 
 ### Evidence graphics and system diagrams
 
@@ -93,6 +96,40 @@ import "@hara-lang/visual-language/v2-diagrams.css";
   <!-- product-owned diagram data and composition -->
 </figure>
 ```
+
+### Semantic symbols and capability iconography
+
+**[Open the v2 symbols and iconography guide](https://hara-lang.github.io/visual-language/v2/symbols/)**
+
+The public symbol layer provides 65 stable semantic identifiers across
+navigation, actions, state, runtime capabilities, Hara products, and authority
+or evidence. Symbols use one `0 0 24 24` geometry system, `currentColor`, and
+16/20/24/32 pixel optical sizes. They do not depend on an icon font or raster
+asset, and unfamiliar, destructive, capability, product and evidence meaning
+remains text-supported.
+
+```astro
+---
+import Symbol from "@hara-lang/visual-language/astro/v2/Symbol.astro";
+import "@hara-lang/visual-language/v2.css";
+import "@hara-lang/visual-language/v2-symbols.css";
+---
+
+<button class="hara-v2-symbol-button" type="button" aria-label="Run example">
+  <Symbol name="action-run" size={20} />
+</button>
+
+<span class="hara-v2-symbol-state" data-state="unavailable">
+  <Symbol name="state-unavailable" size={16} />
+  Network unavailable
+</span>
+```
+
+Framework-free consumers may import the inventory from
+`@hara-lang/visual-language/v2/symbols.js`. The package owns names, geometry,
+optical sizing and accessibility defaults; products still own commands,
+capability availability, state, permissions, ownership, revisions and receipts.
+See [`V2-SYMBOLS.md`](./V2-SYMBOLS.md).
 
 ### Document and product shells
 
@@ -148,7 +185,8 @@ import "@hara-lang/visual-language/v2-tool.css";
 </div>
 ```
 
-The package exports twenty-six stateless Astro primitives and composites:
+The package exports twenty-six stateless Astro primitives and composites plus
+the public `Symbol` primitive:
 
 - controls: `Toolbar`, `ToolGroup`, `ToolButton`, `ToolToggle`, `ToolSelect`,
   `ToolNumberField`, `TabStrip`, `IconRail`, and `StatusBar`;
@@ -157,7 +195,8 @@ The package exports twenty-six stateless Astro primitives and composites:
 - environment: `SectionNavigator`, `EnvironmentSection`, `FrontmatterGrid`,
   `ResourceList`, `CapabilityPane`, and `EnvironmentWorkbench`;
 - browser runtime: `StatusLamp`, `RuntimeSwitch`, `ConnectionRow`,
-  `CompactRuntimeShell`, and `RuntimeAppShell`.
+  `CompactRuntimeShell`, and `RuntimeAppShell`;
+- semantics: `Symbol`, with its public `v2/symbols.js` inventory.
 
 The environment layer supplies the standard **Nav / Frontmatter / Graphics /
 Code** content series and capability-aware **Sessions / Files / Canvas / 3D**
