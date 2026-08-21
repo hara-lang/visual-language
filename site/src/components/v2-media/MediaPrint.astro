@@ -1,0 +1,79 @@
+---
+import DeliveryFrame from "../../../../src/astro/v2/DeliveryFrame.astro";
+import ArtifactProvenance from "../../../../src/astro/v2/ArtifactProvenance.astro";
+import {
+  artifactEnvelope,
+  benchmarkReport,
+  specsPacket
+} from "../../lib/v2-media.mjs";
+
+const specsEnvelope = artifactEnvelope(specsPacket);
+const benchmarkEnvelope = artifactEnvelope(benchmarkReport);
+---
+<section class="media-guide-section" id="print" aria-labelledby="media-print-title">
+  <header class="media-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">03 · print and PDF</p>
+      <h2 id="media-print-title">Paginated evidence without background ink or hidden controls.</h2>
+      <p>Print projections expose running identity, page number, source revision, authority, canonical URL and evidence notes. Tables repeat headers, links needed for comprehension expand to URLs, and interactive diagrams remain paired with a linear equivalent.</p>
+    </div>
+    <dl class="media-guide-fence">
+      <div><dt>Page targets</dt><dd>A4 and US Letter</dd></div>
+      <div><dt>Default margins</dt><dd>17–20 mm</dd></div>
+      <div><dt>Essential links</dt><dd>URL expanded</dd></div>
+      <div><dt>Background ink</dt><dd>Not required</dd></div>
+    </dl>
+  </header>
+
+  <div class="media-print-layout">
+    <div>
+      <div class="media-specimen-label"><span>Specs proposal packet</span><code>{specsPacket.sourceRevision}</code></div>
+      <DeliveryFrame format="print" label="Print preview of HAL-27 proposal packet" title="Specs · proposal packet · page 1">
+        <article class="hara-media-print-page media-print-spec-page">
+          <header class="hara-media-print-running-header"><span>Hara Specs · proposal review</span><span>{specsPacket.proposal}</span></header>
+          <p class="media-print-kicker">PROPOSAL PACKET · REVIEW</p>
+          <h1>{specsPacket.title}</h1>
+          <p>This packet is a static projection of the proposal registry. The canonical record and review decisions remain on Specs.</p>
+          {specsPacket.sections.map(([title, text]) => <section><h2>{title}</h2><p>{text}</p></section>)}
+          <section class="hara-media-print-evidence"><b>Evidence fence</b><p>Source revision: <code>{specsPacket.sourceRevision}</code><br />Authority: {specsPacket.authority}<br />Status: {specsPacket.status}</p></section>
+          <p>Canonical proposal: <a class="hara-media-print-url" href={specsPacket.canonicalUrl}>{specsPacket.proposal}</a></p>
+          <footer class="hara-media-print-running-footer"><span>{specsPacket.sourceRevision}</span><span>Page 1 of 2</span></footer>
+        </article>
+      </DeliveryFrame>
+      <ArtifactProvenance envelope={specsEnvelope} compact={true} label="Proposal packet provenance" />
+    </div>
+
+    <div>
+      <div class="media-specimen-label"><span>Benchmark evidence report</span><code>{benchmarkReport.sourceRevision}</code></div>
+      <DeliveryFrame format="print" label="Print preview of runtime dispatch benchmark report" title="Benchmarks · evidence report · page 1">
+        <article class="hara-media-print-page media-print-benchmark-page">
+          <header class="hara-media-print-running-header"><span>Hara Benchmarks · evidence report</span><span>August 2026</span></header>
+          <p class="media-print-kicker">RUNTIME DISPATCH · EXACT CONTEXT</p>
+          <h1>{benchmarkReport.title}</h1>
+          <p>{benchmarkReport.uncertainty}</p>
+          <table>
+            <caption>Runtime dispatch relative duration; lower is faster</caption>
+            <thead><tr><th>Target</th><th>Median</th><th>95% interval</th><th>Evidence state</th></tr></thead>
+            <tbody>{benchmarkReport.rows.map(([target, median, interval, state]) => <tr data-evidence-state={state}><th>{target}</th><td>{median}</td><td>{interval}</td><td>{state}</td></tr>)}</tbody>
+          </table>
+          <section class="hara-media-print-evidence"><b>Interpretation boundary</b><p><b>Unsupported is not zero.</b> The Java host row has no comparable measurement and remains written as N/A. Browser/Wasm is explicitly partial.</p></section>
+          <h2>Reproduction context</h2><p>Open the full workload definition, raw samples and environment facts at <a class="hara-media-print-url" href={benchmarkReport.canonicalUrl}>the canonical benchmark page</a>.</p>
+          <footer class="hara-media-print-running-footer"><span>{benchmarkReport.sourceRevision}</span><span>Page 1 of 3</span></footer>
+        </article>
+      </DeliveryFrame>
+      <ArtifactProvenance envelope={benchmarkEnvelope} compact={true} label="Benchmark report provenance" />
+    </div>
+  </div>
+
+  <section class="media-print-contract" aria-labelledby="media-print-contract-title">
+    <header><p class="hara-v2-kicker">Pagination contract</p><h3 id="media-print-contract-title">The page break cannot remove the evidence boundary.</h3></header>
+    <div>
+      <article><b>Running context</b><p>Product, artifact title, exact revision and page number repeat outside the body flow.</p></article>
+      <article><b>Tables</b><p>Headers repeat, rows avoid splitting where possible and unsupported remains written rather than plotted as zero.</p></article>
+      <article><b>Diagrams</b><p>Visual maps travel with their relation list, event table, transition table or adjacency table.</p></article>
+      <article><b>Links</b><p>Canonical and evidence URLs expand in print when the destination is required for comprehension.</p></article>
+      <article><b>Colour</b><p>Meaning survives grayscale and background suppression; line style and words remain primary.</p></article>
+      <article><b>Page sizes</b><p>Layouts fit A4 and US Letter without scaling body text below the contract minimum.</p></article>
+    </div>
+  </section>
+</section>
