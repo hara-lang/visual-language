@@ -1,0 +1,60 @@
+---
+import {
+  compatibilityTargets,
+  evidenceStates,
+  packageCompatibility
+} from "../../lib/v2-data-visualisation.mjs";
+
+const symbols = { supported: "✓", partial: "◐", unsupported: "×", missing: "—", incomparable: "≠" };
+const tone = (state) => state === "supported" ? "success" : state === "partial" ? "warning" : state === "unsupported" ? "error" : "muted";
+---
+<section class="data-guide-section" id="compatibility" aria-labelledby="data-compatibility-title">
+  <header class="data-guide-heading">
+    <div><p class="hara-v2-kicker">Reference composition 02 · Packages</p><h2 id="data-compatibility-title">A compatibility matrix is a claim ledger, not coloured wallpaper.</h2></div>
+    <p>Every cell names its state, target, release revision and supporting evidence. Missing, unsupported and incomparable remain different facts; none is rendered as zero or silent absence.</p>
+  </header>
+
+  <article class="data-evidence-panel data-compatibility-panel">
+    <header class="data-evidence-header">
+      <div><span>Package/runtime compatibility</span><h3>Exact release evidence across four target families</h3><p>Cell symbol + state word + evidence text · fixtures only</p></div>
+      <code>compatibility-fixture@2026-08</code>
+    </header>
+
+    <div class="data-compatibility-wrap" tabindex="0" aria-label="Package compatibility matrix; horizontally scrollable at narrow widths">
+      <table class="data-compatibility-table">
+        <caption>Representative package compatibility. These deterministic fixtures are not current registry claims.</caption>
+        <thead><tr><th>Package and release revision</th>{compatibilityTargets.map((target) => <th scope="col">{target.label}</th>)}</tr></thead>
+        <tbody>
+          {packageCompatibility.map((pkg) => (
+            <tr>
+              <th scope="row"><strong>{pkg.coordinate}</strong><code>{pkg.releaseRevision}</code></th>
+              {compatibilityTargets.map((target) => {
+                const cell = pkg.cells[target.id];
+                return <td data-state={cell.state}>
+                  <span class="data-compatibility-symbol" aria-hidden="true">{symbols[cell.state]}</span>
+                  <strong>{cell.state}</strong>
+                  <small>{cell.version ?? "No version claim"}</small>
+                  <p>{cell.evidence}</p>
+                </td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="data-state-legend" aria-label="Compatibility state legend">
+      <article><span class="data-state-symbol" data-state="supported">✓</span><strong>Supported</strong><p>An exact implementation and evidence set supports the declared release.</p></article>
+      {evidenceStates.filter(({ id }) => ["partial", "unsupported", "missing", "incomparable"].includes(id)).map((state) => <article><span class="data-state-symbol" data-state={state.id}>{state.symbol}</span><strong>{state.label}</strong><p>{state.rule}</p></article>)}
+    </div>
+  </article>
+
+  <div class="data-compatibility-cards" aria-label="Narrow-width textual compatibility alternative">
+    {packageCompatibility.map((pkg) => (
+      <article>
+        <header><strong>{pkg.coordinate}</strong><code>{pkg.releaseRevision}</code></header>
+        <dl>{compatibilityTargets.map((target) => { const cell = pkg.cells[target.id]; return <div data-state={cell.state}><dt>{target.label}</dt><dd><span class="guide-state" data-tone={tone(cell.state)}>{symbols[cell.state]} {cell.state}</span><p>{cell.evidence}</p></dd></div>; })}</dl>
+      </article>
+    ))}
+  </div>
+</section>
