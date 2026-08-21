@@ -29,6 +29,7 @@
     "V2-GUIDE.md",
     "V2-DATA-VISUALISATION.md",
     "V2-DIAGRAMS.md",
+    "V2-SYMBOLS.md",
     "LICENSE"
   ],
   "exports": {
@@ -41,7 +42,9 @@
     "./v2-graphics.css": "./src/v2/graphics.css",
     "./v2-data.css": "./src/v2/data-visualisation.css",
     "./v2-diagrams.css": "./src/v2/diagrams.css",
+    "./v2-symbols.css": "./src/v2/symbols.css",
     "./v2/frontmatter.js": "./src/v2/frontmatter.mjs",
+    "./v2/symbols.js": "./src/v2/symbols.mjs",
     "./theme.js": "./src/theme.js",
     "./astro/ThemeToggle.astro": "./src/astro/ThemeToggle.astro",
     "./astro/HaraMark.astro": "./src/astro/HaraMark.astro",
@@ -55,6 +58,7 @@
     "./astro/v2/PageHeader.astro": "./src/astro/v2/PageHeader.astro",
     "./astro/v2/FleetField.astro": "./src/astro/v2/FleetField.astro",
     "./astro/v2/ShaderField.astro": "./src/astro/v2/ShaderField.astro",
+    "./astro/v2/Symbol.astro": "./src/astro/v2/Symbol.astro",
     "./astro/v2/tool/Toolbar.astro": "./src/astro/v2/tool/Toolbar.astro",
     "./astro/v2/tool/ToolGroup.astro": "./src/astro/v2/tool/ToolGroup.astro",
     "./astro/v2/tool/ToolButton.astro": "./src/astro/v2/tool/ToolButton.astro",
