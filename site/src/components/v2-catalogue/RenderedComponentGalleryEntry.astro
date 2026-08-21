@@ -5,7 +5,8 @@ import RenderedComponentGallery from "./RenderedComponentGallery.astro";
 import RenderedSymbolSpecimen from "./RenderedSymbolSpecimen.astro";
 import "../../styles/v2-component-showcase-responsive.css";
 
-const componentCount = ensureSymbolComponentInventory() ? 39 : 38;
+ensureSymbolComponentInventory();
+const componentCount = 39;
 ---
 <RenderedComponentGallery />
 <div class="v2-component-showcase v2-component-showcase--semantic">
