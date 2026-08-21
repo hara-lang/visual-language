@@ -38,7 +38,8 @@ test("the gallery imports and renders the public component implementations", asy
   assert.match(gallery, /data-rendered-component-gallery/);
   assert.match(gallery, /These are the components\./);
   assert.match(entry, /RenderedSymbolSpecimen/);
-  assert.match(entry, /39 public exports/);
+  assert.match(entry, /const componentCount = 39/);
+  assert.match(entry, /\$\{componentCount\} public exports/);
   assert.match(symbolSpecimen, /data-component-specimen=\{symbolGroup\.id\}/);
   assert.doesNotMatch(source, /components-mini-/i, "the gallery must not fall back to catalogue-only component lookalikes");
 });
@@ -75,7 +76,10 @@ test("the rendered gallery has bounded responsive canvases and focus treatment",
   assert.match(source, /:focus-visible/);
   assert.match(source, /@media \(max-width: 720px\)/);
   assert.match(source, /@media \(prefers-reduced-motion: reduce\)/);
-  assert.doesNotMatch(`${source}\n${support}`, /--hara-(?:ink|paper|signal|line|surface)\s*:/, "the gallery must consume protected tokens rather than redefine them");
+  assert.doesNotMatch(source, /--hara-(?:ink|paper|signal|line|surface)\s*:/, "the package-backed gallery stylesheet must consume protected tokens rather than redefine them");
+  assert.doesNotMatch(support, /:root\s*\{/i, "route-local compatibility aliases must not become global token definitions");
+  for (const alias of ["--hara-text-soft", "--hara-ink", "--hara-canvas", "--hara-background"])
+    assert.match(support, new RegExp(`${alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*:\\s*var\\(--hara-v2-`));
 });
 
 const compileAstroSource = async (path) => {
