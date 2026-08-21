@@ -39,7 +39,7 @@ test("primary language and community routes begin with definitions or concrete b
     ["site/src/components/v2-packages/PackagesDiscovery.astro", "Packages and namespaces are versioned registry records."],
     ["site/src/pages/v2/specs/index.astro", "A specification states what an implementation must, should, or may do."],
     ["site/src/pages/v2/playground/index.astro", "Run an exact Hara source revision in a named session."],
-    ["site/src/pages/v2/start/index.astro", "Use an agent to inspect Hara before choosing an example."],
+    ["site/src/components/v2-start/StartHero.astro", "Use an agent to inspect Hara before choosing an example."],
     ["site/src/pages/v2/world/index.astro", "World collects attributed articles, discussions, package changes, and external references."],
     ["site/src/pages/v2/world/discussion/index.astro", "Articles, discussions, and contributor records for Hara."],
     ["site/src/pages/v2/world/around/index.astro", "External Hara material retains its original source and authorship."]
@@ -66,6 +66,7 @@ test("public source excludes the retired promotional vocabulary", async () => {
     /focused product laboratories/i,
     /Get a living thing back/i,
     /Find the exact thing you can trust/i,
+    /Application laboratory/i,
     /Application buildout/i,
     /Focused product study/i,
     /product laboratory/i,
