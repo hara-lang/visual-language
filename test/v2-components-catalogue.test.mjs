@@ -105,8 +105,8 @@ test("the visible inventory exactly matches every public Astro package export", 
   const inventoryExports = publicComponentInventory.map(({ exportPath }) => exportPath).sort();
 
   assert.deepEqual(inventoryExports, packageExports);
-  assert.equal(publicComponentInventory.length, 39);
-  assert.equal(supportComponentInventory.length, 5);
+  assert.equal(publicComponentInventory.length, 41);
+  assert.equal(supportComponentInventory.length, 7);
   assert.equal(v2ComponentInventory.length, 34);
   assert.equal(toolComponentInventory.length, 26);
 
@@ -133,7 +133,7 @@ test("the inventory preserves the document, tool, environment, runtime, and supp
     "runtime"
   ]);
 
-  for (const name of ["ThemeToggle", "HaraMark", "Motif", "Backdrop", "Surface"])
+  for (const name of ["ThemeToggle", "HaraMark", "HaraIcon", "HaraGlyph", "Motif", "Backdrop", "Surface"])
     assert.equal(componentInventoryByName(name)?.owner, "support");
 
   for (const name of ["Shell", "Header", "ContextNav", "Sidebar", "PageHeader", "FleetField", "ShaderField", "Symbol"])
