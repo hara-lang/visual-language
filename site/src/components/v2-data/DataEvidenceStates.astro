@@ -1,0 +1,51 @@
+---
+import {
+  dataVisualisationPrinciples,
+  evidenceStates
+} from "../../lib/v2-data-visualisation.mjs";
+---
+<section class="data-guide-section" id="states" aria-labelledby="data-states-title">
+  <header class="data-guide-heading">
+    <div><p class="hara-v2-kicker">Evidence states and ownership</p><h2 id="data-states-title">Absence has more than one meaning.</h2></div>
+    <p>Shared presentation grammar keeps these states legible. Benchmarks, package registries and runtimes still own the underlying values, freshness policy, methodology and compatibility decisions.</p>
+  </header>
+
+  <div class="data-evidence-state-grid">
+    {evidenceStates.map((state) => (
+      <article data-state={state.id}>
+        <span class="data-state-symbol" data-state={state.id}>{state.symbol}</span>
+        <div><h3>{state.label}</h3><p>{state.rule}</p></div>
+      </article>
+    ))}
+  </div>
+
+  <div class="data-principles-layout">
+    <section>
+      <header><span>Shared visual grammar</span><strong>{dataVisualisationPrinciples.length} rules</strong></header>
+      <ol>{dataVisualisationPrinciples.map((principle) => <li>{principle}</li>)}</ol>
+    </section>
+    <aside>
+      <header><span>Authority boundary</span><strong>Presentation is not methodology</strong></header>
+      <dl>
+        <div><dt>Visual Language owns</dt><dd>Scale and axis presentation, legends, accessible alternatives, evidence-state grammar, responsive containment and reduced-motion behavior.</dd></div>
+        <div><dt>Benchmarks owns</dt><dd>Workloads, measurements, baselines, confidence method, environment, exclusions and raw evidence.</dd></div>
+        <div><dt>Packages owns</dt><dd>Coordinates, releases, target support, compatibility claims, deprecation and publication receipts.</dd></div>
+        <div><dt>Runtime owns</dt><dd>Session identity, generation, source fence, capabilities, observations, sequence and timestamps.</dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<section class="data-guide-section data-adoption" id="adoption" aria-labelledby="data-adoption-title">
+  <header class="data-guide-heading">
+    <div><p class="hara-v2-kicker">Downstream adoption</p><h2 id="data-adoption-title">Adopt the grammar without copying the fixtures.</h2></div>
+    <p>The additive stylesheet supplies evidence-graphic composition classes. Products bind those classes to their own exact data, methodology, states and accessible descriptions.</p>
+  </header>
+  <div class="data-adoption-grid">
+    <article><span>Benchmarks</span><p>Use comparison, confidence, distribution and table patterns while retaining workload and methodology authority in `hara-benchmarks`.</p></article>
+    <article><span>Packages</span><p>Use the matrix and state grammar while retaining exact release and target evidence in the package registry.</p></article>
+    <article><span>Playground and tools</span><p>Use event-sequence and telemetry patterns while runtime systems remain authoritative for observations and receipts.</p></article>
+    <article><span>Docs and WWW</span><p>Use simplified evidence projections with direct links to the exact data, method and current revision.</p></article>
+  </div>
+  <aside class="data-no-perspective" role="note"><strong>Excluded:</strong><span>decorative 3D bars, perspective distortion, unlabeled dual axes, truncated baselines without disclosure, animation-only state and colour-only compatibility cells.</span></aside>
+</section>
