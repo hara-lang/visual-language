@@ -62,15 +62,25 @@ export const componentGroups = [
   {
     id: "support",
     label: "Identity and support",
-    summary: "Theme, identity, motif, backdrop, and generic surface helpers used around the v2 layers.",
+    summary: "Theme, identity, icon, motif, backdrop, and generic surface helpers used around the v2 layers.",
     components: [
       support("ThemeToggle", "Direct light/dark theme control.", {
         states: ["light", "dark"],
         accessibility: "Button label announces the destination theme and remains readable on mobile."
       }),
       support("HaraMark", "Protected block-H identity mark with one signal square.", {
-        densities: ["24px minimum", "product", "hero"],
+        densities: ["24px minimum", "route", "hero"],
         accessibility: "Decorative by default; the containing link supplies the accessible name."
+      }),
+      support("HaraIcon", "Semantic icon wrapper for the shared Hara icon inventory.", {
+        states: ["decorative", "labelled", "current colour"],
+        densities: ["16px", "20px", "24px", "32px"],
+        accessibility: "Decorative icons are hidden; informative icons require an accessible name or adjacent text."
+      }),
+      support("HaraGlyph", "Compact named glyph rendered from shared Hara vector geometry.", {
+        states: ["decorative", "labelled", "current colour"],
+        densities: ["16px", "20px", "24px", "32px"],
+        accessibility: "The glyph supplements a visible label unless the host supplies an accessible name."
       }),
       support("Motif", "Edge, Aperture, or Rack technical atmosphere.", {
         states: ["edge", "aperture", "rack", "light", "dark"],
@@ -89,7 +99,7 @@ export const componentGroups = [
         states: ["default", "with context", "with inspector", "compact"],
         responsive: "Inspector drops first, then sidebar; main source order remains intact."
       }),
-      shared("Header", "Product header with identity, primary navigation, and action slots.", {
+      shared("Header", "Application header with identity, primary navigation, and action slots.", {
         states: ["anonymous", "signed in", "current route"],
         accessibility: "Uses the banner landmark and labelled primary navigation."
       }),
