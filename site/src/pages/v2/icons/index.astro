@@ -1,0 +1,125 @@
+---
+import HaraGlyph from "../../../../../src/astro/HaraGlyph.astro";
+import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
+import IconLibrary from "../../../components/v2-icons/IconLibrary.astro";
+import IconStates from "../../../components/v2-icons/IconStates.astro";
+import IconCapabilities from "../../../components/v2-icons/IconCapabilities.astro";
+import IconSemantics from "../../../components/v2-icons/IconSemantics.astro";
+import {
+  iconFixtureNotice,
+  iconSummary,
+  productGlyphs
+} from "../../../lib/v2-icons.mjs";
+import "../../../../../src/v2.css";
+import "../../../../../src/v2-icons.css";
+import "../../../../../src/theme.js";
+import "../../../styles/v2-lab.css";
+import "../../../styles/v2-calm-lab.css";
+import "../../../styles/v2-icons-guide.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}v2/icons/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const catalogueUrl = `${basePath}v2/`;
+const guideUrl = `${basePath}v2/guide/`;
+const diagramsUrl = `${basePath}v2/diagrams/`;
+const issueUrl = "https://github.com/hara-lang/visual-language/issues/106";
+const localNav = [
+  { href: "#overview", label: "Overview" },
+  { href: "#library", label: "Interface icons" },
+  { href: "#states", label: "State and evidence" },
+  { href: "#capabilities", label: "Capabilities" },
+  { href: "#products", label: "Products" },
+  { href: "#semantics", label: "Semantics" },
+  { href: "#adoption", label: "Adoption" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="The Hara v2 iconography guide for navigation, actions, state and evidence symbols, runtime capabilities, product glyphs, accessible composition and downstream adoption." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara v2 iconography and product glyphs" />
+    <meta property="og:description" content="Original Hara geometry for interface controls, evidence states, runtime capabilities and the six product families." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara v2 iconography and product glyphs" />
+    <meta name="twitter:description" content="A stable, accessible symbol language for Hara products and tools." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara v2 iconography and product glyphs</title>
+  </head>
+  <body class="hara-v2 hara-v2-icon-guide">
+    <CatalogueHeader basePath={basePath} activePath="/v2/icons/" label="Iconography and product glyph guide">
+      <a slot="route-actions" href="#library">Browse symbols</a>
+    </CatalogueHeader>
+
+    <nav class="icon-guide-local-nav" aria-label="Iconography guide sections">
+      <span>Iconography</span>
+      <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+      <a href={issueUrl}>Issue 106 ↗</a>
+    </nav>
+
+    <main class="icon-guide-main">
+      <aside class="icon-guide-fixture-notice" role="note">
+        <strong>{iconFixtureNotice.label}</strong>
+        <span>{iconFixtureNotice.summary}</span>
+        <code>{iconFixtureNotice.id} · {iconFixtureNotice.revision}</code>
+      </aside>
+
+      <section class="icon-guide-hero" id="overview" aria-labelledby="icon-guide-title">
+        <div>
+          <p class="hara-v2-kicker">Issue 106 · original geometry, explicit meaning</p>
+          <h1 id="icon-guide-title">A symbol language for every Hara surface.</h1>
+          <p>Interface icons describe navigation and commands. State symbols reinforce written evidence. Capability glyphs identify runtime boundaries. Product glyphs distinguish WWW, Playground, Specs, Packages, World and Learn without borrowing another system’s visual vocabulary.</p>
+          <div class="icon-guide-hero-actions">
+            <a href="#library">Inspect interface icons</a>
+            <a href="#capabilities">Review capability glyphs</a>
+            <a href="#products">Compare product family</a>
+          </div>
+        </div>
+
+        <aside class="icon-guide-hero-board" aria-label="Iconography guide inventory">
+          <header><span>Shared symbol inventory</span><span class="hara-state-symbol" data-state="success">Original Hara geometry</span></header>
+          <div>
+            <div class="icon-guide-family-preview" aria-label="Hara product glyph family">
+              {productGlyphs.map((product) => <span title={product.label}><HaraGlyph name={product.glyph} size={42} label={product.label} decorative={false} /></span>)}
+            </div>
+            <h2>{iconSummary.interfaceIcons + iconSummary.capabilityGlyphs + iconSummary.productGlyphs} public symbols</h2>
+            <p>Deterministic SVG geometry, semantic names, accessible defaults and one shared composition contract.</p>
+            <dl>
+              <div><dt>Interface icons</dt><dd>{iconSummary.interfaceIcons}</dd></div>
+              <div><dt>Capability glyphs</dt><dd>{iconSummary.capabilityGlyphs}</dd></div>
+              <div><dt>Product glyphs</dt><dd>{iconSummary.productGlyphs}</dd></div>
+              <div><dt>State examples</dt><dd>{iconSummary.stateExamples}</dd></div>
+              <div><dt>Evidence distinctions</dt><dd>{iconSummary.evidenceExamples}</dd></div>
+              <div><dt>Review sizes</dt><dd>{iconSummary.sizes}</dd></div>
+            </dl>
+          </div>
+          <footer><span>24px interface grid</span><span>32px identity grid</span><span>No third-party runtime</span></footer>
+        </aside>
+      </section>
+
+      <IconLibrary />
+      <IconStates />
+      <IconCapabilities />
+      <IconSemantics />
+
+      <footer class="v2-lab-footer">
+        <span>Hara v2 iconography and product/capability glyph guide</span>
+        <span><a href={catalogueUrl}>Catalogue home</a> · <a href={guideUrl}>Catalogue guide</a> · <a href={diagramsUrl}>Diagrams</a> · <a href={issueUrl}>Issue 106</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script>
+      import { initialiseIconGuide } from "../../../scripts/v2-icons.js";
+      initialiseIconGuide();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+---
+import HaraIcon from "../../../../src/astro/HaraIcon.astro";
+import {
+  haraIconCatalog
+} from "../../../../src/icons.mjs";
+import {
+  iconGroups,
+  iconSizeScale
+} from "../../lib/v2-icons.mjs";
+
+const interfaceGroups = iconGroups.filter(({ id }) => ["navigation", "action"].includes(id));
+const scaleIcons = ["search", "run", "save", "warning"];
+---
+<section class="icon-guide-section" id="library" aria-labelledby="icon-library-title">
+  <header class="icon-guide-section-heading">
+    <div>
+      <p class="hara-v2-kicker">01 · interface library</p>
+      <h2 id="icon-library-title">One calm monoline system for navigation and action.</h2>
+      <p>Interface icons use the 24 × 24 grid, consistent stroke caps and joins, and no embedded fill colour. The same geometry renders inside text buttons, icon-only controls, command palettes and compact workbench chrome.</p>
+    </div>
+    <dl class="icon-guide-fence">
+      <div><dt>Grid</dt><dd>24 × 24</dd></div>
+      <div><dt>Default stroke</dt><dd>1.75</dd></div>
+      <div><dt>Smallest review</dt><dd>16 px</dd></div>
+      <div><dt>Interactive target</dt><dd>44 px minimum</dd></div>
+    </dl>
+  </header>
+
+  <div class="icon-library-toolbar">
+    <div role="group" aria-label="Filter interface icons">
+      <button type="button" aria-pressed="true" data-icon-filter="all">All interface icons</button>
+      {interfaceGroups.map((group) => <button type="button" aria-pressed="false" data-icon-filter={group.id}>{group.label}</button>)}
+    </div>
+    <label>
+      <span>Review scale</span>
+      <select class="hara-v2-select" data-icon-scale>
+        {iconSizeScale.map((size) => <option value={size} selected={size === 24}>{size}px</option>)}
+      </select>
+    </label>
+  </div>
+
+  <div class="icon-library-groups">
+    {interfaceGroups.map((group) => (
+      <section class="icon-library-group" data-icon-category={group.id}>
+        <header><div><h3>{group.label}</h3><p>{group.description}</p></div><span>{group.names.length} icons</span></header>
+        <div class="icon-library-grid">
+          {group.names.map((name) => {
+            const definition = haraIconCatalog[name];
+            return (
+              <article data-icon-card data-icon-category={group.id}>
+                <div class="icon-library-mark" data-icon-preview>
+                  <HaraIcon name={name} size={24} decorative={true} />
+                </div>
+                <div><b>{definition.label}</b><code>{name}</code></div>
+                <small>{definition.directional ? "directional · RTL mirrors" : "fixed orientation"}</small>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <section class="icon-scale-study" aria-labelledby="icon-scale-title">
+    <header><div><p class="hara-v2-kicker">Optical scale study</p><h3 id="icon-scale-title">Review the same geometry at every supported size.</h3></div><p>At 16px, the symbol must remain recognizable. At 48px, the original small-grid geometry must not reveal inconsistent weight or accidental detail.</p></header>
+    <div class="icon-scale-table-wrap">
+      <table class="icon-scale-table">
+        <caption>Representative interface icons at 16, 20, 24, 32 and 48 pixels</caption>
+        <thead><tr><th>Icon</th>{iconSizeScale.map((size) => <th>{size}px</th>)}</tr></thead>
+        <tbody>
+          {scaleIcons.map((name) => (
+            <tr><th>{haraIconCatalog[name].label}<code>{name}</code></th>{iconSizeScale.map((size) => <td><HaraIcon name={name} size={size} decorative={true} /></td>)}</tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="icon-control-compositions" aria-labelledby="icon-control-title">
+    <header><p class="hara-v2-kicker">Control composition</p><h3 id="icon-control-title">The parent control owns interaction and focus.</h3></header>
+    <div>
+      <button type="button" class="hara-v2-button hara-icon-label"><HaraIcon name="run" size={20} decorative={true} /><span>Run source</span></button>
+      <button type="button" class="hara-icon-button" aria-label="Search Hara"><HaraIcon name="search" size={20} decorative={true} /></button>
+      <button type="button" class="hara-icon-button hara-icon-badge" aria-label="Open comments, 12 unread"><HaraIcon name="more" size={20} decorative={true} /><span data-badge>12</span></button>
+      <button type="button" class="hara-v2-button hara-icon-label" disabled><HaraIcon name="publish" size={20} decorative={true} /><span>Publish unavailable</span></button>
+      <a class="hara-v2-button hara-icon-label" href="#semantics"><HaraIcon name="external" size={18} decorative={true} /><span>Open semantic rules</span></a>
+    </div>
+    <p>Icons inside visibly labelled controls are decorative. Icon-only buttons receive their accessible name from the button, not from a focusable SVG child.</p>
+  </section>
+</section>

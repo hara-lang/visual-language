@@ -95,6 +95,16 @@ export const catalogueGroups = [
         status: "active",
         issue: 100,
         eyebrow: "Systems and relationships"
+      },
+      {
+        id: "icons",
+        label: "Iconography",
+        path: "/v2/icons/",
+        href: "/v2/icons/",
+        summary: "Original Hara interface icons, evidence symbols, runtime capability glyphs and the WWW, Playground, Specs, Packages, World and Learn product family.",
+        status: "active",
+        issue: 106,
+        eyebrow: "Symbols and product identity"
       }
     ]
   },

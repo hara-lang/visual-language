@@ -1,0 +1,40 @@
+---
+import Symbol from "../../../../src/astro/v2/Symbol.astro";
+import { componentShowcaseGroups } from "../../lib/v2-component-showcase.mjs";
+
+const sourceRoot = "https://github.com/hara-lang/visual-language/blob/main/";
+const symbolGroup = componentShowcaseGroups.find(({ id }) => id === "semantic-symbol");
+if (!symbolGroup) throw new Error("Rendered component catalogue is missing the Symbol showcase group");
+
+const examples = [
+  { name: "action-run", label: "Run", tone: "signal" },
+  { name: "state-ready", label: "Ready", tone: "success" },
+  { name: "state-unavailable", label: "Unavailable", tone: "current" },
+  { name: "capability-filesystem", label: "Filesystem", tone: "current" },
+  { name: "product-playground", label: "Playground", tone: "current" },
+  { name: "evidence-revision", label: "Exact revision", tone: "muted" }
+];
+---
+<article class="v2-component-specimen" id={symbolGroup.id} data-component-specimen={symbolGroup.id}>
+  <header class="v2-component-specimen__header">
+    <div><p>{symbolGroup.eyebrow}</p><h3>{symbolGroup.title}</h3><span>{symbolGroup.description}</span></div>
+    <div class="v2-component-specimen__exports">
+      {symbolGroup.components.map((component) => <a href={`${sourceRoot}${component.path}`}><code>{component.name}</code></a>)}
+    </div>
+  </header>
+  <div class="v2-component-specimen__canvas v2-component-specimen__canvas--symbols">
+    <div class="v2-component-showcase__symbol-specimens" aria-label="Rendered Symbol component states">
+      {examples.map((example) => (
+        <span class="v2-component-showcase__symbol-record">
+          <Symbol name={example.name} size={24} tone={example.tone} />
+          <span><strong>{example.label}</strong><code>{example.name}</code></span>
+        </span>
+      ))}
+    </div>
+    <div class="v2-component-showcase__symbol-boundary">
+      <span class="hara-v2-symbol-state" data-state="ready"><Symbol name="state-ready" size={16} tone="success" />Ready</span>
+      <button class="hara-v2-symbol-button" type="button" aria-label="Copy exact revision"><Symbol name="action-copy" size={20} /></button>
+      <span class="hara-v2-symbol-evidence"><strong>Exact evidence remains text</strong><code>revision: ce4139f1e7a7b0fd</code></span>
+    </div>
+  </div>
+</article>

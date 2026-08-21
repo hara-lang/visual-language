@@ -9,12 +9,15 @@ import {
   toolComponentInventory,
   v2ComponentInventory
 } from "../site/src/lib/v2-component-inventory.mjs";
+import { ensureSymbolComponentInventory } from "../site/src/lib/v2-symbol-component-inventory.mjs";
 import {
   catalogueHref,
   catalogueItemById,
   catalogueItemIsCurrent,
   catalogueLinkIsExternal
 } from "../site/src/lib/v2-catalogue.mjs";
+
+ensureSymbolComponentInventory();
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 const pagePath = "../site/src/pages/v2/components/index.astro";
@@ -102,9 +105,9 @@ test("the visible inventory exactly matches every public Astro package export", 
   const inventoryExports = publicComponentInventory.map(({ exportPath }) => exportPath).sort();
 
   assert.deepEqual(inventoryExports, packageExports);
-  assert.equal(publicComponentInventory.length, 38);
+  assert.equal(publicComponentInventory.length, 39);
   assert.equal(supportComponentInventory.length, 5);
-  assert.equal(v2ComponentInventory.length, 33);
+  assert.equal(v2ComponentInventory.length, 34);
   assert.equal(toolComponentInventory.length, 26);
 
   assert.equal(new Set(publicComponentInventory.map(({ name }) => name)).size, publicComponentInventory.length);
@@ -133,7 +136,7 @@ test("the inventory preserves the document, tool, environment, runtime, and supp
   for (const name of ["ThemeToggle", "HaraMark", "Motif", "Backdrop", "Surface"])
     assert.equal(componentInventoryByName(name)?.owner, "support");
 
-  for (const name of ["Shell", "Header", "ContextNav", "Sidebar", "PageHeader", "FleetField", "ShaderField"])
+  for (const name of ["Shell", "Header", "ContextNav", "Sidebar", "PageHeader", "FleetField", "ShaderField", "Symbol"])
     assert.equal(componentInventoryByName(name)?.owner, "shared");
 
   for (const name of ["Toolbar", "ToolButton", "WorkbenchShell", "CapabilityPane", "EnvironmentWorkbench"])

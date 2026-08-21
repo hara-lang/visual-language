@@ -3,10 +3,15 @@ import CatalogueMasthead from "./CatalogueMasthead.astro";
 import CataloguePageFooter from "./CataloguePageFooter.astro";
 import CatalogueRouteBar from "./CatalogueRouteBar.astro";
 import CatalogueSectionNav from "./CatalogueSectionNav.astro";
+import { ensureSymbolComponentInventory } from "../../lib/v2-symbol-component-inventory.mjs";
+import { ensureSymbolsCatalogueRoute } from "../../lib/v2-symbols-catalogue.mjs";
 import "../../../../src/v2/catalogue-navigation.css";
 import "../../styles/v2-navigation-tighten.css";
 import "../../styles/v2-navigation-mobile-polish.css";
 import "../../styles/v2-matrix-regression-fixes.css";
+
+ensureSymbolComponentInventory();
+ensureSymbolsCatalogueRoute();
 
 const {
   basePath,
