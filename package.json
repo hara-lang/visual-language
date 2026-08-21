@@ -1,7 +1,7 @@
 {
   "name": "@hara-lang/visual-language",
   "version": "1.0.0",
-  "description": "Hara's precision-material visual language for Astro and framework-free sites",
+  "description": "Interface references, components, and public-site specimens for the Hara programming language",
   "type": "module",
   "license": "MIT",
   "homepage": "https://hara-lang.github.io/visual-language/",
@@ -15,6 +15,7 @@
     "README.md",
     "HARA-IMAGERY.md",
     "OG-IMAGERY.md",
+    "V2-EDITORIAL.md",
     "V2-THEME.md",
     "V2-TOOL.md",
     "V2-ENVIRONMENT.md",
