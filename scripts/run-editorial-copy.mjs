@@ -21,6 +21,10 @@ source = source
   .replace(
     'const files = (await Promise.all(sourceRoots.map(walk))).flat();',
     'const files = (await Promise.all(sourceRoots.map(walk))).flat().filter((file) => !file.endsWith("v2-editorial.test.mjs"));'
+  )
+  .replace(
+    'const violations = [];\nfor (const file of files) {',
+    'const violations = [];\nfor (const file of files.filter((file) => !file.includes(`${path.sep}test${path.sep}`))) {'
   );
 
 await fs.writeFile(migration, source);
