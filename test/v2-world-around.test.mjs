@@ -24,8 +24,8 @@ const cssFiles = [
 
 test("Around Hara is linked from the v2 review surface and guided World specimen", async () => {
   const [index, learn, world] = await Promise.all([
-    read("../site/src/pages/v2/index.astro"),
-    read("../site/src/pages/v2/learn/index.astro"),
+    read("../site/src/pages/index.astro"),
+    read("../site/src/pages/learn/index.astro"),
     read("../site/src/components/v2/WorldSpecimen.astro")
   ]);
 
@@ -39,7 +39,7 @@ test("Around Hara is linked from the v2 review surface and guided World specimen
 
 test("Around Hara composes eight screens through the shared v2 shell", async () => {
   const [page, screen] = await Promise.all([
-    read("../site/src/pages/v2/world/around/index.astro"),
+    read("../site/src/pages/world/around/index.astro"),
     read("../site/src/components/v2-world-around/AroundScreen.astro")
   ]);
 
@@ -59,7 +59,7 @@ test("Around Hara composes eight screens through the shared v2 shell", async () 
 
 test("Around Hara visualizes the full discovery, curation, and relay journey", async () => {
   const [page, ...screens] = await Promise.all([
-    read("../site/src/pages/v2/world/around/index.astro"),
+    read("../site/src/pages/world/around/index.astro"),
     ...screenFiles.map((name) => read(`../site/src/components/v2-world-around/${name}.astro`))
   ]);
   const experience = [page, ...screens].join("\n");

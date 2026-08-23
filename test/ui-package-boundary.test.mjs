@@ -16,10 +16,10 @@ test("the visual-language repository is a private catalogue over independent UI 
 test("the catalogue entrypoints consume published package names", async () => {
   const [home, catalogue, tools] = await Promise.all([
     read("site/src/pages/index.astro"),
-    read("site/src/pages/v2/index.astro"),
-    read("site/src/pages/v2/tool/index.astro")
+    read("site/src/pages/index.astro"),
+    read("site/src/pages/tool/index.astro")
   ]);
-  assert.match(home, /@hara-lang\/ui-astro\/astro\/Backdrop\.astro/);
+  assert.match(home, /@hara-lang\/ui-astro\/astro\/v2\/FleetField\.astro/);
   assert.match(catalogue, /@hara-lang\/ui-astro\/astro\/v2\/FleetField\.astro/);
   assert.match(catalogue, /@hara-lang\/ui\/v2\.css/);
   assert.match(tools, /@hara-lang\/ui-tool\/v2-tool\.css/);

@@ -50,8 +50,8 @@ test("the shell accounts for optional context and illustration slots", async () 
 
 test("the v2 catalogue and Learn route cover WWW, Docs, Specs, Benchmarks, and World", async () => {
   const [page, learn] = await Promise.all([
-    read("../site/src/pages/v2/index.astro"),
-    read("../site/src/pages/v2/learn/index.astro")
+    read("../site/src/pages/index.astro"),
+    read("../site/src/pages/learn/index.astro")
   ]);
   const specimens = (await Promise.all([
     "WwwSpecimen", "DocsSpecimen", "SpecsSpecimen", "BenchmarksSpecimen", "WorldSpecimen"

@@ -59,7 +59,7 @@ test("shared matrix fixes raise compact navigation to 44 pixels and offset stick
 });
 
 test("the guide renders a regression report before the live review deck", async () => {
-  const page = await read("site/src/pages/v2/guide/index.astro");
+  const page = await read("site/src/pages/guide/index.astro");
   assert.match(page, /import GuideRegressionReport from/);
   assert.match(page, /import GuideReviewEvidence from/);
   assert.ok(page.indexOf("<GuideRegressionReport") < page.indexOf("<GuideReviewDeck"));

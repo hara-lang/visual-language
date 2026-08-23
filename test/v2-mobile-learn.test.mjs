@@ -6,7 +6,7 @@ const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("Learn owns runnable onboarding and guided World examples", async () => {
   const [page, landing, specimen] = await Promise.all([
-    read("../site/src/pages/v2/learn/index.astro"),
+    read("../site/src/pages/learn/index.astro"),
     read("../site/src/components/v2-learn/LearnLanding.astro"),
     read("../site/src/components/v2/WorldSpecimen.astro")
   ]);

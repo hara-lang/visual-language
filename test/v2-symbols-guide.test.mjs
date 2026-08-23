@@ -12,7 +12,7 @@ import {
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
-const pagePath = "site/src/pages/v2/symbols/index.astro";
+const pagePath = "site/src/pages/symbols/index.astro";
 const stylePath = "site/src/styles/v2-symbols-guide.css";
 
 test("the symbols guide route renders the public Symbol component and complete inventory", async () => {

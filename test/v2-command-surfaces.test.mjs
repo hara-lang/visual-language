@@ -6,9 +6,9 @@ const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("v2 publishes the command-surface retune after content and before responsive rules", async () => {
   const entry = await read("../src/v2.css");
-  const content = entry.indexOf('./v2/content.css');
-  const commands = entry.indexOf('./v2/command-surfaces.css');
-  const responsive = entry.indexOf('./v2/responsive.css');
+  const content = entry.indexOf('./content.css');
+  const commands = entry.indexOf('./command-surfaces.css');
+  const responsive = entry.indexOf('./responsive.css');
   assert.ok(content >= 0 && commands > content && responsive > commands);
 });
 
@@ -27,8 +27,8 @@ test("the retune strengthens operational seams without importing tool-only token
 
 test("four catalogue references and the Learn World example use the retuned reference frame", async () => {
   const [page, learn, lab] = await Promise.all([
-    read("../site/src/pages/v2/index.astro"),
-    read("../site/src/pages/v2/learn/index.astro"),
+    read("../site/src/pages/index.astro"),
+    read("../site/src/pages/learn/index.astro"),
     read("../site/src/styles/v2-command-retune.css")
   ]);
 

@@ -29,8 +29,8 @@ const pathname = Astro.url.pathname.startsWith(normalizedBasePath)
   ? `/${Astro.url.pathname.slice(normalizedBasePath.length)}`
   : Astro.url.pathname;
 const resolvedActivePath = activePath ?? pathname;
-const deepRoute = resolvedActivePath !== "/v2/";
-const componentCatalogue = resolvedActivePath.replace(/\/+$/, "") === "/v2/components";
+const deepRoute = resolvedActivePath !== "/";
+const componentCatalogue = resolvedActivePath.replace(/\/+$/, "") === "/components";
 const RenderedComponentGallery = componentCatalogue
   ? (await import("./RenderedComponentGalleryEntry.astro")).default
   : null;
@@ -92,5 +92,5 @@ const RenderedComponentGallery = componentCatalogue
     }
   })();
 </script>
-<CataloguePageFooter basePath={basePath} activePath={pageFooter ? resolvedActivePath : "/v2/"} />
+<CataloguePageFooter basePath={basePath} activePath={pageFooter ? resolvedActivePath : "/"} />
 <span id="v2-catalogue-content" class="v2-catalogue-content-target" tabindex="-1" aria-label="Route content begins"></span>

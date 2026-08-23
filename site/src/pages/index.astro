@@ -1,249 +1,168 @@
 ---
-import ThemeToggle from "@hara-lang/ui-astro/astro/ThemeToggle.astro";
-import HaraMark from "@hara-lang/ui-astro/astro/HaraMark.astro";
-import Motif from "@hara-lang/ui-astro/astro/Motif.astro";
-import Backdrop from "@hara-lang/ui-astro/astro/Backdrop.astro";
-import "@hara-lang/ui/theme.css";
-import "@hara-lang/ui/motifs.css";
-import "@hara-lang/ui/effects.css";
+import CatalogueHeader from "../components/v2-catalogue/CatalogueHeader.astro";
+import FleetField from "@hara-lang/ui-astro/astro/v2/FleetField.astro";
+import WwwSpecimen from "../components/v2/WwwSpecimen.astro";
+import DocsSpecimen from "../components/v2/DocsSpecimen.astro";
+import SpecsSpecimen from "../components/v2/SpecsSpecimen.astro";
+import BenchmarksSpecimen from "../components/v2/BenchmarksSpecimen.astro";
+import {
+  catalogueGroups,
+  catalogueHref,
+  catalogueItems,
+  catalogueLinkIsExternal,
+  catalogueStatusLabels
+} from "../lib/v2-catalogue.mjs";
+import "@hara-lang/ui/v2.css";
 import "@hara-lang/ui/theme.js";
+import "../styles/v2-lab.css";
+import "../styles/v2-command-retune.css";
+import "../styles/v2-calm-lab.css";
 
 const base = import.meta.env.BASE_URL;
 const basePath = base.endsWith("/") ? base : `${base}/`;
-const pagesUrl = "https://ui.hara-lang.org/";
-const v2Url = `${basePath}v2/`;
-const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site).toString();
-const fields = [
-  { id: "evaluation", file: "evaluation-field.svg", title: "Evaluation field", description: "A background specimen for evaluation state, boundaries, and status overlays." },
-  { id: "syntax", file: "ast-field.svg", title: "Syntax field", description: "A background specimen for syntax trees, compiler paths, and related source structure." },
-  { id: "lattice", file: "symbol-lattice.svg", title: "Symbol lattice", description: "A repeatable geometric field for sections, covers, and large reference surfaces." },
-  { id: "flow", file: "dataflow-orbit.svg", title: "Dataflow field", description: "A background specimen for observable state, data movement, and inspection controls." },
-  { id: "kernel", file: "kernel-depth.svg", title: "Runtime field", description: "A depth field for runtime, stack, session, and infrastructure references." },
-] as const;
+const pageUrl = new URL(`${basePath}`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const toolLab = `${basePath}tool/`;
+const learnLab = `${basePath}learn/`;
+const worldDiscussionLab = `${basePath}world/discussion/`;
+const worldAroundLab = `${basePath}world/around/`;
+const topLevelItems = catalogueGroups.flatMap((group) => group.items);
+const plannedCount = catalogueItems.filter((item) => item.status === "planned").length;
+const implementedCount = catalogueItems.filter((item) => item.href).length;
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Reference implementation for Hara interface tokens, themes, motifs, backgrounds, effects, components, and application specimens." />
+    <meta name="description" content="Reference implementation for Hara's shared interface rules and its language, documentation, learning, package, specification, playground, and community routes." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Hara Visual Language" />
-    <meta property="og:title" content="Hara Visual Language" />
-    <meta property="og:description" content="Shared interface rules and reusable specimens for Hara language, documentation, tools, packages, specifications, learning, and community pages." />
-    <meta property="og:url" content={pagesUrl} />
+    <meta property="og:title" content="Hara visual language v2 reference" />
+    <meta property="og:description" content="Shared interface rules, reusable specimens, and route-specific examples for the Hara programming language and community." />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:image:secure_url" content={socialImage} />
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="3840" />
-    <meta property="og:image:height" content="2016" />
-    <meta property="og:image:alt" content="Hara visual language interface field and rack geometry" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hara Visual Language" />
-    <meta name="twitter:description" content="Interface tokens, themes, components, backgrounds, and route specimens for Hara." />
+    <meta name="twitter:title" content="Hara visual language v2 reference" />
+    <meta name="twitter:description" content="Interface rules and examples for Hara language, documentation, learning, packages, specifications, tools, and community pages." />
     <meta name="twitter:image" content={socialImage} />
-    <meta name="twitter:image:alt" content="Hara visual language interface field and rack geometry" />
-    <link rel="canonical" href={pagesUrl} />
+    <link rel="canonical" href={pageUrl} />
     <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
-    <title>Hara Visual Language</title>
+    <title>Hara visual language v2 reference</title>
   </head>
-  <body>
-    <header>
-      <a href="./"><HaraMark size={28} /><b>Hara visual language</b></a>
-      <nav>
-        <a href={v2Url}>V2 reference</a>
-        <a href="#motifs">Motifs</a>
-        <a href="#fields">Fields</a>
-        <a href="#effects">Effects</a>
-        <a href="#tokens">Tokens</a>
-        <a href="https://github.com/hara-lang/visual-language">Source</a>
-      </nav>
-      <ThemeToggle />
-    </header>
+  <body class="hara-v2">
+    <CatalogueHeader basePath={basePath} activePath="/" />
 
-    <main>
-      <Motif kind="rack" class="hero">
-        <div class="hero-content">
-          <p class="hara-kicker">Interface reference · Version 1</p>
-          <h1>Visual rules<br />for Hara.</h1>
-          <p>This repository defines shared themes, tokens, motifs, backgrounds, effects, and components. Version 2 also records how those rules apply to language, documentation, learning, package, specification, playground, and community routes.</p>
-          <div class="hero-actions">
-            <a class="primary-action" href={v2Url}>Open the v2 reference</a>
-            <a href="https://github.com/hara-lang/visual-language">View source ↗</a>
+    <main class="v2-lab-main">
+      <section class="v2-lab-hero">
+        <div>
+          <p class="hara-v2-kicker">Interface reference · Version 2</p>
+          <h1>Hara visual language v2</h1>
+          <p>This site records the shared interface rules used across Hara and shows how they apply to the language overview, documentation, learning material, packages, specifications, playground, and community. Application pages are specimens for review; they are not product pitches.</p>
+          <div class="v2-lab-principles">
+            <div><b>Route manifest</b><span>Paths, parent relationships, aliases, and implementation status are recorded in one typed source.</span></div>
+            <div><b>Shared rules</b><span>Identity, typography, colour, accessibility, evidence, and common interaction states are documented once.</span></div>
+            <div><b>Route examples</b><span>Each language or community route retains its own information architecture and realistic content.</span></div>
+            <div><b>Explicit status</b><span>Implemented, reference, historical, and planned material are labelled without implying more than the repository supports.</span></div>
           </div>
+          <nav class="v2-lab-quick-links" aria-label="Selected v2 routes">
+            <a href={learnLab}><span>Learn</span><strong>Read a first lesson →</strong></a>
+            <a href={worldDiscussionLab}><span>World</span><strong>Read community discussion →</strong></a>
+            <a href={worldAroundLab}><span>Around Hara</span><strong>View external references →</strong></a>
+            <a href={toolLab}><span>Tools</span><strong>Inspect workbench components →</strong></a>
+          </nav>
         </div>
-      </Motif>
-
-      <section id="motifs">
-        <p class="hara-kicker">Composition motifs</p>
-        <h2>Edge, aperture, and rack.</h2>
-        <p class="section-intro">The original three motifs are retained as composition references. They describe boundary, inspection, and depth without assigning product meaning to the decoration itself.</p>
-        <div class="motif-grid">
-          <Motif kind="edge"><div><b>Edge</b><span>Boundary / tolerance / state</span></div></Motif>
-          <Motif kind="aperture"><div><b>Aperture</b><span>Inspection / focus / control</span></div></Motif>
-          <Motif kind="rack"><div><b>Rack</b><span>Structure / depth / runtime</span></div></Motif>
-        </div>
+        <div class="v2-lab-hero-art"><FleetField title="Hara interface reference field" /></div>
       </section>
 
-      <section id="fields">
-        <p class="hara-kicker">Background references</p>
-        <h2>Five adaptive<br />vector fields.</h2>
-        <p class="section-intro">Each background is a 4096 × 2304 adaptive SVG. The fields support evaluation, syntax, symbol, dataflow, and runtime contexts while remaining secondary to readable content.</p>
-        <div class="field-grid">
-          {fields.map((field) => (
-            <article class="field-card">
-              <img src={`${basePath}backgrounds/${field.file}`} alt={`${field.title} Hara vector background`} loading="lazy" />
-              <div>
-                <p class="hara-kicker">{field.id}</p>
-                <h3>{field.title}</h3>
-                <p>{field.description}</p>
-                <code>4096 × 2304 · adaptive SVG</code>
-              </div>
-            </article>
-          ))}
+      <section class="v2-catalogue-home-intro">
+        <div>
+          <p class="hara-v2-kicker">Reference structure</p>
+          <h2>Shared rules and route-specific examples.</h2>
         </div>
+        <p>Foundations and Library describe reusable contracts. Language and community routes show how those contracts are applied to Hara's public overview, documentation, learning, packages, specifications, executable examples, and discussion. A planned route links to its implementation issue rather than presenting an empty page.</p>
       </section>
 
-      <section id="effects">
-        <p class="hara-kicker">Optional motion states</p>
-        <h2>Motion remains<br />secondary.</h2>
-        <p class="section-intro">The five fields are available as Astro backdrops. Motion is disabled by default and, when enabled, is limited to calibration scans and stepped indicators. Reduced-motion preferences remain authoritative.</p>
-        <div class="effect-grid">
-          {fields.map((field) => (
-            <article class="effect-card field-stage">
-              <Backdrop effect={field.id} intensity="balanced" motion={false} />
-              <div><b>{field.title}</b><code>{`effect="${field.id}"`}</code></div>
-            </article>
-          ))}
+      <div class="v2-catalogue-summary" aria-label="Reference status summary">
+        <article><strong>{catalogueGroups.length}</strong><span>reference groups</span></article>
+        <article><strong>{topLevelItems.length}</strong><span>top-level references</span></article>
+        <article><strong>{plannedCount}</strong><span>planned routes and subroutes</span></article>
+        <article><strong>{implementedCount}</strong><span>implemented routes</span></article>
+      </div>
+
+      {catalogueGroups.map((group) => (
+        <section class="v2-catalogue-family" id={`catalogue-${group.id}`}>
+          <header class="v2-catalogue-family-head">
+            <div><p class="hara-v2-kicker">Reference group</p><h2>{group.label}</h2></div>
+            <p>{group.summary}</p>
+          </header>
+          <div class="v2-catalogue-card-grid">
+            {group.items.map((item) => {
+              const external = catalogueLinkIsExternal(item);
+              return (
+                <article class="v2-catalogue-card" data-status={item.status}>
+                  <a
+                    href={catalogueHref(item, basePath)}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noreferrer" : undefined}
+                  >
+                    <span>{item.eyebrow ?? group.label}</span>
+                    <h3>{item.label}</h3>
+                    <p>{item.summary}</p>
+                    <span class="v2-catalogue-status" data-status={item.status}>
+                      {catalogueStatusLabels[item.status]}
+                      {external && item.issue ? ` · issue #${item.issue}` : ""}
+                    </span>
+                  </a>
+                  {item.children && item.children.length > 0 && (
+                    <nav class="v2-catalogue-children" aria-label={`${item.label} routes`}>
+                      {item.children.map((child) => {
+                        const childExternal = catalogueLinkIsExternal(child);
+                        return (
+                          <a
+                            href={catalogueHref(child, basePath)}
+                            target={childExternal ? "_blank" : undefined}
+                            rel={childExternal ? "noreferrer" : undefined}
+                          >
+                            <span>{child.label}</span>
+                            <small data-status={child.status}>{catalogueStatusLabels[child.status]}</small>
+                          </a>
+                        );
+                      })}
+                    </nav>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+
+      <section class="v2-catalogue-legacy-head">
+        <div>
+          <p class="hara-v2-kicker">Earlier specimens</p>
+          <h2>Earlier document layouts remain available for comparison.</h2>
         </div>
+        <p>WWW, Docs, Specs, and Benchmarks established the first shared v2 shell. The earlier World example is retained under Learn so that its attribution, discussion, and source-handling decisions can be explained rather than presented as a current destination.</p>
       </section>
 
-      <section id="tokens">
-        <p class="hara-kicker">Shared interface tokens</p>
-        <h2>One token set,<br />light and dark themes.</h2>
-        <p class="section-intro">Semantic tokens name the page ground, surfaces, recesses, signal colour, and text. Components consume these names rather than embedding route-specific colour values.</p>
-        <div class="token-grid">
-          <article><i style="background:var(--hara-bg)"></i><b>Ground</b><code>--hara-bg</code></article>
-          <article><i style="background:var(--hara-surface-solid)"></i><b>Surface</b><code>--hara-surface-solid</code></article>
-          <article><i style="background:var(--hara-metal)"></i><b>Metal</b><code>--hara-metal</code></article>
-          <article><i style="background:var(--hara-metal-recess)"></i><b>Recess</b><code>--hara-metal-recess</code></article>
-          <article><i style="background:var(--hara-signal)"></i><b>Signal</b><code>--hara-signal</code></article>
-          <article><i style="background:var(--hara-text)"></i><b>Text</b><code>--hara-text</code></article>
-        </div>
-        <pre><code>import Backdrop from "@hara-lang/ui-astro/astro/Backdrop.astro";
-import "@hara-lang/ui/theme.css";
-import "@hara-lang/ui/effects.css";
+      <div class="v2-lab-index" aria-label="Language, community, and interface references">
+        <a href={learnLab}><strong>Read Learn</strong><span>Introductory explanations, runnable lessons, projects, and guided interface examples.</span><code>implemented route</code></a>
+        <a href={worldDiscussionLab}><strong>Read World discussion</strong><span>Articles, clippings, comments, contributor profiles, presence, and owner-attributed bots.</span><code>implemented route</code></a>
+        <a href={worldAroundLab}><strong>View Around Hara</strong><span>External references with source provenance, curation, moderation, and relay review.</span><code>implemented route</code></a>
+        <a href={toolLab}><strong>Inspect tool workbenches</strong><span>3D, node, material, and animation editor compositions.</span><code>reference</code></a>
+        <a href="https://github.com/hara-lang/visual-language/issues/32"><strong>Catalogue architecture record</strong><span>The completed issue that established the route manifest and application reference structure.</span><code>completed issue #32</code></a>
+      </div>
 
-&lt;Backdrop effect="kernel" intensity="quiet" /&gt;</code></pre>
-      </section>
+      <WwwSpecimen />
+      <DocsSpecimen />
+      <SpecsSpecimen />
+      <BenchmarksSpecimen />
+
+      <footer class="v2-lab-footer">
+        <span>Hara visual language v2 · Editorial contract <a href="https://github.com/hara-lang/visual-language/issues/110">#110</a></span>
+        <span><a href={learnLab}>Learn</a> · <a href={worldAroundLab}>Around Hara</a> · <a href={toolLab}>Tool reference</a> · <a href="https://github.com/hara-lang/visual-language/blob/main/V2-EDITORIAL.md">Editorial contract</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
     </main>
-
-    <footer>
-      <span>
-        <a href="https://opensource.greenways.ai/open-source/">A Greenways Open Source Project</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://github.com/hara-lang/visual-language/blob/main/LICENSE">MIT</a>
-      </span>
-      <a href={v2Url}>Hara visual language v2 reference</a>
-    </footer>
   </body>
 </html>
-
-<style>
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    min-height: 64px;
-    padding: 0 var(--hara-space-page);
-    border-bottom: 1px solid var(--hara-line);
-    background: color-mix(in srgb, var(--hara-bg) 90%, transparent);
-    backdrop-filter: blur(18px) saturate(108%);
-  }
-  header > a { display: flex; align-items: center; gap: .7rem; width: max-content; text-decoration: none; }
-  nav { display: flex; gap: 1.35rem; }
-  nav a { color: var(--hara-muted); font-size: .82rem; text-decoration: none; }
-  header :global(.hara-theme-toggle) { justify-self: end; }
-
-  .field-stage { position: relative; isolation: isolate; overflow: hidden; }
-  .hero {
-    min-height: 720px;
-    display: flex;
-    align-items: center;
-    padding: var(--hara-space-page);
-    border-bottom: 1px solid var(--hara-line);
-  }
-  .hero::after { background: linear-gradient(90deg, var(--hara-bg) 0%, color-mix(in srgb, var(--hara-bg) 94%, transparent) 54%, transparent 82%); }
-  .hero-content { position: relative; z-index: 1; width: min(var(--hara-content), 100%); margin: auto; }
-  .hero h1 { max-width: 900px; margin: .2em 0; font-size: clamp(4rem, 10vw, 8.5rem); line-height: .82; letter-spacing: -.07em; }
-  .hero-content > p:not(.hara-kicker) { max-width: 590px; color: var(--hara-muted); font-size: 1.18rem; line-height: 1.6; }
-  .hero-actions { display: flex; align-items: center; gap: 1.2rem; margin-top: 2rem; }
-  .hero-actions a { color: var(--hara-muted); font-size: .86rem; text-decoration: none; }
-  .hero-actions .primary-action {
-    padding: .82rem 1.05rem;
-    color: white;
-    border: 1px solid color-mix(in srgb, var(--hara-signal) 78%, black);
-    border-radius: var(--hara-radius-sm);
-    background: var(--hara-signal);
-    box-shadow: inset 0 1px rgba(255,255,255,.28), 0 10px 24px color-mix(in srgb, var(--hara-signal) 18%, transparent);
-  }
-
-  section:not(.hero) { width: min(var(--hara-content), calc(100% - 2 * var(--hara-space-page))); margin: auto; padding: 110px 0; }
-  h2 { margin: .25em 0 .45em; font-size: clamp(2.5rem, 6vw, 5rem); line-height: .94; letter-spacing: -.055em; }
-  .section-intro { max-width: 760px; margin: 0 0 2.4rem; color: var(--hara-muted); font-size: 1.08rem; line-height: 1.65; }
-
-  .motif-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  .motif-grid > :global(.hara-motif) {
-    aspect-ratio: 1;
-    display: flex;
-    align-items: flex-end;
-    padding: 1.2rem;
-    border: 1px solid var(--hara-line);
-    border-radius: var(--hara-radius-md);
-  }
-  .motif-grid :global(.hara-motif)::after { background: linear-gradient(0deg, var(--hara-bg), transparent 58%); }
-  .motif-grid div { position: relative; z-index: 1; display: grid; gap: .3rem; }
-  .motif-grid span { color: var(--hara-muted); font: .7rem var(--hara-font-mono); text-transform: uppercase; letter-spacing: .05em; }
-
-  .field-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  .field-card { overflow: hidden; border: 1px solid var(--hara-line); border-radius: var(--hara-radius-md); background: var(--hara-surface-solid); box-shadow: var(--hara-shadow); }
-  .field-card:first-child { grid-column: 1 / -1; }
-  .field-card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--hara-void); }
-  .field-card > div { padding: 1.25rem; border-top: 1px solid var(--hara-line); }
-  .field-card h3 { margin: .15rem 0 .45rem; font-size: 1.4rem; }
-  .field-card p:not(.hara-kicker) { min-height: 2.8em; margin: 0 0 1rem; color: var(--hara-muted); line-height: 1.45; }
-  .field-card code { color: var(--hara-signal); font-size: .72rem; }
-
-  .effect-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: .75rem; }
-  .effect-card { min-height: 270px; border: 1px solid var(--hara-line); border-radius: var(--hara-radius-sm); background: var(--hara-bg-clean); }
-  .effect-card > div { position: relative; z-index: 1; display: grid; gap: .35rem; align-content: end; height: 100%; padding: 1rem; background: linear-gradient(0deg, var(--hara-bg-clean), transparent 58%); }
-  .effect-card code { color: var(--hara-muted); font-size: .68rem; }
-
-  .token-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; overflow: hidden; border: 1px solid var(--hara-line); border-radius: var(--hara-radius-sm); background: var(--hara-line); }
-  .token-grid article { display: grid; gap: .5rem; padding: 1rem; background: var(--hara-surface-solid); }
-  .token-grid article i { height: 80px; border: 1px solid var(--hara-line); border-radius: 4px; }
-  .token-grid article code { color: var(--hara-muted); font-size: .72rem; }
-  pre { margin-top: 2rem; padding: 1.4rem; overflow: auto; border: 1px solid var(--hara-line); border-radius: var(--hara-radius-sm); background: var(--hara-surface-solid); line-height: 1.55; }
-
-  footer { display: flex; justify-content: space-between; gap: 1rem; padding: 2rem var(--hara-space-page); border-top: 1px solid var(--hara-line); color: var(--hara-muted); font-size: .82rem; }
-  footer a { color: inherit; }
-
-  @media (max-width: 940px) {
-    .effect-grid { grid-template-columns: repeat(2, 1fr); }
-    .effect-card:last-child { grid-column: 1 / -1; }
-  }
-
-  @media (max-width: 700px) {
-    header { grid-template-columns: 1fr auto; }
-    nav { display: none; }
-    .hero { min-height: 650px; }
-    .hero h1 { font-size: 4rem; }
-    .hero-actions { align-items: flex-start; flex-direction: column; }
-    .field-grid, .effect-grid, .motif-grid, .token-grid { grid-template-columns: 1fr; }
-    .field-card:first-child, .effect-card:last-child { grid-column: auto; }
-    footer { flex-direction: column; }
-  }
-</style>

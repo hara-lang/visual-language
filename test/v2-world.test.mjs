@@ -21,12 +21,12 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
 const readJson = (path) => read(path).then(JSON.parse);
 
-const pagePath = "site/src/pages/v2/world/index.astro";
+const pagePath = "site/src/pages/world/index.astro";
 const componentPaths = [
-  "site/src/pages/v2/world/_components/FeedExplorer.astro",
-  "site/src/pages/v2/world/_components/SourceManager.astro",
-  "site/src/pages/v2/world/_components/ConversationCluster.astro",
-  "site/src/pages/v2/world/_components/RelayConsole.astro"
+  "site/src/pages/world/_components/FeedExplorer.astro",
+  "site/src/pages/world/_components/SourceManager.astro",
+  "site/src/pages/world/_components/ConversationCluster.astro",
+  "site/src/pages/world/_components/RelayConsole.astro"
 ];
 const stylePaths = [
   "site/src/styles/v2-world-feed.css",

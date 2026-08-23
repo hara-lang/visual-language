@@ -20,7 +20,7 @@ export const familyRoutes = [
   {
     id: "home",
     label: "Overview",
-    path: "/v2/www/",
+    path: "/www/",
     summary: "Language model, first form, runtime choices, libraries, source records, and current changes.",
     schemaNamespace: wwwContracts.www.schemaNamespace,
     schemaVersion: wwwContracts.www.schemaVersion
@@ -28,7 +28,7 @@ export const familyRoutes = [
   {
     id: "docs",
     label: "Docs",
-    path: "/v2/www/docs/",
+    path: "/www/docs/",
     summary: "Task-oriented guides, reference material, search, versions, and bounded executable examples.",
     schemaNamespace: wwwContracts.docs.schemaNamespace,
     schemaVersion: wwwContracts.docs.schemaVersion
@@ -36,7 +36,7 @@ export const familyRoutes = [
   {
     id: "benchmarks",
     label: "Benchmarks",
-    path: "/v2/www/benchmarks/",
+    path: "/www/benchmarks/",
     summary: "Workload results, comparison matrices, selected evidence, methods, uncertainty, and result history.",
     schemaNamespace: wwwContracts.benchmarks.schemaNamespace,
     schemaVersion: wwwContracts.benchmarks.schemaVersion
@@ -177,8 +177,8 @@ export const releaseSummary = [
 ];
 
 export const handoffs = [
-  { id: "learn", label: "Learn", title: "Study the language in sequence", summary: "Continue from the first form into concepts, exercises, projects, and curriculum revisions.", action: "Read Learn", href: "/v2/learn/" },
-  { id: "world", label: "World", title: "Read community work and discussion", summary: "Read articles, clippings, discussions, package changes, and owner-attributed bot contributions.", action: "Read World", href: "/v2/world/" }
+  { id: "learn", label: "Learn", title: "Study the language in sequence", summary: "Continue from the first form into concepts, exercises, projects, and curriculum revisions.", action: "Read Learn", href: "/learn/" },
+  { id: "world", label: "World", title: "Read community work and discussion", summary: "Read articles, clippings, discussions, package changes, and owner-attributed bot contributions.", action: "Read World", href: "/world/" }
 ];
 
 export const gettingStartedChoices = [

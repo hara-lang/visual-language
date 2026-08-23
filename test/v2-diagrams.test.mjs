@@ -27,7 +27,7 @@ import {
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
-const pagePath = "site/src/pages/v2/diagrams/index.astro";
+const pagePath = "site/src/pages/diagrams/index.astro";
 const componentPaths = [
   "site/src/components/v2-diagrams/DiagramArchitecture.astro",
   "site/src/components/v2-diagrams/DiagramSequenceState.astro",
@@ -134,12 +134,12 @@ test("diagram principles require textual equivalence, non-colour cues, narrow-wi
 test("the diagrams route is active in the Foundations catalogue and uses the shared route shell", async () => {
   const route = catalogueItemById("diagrams");
   assert.ok(route);
-  assert.equal(route.path, "/v2/diagrams/");
-  assert.equal(route.href, "/v2/diagrams/");
+  assert.equal(route.path, "/diagrams/");
+  assert.equal(route.href, "/diagrams/");
   assert.equal(route.status, "active");
   assert.equal(route.issue, 100);
-  assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/v2/diagrams/");
-  assert.equal(catalogueItemIsCurrent(route, "/v2/diagrams/"), true);
+  assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/diagrams/");
+  assert.equal(catalogueItemIsCurrent(route, "/diagrams/"), true);
   await access(resolve(root, pagePath));
   const page = await read(pagePath);
   assert.match(page, /import CatalogueHeader/);

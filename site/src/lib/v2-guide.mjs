@@ -36,7 +36,7 @@ export const requiredReviewRoutes = [
   {
     id: "catalogue",
     label: "Catalogue home",
-    path: "/v2/",
+    path: "/",
     group: "Catalogue",
     shell: "Catalogue landing",
     primaryTask: "Understand the route families and choose a detailed reference.",
@@ -47,7 +47,7 @@ export const requiredReviewRoutes = [
   {
     id: "design-system",
     label: "Foundations",
-    path: "/v2/foundations/",
+    path: "/foundations/",
     group: "Foundations",
     shell: "Document catalogue",
     primaryTask: "Inspect identity, tokens, type, material, motion and accessibility contracts.",
@@ -58,7 +58,7 @@ export const requiredReviewRoutes = [
   {
     id: "components",
     label: "Components",
-    path: "/v2/components/",
+    path: "/components/",
     group: "Library",
     shell: "Inventory and composition",
     primaryTask: "Find a public primitive and inspect its states and ownership.",
@@ -69,7 +69,7 @@ export const requiredReviewRoutes = [
   {
     id: "ui-patterns",
     label: "UI patterns",
-    path: "/v2/ui/",
+    path: "/ui/",
     group: "Library",
     shell: "Workflow reference",
     primaryTask: "Review reusable behavior over time without importing product business rules.",
@@ -80,7 +80,7 @@ export const requiredReviewRoutes = [
   {
     id: "frontmatter",
     label: "Front matter",
-    path: "/v2/frontmatter/",
+    path: "/frontmatter/",
     group: "Foundations",
     shell: "Content-contract registry",
     primaryTask: "Inspect author, registry, identity, runtime and source-controlled fields.",
@@ -91,7 +91,7 @@ export const requiredReviewRoutes = [
   {
     id: "tool-workbenches",
     label: "Tool workbenches",
-    path: "/v2/tool/",
+    path: "/tool/",
     group: "Library",
     shell: "Viewport-first workbench",
     primaryTask: "Manipulate and inspect a durable primary surface while secondary panes yield.",
@@ -102,7 +102,7 @@ export const requiredReviewRoutes = [
   {
     id: "www",
     label: "WWW",
-    path: "/v2/www/",
+    path: "/www/",
     group: "Applications",
     shell: "Public narrative",
     primaryTask: "Understand Hara through bounded claims, proof and executable examples.",
@@ -113,7 +113,7 @@ export const requiredReviewRoutes = [
   {
     id: "www-docs",
     label: "Docs",
-    path: "/v2/www/docs/",
+    path: "/www/docs/",
     group: "Applications",
     shell: "Persistent reading shell",
     primaryTask: "Find guidance or reference and optionally run a fenced example.",
@@ -124,7 +124,7 @@ export const requiredReviewRoutes = [
   {
     id: "www-benchmarks",
     label: "Benchmarks",
-    path: "/v2/www/benchmarks/",
+    path: "/www/benchmarks/",
     group: "Applications",
     shell: "Evidence command board",
     primaryTask: "Read an insight, inspect the selected evidence and verify its method.",
@@ -135,7 +135,7 @@ export const requiredReviewRoutes = [
   {
     id: "playground",
     label: "Playground",
-    path: "/v2/playground/",
+    path: "/playground/",
     group: "Applications",
     shell: "Executable studio",
     primaryTask: "Load exact source, run it and inspect session and observation state.",
@@ -146,7 +146,7 @@ export const requiredReviewRoutes = [
   {
     id: "specs",
     label: "Specs",
-    path: "/v2/specs/",
+    path: "/specs/",
     group: "Applications",
     shell: "Registry, reader and checker",
     primaryTask: "Find an exact standard, inspect authority and evaluate fenced evidence.",
@@ -157,7 +157,7 @@ export const requiredReviewRoutes = [
   {
     id: "packages",
     label: "Packages",
-    path: "/v2/packages/",
+    path: "/packages/",
     group: "Applications",
     shell: "Registry and publication product",
     primaryTask: "Find, evaluate, install, publish and maintain packages and namespaces.",
@@ -168,7 +168,7 @@ export const requiredReviewRoutes = [
   {
     id: "world",
     label: "World",
-    path: "/v2/world/",
+    path: "/world/",
     group: "Applications",
     shell: "Community reader",
     primaryTask: "Read source-aware community material and participate in accountable discussion.",
@@ -179,7 +179,7 @@ export const requiredReviewRoutes = [
   {
     id: "learn",
     label: "Learn",
-    path: "/v2/learn/",
+    path: "/learn/",
     group: "Applications",
     shell: "Curriculum and lesson product",
     primaryTask: "Run a visible lesson, follow a concept graph and record meaningful progress.",
@@ -190,17 +190,17 @@ export const requiredReviewRoutes = [
 ];
 
 export const supplementaryReviewRoutes = [
-  { id: "graphics", label: "Graphics", path: "/v2/graphics/", kind: "current-extension", parent: "Foundations", summary: "Raster fields, material textures and progressive shader surfaces." },
-  { id: "start", label: "Agent-first Start", path: "/v2/start/", kind: "compatibility", parent: "Learn", summary: "Agent-first discovery and Habitat study with a canonical Learn relationship." },
-  { id: "world-discussion", label: "World discussion", path: "/v2/world/discussion/", kind: "current-extension", parent: "World", summary: "Focused article, clipping, comment, profile and presence study." },
-  { id: "world-around", label: "Around Hara", path: "/v2/world/around/", kind: "current-extension", parent: "World", summary: "External discovery, provenance, moderation and relay study." },
-  { id: "hara-chrome", label: "Hara Chrome", path: "/v2/tool/hara-chrome/", kind: "current-extension", parent: "Tool workbenches", summary: "Browser runtime and bounded diagnostics application study." }
+  { id: "graphics", label: "Graphics", path: "/graphics/", kind: "current-extension", parent: "Foundations", summary: "Raster fields, material textures and progressive shader surfaces." },
+  { id: "start", label: "Agent-first Start", path: "/start/", kind: "compatibility", parent: "Learn", summary: "Agent-first discovery and Habitat study with a canonical Learn relationship." },
+  { id: "world-discussion", label: "World discussion", path: "/world/discussion/", kind: "current-extension", parent: "World", summary: "Focused article, clipping, comment, profile and presence study." },
+  { id: "world-around", label: "Around Hara", path: "/world/around/", kind: "current-extension", parent: "World", summary: "External discovery, provenance, moderation and relay study." },
+  { id: "hara-chrome", label: "Hara Chrome", path: "/tool/hara-chrome/", kind: "current-extension", parent: "Tool workbenches", summary: "Browser runtime and bounded diagnostics application study." }
 ];
 
 export const historicalReviewRoutes = [
-  { id: "learn-community-study", label: "Community reader study", path: "/v2/world/community/", canonicalPath: "/v2/learn/studies/world-community/", summary: "Retained under Learn for comparison, not a primary World destination." },
-  { id: "learn-onboarding-study", label: "Programmer onboarding study", path: "/v2/world/onboarding/", canonicalPath: "/v2/learn/studies/programmer-onboarding/", summary: "Retained as a Learn teaching study, not active World navigation." },
-  { id: "world-feed-study", label: "World feed infrastructure study", path: "/v2/world/feed/", canonicalPath: "/v2/learn/studies/world-feed/", summary: "Retained implementation evidence for source normalization, clustering and relay." }
+  { id: "learn-community-study", label: "Community reader study", path: "/world/community/", canonicalPath: "/learn/studies/world-community/", summary: "Retained under Learn for comparison, not a primary World destination." },
+  { id: "learn-onboarding-study", label: "Programmer onboarding study", path: "/world/onboarding/", canonicalPath: "/learn/studies/programmer-onboarding/", summary: "Retained as a Learn teaching study, not active World navigation." },
+  { id: "world-feed-study", label: "World feed infrastructure study", path: "/world/feed/", canonicalPath: "/learn/studies/world-feed/", summary: "Retained implementation evidence for source normalization, clustering and relay." }
 ];
 
 export const reviewChecks = [
@@ -250,14 +250,14 @@ export const newApplicationSteps = [
 ];
 
 export const adoptionTargets = [
-  { id: "www", label: "WWW", target: "hara-www", route: "/v2/www/", guide: "V2-WWW.md", ownership: "Narrative, proof, release and getting-started composition." },
-  { id: "docs", label: "Docs", target: "hara-docs", route: "/v2/www/docs/", guide: "V2-WWW.md", ownership: "Guides, reference, search and embedded live examples." },
-  { id: "benchmarks", label: "Benchmarks", target: "hara-benchmarks", route: "/v2/www/benchmarks/", guide: "V2-WWW.md", ownership: "Evidence, workloads, methods, environments and result history." },
-  { id: "playground", label: "Playground", target: "Playground/live-component repositories", route: "/v2/playground/", guide: "V2-PLAYGROUND.md", ownership: "Execution, session lifecycle, sharing and embed runtime behavior." },
-  { id: "specs", label: "Specs", target: "hara-specs", route: "/v2/specs/", guide: "V2-SPECS.md", ownership: "Canonical standards, proposals, review and conformance authority." },
-  { id: "packages", label: "Packages", target: "package registry product", route: "/v2/packages/", guide: "V2-PACKAGES.md", ownership: "Package/namespace registry, release, compatibility and provenance." },
-  { id: "world", label: "World", target: "hara-world", route: "/v2/world/", guide: "V2-WORLD.md", ownership: "Public reading, source discovery, discussion, profiles and accountable bots." },
-  { id: "learn", label: "Learn", target: "learn.hara-lang.org", route: "/v2/learn/", guide: "V2-LEARN.md", ownership: "Curriculum, lessons, practice, projects and private progress." }
+  { id: "www", label: "WWW", target: "hara-www", route: "/www/", guide: "V2-WWW.md", ownership: "Narrative, proof, release and getting-started composition." },
+  { id: "docs", label: "Docs", target: "hara-docs", route: "/www/docs/", guide: "V2-WWW.md", ownership: "Guides, reference, search and embedded live examples." },
+  { id: "benchmarks", label: "Benchmarks", target: "hara-benchmarks", route: "/www/benchmarks/", guide: "V2-WWW.md", ownership: "Evidence, workloads, methods, environments and result history." },
+  { id: "playground", label: "Playground", target: "Playground/live-component repositories", route: "/playground/", guide: "V2-PLAYGROUND.md", ownership: "Execution, session lifecycle, sharing and embed runtime behavior." },
+  { id: "specs", label: "Specs", target: "hara-specs", route: "/specs/", guide: "V2-SPECS.md", ownership: "Canonical standards, proposals, review and conformance authority." },
+  { id: "packages", label: "Packages", target: "package registry product", route: "/packages/", guide: "V2-PACKAGES.md", ownership: "Package/namespace registry, release, compatibility and provenance." },
+  { id: "world", label: "World", target: "hara-world", route: "/world/", guide: "V2-WORLD.md", ownership: "Public reading, source discovery, discussion, profiles and accountable bots." },
+  { id: "learn", label: "Learn", target: "learn.hara-lang.org", route: "/learn/", guide: "V2-LEARN.md", ownership: "Curriculum, lessons, practice, projects and private progress." }
 ];
 
 export const screenshotProcedure = [
@@ -273,7 +273,7 @@ export const screenshotProcedure = [
 
 export const releaseImpact = {
   packageExports: "No new runtime or component export is required for the guide. V2-GUIDE.md is included in the published documentation set.",
-  routeImpact: "Adds /v2/guide/ as a current Foundations route and a permanent Catalogue guide link in page footers.",
+  routeImpact: "Adds /guide/ as a current Foundations route and a permanent Catalogue guide link in page footers.",
   downstream: "Adoption pull requests remain independent and pin only merged Visual Language revisions.",
   compatibility: "V1 and all existing v2 imports, routes and historical studies remain available."
 };

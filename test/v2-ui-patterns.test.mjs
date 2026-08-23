@@ -8,7 +8,7 @@ import {
 } from "../site/src/lib/v2-catalogue.mjs";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
-const pagePath = "../site/src/pages/v2/ui/index.astro";
+const pagePath = "../site/src/pages/ui/index.astro";
 const cssPath = "../site/src/styles/v2-ui-patterns.css";
 
 const requiredSections = [
@@ -53,7 +53,7 @@ test("the UI pattern route is active, internal, and discoverable from the catalo
   assert.ok(ui);
   assert.equal(ui.status, "active");
   assert.equal(ui.issue, 36);
-  assert.equal(catalogueHref(ui, "/visual-language/"), "/visual-language/v2/ui/");
+  assert.equal(catalogueHref(ui, "/visual-language/"), "/visual-language/ui/");
   assert.equal(catalogueLinkIsExternal(ui), false);
 });
 

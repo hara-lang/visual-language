@@ -78,7 +78,7 @@ test("ShaderField remains real WebGL progressive enhancement", async () => {
 });
 
 test("v2 publishes a raster-first graphics reference", async () => {
-  const page = await read("site/src/pages/v2/graphics/index.astro");
+  const page = await read("site/src/pages/graphics/index.astro");
   const docs = await read("V2-GRAPHICS.md");
   assert.match(page, /Six 4K cinematic backgrounds/);
   assert.match(page, /Four 4K material textures/);

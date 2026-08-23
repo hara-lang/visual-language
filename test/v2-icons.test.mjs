@@ -37,7 +37,7 @@ import {
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
-const pagePath = "site/src/pages/v2/icons/index.astro";
+const pagePath = "site/src/pages/icons/index.astro";
 const componentPaths = [
   "site/src/components/v2-icons/IconLibrary.astro",
   "site/src/components/v2-icons/IconStates.astro",
@@ -181,12 +181,12 @@ test("public Astro renderers enforce decorative and meaningful accessibility def
 test("the iconography route is active in Foundations and composes all detailed guide surfaces", async () => {
   const route = catalogueItemById("icons");
   assert.ok(route);
-  assert.equal(route.path, "/v2/icons/");
-  assert.equal(route.href, "/v2/icons/");
+  assert.equal(route.path, "/icons/");
+  assert.equal(route.href, "/icons/");
   assert.equal(route.status, "active");
   assert.equal(route.issue, 106);
-  assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/v2/icons/");
-  assert.equal(catalogueItemIsCurrent(route, "/v2/icons/"), true);
+  assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/icons/");
+  assert.equal(catalogueItemIsCurrent(route, "/icons/"), true);
 
   await access(resolve(root, pagePath));
   const page = await read(pagePath);
