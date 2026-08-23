@@ -12,8 +12,7 @@ import "../../styles/v2-navigation-tighten.css";
 const {
   basePath,
   activePath = "/",
-  label = "Hara visual language catalogue",
-  sourceHref = "https://github.com/hara-lang/visual-language"
+  label = "Hara visual language catalogue"
 } = Astro.props;
 
 const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
@@ -38,7 +37,7 @@ const catalogueNav = [
     accountHref="#account"
   >
     <button
-      class="v2-catalogue-launcher-trigger"
+      class="v2-catalogue-launcher-trigger v2-catalogue-desktop-launcher"
       type="button"
       aria-expanded="false"
       aria-controls="v2-catalogue-launcher"
@@ -50,8 +49,23 @@ const catalogueNav = [
       <span>Browse</span>
       <small>{launcherContext}</small>
     </button>
-    <a class="v2-catalogue-source-link" href={sourceHref}>Source</a>
     <ThemeToggle />
+
+    <div slot="mobile-navigation" class="v2-catalogue-mobile-navigation">
+      <p class="v2-catalogue-mobile-navigation-label">Catalogue</p>
+      <button
+        class="v2-catalogue-launcher-trigger v2-catalogue-mobile-launcher"
+        type="button"
+        aria-expanded="false"
+        aria-controls="v2-catalogue-launcher"
+        data-catalogue-launcher-trigger
+      >
+        <span class="v2-catalogue-launcher-icon" aria-hidden="true">
+          {Array.from({ length: 9 }, () => <i></i>)}
+        </span>
+        <span>Browse catalogue</span>
+      </button>
+    </div>
   </Header>
 
   <CatalogueLauncher basePath={basePath} activePath={activePath} />
@@ -64,15 +78,19 @@ const catalogueNav = [
       if (!(header instanceof HTMLElement) || header.dataset.ready === "true") return;
       header.dataset.ready = "true";
 
-      const trigger = header.querySelector("[data-catalogue-launcher-trigger]");
+      const triggers = Array.from(header.querySelectorAll("[data-catalogue-launcher-trigger]")).filter(
+        (element) => element instanceof HTMLButtonElement
+      );
       const launcher = header.querySelector("[data-catalogue-launcher]");
       const backdrop = header.querySelector("[data-catalogue-launcher-backdrop]");
       const close = header.querySelector("[data-catalogue-launcher-close]");
-      if (!(trigger instanceof HTMLButtonElement) || !(launcher instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) return;
+      if (triggers.length === 0 || !(launcher instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) return;
+
+      let activeTrigger = triggers[0];
 
       const setOpen = (open, restoreFocus = false) => {
         header.dataset.launcherOpen = String(open);
-        trigger.setAttribute("aria-expanded", String(open));
+        triggers.forEach((trigger) => trigger.setAttribute("aria-expanded", String(open)));
         launcher.hidden = !open;
         backdrop.hidden = !open;
         document.documentElement.dataset.catalogueLauncherOpen = String(open);
@@ -80,10 +98,17 @@ const catalogueNav = [
         if (open) {
           const firstLink = launcher.querySelector("a[aria-current], a");
           if (firstLink instanceof HTMLAnchorElement) requestAnimationFrame(() => firstLink.focus());
-        } else if (restoreFocus) trigger.focus();
+        } else if (restoreFocus) activeTrigger.focus();
       };
 
-      trigger.addEventListener("click", () => setOpen(header.dataset.launcherOpen !== "true"));
+      triggers.forEach((trigger) => trigger.addEventListener("click", () => {
+        activeTrigger = trigger;
+        const mobileMenu = header.querySelector("[data-hara-header-menu]");
+        if (trigger.closest("[data-hara-mobile-navigation]") && mobileMenu instanceof HTMLButtonElement && mobileMenu.getAttribute("aria-expanded") === "true") {
+          mobileMenu.click();
+        }
+        setOpen(header.dataset.launcherOpen !== "true");
+      }));
       backdrop.addEventListener("click", () => setOpen(false, true));
       if (close instanceof HTMLButtonElement) close.addEventListener("click", () => setOpen(false, true));
       launcher.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));

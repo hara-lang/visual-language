@@ -393,6 +393,26 @@
 
 .v2-catalogue-card .v2-catalogue-children { margin-top: auto; }
 
+/* Catalogue cards are independent reading units, not a joined table. */
+.v2-catalogue-summary,
+.v2-catalogue-card-grid {
+  gap: clamp(.7rem, 1.2vw, 1.1rem);
+  border: 0;
+  background: transparent;
+}
+
+.v2-catalogue-summary article,
+.v2-catalogue-card {
+  border: 1px solid var(--hara-v2-line);
+  border-radius: 11px;
+  box-shadow: none;
+}
+
+.v2-catalogue-card[data-status="active"],
+.v2-catalogue-card[data-status="settled"] {
+  box-shadow: inset 3px 0 var(--hara-v2-signal);
+}
+
 .v2-catalogue-legacy-head {
   display: grid;
   grid-template-columns: minmax(0, .8fr) minmax(300px, 1.2fr);

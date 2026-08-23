@@ -34,6 +34,24 @@ test("lower navigation typography is explicit and the mobile section control is 
   assert.doesNotMatch(polish, /--hara-[A-Za-z0-9_-]+\s*:/);
 });
 
+test("the catalogue moves browsing into the hamburger and keeps layer two quiet", async () => {
+  const [header, masthead, polish] = await Promise.all([
+    read("../site/src/components/v2-catalogue/CatalogueHeader.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueMasthead.astro"),
+    read("../site/src/styles/v2-navigation-mobile-polish.css")
+  ]);
+
+  assert.doesNotMatch(header, /sourceHref/);
+  assert.doesNotMatch(masthead, /v2-catalogue-source-link|sourceHref/);
+  assert.match(masthead, /slot="mobile-navigation"/);
+  assert.match(masthead, /v2-catalogue-mobile-launcher/);
+  assert.match(masthead, /const triggers = Array\.from/);
+  assert.match(polish, /grid-template-areas: "identity tabs tools"/);
+  assert.match(polish, /\.v2-catalogue-launcher-grid[\s\S]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)/);
+  assert.match(polish, /\.v2-catalogue-mobile-navigation \{ display: none; \}/);
+  assert.match(polish, /\.v2-catalogue-desktop-launcher \{ display: none; \}/);
+});
+
 test("historical studies use the same lower-menu type scale", async () => {
   const [entry, legacy] = await Promise.all([
     read("../src/v2.css"),

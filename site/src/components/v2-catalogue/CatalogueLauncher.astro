@@ -35,14 +35,16 @@ const groups = catalogueGroups.map((group) => ({
 <section
   class="v2-catalogue-launcher"
   id={id}
-  aria-label="Visual language app launcher"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby={`${id}-title`}
   hidden
   data-catalogue-launcher
 >
   <header class="v2-catalogue-launcher-header">
     <div>
       <p class="hara-v2-kicker">App launcher</p>
-      <h2>Browse the visual language</h2>
+      <h2 id={`${id}-title`}>Browse the visual language</h2>
       <p>Shared foundations, reusable interface patterns, and focused route references.</p>
     </div>
     <button class="v2-catalogue-launcher-close" type="button" data-catalogue-launcher-close>

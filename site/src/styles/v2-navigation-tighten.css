@@ -54,17 +54,6 @@ body.hara-v2 main { min-width: 0; }
   background: currentColor;
 }
 
-.v2-catalogue-source-link {
-  min-height: 32px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 .42rem;
-  color: var(--hara-v2-muted);
-  font-size: .6rem;
-  text-decoration: none;
-}
-.v2-catalogue-source-link:hover { color: var(--hara-v2-ink); }
-
 .v2-catalogue-launcher-backdrop {
   position: fixed;
   z-index: 121;
@@ -434,7 +423,6 @@ body.www-family-page .www-section { scroll-margin-top: 150px; }
 }
 
 @media (max-width: 840px) {
-  .v2-catalogue-source-link { display: none; }
   .v2-catalogue-launcher { right: 14px; width: calc(100vw - 28px); }
   .v2-catalogue-launcher-grid { grid-template-columns: 1fr; }
   .v2-catalogue-launcher-group > header p { min-height: 0; }
