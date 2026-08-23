@@ -53,23 +53,23 @@ test("planned routes resolve to implementation issues while current routes use t
   const start = catalogueItemById("start");
 
   assert.ok(foundations && components && tool && world && around && learn && start);
-  assert.equal(catalogueHref(foundations, "/visual-language/"), "/visual-language/v2/foundations/");
-  assert.equal(catalogueHref(components, "/visual-language/"), "/visual-language/v2/components/");
-  assert.equal(catalogueHref(tool, "/visual-language/"), "/visual-language/v2/tool/");
-  assert.equal(catalogueHref(world, "/visual-language/"), "/visual-language/v2/world/");
-  assert.equal(catalogueHref(around, "/visual-language/"), "/visual-language/v2/world/around/");
-  assert.equal(catalogueHref(learn, "/visual-language/"), "/visual-language/v2/learn/");
-  assert.equal(catalogueHref(start, "/visual-language/"), "/visual-language/v2/start/");
+  assert.equal(catalogueHref(foundations, "/visual-language/"), "/visual-language/foundations/");
+  assert.equal(catalogueHref(components, "/visual-language/"), "/visual-language/components/");
+  assert.equal(catalogueHref(tool, "/visual-language/"), "/visual-language/tool/");
+  assert.equal(catalogueHref(world, "/visual-language/"), "/visual-language/world/");
+  assert.equal(catalogueHref(around, "/visual-language/"), "/visual-language/world/around/");
+  assert.equal(catalogueHref(learn, "/visual-language/"), "/visual-language/learn/");
+  assert.equal(catalogueHref(start, "/visual-language/"), "/visual-language/start/");
   assert.equal(catalogueLinkIsExternal(foundations), false);
   assert.equal(catalogueLinkIsExternal(components), false);
   assert.equal(catalogueLinkIsExternal(tool), false);
   assert.equal(catalogueLinkIsExternal(learn), false);
   assert.equal(catalogueLinkIsExternal(start), false);
-  assert.equal(catalogueItemIsCurrent(foundations, "/v2/foundations/"), true);
-  assert.equal(catalogueItemIsCurrent(components, "/v2/components/"), true);
-  assert.equal(catalogueItemIsCurrent(world, "/v2/world/discussion/"), true);
-  assert.equal(catalogueItemIsCurrent(learn, "/v2/learn/#world-examples"), true);
-  assert.equal(catalogueItemIsCurrent(start, "/v2/start/"), true);
+  assert.equal(catalogueItemIsCurrent(foundations, "/foundations/"), true);
+  assert.equal(catalogueItemIsCurrent(components, "/components/"), true);
+  assert.equal(catalogueItemIsCurrent(world, "/world/discussion/"), true);
+  assert.equal(catalogueItemIsCurrent(learn, "/learn/#world-examples"), true);
+  assert.equal(catalogueItemIsCurrent(start, "/start/"), true);
 
   for (const item of catalogueItems.filter(({ status }) => status === "planned")) {
     assert.equal(typeof item.issue, "number", `${item.id} needs an implementation issue`);
@@ -81,16 +81,16 @@ test("planned routes resolve to implementation issues while current routes use t
 
 test("every implemented reference advertised by the manifest exists", async () => {
   for (const path of [
-    "../site/src/pages/v2/foundations/index.astro",
-    "../site/src/pages/v2/components/index.astro",
-    "../site/src/pages/v2/tool/index.astro",
-    "../site/src/pages/v2/world/index.astro",
-    "../site/src/pages/v2/world/discussion/index.astro",
-    "../site/src/pages/v2/world/around/index.astro",
-    "../site/src/pages/v2/world/community/index.astro",
-    "../site/src/pages/v2/world/onboarding/index.astro",
-    "../site/src/pages/v2/learn/index.astro",
-    "../site/src/pages/v2/start/index.astro"
+    "../site/src/pages/foundations/index.astro",
+    "../site/src/pages/components/index.astro",
+    "../site/src/pages/tool/index.astro",
+    "../site/src/pages/world/index.astro",
+    "../site/src/pages/world/discussion/index.astro",
+    "../site/src/pages/world/around/index.astro",
+    "../site/src/pages/world/community/index.astro",
+    "../site/src/pages/world/onboarding/index.astro",
+    "../site/src/pages/learn/index.astro",
+    "../site/src/pages/start/index.astro"
   ]) await access(new URL(path, import.meta.url));
 });
 
@@ -129,8 +129,8 @@ test("the shared shell keeps the global catalogue inside one app launcher", asyn
 
 test("the catalogue home preserves four references and Learn owns the guided World specimen", async () => {
   const [page, learn] = await Promise.all([
-    read("../site/src/pages/v2/index.astro"),
-    read("../site/src/pages/v2/learn/index.astro")
+    read("../site/src/pages/index.astro"),
+    read("../site/src/pages/learn/index.astro")
   ]);
 
   assert.match(page, /import CatalogueHeader/);
@@ -146,9 +146,9 @@ test("the catalogue home preserves four references and Learn owns the guided Wor
   assert.match(learn, /import WorldSpecimen/);
   assert.match(learn, /<WorldSpecimen\s*\/>/);
 
-  assert.match(page, /const learnLab = `\$\{basePath\}v2\/learn\/`/);
-  assert.match(page, /const worldDiscussionLab = `\$\{basePath\}v2\/world\/discussion\/`/);
-  assert.match(page, /const worldAroundLab = `\$\{basePath\}v2\/world\/around\/`/);
+  assert.match(page, /const learnLab = `\$\{basePath\}learn\/`/);
+  assert.match(page, /const worldDiscussionLab = `\$\{basePath\}world\/discussion\/`/);
+  assert.match(page, /const worldAroundLab = `\$\{basePath\}world\/around\/`/);
   assert.match(page, /Read Learn/);
   assert.match(page, /Read World discussion/);
   assert.match(page, /View Around Hara/);
@@ -164,7 +164,7 @@ test("catalogue styling includes the launcher, compact layers and responsive con
   const combined = `${css}\n${disclosure}\n${mobile}\n${tighten}`;
 
   for (const selector of [
-    ".v2-catalogue-masthead",
+    ".v2-catalogue-shell",
     ".v2-catalogue-launcher-trigger",
     ".v2-catalogue-launcher",
     ".v2-catalogue-launcher-grid",

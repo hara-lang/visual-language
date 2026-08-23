@@ -29,7 +29,7 @@ import {
 } from "../site/src/lib/v2-catalogue.mjs";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
-const pagePath = "../site/src/pages/v2/frontmatter/index.astro";
+const pagePath = "../site/src/pages/frontmatter/index.astro";
 const cssPath = "../site/src/styles/v2-frontmatter.css";
 
 const requiredSections = [
@@ -53,7 +53,7 @@ test("the front matter route is active, internal, and discoverable from Foundati
   assert.ok(frontmatter);
   assert.equal(frontmatter.status, "active");
   assert.equal(frontmatter.issue, 37);
-  assert.equal(catalogueHref(frontmatter, "/visual-language/"), "/visual-language/v2/frontmatter/");
+  assert.equal(catalogueHref(frontmatter, "/visual-language/"), "/visual-language/frontmatter/");
   assert.equal(catalogueLinkIsExternal(frontmatter), false);
 });
 

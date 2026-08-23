@@ -1,7 +1,7 @@
 /* Compact, layered navigation for the Visual Language review site. */
 
 :root {
-  --v2-catalogue-masthead-height: 56px;
+  --v2-catalogue-masthead-height: var(--hara-v2-header-height);
   --v2-catalogue-route-height: 48px;
   --v2-catalogue-section-height: 38px;
 }
@@ -9,47 +9,6 @@
 html[data-catalogue-launcher-open="true"] { overflow: hidden; }
 body.hara-v2 { overflow-x: clip; }
 body.hara-v2 main { min-width: 0; }
-
-.v2-catalogue-masthead {
-  position: sticky;
-  z-index: 120;
-  top: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
-  align-items: center;
-  min-height: var(--v2-catalogue-masthead-height);
-  padding: 0 var(--hara-v2-page);
-  color: var(--hara-v2-ink);
-  border-bottom: 1px solid var(--hara-v2-line-strong);
-  background: color-mix(in srgb, var(--hara-v2-panel-raised) 96%, transparent);
-  box-shadow: 0 1px 0 var(--hara-v2-sketch);
-  backdrop-filter: blur(16px) saturate(108%);
-}
-
-.v2-catalogue-masthead .v2-catalogue-brand {
-  gap: .55rem;
-  width: max-content;
-  min-width: 0;
-}
-
-.v2-catalogue-masthead .v2-catalogue-brand > span { gap: .04rem; }
-.v2-catalogue-masthead .v2-catalogue-brand b {
-  font-size: .78rem;
-  font-weight: 720;
-  letter-spacing: -.02em;
-}
-.v2-catalogue-masthead .v2-catalogue-brand small {
-  font: 680 .46rem var(--hara-v2-font-code);
-  letter-spacing: .07em;
-}
-
-.v2-catalogue-masthead-actions {
-  display: flex;
-  justify-self: end;
-  align-items: center;
-  gap: .4rem;
-}
 
 .v2-catalogue-launcher-trigger,
 .v2-catalogue-launcher-close {
@@ -105,20 +64,6 @@ body.hara-v2 main { min-width: 0; }
   text-decoration: none;
 }
 .v2-catalogue-source-link:hover { color: var(--hara-v2-ink); }
-
-.v2-catalogue-masthead .hara-theme-toggle {
-  min-width: 68px;
-  min-height: 34px;
-  padding: .28rem .48rem .28rem .34rem;
-  gap: .34rem;
-  border-radius: 7px;
-  font-size: .62rem;
-}
-.v2-catalogue-masthead .hara-theme-toggle__icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 5px;
-}
 
 .v2-catalogue-launcher-backdrop {
   position: fixed;
@@ -298,7 +243,7 @@ body.hara-v2 main { min-width: 0; }
   text-transform: uppercase;
 }
 
-.v2-catalogue-masthead :is(a, button):focus-visible,
+.v2-catalogue-shell :is(a, button):focus-visible,
 .v2-catalogue-launcher :is(a, button):focus-visible {
   outline: 2px solid var(--hara-v2-signal);
   outline-offset: 2px;
@@ -489,8 +434,6 @@ body.www-family-page .www-section { scroll-margin-top: 150px; }
 }
 
 @media (max-width: 840px) {
-  .v2-catalogue-masthead { padding-inline: 14px; }
-  .v2-catalogue-masthead .v2-catalogue-brand small { display: none; }
   .v2-catalogue-source-link { display: none; }
   .v2-catalogue-launcher { right: 14px; width: calc(100vw - 28px); }
   .v2-catalogue-launcher-grid { grid-template-columns: 1fr; }
@@ -523,14 +466,8 @@ body.www-family-page .www-section { scroll-margin-top: 150px; }
 }
 
 @media (max-width: 560px) {
-  .v2-catalogue-masthead .v2-catalogue-brand b { font-size: .72rem; }
   .v2-catalogue-launcher-trigger > span:nth-child(2) { display: none; }
   .v2-catalogue-launcher-trigger small { font-size: .44rem; }
-  .v2-catalogue-masthead .hara-theme-toggle {
-    min-width: 34px;
-    padding: .28rem;
-  }
-  .v2-catalogue-masthead .hara-theme-toggle > [data-hara-theme-label] { display: none; }
   .v2-catalogue-launcher-header { grid-template-columns: minmax(0, 1fr); }
   .v2-catalogue-launcher-close { width: max-content; }
   .v2-catalogue-launcher-item { grid-template-columns: 26px minmax(0, 1fr); }
@@ -551,7 +488,7 @@ body.www-family-page .www-section { scroll-margin-top: 150px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .v2-catalogue-masthead *,
+  .v2-catalogue-shell *,
   .v2-catalogue-route-bar *,
   .v2-catalogue-section-nav *,
   .v2-catalogue-launcher * {

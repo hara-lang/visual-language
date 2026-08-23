@@ -6,9 +6,9 @@ const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("document v2 loads the calm refinement after the structural layers", async () => {
   const entry = await read("../src/v2.css");
-  const command = entry.indexOf('@import "./v2/command-surfaces.css"');
-  const responsive = entry.indexOf('@import "./v2/responsive.css"');
-  const calm = entry.indexOf('@import "./v2/calm-surfaces.css"');
+  const command = entry.indexOf('@import "./command-surfaces.css"');
+  const responsive = entry.indexOf('@import "./responsive.css"');
+  const calm = entry.indexOf('@import "./calm-surfaces.css"');
 
   assert.ok(command >= 0);
   assert.ok(responsive > command);
@@ -33,7 +33,7 @@ test("the tool layer becomes roomier, quieter, and continuous", async () => {
     read("../src/v2/tool-calm.css")
   ]);
 
-  assert.ok(entry.indexOf('@import "./v2/tool-calm.css"') > entry.indexOf('@import "./v2/tool-shell.css"'));
+  assert.ok(entry.indexOf('@import "./tool-calm.css"') > entry.indexOf('@import "./tool-shell.css"'));
   assert.match(css, /--hara-tool-control-dense:\s*30px/);
   assert.match(css, /--hara-tool-motion:\s*180ms/);
   assert.match(css, /--hara-tool-noise:\s*none/);
@@ -44,8 +44,8 @@ test("the tool layer becomes roomier, quieter, and continuous", async () => {
 
 test("both references load the calm presentation and describe the refinement", async () => {
   const [documentLab, toolLab, labCss] = await Promise.all([
-    read("../site/src/pages/v2/index.astro"),
-    read("../site/src/pages/v2/tool/index.astro"),
+    read("../site/src/pages/index.astro"),
+    read("../site/src/pages/tool/index.astro"),
     read("../site/src/styles/v2-calm-lab.css")
   ]);
 

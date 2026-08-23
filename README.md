@@ -19,7 +19,7 @@ persistence, docking, graph manipulation, drag and drop, runtime providers,
 permissions, and other behaviour.
 
 **[Open the published reference](https://ui.hara-lang.org/)**
-**[Open the v2 catalogue](https://ui.hara-lang.org/v2/)**
+**[Open the v2 catalogue](https://ui.hara-lang.org/)**
 
 Public copy follows [`V2-EDITORIAL.md`](./V2-EDITORIAL.md): describe before
 evaluating, define Hara terms on introductory pages, state implementation status
@@ -65,7 +65,7 @@ storage, and heading family. Common controls use readable labels, consistent
 focus treatment, restrained borders and rounding, and explicit state language.
 Strong material effects remain secondary to content.
 
-**[Open the v2 catalogue guide and review matrix](https://ui.hara-lang.org/v2/guide/)**
+**[Open the v2 catalogue guide and review matrix](https://ui.hara-lang.org/guide/)**
 
 The guide records the route manifest, global and route-local navigation, shared
 and application-owned boundaries, route lifecycle, viewport and accessibility
@@ -90,8 +90,8 @@ facts and behaviour.
 
 The document layer has two additive explanation grammars:
 
-- **[Data visualisation](https://ui.hara-lang.org/v2/data/)** — benchmark comparisons, uncertainty, compatibility, runtime telemetry, and evidence states through `v2-data.css` and [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md).
-- **[Diagrams and system maps](https://ui.hara-lang.org/v2/diagrams/)** — architecture, runtime flow, exact sequence, lifecycle, and package or namespace relationships through `v2-diagrams.css` and [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md).
+- **[Data visualisation](https://ui.hara-lang.org/data/)** — benchmark comparisons, uncertainty, compatibility, runtime telemetry, and evidence states through `v2-data.css` and [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md).
+- **[Diagrams and system maps](https://ui.hara-lang.org/diagrams/)** — architecture, runtime flow, exact sequence, lifecycle, and package or namespace relationships through `v2-diagrams.css` and [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md).
 
 Both are presentation contracts. Downstream applications provide the
 authoritative measurements, identities, revisions, events, transitions,
@@ -112,7 +112,7 @@ import "@hara-lang/ui/v2-diagrams.css";
 
 ### Semantic symbols and capability iconography
 
-**[Open the v2 symbols and iconography reference](https://ui.hara-lang.org/v2/symbols/)**
+**[Open the v2 symbols and iconography reference](https://ui.hara-lang.org/symbols/)**
 
 The public symbol layer provides 65 stable semantic identifiers across
 navigation, actions, state, runtime capabilities, Hara routes, authority, and
@@ -146,7 +146,7 @@ See [`V2-SYMBOLS.md`](./V2-SYMBOLS.md).
 
 ### Document and application shells
 
-**[Open the v2 route and layout reference](https://ui.hara-lang.org/v2/)**
+**[Open the v2 route and layout reference](https://ui.hara-lang.org/)**
 
 ```astro
 ---
@@ -170,7 +170,7 @@ adoption order.
 
 ### Tool, editor, environment, and browser-runtime workbenches
 
-**[Open the environment, 3D, node, and animation workbench reference](https://ui.hara-lang.org/v2/tool/)**
+**[Open the environment, 3D, node, and animation workbench reference](https://ui.hara-lang.org/tool/)**
 
 ```astro
 ---

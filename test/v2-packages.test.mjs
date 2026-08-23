@@ -23,7 +23,7 @@ import {
 import { catalogueHref, catalogueItemById } from "../site/src/lib/v2-catalogue.mjs";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
-const pagePath = "../site/src/pages/v2/packages/index.astro";
+const pagePath = "../site/src/pages/packages/index.astro";
 const componentPaths = [
   "../site/src/components/v2-packages/PackagesDiscovery.astro",
   "../site/src/components/v2-packages/PackageDetail.astro",
@@ -217,8 +217,8 @@ test("the catalogue activates the internal Packages route", async () => {
   const packages = catalogueItemById("packages");
   assert.ok(packages);
   assert.equal(packages.status, "active");
-  assert.equal(packages.href, "/v2/packages/");
-  assert.equal(catalogueHref(packages, "/visual-language/"), "/visual-language/v2/packages/");
+  assert.equal(packages.href, "/packages/");
+  assert.equal(catalogueHref(packages, "/visual-language/"), "/visual-language/packages/");
   await access(new URL(pagePath, import.meta.url));
 });
 

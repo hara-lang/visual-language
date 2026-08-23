@@ -39,9 +39,9 @@ import {
 } from "../site/src/lib/v2-frontmatter.mjs";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
-const homePath = "../site/src/pages/v2/www/index.astro";
-const docsPath = "../site/src/pages/v2/www/docs/index.astro";
-const benchmarksPath = "../site/src/pages/v2/www/benchmarks/index.astro";
+const homePath = "../site/src/pages/www/index.astro";
+const docsPath = "../site/src/pages/www/docs/index.astro";
+const benchmarksPath = "../site/src/pages/www/benchmarks/index.astro";
 const cssPaths = [
   "../site/src/styles/v2-www.css",
   "../site/src/styles/v2-www/core.css",
@@ -69,9 +69,9 @@ test("the WWW, Docs, and Benchmarks routes are active internal catalogue destina
     assert.match(catalogueHref(item, "/visual-language/"), /^\/visual-language\/v2\/www\//);
   }
 
-  assert.equal(catalogueHref(catalogueItemById("www"), "/visual-language/"), "/visual-language/v2/www/");
-  assert.equal(catalogueHref(catalogueItemById("www-docs"), "/visual-language/"), "/visual-language/v2/www/docs/");
-  assert.equal(catalogueHref(catalogueItemById("www-benchmarks"), "/visual-language/"), "/visual-language/v2/www/benchmarks/");
+  assert.equal(catalogueHref(catalogueItemById("www"), "/visual-language/"), "/visual-language/www/");
+  assert.equal(catalogueHref(catalogueItemById("www-docs"), "/visual-language/"), "/visual-language/www/docs/");
+  assert.equal(catalogueHref(catalogueItemById("www-benchmarks"), "/visual-language/"), "/visual-language/www/benchmarks/");
 });
 
 test("the family consumes the shared hara.www, hara.docs, and hara.benchmarks contracts by identity", () => {
@@ -86,8 +86,8 @@ test("the family consumes the shared hara.www, hara.docs, and hara.benchmarks co
   const issueContract = applicationContractMap.find(({ issue }) => issue === 38);
   assert.strictEqual(wwwAdoptionContract, issueContract);
   assert.deepEqual(wwwAdoptionContract.families, ["www", "docs", "benchmarks"]);
-  assert.equal(familyRouteById("docs")?.path, "/v2/www/docs/");
-  assert.equal(withBasePath("/visual-language", "/v2/www/benchmarks/"), "/visual-language/v2/www/benchmarks/");
+  assert.equal(familyRouteById("docs")?.path, "/www/docs/");
+  assert.equal(withBasePath("/visual-language", "/www/benchmarks/"), "/visual-language/www/benchmarks/");
 });
 
 test("the WWW family puts search and account actions into the shared secondary header", async () => {

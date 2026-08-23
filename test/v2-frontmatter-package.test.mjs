@@ -9,7 +9,7 @@ const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 test("the package publishes the accepted front matter contract and written guide", async () => {
   const pkg = JSON.parse(await read("../package.json"));
 
-  assert.equal(pkg.exports["./v2/frontmatter.js"], "./src/v2/frontmatter.mjs");
+  assert.equal(pkg.exports["./frontmatter.js"], "./src/v2/frontmatter.mjs");
   assert.ok(pkg.files.includes("V2-FRONTMATTER.md"));
   await access(new URL("../src/v2/frontmatter.mjs", import.meta.url));
   await access(new URL("../V2-FRONTMATTER.md", import.meta.url));

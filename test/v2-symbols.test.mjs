@@ -102,7 +102,7 @@ test("the Astro Symbol primitive is stateless and owns accessible SVG output", a
 test("the public package exports the symbol manifest, component, stylesheet and written contract", async () => {
   const packageJson = JSON.parse(await read("package.json"));
   assert.equal(packageJson.exports["./v2-symbols.css"], "./src/v2/symbols.css");
-  assert.equal(packageJson.exports["./v2/symbols.js"], "./src/v2/symbols.mjs");
+  assert.equal(packageJson.exports["./symbols.js"], "./src/v2/symbols.mjs");
   assert.equal(packageJson.exports["./astro/v2/Symbol.astro"], "./src/astro/v2/Symbol.astro");
   assert.ok(packageJson.files.includes("V2-SYMBOLS.md"));
 });

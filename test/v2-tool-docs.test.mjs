@@ -67,8 +67,8 @@ test("the tool contract covers tokens, components, responsive order, and accessi
 
 test("the document and tool references cross-link each other", async () => {
   const [documentLab, toolLab] = await Promise.all([
-    read("../site/src/pages/v2/index.astro"),
-    read("../site/src/pages/v2/tool/index.astro")
+    read("../site/src/pages/index.astro"),
+    read("../site/src/pages/tool/index.astro")
   ]);
   assert.match(documentLab, /v2\/tool\//);
   assert.match(toolLab, /documentLab/);

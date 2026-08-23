@@ -5,7 +5,7 @@ import test from "node:test";
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 const escape = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const sources = [
-  "../site/src/pages/v2/start/index.astro",
+  "../site/src/pages/start/index.astro",
   ...["Hero", "Discover", "Choose", "Habitat", "HabitatWorkbench", "HabitatRail", "HabitatViewport", "HabitatInspector", "Mutate", "Graduate"]
     .map((name) => `../site/src/components/v2-start/Start${name}.astro`),
   ...["ui", "habitat", "canvas"].map((name) => `../site/src/scripts/v2-start-${name}.js`)
@@ -82,9 +82,9 @@ test("Start styles are product-owned, responsive, and motion-aware", async () =>
 test("the v2 catalogue advertises the active Start route", async () => {
   const [catalogue, page] = await Promise.all([
     read("../site/src/lib/v2-catalogue.mjs"),
-    read("../site/src/pages/v2/start/index.astro")
+    read("../site/src/pages/start/index.astro")
   ]);
-  includes(catalogue, ["id: \"start\"", "label: \"Agent-first Start\"", "path: \"/v2/start/\"", "href: \"/v2/start/\"", "status: \"active\""]);
+  includes(catalogue, ["id: \"start\"", "label: \"Agent-first Start\"", "path: \"/start/\"", "href: \"/start/\"", "status: \"active\""]);
   assert.match(page, /import CatalogueHeader/);
   assert.match(page, /activePath="\/v2\/start\/"/);
 });

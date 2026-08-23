@@ -22,7 +22,7 @@ ensureFoundationComponentInventory();
 ensureSymbolComponentInventory();
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
-const pagePath = "../site/src/pages/v2/components/index.astro";
+const pagePath = "../site/src/pages/components/index.astro";
 
 const requiredSections = [
   "inventory",
@@ -94,9 +94,9 @@ test("the component route is an active internal catalogue destination", async ()
   assert.ok(components);
   assert.equal(components.status, "active");
   assert.equal(components.issue, 35);
-  assert.equal(catalogueHref(components, "/visual-language/"), "/visual-language/v2/components/");
+  assert.equal(catalogueHref(components, "/visual-language/"), "/visual-language/components/");
   assert.equal(catalogueLinkIsExternal(components), false);
-  assert.equal(catalogueItemIsCurrent(components, "/v2/components/"), true);
+  assert.equal(catalogueItemIsCurrent(components, "/components/"), true);
 });
 
 test("the visible inventory exactly matches every public Astro package export", async () => {

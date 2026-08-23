@@ -22,7 +22,7 @@ import { catalogueItemById } from "../site/src/lib/v2-catalogue.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
-const pagePath = "site/src/pages/v2/data/index.astro";
+const pagePath = "site/src/pages/data/index.astro";
 const components = [
   "site/src/components/v2-data/DataBenchmarkEvidence.astro",
   "site/src/components/v2-data/DataCompatibilityEvidence.astro",
@@ -101,8 +101,8 @@ test("evidence-state and principle inventories preserve non-colour and authority
 
 test("the route is active in the shared catalogue and composes all three reference applications", async () => {
   const route = catalogueItemById("data-visualisation");
-  assert.equal(route?.path, "/v2/data/");
-  assert.equal(route?.href, "/v2/data/");
+  assert.equal(route?.path, "/data/");
+  assert.equal(route?.href, "/data/");
   assert.equal(route?.status, "active");
   assert.equal(route?.issue, 91);
   await access(resolve(root, pagePath));

@@ -1,0 +1,364 @@
+---
+import CatalogueHeader from "../../components/v2-catalogue/CatalogueHeader.astro";
+import Symbol from "../../../../src/astro/v2/Symbol.astro";
+import {
+  symbolFamilies,
+  symbolFixtureNotice,
+  symbolInventory,
+  symbolOpticalSizes,
+  symbolSummary,
+  symbolsByFamily
+} from "../../../../src/v2/symbols.mjs";
+import "../../../../src/v2.css";
+import "../../../../src/v2/symbols.css";
+import "../../../../src/theme.js";
+import "../../styles/v2-lab.css";
+import "../../styles/v2-calm-lab.css";
+import "../../styles/v2-symbols-guide.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}symbols/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const catalogueUrl = `${basePath}`;
+const guideUrl = `${basePath}guide/`;
+const dataUrl = `${basePath}data/`;
+const diagramsUrl = `${basePath}diagrams/`;
+const issueUrl = "https://github.com/hara-lang/visual-language/issues/102";
+const localNav = [
+  { href: "#overview", label: "Overview" },
+  { href: "#optical", label: "Optical sizes" },
+  { href: "#inventory", label: "Inventory" },
+  { href: "#products", label: "Route use" },
+  { href: "#accessibility", label: "Accessibility" },
+  { href: "#adoption", label: "Adoption" }
+];
+const firstSymbol = symbolInventory[0];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="The Hara v2 semantic symbol guide: stable names, optical sizing, currentColor SVG, accessibility, route use, and authority boundaries." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara v2 symbols and iconography" />
+    <meta property="og:description" content="Navigation, action, state, capability, product and evidence symbols with explicit text and authority boundaries." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara v2 symbols and iconography" />
+    <meta name="twitter:description" content="A shared semantic symbol contract for Hara sites, tools and documentation." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara v2 symbols and iconography</title>
+  </head>
+  <body class="hara-v2 hara-v2-symbol-guide">
+    <CatalogueHeader basePath={basePath} activePath="/symbols/" label="Symbols and iconography guide">
+      <a slot="route-actions" href="#inventory">Browse symbols</a>
+    </CatalogueHeader>
+
+    <nav class="symbol-guide-local-nav" aria-label="Symbols guide sections">
+      <span>Symbols</span>
+      <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+      <a href={issueUrl}>Issue 102 ↗</a>
+    </nav>
+
+    <main class="symbol-guide-main">
+      <aside class="symbol-guide-notice" role="note">
+        <strong>Design-review fixture</strong>
+        <span>{symbolFixtureNotice.summary}</span>
+        <code>{symbolFixtureNotice.revision}</code>
+      </aside>
+
+      <section class="symbol-guide-hero" id="overview" aria-labelledby="symbol-guide-title">
+        <div>
+          <p class="hara-v2-kicker">Issue 102 · meaning before glyph</p>
+          <h1 id="symbol-guide-title">One semantic name, one shape, and a visible boundary.</h1>
+          <p>Hara symbols identify navigation, commands, state, runtime capabilities, products and evidence. They stay monochrome by default, inherit current colour, and keep unfamiliar, destructive, capability and authority meaning supported by ordinary text.</p>
+          <div class="symbol-guide-actions">
+            <a href="#inventory">Browse the inventory</a>
+            <a href="#products">Review route compositions</a>
+            <a href="#accessibility">Read accessibility rules</a>
+          </div>
+        </div>
+        <aside class="symbol-guide-ledger" aria-label="Symbol guide inventory summary">
+          <header><span>Public contract</span><span>additive v2</span></header>
+          <div>
+            <p class="hara-v2-kicker">v2/symbols@1</p>
+            <h2>{symbolSummary.symbols} semantic symbols</h2>
+            <p>Six families, one 24 × 24 coordinate system, four optical sizes, and no icon font or raster dependency.</p>
+            <dl>
+              <div><dt>Families</dt><dd>{symbolSummary.families}</dd></div>
+              <div><dt>Optical sizes</dt><dd>{symbolSummary.opticalSizes}</dd></div>
+              <div><dt>Text required</dt><dd>{symbolSummary.textRequired}</dd></div>
+              <div><dt>Interactive</dt><dd>{symbolSummary.interactive}</dd></div>
+              <div><dt>Destructive</dt><dd>{symbolSummary.destructive}</dd></div>
+              <div><dt>ViewBox</dt><dd>24²</dd></div>
+            </dl>
+          </div>
+          <footer><span>currentColor SVG</span><span>Applications retain behaviour</span></footer>
+        </aside>
+      </section>
+
+      <section class="symbol-guide-section" id="optical" aria-labelledby="symbol-optical-title">
+        <header class="symbol-guide-section-head">
+          <div><p class="hara-v2-kicker">01 · Geometry</p><h2 id="symbol-optical-title">Compact symbols are drawn for compact use.</h2></div>
+          <p>The public contract supports 16, 20, 24 and 32 pixel optical sizes. Stroke weight changes slightly at each size while the shared 24 × 24 geometry, rounded joins and currentColor delivery remain stable.</p>
+        </header>
+        <div class="symbol-optical-stage">
+          <div class="symbol-optical-row">
+            <h3>One meaning across four optical sizes</h3>
+            <div class="hara-v2-symbol-sizes" aria-label="Evaluate symbol optical sizes">
+              {symbolOpticalSizes.map((size) => (
+                <span class="hara-v2-symbol-size"><Symbol name="action-evaluate" size={size} label={`Evaluate at ${size} pixels`} decorative={false} /><span>{size}px</span></span>
+              ))}
+            </div>
+            <p>Large illustrations should compose symbols with labels and evidence rather than stretching a compact control glyph into a product logo.</p>
+          </div>
+          <aside class="hara-v2-symbol-evidence">
+            <strong>Geometry fence</strong>
+            <span>viewBox: <code>0 0 24 24</code></span>
+            <span>stroke: <code>currentColor</code></span>
+            <span>sizes: <code>16 · 20 · 24 · 32</code></span>
+            <span>fill: <code>none</code></span>
+            <span>font dependency: <code>none</code></span>
+          </aside>
+        </div>
+      </section>
+
+      <section class="symbol-guide-section" id="inventory" aria-labelledby="symbol-inventory-title">
+        <header class="symbol-guide-section-head">
+          <div><p class="hara-v2-kicker">02 · Semantic inventory</p><h2 id="symbol-inventory-title">Each symbol has one recorded semantic role.</h2></div>
+          <p>Every symbol has a stable family-prefixed identifier, label, usage boundary, and text rule. Select a specimen to inspect its public metadata; the application still decides whether a command, capability, or state exists.</p>
+        </header>
+        <div class="symbol-inspector-layout">
+          <div>
+            {symbolFamilies.map((family) => (
+              <section class="symbol-family" aria-labelledby={`symbol-family-${family.id}`}>
+                <header>
+                  <div><h3 id={`symbol-family-${family.id}`}>{family.label}</h3><p>{family.summary} {family.textRule}</p></div>
+                  <code>{symbolsByFamily(family.id).length} symbols</code>
+                </header>
+                <div class="hara-v2-symbol-grid">
+                  {symbolsByFamily(family.id).map((symbol, index) => (
+                    <button
+                      class="hara-v2-symbol-card"
+                      type="button"
+                      aria-pressed={family.id === "navigation" && index === 0 ? "true" : "false"}
+                      data-symbol-select
+                      data-symbol-id={symbol.id}
+                      data-symbol-label={symbol.label}
+                      data-symbol-family={symbol.family}
+                      data-symbol-usage={symbol.usage}
+                      data-symbol-text={symbol.text}
+                      data-symbol-tone={symbol.tone}
+                      data-symbol-destructive={String(symbol.destructive)}
+                    >
+                      <Symbol name={symbol.id} size={24} tone={symbol.tone} />
+                      <span><strong>{symbol.label}</strong><small>{symbol.usage}</small><code>{symbol.id}</code></span>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+          <aside class="symbol-inspector" aria-live="polite" data-symbol-inspector>
+            <div class="symbol-inspector-icon" data-symbol-inspector-icon><Symbol name={firstSymbol.id} size={32} /></div>
+            <h3 data-symbol-inspector-label>{firstSymbol.label}</h3>
+            <p data-symbol-inspector-usage>{firstSymbol.usage}</p>
+            <dl>
+              <div><dt>Identifier</dt><dd><code data-symbol-inspector-id>{firstSymbol.id}</code></dd></div>
+              <div><dt>Family</dt><dd data-symbol-inspector-family>{firstSymbol.family}</dd></div>
+              <div><dt>Text rule</dt><dd data-symbol-inspector-text>{firstSymbol.text}</dd></div>
+              <div><dt>Tone</dt><dd data-symbol-inspector-tone>{firstSymbol.tone}</dd></div>
+              <div><dt>Destructive</dt><dd data-symbol-inspector-destructive>{String(firstSymbol.destructive)}</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <section class="symbol-guide-section" id="products" aria-labelledby="symbol-products-title">
+        <header class="symbol-guide-section-head">
+          <div><p class="hara-v2-kicker">03 · Route compositions</p><h2 id="symbol-products-title">Symbols accompany route labels and state; they do not replace them.</h2></div>
+          <p>These compositions use realistic Hara actions, capabilities, states, products and evidence. The visible words remain authoritative for the reader, while products continue to own commands, permissions, lifecycle, data and moderation.</p>
+        </header>
+        <div class="symbol-composition-grid">
+          <article class="symbol-composition">
+            <header><h3>Playground runtime controls</h3><span>commands ≠ state</span></header>
+            <div class="symbol-command-row">
+              <button class="hara-v2-symbol-button" type="button"><Symbol name="action-run" tone="signal" /><span>Run</span></button>
+              <button class="hara-v2-symbol-button" type="button"><Symbol name="action-stop" /><span>Stop</span></button>
+              <button class="hara-v2-symbol-button" type="button"><Symbol name="action-evaluate" tone="signal" /><span>Evaluate</span></button>
+              <button class="hara-v2-symbol-button" type="button"><Symbol name="action-inspect" /><span>Inspect</span></button>
+            </div>
+            <div class="symbol-state-row">
+              <span class="hara-v2-symbol-state" data-state="ready"><Symbol name="state-ready" size={16} tone="success" />Ready</span>
+              <span class="hara-v2-symbol-state" data-state="connecting"><Symbol name="state-connecting" size={16} tone="signal" />Filesystem connecting</span>
+              <span class="hara-v2-symbol-state" data-state="unavailable"><Symbol name="state-unavailable" size={16} />Network unavailable</span>
+            </div>
+            <p>Buttons express requested commands. Status records express actual fenced runtime state.</p>
+          </article>
+
+          <article class="symbol-composition">
+            <header><h3>Capability pane</h3><span>provider authority</span></header>
+            <div class="symbol-product-row">
+              <span class="symbol-product-label"><Symbol name="capability-session" />Session</span>
+              <span class="symbol-product-label"><Symbol name="capability-filesystem" />Filesystem</span>
+              <span class="symbol-product-label"><Symbol name="capability-canvas" />Canvas</span>
+              <span class="symbol-product-label"><Symbol name="capability-audio" />Audio</span>
+              <span class="symbol-product-label"><Symbol name="capability-3d" />3D</span>
+              <span class="symbol-product-label"><Symbol name="capability-provider" />External provider</span>
+            </div>
+            <aside class="hara-v2-symbol-evidence"><strong>capabilities@0d44c1a8</strong><span>Host: hara-chrome</span><span>Available: session, filesystem, canvas</span><span>Unavailable: audio, 3D</span></aside>
+            <p>The glyph identifies the capability class. The host and evidence fence determine availability.</p>
+          </article>
+
+          <article class="symbol-composition">
+            <header><h3>Specs and Packages lifecycle</h3><span>text-supported consequence</span></header>
+            <div class="symbol-command-row">
+              <button class="hara-v2-symbol-button" type="button"><Symbol name="action-publish" tone="signal" /><span>Publish proposal</span></button>
+              <button class="hara-v2-symbol-button" type="button"><Symbol name="action-approve" tone="success" /><span>Approve</span></button>
+              <button class="hara-v2-symbol-button" type="button" data-consequence="danger"><Symbol name="action-reject" tone="danger" /><span>Reject</span></button>
+              <button class="hara-v2-symbol-button" type="button" data-consequence="danger"><Symbol name="action-revoke" tone="danger" /><span>Revoke release</span></button>
+            </div>
+            <div class="symbol-state-row">
+              <span class="hara-v2-symbol-state" data-state="deprecated"><Symbol name="state-deprecated" size={16} tone="warning" />Deprecated</span>
+              <span class="hara-v2-symbol-state"><Symbol name="state-superseded" size={16} />Superseded by 0.9.0</span>
+              <span class="hara-v2-symbol-state" data-state="partial"><Symbol name="state-partial" size={16} tone="warning" />Partial compatibility</span>
+            </div>
+            <p>Destructive and publication actions keep visible labels, consequence and authority context.</p>
+          </article>
+
+          <article class="symbol-composition">
+            <header><h3>Products and accountable identity</h3><span>labels stay visible</span></header>
+            <div class="symbol-product-row">
+              <span class="symbol-product-label"><Symbol name="product-www" />WWW</span>
+              <span class="symbol-product-label"><Symbol name="product-docs" />Docs</span>
+              <span class="symbol-product-label"><Symbol name="product-benchmarks" />Benchmarks</span>
+              <span class="symbol-product-label"><Symbol name="product-playground" />Playground</span>
+              <span class="symbol-product-label"><Symbol name="product-specs" />Specs</span>
+              <span class="symbol-product-label"><Symbol name="product-packages" />Packages</span>
+              <span class="symbol-product-label"><Symbol name="product-world" />World</span>
+              <span class="symbol-product-label"><Symbol name="product-learn" />Learn</span>
+            </div>
+            <div class="symbol-evidence-stack">
+              <div class="hara-v2-symbol-evidence"><Symbol name="evidence-owned-bot" /><span><strong>@release-bot</strong><br />Owned by @mina · present owner verified</span></div>
+              <div class="hara-v2-symbol-evidence"><Symbol name="evidence-maintainer" /><span><strong>@mina</strong><br />Maintainer evidence: namespace std.work@af6273c</span></div>
+            </div>
+            <p>Product and ownership symbols are never unexplained standalone pictograms.</p>
+          </article>
+
+          <article class="symbol-composition">
+            <header><h3>Docs and Benchmarks evidence</h3><span>exact facts adjacent</span></header>
+            <div class="symbol-evidence-stack">
+              <div class="hara-v2-symbol-evidence"><Symbol name="evidence-source" /><span><strong>Source</strong><br /><code>hara-lang/hara/runtime/hara</code></span></div>
+              <div class="hara-v2-symbol-evidence"><Symbol name="evidence-revision" /><span><strong>Exact revision</strong><br /><code>ce4139f1e7a7b0fd</code></span></div>
+              <div class="hara-v2-symbol-evidence"><Symbol name="evidence-observation" /><span><strong>Runtime observation</strong><br /><code>session-01J… · generation 7</code></span></div>
+              <div class="hara-v2-symbol-evidence"><Symbol name="evidence-receipt" /><span><strong>Receipt</strong><br /><code>benchmark-receipt-0184</code></span></div>
+            </div>
+            <p>The symbol points to a class of evidence; exact source, revision, session and receipt text carries the fact.</p>
+          </article>
+
+          <article class="symbol-composition">
+            <header><h3>Missing and incomparable evidence</h3><span>not zero · not failure</span></header>
+            <div class="symbol-state-row">
+              <span class="hara-v2-symbol-state"><Symbol name="state-missing" size={16} />Sample count missing</span>
+              <span class="hara-v2-symbol-state"><Symbol name="state-incomparable" size={16} />Different methodology</span>
+              <span class="hara-v2-symbol-state" data-state="stale"><Symbol name="state-stale" size={16} tone="warning" />Observation stale</span>
+              <span class="hara-v2-symbol-state" data-state="partial"><Symbol name="state-partial" size={16} tone="warning" />3 of 5 targets</span>
+            </div>
+            <p>Evidence gaps remain explicit and cannot collapse into successful zero values or generic errors.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="symbol-guide-section" id="accessibility" aria-labelledby="symbol-accessibility-title">
+        <header class="symbol-guide-section-head">
+          <div><p class="hara-v2-kicker">04 · Accessible inventory</p><h2 id="symbol-accessibility-title">The table is the complete non-visual contract.</h2></div>
+          <p>Decorative SVGs are hidden when adjacent text already carries meaning. Informative standalone symbols receive a concise label. Icon-only controls put the accessible name on the button or link, not on competing nested elements.</p>
+        </header>
+        <div class="symbol-inventory-table-wrap">
+          <table class="symbol-inventory-table">
+            <caption>Complete Hara v2 semantic symbol inventory</caption>
+            <thead><tr><th>Identifier</th><th>Label</th><th>Family</th><th>Text</th><th>Tone</th><th>Interactive</th><th>Usage boundary</th></tr></thead>
+            <tbody>
+              {symbolInventory.map((symbol) => (
+                <tr><td><code>{symbol.id}</code></td><td>{symbol.label}</td><td>{symbol.family}</td><td>{symbol.text}</td><td>{symbol.tone}</td><td>{symbol.interactive ? "Yes" : "No"}</td><td>{symbol.usage}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="symbol-guide-section" id="adoption" aria-labelledby="symbol-adoption-title">
+        <header class="symbol-guide-section-head">
+          <div><p class="hara-v2-kicker">05 · Adoption</p><h2 id="symbol-adoption-title">Pin the merged contract; keep product meaning downstream.</h2></div>
+          <p>A downstream adoption uses public identifiers, preserves visible text and accessibility, and pins a merged Visual Language revision. It does not copy SVG paths, redefine protected tokens, or transfer command, capability, lifecycle, ownership or evidence authority into this package.</p>
+        </header>
+        <div class="symbol-composition-grid">
+          <article class="symbol-composition"><header><h3>Shared package owns</h3><span>visual contract</span></header><p>Semantic identifiers, family classification, line geometry, optical sizes, currentColor, accessibility defaults, shared presentation and the deterministic reference inventory.</p><div class="symbol-state-row"><span class="hara-v2-symbol-state"><Symbol name="evidence-source" size={16} />Public manifest</span><span class="hara-v2-symbol-state"><Symbol name="evidence-revision" size={16} />Merged revision</span></div></article>
+          <article class="symbol-composition"><header><h3>Product owns</h3><span>facts and behavior</span></header><p>Commands, capabilities, permissions, lifecycle, moderation, publication rules, product labels, identity, evidence, persistence and telemetry.</p><div class="symbol-state-row"><span class="hara-v2-symbol-state"><Symbol name="capability-provider" size={16} />Provider availability</span><span class="hara-v2-symbol-state"><Symbol name="evidence-registry" size={16} />Registry authority</span></div></article>
+        </div>
+      </section>
+
+      <footer class="v2-lab-footer">
+        <span>Hara v2 symbols and iconography guide</span>
+        <span><a href={catalogueUrl}>Catalogue home</a> · <a href={guideUrl}>Catalogue guide</a> · <a href={dataUrl}>Data visualisation</a> · <a href={diagramsUrl}>Diagrams</a> · <a href={issueUrl}>Issue 102</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script>
+      const initialiseSymbolGuide = () => {
+        const inspector = document.querySelector("[data-symbol-inspector]");
+        if (!(inspector instanceof HTMLElement)) return;
+        const fields = {
+          icon: inspector.querySelector("[data-symbol-inspector-icon]"),
+          label: inspector.querySelector("[data-symbol-inspector-label]"),
+          usage: inspector.querySelector("[data-symbol-inspector-usage]"),
+          id: inspector.querySelector("[data-symbol-inspector-id]"),
+          family: inspector.querySelector("[data-symbol-inspector-family]"),
+          text: inspector.querySelector("[data-symbol-inspector-text]"),
+          tone: inspector.querySelector("[data-symbol-inspector-tone]"),
+          destructive: inspector.querySelector("[data-symbol-inspector-destructive]")
+        };
+        document.querySelectorAll("[data-symbol-select]").forEach((candidate) => {
+          if (!(candidate instanceof HTMLButtonElement) || candidate.dataset.symbolReady === "true") return;
+          candidate.dataset.symbolReady = "true";
+          candidate.addEventListener("click", () => {
+            document.querySelectorAll("[data-symbol-select]").forEach((item) => item.setAttribute("aria-pressed", String(item === candidate)));
+            const sourceIcon = candidate.querySelector("svg");
+            if (fields.icon instanceof HTMLElement && sourceIcon) {
+              const copy = sourceIcon.cloneNode(true);
+              if (copy instanceof SVGElement) {
+                copy.setAttribute("width", "32");
+                copy.setAttribute("height", "32");
+                copy.setAttribute("aria-hidden", "true");
+                copy.removeAttribute("aria-label");
+                copy.removeAttribute("role");
+              }
+              fields.icon.replaceChildren(copy);
+            }
+            const values = {
+              label: candidate.dataset.symbolLabel,
+              usage: candidate.dataset.symbolUsage,
+              id: candidate.dataset.symbolId,
+              family: candidate.dataset.symbolFamily,
+              text: candidate.dataset.symbolText,
+              tone: candidate.dataset.symbolTone,
+              destructive: candidate.dataset.symbolDestructive
+            };
+            Object.entries(values).forEach(([key, value]) => {
+              const field = fields[key];
+              if (field instanceof HTMLElement && value !== undefined) field.textContent = value;
+            });
+          });
+        });
+      };
+      initialiseSymbolGuide();
+      document.addEventListener("astro:page-load", initialiseSymbolGuide);
+    </script>
+  </body>
+</html>

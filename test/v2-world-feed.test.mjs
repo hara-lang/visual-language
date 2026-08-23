@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const focusedPageUrl = new URL("../site/src/pages/v2/world/feed/index.astro", import.meta.url);
-const canonicalPageUrl = new URL("../site/src/pages/v2/world/index.astro", import.meta.url);
+const focusedPageUrl = new URL("../site/src/pages/world/feed/index.astro", import.meta.url);
+const canonicalPageUrl = new URL("../site/src/pages/world/index.astro", import.meta.url);
 const styleUrl = new URL("../site/src/styles/v2-world-feed.css", import.meta.url);
 const sharedCalmStyleUrl = new URL("../src/v2/calm-surfaces.css", import.meta.url);
 const policyUrl = new URL("../site/src/data/world-feed-policy.json", import.meta.url);

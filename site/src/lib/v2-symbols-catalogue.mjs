@@ -6,8 +6,8 @@ import {
 export const symbolsCatalogueItem = Object.freeze({
   id: "symbols",
   label: "Semantic symbols",
-  path: "/v2/symbols/",
-  href: "/v2/symbols/",
+  path: "/symbols/",
+  href: "/symbols/",
   summary: "The merged 24 × 24 semantic symbol inventory retained as a compatibility surface while Iconography remains the primary current destination.",
   status: "settled",
   issue: 102,

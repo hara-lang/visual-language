@@ -31,7 +31,7 @@ test("symbols route is registered once beneath the primary Iconography route", (
   assert.equal(icons?.children?.filter(({ id }) => id === "symbols").length, 1);
 
   const symbols = catalogueItemById("symbols");
-  assert.equal(symbols?.path, "/v2/symbols/");
+  assert.equal(symbols?.path, "/symbols/");
   assert.equal(symbols?.status, "settled");
   assert.equal(symbols?.kind, "compatibility");
   assert.equal(symbols?.issue, 102);
@@ -41,10 +41,10 @@ test("symbols route is registered once beneath the primary Iconography route", (
 
 test("symbols route resolves through standard href, current and family-context APIs", () => {
   const route = ensureSymbolsCatalogueRoute();
-  assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/v2/symbols/");
-  assert.equal(catalogueItemIsCurrent(route, "/v2/symbols/"), true);
+  assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/symbols/");
+  assert.equal(catalogueItemIsCurrent(route, "/symbols/"), true);
 
-  const context = catalogueRouteContext("/v2/symbols/");
+  const context = catalogueRouteContext("/symbols/");
   assert.equal(context?.item.id, "symbols");
   assert.equal(context?.group.id, "foundations");
   assert.equal(context?.family.id, "icons");

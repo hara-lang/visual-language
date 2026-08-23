@@ -31,18 +31,18 @@ test("the editorial contract defines audience, terminology, status and review ru
 
 test("primary language and community routes begin with definitions or concrete boundaries", async () => {
   const expectations = new Map([
-    ["site/src/pages/v2/index.astro", "Application pages are specimens for review; they are not product pitches."],
-    ["site/src/pages/v2/www/index.astro", "Hara is a programming language built from readable forms."],
-    ["site/src/pages/v2/www/docs/index.astro", "Hara documentation is organised by the kind of answer required."],
-    ["site/src/pages/v2/www/benchmarks/index.astro", "A benchmark result is meaningful only within its workload, method, and environment."],
+    ["site/src/pages/index.astro", "Application pages are specimens for review; they are not product pitches."],
+    ["site/src/pages/www/index.astro", "Hara is a programming language built from readable forms."],
+    ["site/src/pages/www/docs/index.astro", "Hara documentation is organised by the kind of answer required."],
+    ["site/src/pages/www/benchmarks/index.astro", "A benchmark result is meaningful only within its workload, method, and environment."],
     ["site/src/components/v2-learn/LearnLanding.astro", "Learn the language one form at a time."],
     ["site/src/components/v2-packages/PackagesDiscovery.astro", "Packages and namespaces are versioned registry records."],
-    ["site/src/pages/v2/specs/index.astro", "A specification states what an implementation must, should, or may do."],
-    ["site/src/pages/v2/playground/index.astro", "Run an exact Hara source revision in a named session."],
+    ["site/src/pages/specs/index.astro", "A specification states what an implementation must, should, or may do."],
+    ["site/src/pages/playground/index.astro", "Run an exact Hara source revision in a named session."],
     ["site/src/components/v2-start/StartHero.astro", "Use an agent to inspect Hara before choosing an example."],
-    ["site/src/pages/v2/world/index.astro", "World collects attributed articles, discussions, package changes, and external references."],
-    ["site/src/pages/v2/world/discussion/index.astro", "Articles, discussions, and contributor records for Hara."],
-    ["site/src/pages/v2/world/around/index.astro", "External Hara material retains its original source and authorship."]
+    ["site/src/pages/world/index.astro", "World collects attributed articles, discussions, package changes, and external references."],
+    ["site/src/pages/world/discussion/index.astro", "Articles, discussions, and contributor records for Hara."],
+    ["site/src/pages/world/around/index.astro", "External Hara material retains its original source and authorship."]
   ]);
 
   for (const [file, phrase] of expectations) {
