@@ -1,6 +1,6 @@
 ---
-import HaraIcon from "../../../../src/astro/HaraIcon.astro";
-import HaraGlyph from "../../../../src/astro/HaraGlyph.astro";
+import HaraIcon from "@hara-lang/ui-astro/astro/HaraIcon.astro";
+import HaraGlyph from "@hara-lang/ui-astro/astro/HaraGlyph.astro";
 import DeliveryFrame from "../../../../src/astro/v2/DeliveryFrame.astro";
 import ArtifactProvenance from "../../../../src/astro/v2/ArtifactProvenance.astro";
 import { foundationComponentShowcaseGroup } from "../../lib/v2-foundation-component-inventory.mjs";
@@ -9,7 +9,7 @@ const sourceRoot = "https://github.com/hara-lang/visual-language/blob/main/";
 const envelope = {
   artifactType: "component-catalogue-record",
   template: "rendered-public-export",
-  canonicalUrl: "https://hara-lang.github.io/visual-language/v2/components/",
+  canonicalUrl: "https://ui.hara-lang.org/v2/components/",
   sourceIdentity: "visual-language:component-catalogue",
   sourceRevision: "component-union:43",
   authority: "Hara Visual Language package manifest",

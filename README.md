@@ -1,29 +1,32 @@
 # @hara-lang/visual-language
 
-This repository contains the shared interface rules used by Hara sites and
-tools. It publishes theme tokens, light and dark themes, motifs, vector
-backgrounds, optional field effects, document shells, data and diagram styles,
-semantic symbols, and stateless Astro components for workbench and runtime
-surfaces.
+This repository is the Hara visual-language kitchen-sink site. It composes the
+independently publishable UI packages into a browsable catalogue of foundations,
+shell states, product specimens, tools, data, diagrams, symbols, and route
+examples.
 
-The package owns **presentation and semantic interface contracts**. An
-application continues to own its language and domain data, commands, focus
-movement, persistence, docking, graph manipulation, drag and drop, runtime
-providers, permissions, and other behaviour. Those concerns may also belong in
-`@hara-lang/ui` or the relevant Hara application.
+The reusable implementation lives in the `hara-lang/hara-ui` repository:
 
-**[Open the published reference](https://hara-lang.github.io/visual-language/)**  
-**[Open the v2 catalogue](https://hara-lang.github.io/visual-language/v2/)**
+- `@hara-lang/ui` — tokens, themes, shell styles, icons, symbols, diagrams, and
+  data/media foundation entrypoints;
+- `@hara-lang/ui-astro` — Astro shell, navigation, identity, and presentation
+  adapters;
+- `@hara-lang/ui-tool` — Astro tool/workbench components and styles.
+
+The catalogue owns **reference composition and review fixtures**. Applications
+continue to own their language and domain data, commands, focus movement,
+persistence, docking, graph manipulation, drag and drop, runtime providers,
+permissions, and other behaviour.
+
+**[Open the published reference](https://ui.hara-lang.org/)**
+**[Open the v2 catalogue](https://ui.hara-lang.org/v2/)**
 
 Public copy follows [`V2-EDITORIAL.md`](./V2-EDITORIAL.md): describe before
 evaluating, define Hara terms on introductory pages, state implementation status
 plainly, and point claims to source, revisions, specifications, or evidence.
 
-Consumers should pin a release tag exactly:
-
-```json
-"@hara-lang/visual-language": "github:hara-lang/visual-language#v1.0.0"
-```
+The catalogue is private and is not a compatibility facade. Consumers import
+the independently versioned packages directly.
 
 ## Version 1 themes, motifs, and backgrounds
 
@@ -40,9 +43,9 @@ preferences.
 
 ```astro
 ---
-import Backdrop from "@hara-lang/visual-language/astro/Backdrop.astro";
-import "@hara-lang/visual-language/theme.css";
-import "@hara-lang/visual-language/effects.css";
+import Backdrop from "@hara-lang/ui-astro/astro/Backdrop.astro";
+import "@hara-lang/ui/theme.css";
+import "@hara-lang/ui/effects.css";
 ---
 
 <section class="runtime-status">
@@ -62,7 +65,7 @@ storage, and heading family. Common controls use readable labels, consistent
 focus treatment, restrained borders and rounding, and explicit state language.
 Strong material effects remain secondary to content.
 
-**[Open the v2 catalogue guide and review matrix](https://hara-lang.github.io/visual-language/v2/guide/)**
+**[Open the v2 catalogue guide and review matrix](https://ui.hara-lang.org/v2/guide/)**
 
 The guide records the route manifest, global and route-local navigation, shared
 and application-owned boundaries, route lifecycle, viewport and accessibility
@@ -87,8 +90,8 @@ facts and behaviour.
 
 The document layer has two additive explanation grammars:
 
-- **[Data visualisation](https://hara-lang.github.io/visual-language/v2/data/)** — benchmark comparisons, uncertainty, compatibility, runtime telemetry, and evidence states through `v2-data.css` and [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md).
-- **[Diagrams and system maps](https://hara-lang.github.io/visual-language/v2/diagrams/)** — architecture, runtime flow, exact sequence, lifecycle, and package or namespace relationships through `v2-diagrams.css` and [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md).
+- **[Data visualisation](https://ui.hara-lang.org/v2/data/)** — benchmark comparisons, uncertainty, compatibility, runtime telemetry, and evidence states through `v2-data.css` and [`V2-DATA-VISUALISATION.md`](./V2-DATA-VISUALISATION.md).
+- **[Diagrams and system maps](https://ui.hara-lang.org/v2/diagrams/)** — architecture, runtime flow, exact sequence, lifecycle, and package or namespace relationships through `v2-diagrams.css` and [`V2-DIAGRAMS.md`](./V2-DIAGRAMS.md).
 
 Both are presentation contracts. Downstream applications provide the
 authoritative measurements, identities, revisions, events, transitions,
@@ -97,8 +100,8 @@ transition table, or adjacency table that remains complete without the visual.
 
 ```astro
 ---
-import "@hara-lang/visual-language/v2.css";
-import "@hara-lang/visual-language/v2-diagrams.css";
+import "@hara-lang/ui/v2.css";
+import "@hara-lang/ui/v2-diagrams.css";
 ---
 
 <figure class="diagram-figure">
@@ -109,7 +112,7 @@ import "@hara-lang/visual-language/v2-diagrams.css";
 
 ### Semantic symbols and capability iconography
 
-**[Open the v2 symbols and iconography reference](https://hara-lang.github.io/visual-language/v2/symbols/)**
+**[Open the v2 symbols and iconography reference](https://ui.hara-lang.org/v2/symbols/)**
 
 The public symbol layer provides 65 stable semantic identifiers across
 navigation, actions, state, runtime capabilities, Hara routes, authority, and
@@ -120,9 +123,9 @@ supported by text.
 
 ```astro
 ---
-import Symbol from "@hara-lang/visual-language/astro/v2/Symbol.astro";
-import "@hara-lang/visual-language/v2.css";
-import "@hara-lang/visual-language/v2-symbols.css";
+import Symbol from "@hara-lang/ui-astro/astro/v2/Symbol.astro";
+import "@hara-lang/ui/v2.css";
+import "@hara-lang/ui/v2-symbols.css";
 ---
 
 <button class="hara-v2-symbol-button" type="button" aria-label="Run example">
@@ -136,21 +139,21 @@ import "@hara-lang/visual-language/v2-symbols.css";
 ```
 
 Framework-free consumers may import the inventory from
-`@hara-lang/visual-language/v2/symbols.js`. The package owns names, geometry,
+`@hara-lang/ui/v2/symbols.js`. The package owns names, geometry,
 optical sizing, and accessibility defaults; applications still own commands,
 capability availability, state, permissions, ownership, revisions, and receipts.
 See [`V2-SYMBOLS.md`](./V2-SYMBOLS.md).
 
 ### Document and application shells
 
-**[Open the v2 route and layout reference](https://hara-lang.github.io/visual-language/v2/)**
+**[Open the v2 route and layout reference](https://ui.hara-lang.org/v2/)**
 
 ```astro
 ---
-import Shell from "@hara-lang/visual-language/astro/v2/Shell.astro";
-import Header from "@hara-lang/visual-language/astro/v2/Header.astro";
-import ContextNav from "@hara-lang/visual-language/astro/v2/ContextNav.astro";
-import "@hara-lang/visual-language/v2.css";
+import Shell from "@hara-lang/ui-astro/astro/v2/Shell.astro";
+import Header from "@hara-lang/ui-astro/astro/v2/Header.astro";
+import ContextNav from "@hara-lang/ui-astro/astro/v2/ContextNav.astro";
+import "@hara-lang/ui/v2.css";
 ---
 
 <Shell sidebar={false}>
@@ -167,17 +170,17 @@ adoption order.
 
 ### Tool, editor, environment, and browser-runtime workbenches
 
-**[Open the environment, 3D, node, and animation workbench reference](https://hara-lang.github.io/visual-language/v2/tool/)**
+**[Open the environment, 3D, node, and animation workbench reference](https://ui.hara-lang.org/v2/tool/)**
 
 ```astro
 ---
-import WorkbenchShell from "@hara-lang/visual-language/astro/v2/tool/WorkbenchShell.astro";
-import Toolbar from "@hara-lang/visual-language/astro/v2/tool/Toolbar.astro";
-import ToolGroup from "@hara-lang/visual-language/astro/v2/tool/ToolGroup.astro";
-import ToolButton from "@hara-lang/visual-language/astro/v2/tool/ToolButton.astro";
-import DockPanel from "@hara-lang/visual-language/astro/v2/tool/DockPanel.astro";
-import StatusBar from "@hara-lang/visual-language/astro/v2/tool/StatusBar.astro";
-import "@hara-lang/visual-language/v2-tool.css";
+import WorkbenchShell from "@hara-lang/ui-tool/astro/v2/WorkbenchShell.astro";
+import Toolbar from "@hara-lang/ui-tool/astro/v2/Toolbar.astro";
+import ToolGroup from "@hara-lang/ui-tool/astro/v2/ToolGroup.astro";
+import ToolButton from "@hara-lang/ui-tool/astro/v2/ToolButton.astro";
+import DockPanel from "@hara-lang/ui-tool/astro/v2/DockPanel.astro";
+import StatusBar from "@hara-lang/ui-tool/astro/v2/StatusBar.astro";
+import "@hara-lang/ui-tool/v2-tool.css";
 ---
 
 <div class="hara-v2 hara-v2-tool">
