@@ -28,7 +28,7 @@ const readStyles = async () => (await Promise.all([
 
 const readRouteSource = async () => {
   const parts = await Promise.all([
-    read("../site/src/pages/v2/playground/index.astro"),
+    read("../site/src/pages/playground/index.astro"),
     ...componentPaths.map(read),
     readScripts()
   ]);
@@ -39,11 +39,11 @@ test("the catalogue activates the detailed Playground route", async () => {
   const playground = catalogueItemById("playground");
   assert.ok(playground);
   assert.equal(playground.status, "active");
-  assert.equal(playground.href, "/v2/playground/");
-  assert.equal(catalogueHref(playground, "/visual-language/"), "/visual-language/v2/playground/");
+  assert.equal(playground.href, "/playground/");
+  assert.equal(catalogueHref(playground, "/visual-language/"), "/visual-language/playground/");
   assert.equal(catalogueLinkIsExternal(playground), false);
-  assert.equal(catalogueItemIsCurrent(playground, "/v2/playground/"), true);
-  await access(new URL("../site/src/pages/v2/playground/index.astro", import.meta.url));
+  assert.equal(catalogueItemIsCurrent(playground, "/playground/"), true);
+  await access(new URL("../site/src/pages/playground/index.astro", import.meta.url));
 });
 
 test("arrival supports outcomes, exact loading, recovery, and account states", async () => {

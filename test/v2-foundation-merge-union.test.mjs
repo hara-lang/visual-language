@@ -14,10 +14,10 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
 
 const mergedRoutes = [
-  "site/src/pages/v2/diagrams/index.astro",
-  "site/src/pages/v2/symbols/index.astro",
-  "site/src/pages/v2/icons/index.astro",
-  "site/src/pages/v2/media/index.astro"
+  "site/src/pages/diagrams/index.astro",
+  "site/src/pages/symbols/index.astro",
+  "site/src/pages/icons/index.astro",
+  "site/src/pages/media/index.astro"
 ];
 
 const mergedDocuments = [
@@ -53,7 +53,7 @@ test("Iconography is primary, Semantic Symbols is compatible, and Delivery Media
   assert.equal(media.status, "active");
   assert.equal(media.issue, 108);
 
-  const symbolsContext = catalogueRouteContext("/v2/symbols/");
+  const symbolsContext = catalogueRouteContext("/symbols/");
   assert.equal(symbolsContext?.family.id, "icons");
   assert.equal(symbolsContext?.parent?.id, "icons");
   assert.equal(symbolsContext?.statusLabel, "Compatibility route");
@@ -76,7 +76,7 @@ test("the package exports the complete merged additive union", async () => {
     "./v2-symbols.css": "./src/v2/symbols.css",
     "./v2-icons.css": "./src/v2-icons.css",
     "./v2-media.css": "./src/v2-media.css",
-    "./v2/symbols.js": "./src/v2/symbols.mjs",
+    "./symbols.js": "./src/v2/symbols.mjs",
     "./icons.js": "./src/icons.mjs",
     "./astro/v2/Symbol.astro": "./src/astro/v2/Symbol.astro",
     "./astro/HaraIcon.astro": "./src/astro/HaraIcon.astro",
@@ -121,9 +121,9 @@ test("README and catalogue guide explain the merged hierarchy without removing c
     "v2-icons.css",
     "v2-symbols.css",
     "v2-media.css",
-    "/v2/icons/",
-    "/v2/symbols/",
-    "/v2/media/",
+    "/icons/",
+    "/symbols/",
+    "/media/",
     "compatibility"
   ]) {
     assert.match(readme, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));

@@ -40,8 +40,8 @@ export const catalogueGroups = [
       {
         id: "design-system",
         label: "Design system",
-        path: "/v2/foundations/",
-        href: "/v2/foundations/",
+        path: "/foundations/",
+        href: "/foundations/",
         summary: "Reference values for identity, colour, typography, spacing, geometry, imagery, motion, and accessibility.",
         status: "active",
         issue: 34,
@@ -50,8 +50,8 @@ export const catalogueGroups = [
       {
         id: "graphics",
         label: "Graphics",
-        path: "/v2/graphics/",
-        href: "/v2/graphics/",
+        path: "/graphics/",
+        href: "/graphics/",
         summary: "Background, texture, field, and shader specimens with fallback and reduced-motion states.",
         status: "active",
         eyebrow: "Images and shaders"
@@ -59,8 +59,8 @@ export const catalogueGroups = [
       {
         id: "frontmatter",
         label: "Front matter",
-        path: "/v2/frontmatter/",
-        href: "/v2/frontmatter/",
+        path: "/frontmatter/",
+        href: "/frontmatter/",
         summary: "Typed content metadata, controlled fields, lifecycle states, previews, revisions, and provenance.",
         status: "active",
         issue: 37,
@@ -69,8 +69,8 @@ export const catalogueGroups = [
       {
         id: "catalogue-guide",
         label: "Catalogue guide",
-        path: "/v2/guide/",
-        href: "/v2/guide/",
+        path: "/guide/",
+        href: "/guide/",
         summary: "Route structure, theme and viewport review, state coverage, validation, lifecycle, and adoption notes.",
         status: "active",
         issue: 90,
@@ -79,8 +79,8 @@ export const catalogueGroups = [
       {
         id: "data-visualisation",
         label: "Data visualisation",
-        path: "/v2/data/",
-        href: "/v2/data/",
+        path: "/data/",
+        href: "/data/",
         summary: "Benchmark comparisons, uncertainty, compatibility matrices, runtime telemetry, and missing-data states.",
         status: "active",
         issue: 91,
@@ -89,8 +89,8 @@ export const catalogueGroups = [
       {
         id: "diagrams",
         label: "Diagrams",
-        path: "/v2/diagrams/",
-        href: "/v2/diagrams/",
+        path: "/diagrams/",
+        href: "/diagrams/",
         summary: "Architecture, runtime flow, sequence, lifecycle, package, and namespace diagrams with complete text alternatives.",
         status: "active",
         issue: 100,
@@ -99,8 +99,8 @@ export const catalogueGroups = [
       {
         id: "icons",
         label: "Iconography",
-        path: "/v2/icons/",
-        href: "/v2/icons/",
+        path: "/icons/",
+        href: "/icons/",
         summary: "Interface symbols for actions, state, evidence, runtime capabilities, and the public Hara route families.",
         status: "active",
         issue: 106,
@@ -116,8 +116,8 @@ export const catalogueGroups = [
       {
         id: "components",
         label: "Components",
-        path: "/v2/components/",
-        href: "/v2/components/",
+        path: "/components/",
+        href: "/components/",
         summary: "Primitive, compound, document, data, profile, feed, form, tool, environment, and runtime specimens.",
         status: "active",
         issue: 35,
@@ -126,8 +126,8 @@ export const catalogueGroups = [
       {
         id: "ui-patterns",
         label: "UI patterns",
-        path: "/v2/ui/",
-        href: "/v2/ui/",
+        path: "/ui/",
+        href: "/ui/",
         summary: "Navigation, workflow, loading, empty, error, permission, responsive, and input-state references.",
         status: "active",
         issue: 36,
@@ -136,8 +136,8 @@ export const catalogueGroups = [
       {
         id: "tool-workbenches",
         label: "Tool workbenches",
-        path: "/v2/tool/",
-        href: "/v2/tool/",
+        path: "/tool/",
+        href: "/tool/",
         summary: "Reference compositions for 3D, node, material, animation, dock, inspector, toolbar, overlay, and status surfaces.",
         status: "settled",
         eyebrow: "Workbench reference"
@@ -152,8 +152,8 @@ export const catalogueGroups = [
       {
         id: "www",
         label: "Hara overview",
-        path: "/v2/www/",
-        href: "/v2/www/",
+        path: "/www/",
+        href: "/www/",
         summary: "A plain-language introduction to Hara forms, runtimes, libraries, source, documentation, and benchmark evidence.",
         status: "active",
         issue: 38,
@@ -162,8 +162,8 @@ export const catalogueGroups = [
           {
             id: "www-docs",
             label: "Docs",
-            path: "/v2/www/docs/",
-            href: "/v2/www/docs/",
+            path: "/www/docs/",
+            href: "/www/docs/",
             summary: "Task guides, reference material, search, versions, examples, and explicit runtime states.",
             status: "active",
             issue: 38
@@ -171,8 +171,8 @@ export const catalogueGroups = [
           {
             id: "www-benchmarks",
             label: "Benchmarks",
-            path: "/v2/www/benchmarks/",
-            href: "/v2/www/benchmarks/",
+            path: "/www/benchmarks/",
+            href: "/www/benchmarks/",
             summary: "Workload results with method, runtime, revision, uncertainty, history, and source tables.",
             status: "active",
             issue: 38
@@ -182,8 +182,8 @@ export const catalogueGroups = [
       {
         id: "playground",
         label: "Playground",
-        path: "/v2/playground/",
-        href: "/v2/playground/",
+        path: "/playground/",
+        href: "/playground/",
         summary: "Editor, sample, runtime-session, control-pane, embed, sharing, and mobile execution references.",
         status: "active",
         issue: 39,
@@ -192,8 +192,8 @@ export const catalogueGroups = [
       {
         id: "specs",
         label: "Specifications",
-        path: "/v2/specs/",
-        href: "/v2/specs/",
+        path: "/specs/",
+        href: "/specs/",
         summary: "Versioned specifications, conformance results, proposals, reviews, publication records, and change history.",
         status: "active",
         issue: 40,
@@ -202,8 +202,8 @@ export const catalogueGroups = [
       {
         id: "packages",
         label: "Packages",
-        path: "/v2/packages/",
-        href: "/v2/packages/",
+        path: "/packages/",
+        href: "/packages/",
         summary: "Package and namespace records covering ownership, versions, compatibility, artifacts, provenance, and maintenance.",
         status: "active",
         issue: 41,
@@ -212,8 +212,8 @@ export const catalogueGroups = [
       {
         id: "world",
         label: "World",
-        path: "/v2/world/",
-        href: "/v2/world/",
+        path: "/world/",
+        href: "/world/",
         summary: "Articles, discussions, external references, contributor profiles, package activity, presence, and owner-attributed bot comments.",
         status: "active",
         issue: 42,
@@ -222,8 +222,8 @@ export const catalogueGroups = [
           {
             id: "world-discussion",
             label: "Discussion",
-            path: "/v2/world/discussion/",
-            href: "/v2/world/discussion/",
+            path: "/world/discussion/",
+            href: "/world/discussion/",
             summary: "Articles, clippings, comments, contributor identity, presence, attribution, and moderation states.",
             status: "active",
             issue: 42,
@@ -232,8 +232,8 @@ export const catalogueGroups = [
           {
             id: "world-around",
             label: "Around Hara",
-            path: "/v2/world/around/",
-            href: "/v2/world/around/",
+            path: "/world/around/",
+            href: "/world/around/",
             summary: "External project and article references with source provenance, curation, moderation, and relay review.",
             status: "active",
             issue: 42
@@ -243,8 +243,8 @@ export const catalogueGroups = [
       {
         id: "learn",
         label: "Learn",
-        path: "/v2/learn/",
-        href: "/v2/learn/",
+        path: "/learn/",
+        href: "/learn/",
         summary: "Introductory explanations, runnable lessons, exercises, projects, progress records, and teaching guidance.",
         status: "active",
         issue: 43,
@@ -253,8 +253,8 @@ export const catalogueGroups = [
           {
             id: "learn-start",
             label: "Start here",
-            path: "/v2/learn/start/",
-            href: "/v2/learn/#start",
+            path: "/learn/start/",
+            href: "/learn/#start",
             summary: "Read and run a first Hara form, then change it and inspect the result.",
             status: "active",
             issue: 43
@@ -262,10 +262,10 @@ export const catalogueGroups = [
           {
             id: "start",
             label: "Repository-guided start",
-            path: "/v2/start/",
-            href: "/v2/start/",
-            canonicalPath: "/v2/learn/start/agent-first/",
-            aliases: ["/v2/start/"],
+            path: "/start/",
+            href: "/start/",
+            canonicalPath: "/learn/start/agent-first/",
+            aliases: ["/start/"],
             summary: "Use an agent or inspect the repository directly to choose a verified example, run it, and make one visible change.",
             status: "active",
             tabLabel: "Repository guide"
@@ -273,8 +273,8 @@ export const catalogueGroups = [
           {
             id: "learn-world-examples",
             label: "World interface examples",
-            path: "/v2/learn/world-examples/",
-            href: "/v2/learn/#world-examples",
+            path: "/learn/world-examples/",
+            href: "/learn/#world-examples",
             summary: "Guided readings of World screens, attribution, discussion, presence, and source handling.",
             status: "active",
             issue: 43,
@@ -283,10 +283,10 @@ export const catalogueGroups = [
           {
             id: "learn-community-study",
             label: "Community reader study",
-            path: "/v2/world/community/",
-            href: "/v2/world/community/",
-            canonicalPath: "/v2/learn/studies/world-community/",
-            aliases: ["/v2/world/community/"],
+            path: "/world/community/",
+            href: "/world/community/",
+            canonicalPath: "/learn/studies/world-community/",
+            aliases: ["/world/community/"],
             summary: "An earlier community interface retained as a historical Learn example rather than a current World destination.",
             status: "settled",
             kind: "historical",
@@ -295,10 +295,10 @@ export const catalogueGroups = [
           {
             id: "learn-onboarding-study",
             label: "Programmer onboarding study",
-            path: "/v2/world/onboarding/",
-            href: "/v2/world/onboarding/",
-            canonicalPath: "/v2/learn/studies/programmer-onboarding/",
-            aliases: ["/v2/world/onboarding/"],
+            path: "/world/onboarding/",
+            href: "/world/onboarding/",
+            canonicalPath: "/learn/studies/programmer-onboarding/",
+            aliases: ["/world/onboarding/"],
             summary: "An earlier executable-feed onboarding study retained for comparison and teaching.",
             status: "settled",
             kind: "historical",
@@ -422,7 +422,7 @@ function catalogueMatchLength(item, activePath) {
  */
 export function catalogueRouteContext(activePath) {
   const active = normalizeCataloguePath(activePath);
-  if (active === "/v2/") return null;
+  if (active === "/") return null;
 
   const item = [...catalogueItems]
     .filter((candidate) => catalogueItemIsCurrent(candidate, active))
@@ -446,8 +446,8 @@ export function catalogueRouteContext(activePath) {
     : catalogueStatusLabels[item.status];
 
   const crumbs = [
-    { id: "catalogue", label: "V2 reference", path: "/v2/" },
-    { id: group.id, label: group.label, path: `/v2/#catalogue-${group.id}` }
+    { id: "catalogue", label: "V2 reference", path: "/" },
+    { id: group.id, label: group.label, path: `/#catalogue-${group.id}` }
   ];
   if (parent) crumbs.push({ id: family.id, label: family.label, path: family.path });
   crumbs.push({ id: item.id, label: item.label, path: item.path, current: true });
@@ -461,7 +461,7 @@ export function catalogueRouteContext(activePath) {
     siblings,
     previous: currentIndex > 0 ? siblings[currentIndex - 1] : null,
     next: currentIndex >= 0 && currentIndex < siblings.length - 1 ? siblings[currentIndex + 1] : null,
-    parentTarget: parent ?? { id: "catalogue", label: "V2 reference", path: "/v2/", href: "/v2/", status: "active" },
+    parentTarget: parent ?? { id: "catalogue", label: "V2 reference", path: "/", href: "/", status: "active" },
     crumbs,
     canonicalPath,
     isAlias,

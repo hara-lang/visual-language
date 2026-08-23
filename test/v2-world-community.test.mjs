@@ -6,7 +6,7 @@ import { catalogueItemById } from "../site/src/lib/v2-catalogue.mjs";
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("the focused World study covers the complete community-reader product", async () => {
-  const page = await read("../site/src/pages/v2/world/community/index.astro");
+  const page = await read("../site/src/pages/world/community/index.astro");
 
   for (const id of ["hot", "thread", "whats-new", "feeds", "profile", "online"])
     assert.match(page, new RegExp(`id="${id}"`), `missing ${id} screen`);
@@ -23,7 +23,7 @@ test("the focused World study covers the complete community-reader product", asy
 });
 
 test("World navigation is narrowed to community reading and discovery", async () => {
-  const page = await read("../site/src/pages/v2/world/community/index.astro");
+  const page = await read("../site/src/pages/world/community/index.astro");
 
   for (const label of ["Hot", "New", "Clippings", "Feeds", "People"])
     assert.match(page, new RegExp(`label: "${label}"`));
@@ -35,7 +35,7 @@ test("World navigation is narrowed to community reading and discovery", async ()
 });
 
 test("the feed includes articles, clippings, package releases, and snippet of the day", async () => {
-  const page = await read("../site/src/pages/v2/world/community/index.astro");
+  const page = await read("../site/src/pages/world/community/index.astro");
 
   assert.match(page, /data-kind="article"/);
   assert.match(page, /data-kind="clipping"/);
@@ -48,7 +48,7 @@ test("the feed includes articles, clippings, package releases, and snippet of th
 });
 
 test("comments link people and user-owned bots through explicit ownership", async () => {
-  const page = await read("../site/src/pages/v2/world/community/index.astro");
+  const page = await read("../site/src/pages/world/community/index.astro");
 
   assert.match(page, /@mina\/build-bot/);
   assert.match(page, /bot by <a href="#profile">@mina<\/a>/i);
@@ -61,7 +61,7 @@ test("comments link people and user-owned bots through explicit ownership", asyn
 });
 
 test("the public digest and mailing list support what's new and what's hot", async () => {
-  const page = await read("../site/src/pages/v2/world/community/index.astro");
+  const page = await read("../site/src/pages/world/community/index.astro");
 
   assert.match(page, /What's new in Hara/);
   assert.match(page, /data-digest-choice="new"/);
@@ -73,7 +73,7 @@ test("the public digest and mailing list support what's new and what's hot", asy
 });
 
 test("feed submission stays first-party and GitHub-attributed", async () => {
-  const page = await read("../site/src/pages/v2/world/community/index.astro");
+  const page = await read("../site/src/pages/world/community/index.astro");
 
   assert.match(page, /Add your RSS or Atom feed/);
   assert.match(page, /data-feed-probe/);
@@ -85,7 +85,7 @@ test("feed submission stays first-party and GitHub-attributed", async () => {
 });
 
 test("profiles expose packages, namespaces, contributions, badges, and owned bots", async () => {
-  const page = await read("../site/src/pages/v2/world/community/index.astro");
+  const page = await read("../site/src/pages/world/community/index.astro");
 
   for (const phrase of [
     "packages deployed",
@@ -104,7 +104,7 @@ test("profiles expose packages, namespaces, contributions, badges, and owned bot
 });
 
 test("presence visualizes people, coarse activity, and accountable bots", async () => {
-  const page = await read("../site/src/pages/v2/world/community/index.astro");
+  const page = await read("../site/src/pages/world/community/index.astro");
 
   assert.match(page, /11 people are online/);
   assert.match(page, /world-presence-map/);
@@ -134,7 +134,7 @@ test("focused World styling is responsive and does not redefine protected Hara t
 });
 
 test("the earlier community study is linked from Learn rather than the active World menu", async () => {
-  const learnPage = await read("../site/src/pages/v2/learn/index.astro");
+  const learnPage = await read("../site/src/pages/learn/index.astro");
   const world = catalogueItemById("world");
   const learn = catalogueItemById("learn");
 

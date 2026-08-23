@@ -5,7 +5,7 @@ import test from "node:test";
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("the World onboarding journey covers the complete first-session funnel", async () => {
-  const page = await read("../site/src/pages/v2/world/onboarding/index.astro");
+  const page = await read("../site/src/pages/world/onboarding/index.astro");
 
   for (const id of ["arrival", "first-run", "interests", "for-you", "newcomer", "community-path"])
     assert.match(page, new RegExp(`id="${id}"`), `missing ${id} onboarding screen`);
@@ -21,7 +21,7 @@ test("the World onboarding journey covers the complete first-session funnel", as
 });
 
 test("onboarding preserves the run-change-save identity boundary", async () => {
-  const page = await read("../site/src/pages/v2/world/onboarding/index.astro");
+  const page = await read("../site/src/pages/world/onboarding/index.astro");
 
   assert.match(page, /No account needed/);
   assert.match(page, /data-onboarding-run="arrival"/);
@@ -32,7 +32,7 @@ test("onboarding preserves the run-change-save identity boundary", async () => {
 });
 
 test("feed interactions are programming-native rather than generic social actions", async () => {
-  const page = await read("../site/src/pages/v2/world/onboarding/index.astro");
+  const page = await read("../site/src/pages/world/onboarding/index.astro");
 
   for (const action of ["Run demo", "View Hara", "Remix", "Answer with code", "Run reproduction", "Open project"])
     assert.match(page, new RegExp(action));
@@ -43,14 +43,14 @@ test("feed interactions are programming-native rather than generic social action
 });
 
 test("community discovery is organized around work and newcomer participation", async () => {
-  const page = await read("../site/src/pages/v2/world/onboarding/index.astro");
+  const page = await read("../site/src/pages/world/onboarding/index.astro");
 
   for (const phrase of ["Projects first", "Help wanted", "New programmers", "First Hara program complete", "I'm interested", "Follow work, not celebrities"])
     assert.match(page, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 });
 
 test("the onboarding prototype has lightweight review interactions", async () => {
-  const page = await read("../site/src/pages/v2/world/onboarding/index.astro");
+  const page = await read("../site/src/pages/world/onboarding/index.astro");
 
   assert.match(page, /data-interest=/);
   assert.match(page, /data-experience=/);

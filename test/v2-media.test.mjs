@@ -28,7 +28,7 @@ import {
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
-const pagePath = "site/src/pages/v2/media/index.astro";
+const pagePath = "site/src/pages/media/index.astro";
 const componentPaths = [
   "site/src/components/v2-media/MediaProjectionLab.astro",
   "site/src/components/v2-media/MediaEmail.astro",
@@ -169,12 +169,12 @@ test("public media components validate format, state, label and provenance field
 test("the media route is active in Foundations and composes every detailed specimen", async () => {
   const route = catalogueItemById("media");
   assert.ok(route);
-  assert.equal(route.path, "/v2/media/");
-  assert.equal(route.href, "/v2/media/");
+  assert.equal(route.path, "/media/");
+  assert.equal(route.href, "/media/");
   assert.equal(route.status, "active");
   assert.equal(route.issue, 108);
-  assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/v2/media/");
-  assert.equal(catalogueItemIsCurrent(route, "/v2/media/"), true);
+  assert.equal(catalogueHref(route, "/visual-language/"), "/visual-language/media/");
+  assert.equal(catalogueItemIsCurrent(route, "/media/"), true);
   await access(resolve(root, pagePath));
   const page = await read(pagePath);
   assert.match(page, /import CatalogueHeader/);

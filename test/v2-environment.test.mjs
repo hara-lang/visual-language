@@ -105,7 +105,7 @@ test("environment CSS preserves calm hierarchy, state, and responsive yielding",
 
 test("the tool reference demonstrates the upstream environment composition", async () => {
   const [page, specimen, contract] = await Promise.all([
-    read("../site/src/pages/v2/tool/index.astro"),
+    read("../site/src/pages/tool/index.astro"),
     read("../site/src/components/v2-tool/EnvironmentWorkbenchSpecimen.astro"),
     read("../V2-ENVIRONMENT.md")
   ]);

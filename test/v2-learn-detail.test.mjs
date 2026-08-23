@@ -26,7 +26,7 @@ import {
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
-const pagePath = "site/src/pages/v2/learn/index.astro";
+const pagePath = "site/src/pages/learn/index.astro";
 const componentPaths = [
   "site/src/components/v2-learn/LearnLanding.astro",
   "site/src/components/v2-learn/LearnCourse.astro",

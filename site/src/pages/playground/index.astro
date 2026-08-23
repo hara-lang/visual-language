@@ -1,0 +1,355 @@
+---
+import CatalogueHeader from "../../components/v2-catalogue/CatalogueHeader.astro";
+import PlaygroundWorkspace from "../../components/v2-playground/PlaygroundWorkspace.astro";
+import PlaygroundEmbeds from "../../components/v2-playground/PlaygroundEmbeds.astro";
+import PlaygroundMobile from "../../components/v2-playground/PlaygroundMobile.astro";
+import { contentContractById, contentTypeById } from "../../lib/v2-frontmatter.mjs";
+import "../../../../src/v2-tool.css";
+import "../../../../src/theme.js";
+import "../../styles/v2-lab.css";
+import "../../styles/v2-calm-lab.css";
+import "../../styles/v2-playground.css";
+
+const base = import.meta.env.BASE_URL;
+const basePath = base.endsWith("/") ? base : `${base}/`;
+const pageUrl = new URL(`${basePath}playground/`, Astro.site);
+const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
+const v2Lab = `${basePath}`;
+const toolLab = `${basePath}tool/`;
+const docsLab = `${basePath}frontmatter/`;
+const exactPlaygroundUrl = `${basePath}playground/?repo=hara-lang%2Fhara-playground&branch=main&path=samples%2Fsupersonic-live%2Fmain.hara&revision=9f3c2ab7&backend=interpreter`;
+
+const docsContract = contentContractById("docs");
+const learnContract = contentContractById("learn");
+const liveExampleType = contentTypeById("docs.live-example");
+const exerciseType = contentTypeById("learn.exercise");
+const projectType = contentTypeById("learn.project");
+
+const source = `(defn ribbon-field
+  [{:keys [count width decay]
+    :or   {count 12 width 0.42 decay 0.18}}]
+  (canvas/field
+    {:ribbons count
+     :trail-width width
+     :signal-decay decay
+     :palette :hara/signal}))
+
+(def live
+  (session/start
+    {:scene (ribbon-field {})
+     :observe [:lifecycle :canvas.frame :runtime.value]}))`;
+
+const outcomes = [
+  {
+    id: "move",
+    eyebrow: "Canvas example",
+    title: "Ribbon signal field",
+    summary: "Run a Canvas sample, change trail width, and inspect the exact mutation receipt.",
+    backend: "Interpreter",
+    capabilities: ["eval", "cancel", "canvas", "observations"],
+    status: "available"
+  },
+  {
+    id: "inspect",
+    eyebrow: "Runtime event example",
+    title: "Session event microscope",
+    summary: "Follow monotonic lifecycle and value observations across restart and replacement.",
+    backend: "Interpreter + HBC",
+    capabilities: ["eval", "restart", "observations", "diagnostics"],
+    status: "available"
+  },
+  {
+    id: "compose",
+    eyebrow: "WebGL example",
+    title: "Material and shader study",
+    summary: "Edit source beside a progressive WebGL preview with a labelled static fallback.",
+    backend: "Interpreter",
+    capabilities: ["eval", "canvas", "webgl", "fallback"],
+    status: "available"
+  },
+  {
+    id: "build",
+    eyebrow: "Work algebra example",
+    title: "Durable work receipt",
+    summary: "Model replayable work and checkpointed steps, then inspect the resulting receipt.",
+    backend: "HBC requested",
+    capabilities: ["files", "work", "receipts"],
+    status: "backend unavailable"
+  }
+];
+
+const recent = [
+  { title: "Ribbon signal field", detail: "hara-lang/hara-playground · main · 9f3c2ab7", state: "ready", time: "12 minutes ago" },
+  { title: "Whole-Wasm value inspector", detail: "hara-lang/hara · main · 71cc80f4", state: "cancelled", time: "Yesterday" },
+  { title: "Soft-body procedure", detail: "local draft · unpublished", state: "private", time: "3 days ago" }
+];
+
+const integrationCode = `<hara-live-example
+  content-id="hara:docs:live-example:ribbon-field"
+  repo="hara-lang/hara-playground"
+  branch="main"
+  path="samples/supersonic-live/main.hara"
+  revision="9f3c2ab7"
+  backend="interpreter"
+  editable
+  controls="sessions,files">
+</hara-live-example>`;
+
+const portableSnippet = `{:schema hara.docs/live-example
+ :schema-version "2.1.0"
+ :content-id "hara:docs:live-example:ribbon-field"
+ :source {:repo "hara-lang/hara-playground"
+          :branch "main"
+          :path "samples/supersonic-live/main.hara"
+          :revision "9f3c2ab7"}
+ :runtime {:backend :interpreter
+           :capabilities [:eval :cancel :canvas :observations]}}`;
+
+const localNav = [
+  { href: "#arrival", label: "Open source" },
+  { href: "#workspace", label: "Workspace" },
+  { href: "#embedded", label: "Embedded" },
+  { href: "#sharing", label: "Sharing" },
+  { href: "#mobile", label: "Mobile" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Hara Playground reference covering exact repository source, runtime sessions, editor and result states, capabilities, diagnostics, embeds, sharing, and mobile execution." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hara Visual Language" />
+    <meta property="og:title" content="Hara Playground" />
+    <meta property="og:description" content="Read and run an exact Hara source revision in a named runtime session with explicit capabilities and result records." />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Hara Playground" />
+    <meta name="twitter:description" content="Source, editor, runtime session, capabilities, diagnostics, embeds, and exact sharing for Hara examples." />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="icon" href={`${basePath}hara-logo.svg`} type="image/svg+xml" />
+    <title>Hara Playground</title>
+  </head>
+  <body class="hara-v2 hara-v2-tool hara-v2-playground">
+    <CatalogueHeader basePath={basePath} activePath="/playground/" label="Playground" />
+    <nav class="playground-local-nav" aria-label="Playground sections">
+      <span>Playground</span>
+      <div>{localNav.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+      <a href={toolLab}>Workbench reference ↗</a>
+    </nav>
+
+    <main class="playground-main">
+      <aside class="playground-lab-notice" role="note">
+        <strong>Interactive session specimen</strong>
+        <span>The controls below simulate the shared live-session lifecycle and responsive behaviour. This Visual Language route is not connected to a Hara evaluator and does not modify a repository.</span>
+      </aside>
+      <section class="playground-hero" aria-labelledby="playground-title">
+        <div class="playground-hero-copy">
+          <p class="hara-v2-kicker">Source and runtime reference</p>
+          <h1 id="playground-title">Run an exact Hara source revision in a named session.</h1>
+          <p>A session is one identifiable runtime context with a generation, requested and actual backend, source revision, capabilities, events, diagnostics, and result records. The Playground keeps those facts beside the editor rather than treating execution as an unlabelled preview.</p>
+          <div class="playground-hero-actions">
+            <a class="playground-primary-action" href="#workspace">Open the ribbon-field example</a>
+            <a href="#arrival">View available samples</a>
+            <a href="#embedded">Read the embed contract</a>
+          </div>
+          <div class="playground-contract-row" aria-label="Consumed shared contracts">
+            <span>{liveExampleType?.id ?? "docs.live-example"}<b>@{liveExampleType?.version ?? docsContract?.schemaVersion}</b></span>
+            <span>{exerciseType?.id ?? "learn.exercise"}<b>@{exerciseType?.version ?? learnContract?.schemaVersion}</b></span>
+            <span>{projectType?.id ?? "learn.project"}<b>@{projectType?.version ?? learnContract?.schemaVersion}</b></span>
+          </div>
+        </div>
+        <aside class="playground-hero-session" aria-label="Shared live-session envelope">
+          <header><span>Live-session envelope · simulated host</span><strong data-state="ready"><i></i> Ready</strong></header>
+          <dl>
+            <div><dt>Session</dt><dd>pg-7a91</dd></div>
+            <div><dt>Generation</dt><dd>4</dd></div>
+            <div><dt>Source revision</dt><dd>9f3c2ab7</dd></div>
+            <div><dt>Event sequence</dt><dd>148</dd></div>
+            <div><dt>Requested backend</dt><dd>interpreter</dd></div>
+            <div><dt>Actual backend</dt><dd>interpreter</dd></div>
+          </dl>
+          <div class="playground-capability-strip">
+            <span data-available="true">eval</span><span data-available="true">cancel</span><span data-available="true">canvas</span><span data-available="true">observations</span><span data-available="false">3D</span>
+          </div>
+        </aside>
+      </section>
+
+      <section id="arrival" class="playground-arrival" aria-labelledby="arrival-title">
+        <header class="playground-section-heading">
+          <div>
+            <p class="hara-v2-kicker">Samples and repository source</p>
+            <h2 id="arrival-title">Choose a sample or load exact repository coordinates.</h2>
+          </div>
+          <p>A sample record names its source revision, backend, required capabilities, and current availability. Experienced users and agents may enter repository coordinates directly.</p>
+        </header>
+
+        <div class="playground-arrival-actions" role="group" aria-label="First-run choices">
+          <a href="#workspace"><span>01</span><strong>Run</strong><small>Open the documented sample without creating an account or focusing the editor.</small></a>
+          <a href="#workspace"><span>02</span><strong>Edit</strong><small>Open source beside its result, diagnostics, and session facts.</small></a>
+          <a href="#sample-gallery"><span>03</span><strong>Browse</strong><small>Compare samples by language concept, runtime, and required capabilities.</small></a>
+        </div>
+
+        <form class="playground-repository-loader" data-repository-loader>
+          <header>
+            <div><span>Load exact source</span><strong>Repository · branch · path · revision</strong></div>
+            <span data-loader-status>Ready to load</span>
+          </header>
+          <label>Repository<input name="repo" value="hara-lang/hara-playground" autocomplete="off" /></label>
+          <label>Branch<input name="branch" value="main" autocomplete="off" /></label>
+          <label>Path<input name="path" value="samples/supersonic-live/main.hara" autocomplete="off" /></label>
+          <label>Revision<input name="revision" value="9f3c2ab7" autocomplete="off" /></label>
+          <button type="submit">Load exact revision</button>
+          <button type="button" data-loader-state-button="missing">Show missing revision</button>
+          <button type="button" data-loader-state-button="unavailable">Show unavailable sample</button>
+          <div class="playground-loader-message" data-loader-message data-state="ready">
+            <strong>Exact source available.</strong><span>A new session will be created; the current session will not be modified.</span>
+          </div>
+        </form>
+
+        <div id="sample-gallery" class="playground-sample-gallery">
+          {outcomes.map((sample) => (
+            <article data-sample={sample.id} data-sample-status={sample.status}>
+              <header><span>{sample.eyebrow}</span><i data-state={sample.status === "available" ? "ready" : "warning"}>{sample.status}</i></header>
+              <h3>{sample.title}</h3>
+              <p>{sample.summary}</p>
+              <div>{sample.capabilities.map((capability) => <code>{capability}</code>)}</div>
+              <footer><span>{sample.backend}</span><button type="button" disabled={sample.status !== "available"}>Open sample</button></footer>
+            </article>
+          ))}
+        </div>
+
+        <div class="playground-session-library">
+          <section>
+            <header><div><span>Recent sessions</span><strong>Browser-local until saved</strong></div><button type="button">Clear recent</button></header>
+            <ul>
+              {recent.map((item) => (
+                <li data-state={item.state}>
+                  <button type="button"><strong>{item.title}</strong><small>{item.detail}</small></button>
+                  <span>{item.time}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+          <aside>
+            <span>Anonymous use</span>
+            <h3>Public source can be run and shared without an account.</h3>
+            <p>Recent sessions remain in the browser. Saving an editable project or publishing a private link requires an accountable identity.</p>
+            <div><button type="button">Copy exact public link</button><button type="button">Sign in to save</button></div>
+            <hr />
+            <span>Saved session</span>
+            <p>Saved sessions retain owner, visibility, source revision, runtime receipt references, and replacement history.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="workspace" class="playground-workspace-study" aria-labelledby="workspace-title">
+        <header class="playground-section-heading playground-workspace-intro">
+          <div>
+            <p class="hara-v2-kicker">Coding workspace</p>
+            <h2 id="workspace-title">Source, result, diagnostics, and session facts share one workspace.</h2>
+          </div>
+          <p>Dense and comfortable modes change spacing only. The control pane is optional and dismissible; runtime identity and capability facts remain available.</p>
+        </header>
+        <PlaygroundWorkspace source={source} />
+        <div class="playground-density-contract" aria-label="Workspace density modes">
+          <button type="button" data-density-mode="clean">Clean</button>
+          <button type="button" data-density-mode="dense">Dense</button>
+          <button type="button" data-density-mode="comfortable" aria-pressed="true">Comfortable</button>
+          <p>Density is presentation state. Session, source, backend, capability, diagnostic, and receipt facts remain unchanged.</p>
+        </div>
+      </section>
+
+      <section id="embedded">
+        <PlaygroundEmbeds source={source} playgroundUrl={exactPlaygroundUrl} />
+      </section>
+
+      <section id="sharing" class="playground-sharing" aria-labelledby="sharing-title">
+        <header class="playground-section-heading">
+          <div>
+            <p class="hara-v2-kicker">Sharing and embedding</p>
+            <h2 id="sharing-title">A shared link records exact source coordinates.</h2>
+          </div>
+          <p>Links include repository, branch, path, revision, requested backend, and editability. Runtime receipts remain references to runtime-owned facts.</p>
+        </header>
+
+        <div class="playground-sharing-grid">
+          <article class="playground-share-builder">
+            <header><span>Exact project link</span><strong>Portable source reference</strong></header>
+            <label>Repository<input value="hara-lang/hara-playground" readonly /></label>
+            <label>Branch<input value="main" readonly /></label>
+            <label>Path<input value="samples/supersonic-live/main.hara" readonly /></label>
+            <label>Revision<input value="9f3c2ab7" readonly /></label>
+            <fieldset>
+              <legend>Embed mode</legend>
+              <label><input type="radio" name="embed-mode" value="readonly" /> Read only</label>
+              <label><input type="radio" name="embed-mode" value="editable" checked /> Editable</label>
+            </fieldset>
+            <label class="playground-checkbox"><input type="checkbox" checked /> Show optional Sessions and Files pane</label>
+            <label class="playground-checkbox"><input type="checkbox" /> Request Canvas controls</label>
+            <div class="playground-generated-link"><code>{exactPlaygroundUrl}</code><button type="button" data-copy-value={exactPlaygroundUrl}>Copy exact link</button></div>
+          </article>
+
+          <article class="playground-embed-code">
+            <header><span>Generated integration code</span><button type="button" data-copy-value={integrationCode}>Copy code</button></header>
+            <pre><code>{integrationCode}</code></pre>
+            <p>The host may request controls and editability. The runtime response determines the actual backend, capabilities, source fence, and receipt.</p>
+          </article>
+
+          <article class="playground-portable-snippet">
+            <header><span>Portable Hara publication form</span><button type="button" data-copy-value={portableSnippet}>Copy form</button></header>
+            <pre><code>{portableSnippet}</code></pre>
+          </article>
+
+          <div class="playground-share-states">
+            <article data-state="private">
+              <span>Private / unpublished</span>
+              <h3>This project has no public route.</h3>
+              <p>Only the owner and explicitly authorised collaborators can resolve the content identity. A copied URL does not grant access.</p>
+              <button type="button">Review visibility</button>
+            </article>
+            <article data-state="stale">
+              <span>Stale link</span>
+              <h3>Revision 72aa901 is no longer current.</h3>
+              <p>The exact historical source remains available. Opening the latest revision requires an explicit replacement action.</p>
+              <div><button type="button">Open historical revision</button><button type="button">Request latest replacement</button></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="mobile">
+        <PlaygroundMobile source={source} />
+      </section>
+
+      <section class="playground-adoption" aria-labelledby="adoption-title">
+        <header class="playground-section-heading">
+          <div>
+            <p class="hara-v2-kicker">Ownership and adoption</p>
+            <h2 id="adoption-title">The interface presents runtime state; it does not author runtime facts.</h2>
+          </div>
+        </header>
+        <div>
+          <article><span>Visual Language</span><p>Workbench geometry, tabs, controls, responsive yielding, status presentation, focus treatment, and capability-aware slot composition.</p></article>
+          <article><span>Public Playground</span><p>Repository loading, project navigation, editor state, saved sessions, account behaviour, sharing policy, and application commands.</p></article>
+          <article><span>Docs embed</span><p>Surrounding explanation, live-example placement, read-only or editable request, expansion control, and open-in-Playground handoff.</p></article>
+          <article><span>Runtime</span><p>Session identity, generation, source revision, backend, capabilities, monotonic events, replacement, cancellation, disposal, observations, and receipts.</p></article>
+        </div>
+        <p>See <a href={docsLab}>the front-matter contract</a>, <a href={toolLab}>the workbench reference</a>, and <code>V2-PLAYGROUND.md</code> for the implementation boundary.</p>
+      </section>
+
+      <footer class="v2-lab-footer playground-footer">
+        <span>Hara Playground reference · Visual language v2</span>
+        <span><a href={v2Lab}>V2 reference</a> · <a href={toolLab}>Workbench reference</a> · <a href="https://github.com/hara-lang/visual-language/issues/39">Implementation record</a> · <a href="https://github.com/hara-lang/visual-language">Source</a></span>
+      </footer>
+    </main>
+
+    <script>
+      import { initialisePlayground } from "../../scripts/v2-playground.js";
+      initialisePlayground();
+    </script>
+  </body>
+</html>

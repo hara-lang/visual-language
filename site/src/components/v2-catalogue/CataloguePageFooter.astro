@@ -4,8 +4,8 @@ import { catalogueHref, catalogueLinkIsExternal, catalogueRouteContext } from ".
 const { basePath, activePath } = Astro.props;
 const context = catalogueRouteContext(activePath);
 const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
-const catalogueHome = `${normalizedBasePath}v2/`;
-const catalogueGuide = `${normalizedBasePath}v2/guide/`;
+const catalogueHome = `${normalizedBasePath}`;
+const catalogueGuide = `${normalizedBasePath}guide/`;
 const itemHref = (item) => item.href || item.issue
   ? catalogueHref(item, basePath)
   : `${normalizedBasePath}${item.path.replace(/^\/+/, "")}`;

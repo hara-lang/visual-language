@@ -1,6 +1,6 @@
 ---
 import ThemeToggle from "@hara-lang/ui-astro/astro/ThemeToggle.astro";
-import HaraMark from "@hara-lang/ui-astro/astro/HaraMark.astro";
+import Header from "@hara-lang/ui-astro/astro/v2/Header.astro";
 import CatalogueFallback from "./CatalogueFallback.astro";
 import CatalogueLauncher from "./CatalogueLauncher.astro";
 import { catalogueRouteContext } from "../../lib/v2-catalogue.mjs";
@@ -11,27 +11,32 @@ import "../../styles/v2-navigation-tighten.css";
 
 const {
   basePath,
-  activePath = "/v2/",
+  activePath = "/",
   label = "Hara visual language catalogue",
   sourceHref = "https://github.com/hara-lang/visual-language"
 } = Astro.props;
 
 const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
-const catalogueHome = `${normalizedBasePath}v2/`;
+const catalogueHome = `${normalizedBasePath}`;
 const context = catalogueRouteContext(activePath);
 const launcherContext = context?.group.label ?? "Catalogue";
+const catalogueNav = [
+  { href: `${normalizedBasePath}www/docs/`, label: "Docs", current: activePath.startsWith("/www/docs") },
+  { href: `${normalizedBasePath}components/`, label: "Components", current: activePath.startsWith("/components") },
+  { href: `${normalizedBasePath}ui/`, label: "Patterns", current: activePath.startsWith("/ui") }
+];
 ---
-<header class="v2-catalogue-masthead" data-catalogue-masthead data-launcher-open="false">
+<div class="v2-catalogue-shell" data-catalogue-masthead data-launcher-open="false">
   <a class="v2-catalogue-skip-link" href="#v2-catalogue-content">Skip to route content</a>
-  <a class="v2-catalogue-brand" href={catalogueHome} aria-label={label}>
-    <HaraMark size={27} />
-    <span>
-      <b>Hara visual language</b>
-      <small>Interface catalogue · V2</small>
-    </span>
-  </a>
-
-  <div class="v2-catalogue-masthead-actions">
+  <Header
+    homeHref={catalogueHome}
+    section="Visual language"
+    nav={catalogueNav}
+    activePath={activePath}
+    label={label}
+    account="logged-out"
+    accountHref="#account"
+  >
     <button
       class="v2-catalogue-launcher-trigger"
       type="button"
@@ -47,11 +52,11 @@ const launcherContext = context?.group.label ?? "Catalogue";
     </button>
     <a class="v2-catalogue-source-link" href={sourceHref}>Source</a>
     <ThemeToggle />
-  </div>
+  </Header>
 
   <CatalogueLauncher basePath={basePath} activePath={activePath} />
   <CatalogueFallback basePath={basePath} />
-</header>
+</div>
 
 <script>
   const initialiseCatalogueMastheads = () => {

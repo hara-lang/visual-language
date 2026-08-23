@@ -8,8 +8,8 @@ const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 test("the focused World reference is linked from the v2 review surface", async () => {
   const [index, page] = await Promise.all([
-    read("../site/src/pages/v2/index.astro"),
-    read("../site/src/pages/v2/world/discussion/index.astro")
+    read("../site/src/pages/index.astro"),
+    read("../site/src/pages/world/discussion/index.astro")
   ]);
 
   assert.match(index, /const worldDiscussionLab = `\$\{basePath\}v2\/world\/discussion\/`/);
@@ -18,7 +18,7 @@ test("the focused World reference is linked from the v2 review surface", async (
 });
 
 test("the focused route covers front page, thread, clipping, presence, profile, and scope", async () => {
-  const page = await read("../site/src/pages/v2/world/discussion/index.astro");
+  const page = await read("../site/src/pages/world/discussion/index.astro");
 
   for (const id of ["front-page", "thread", "clipping", "presence", "profile", "scope"])
     assert.match(page, new RegExp(`id="${id}"`), `missing ${id} screen`);
@@ -28,7 +28,7 @@ test("the focused route covers front page, thread, clipping, presence, profile, 
 });
 
 test("World local navigation is discussion-focused and Learn is an external ecosystem destination", async () => {
-  const page = await read("../site/src/pages/v2/world/discussion/index.astro");
+  const page = await read("../site/src/pages/world/discussion/index.astro");
   const nav = page.match(/const worldNav = \(current\) => \[[\s\S]*?\n\];/)?.[0] ?? "";
 
   for (const label of ["Hot", "New", "Following", "Clippings", "Profiles"])
@@ -41,7 +41,7 @@ test("World local navigation is discussion-focused and Learn is an external ecos
 });
 
 test("the front page centers articles, feeds, clippings, comments, presence, and the daily snippet", async () => {
-  const page = await read("../site/src/pages/v2/world/discussion/index.astro");
+  const page = await read("../site/src/pages/world/discussion/index.astro");
 
   for (const phrase of [
     "Article and discussion index",
@@ -58,7 +58,7 @@ test("the front page centers articles, feeds, clippings, comments, presence, and
 });
 
 test("comments link users and bots remain visibly accountable to present owners", async () => {
-  const page = await read("../site/src/pages/v2/world/discussion/index.astro");
+  const page = await read("../site/src/pages/world/discussion/index.astro");
 
   assert.match(page, /class="world-comment world-comment--bot"/);
   assert.match(page, /data-bot-owner="@mina"/);
@@ -71,7 +71,7 @@ test("comments link users and bots remain visibly accountable to present owners"
 });
 
 test("presence visualizes active threads, people, maintainers, and owner-linked bots", async () => {
-  const page = await read("../site/src/pages/v2/world/discussion/index.astro");
+  const page = await read("../site/src/pages/world/discussion/index.astro");
 
   for (const phrase of ["22 people across 9 discussions", "7 commenting", "8 reading", "3 maintaining", "4 bots"])
     assert.match(page, new RegExp(escapeRegex(phrase)));
@@ -83,7 +83,7 @@ test("presence visualizes active threads, people, maintainers, and owner-linked 
 });
 
 test("profiles center packages, contributions, evidence-linked badges, comments, clippings, and owned bots", async () => {
-  const page = await read("../site/src/pages/v2/world/discussion/index.astro");
+  const page = await read("../site/src/pages/world/discussion/index.astro");
 
   for (const phrase of [
     "Contribution badges",
@@ -101,7 +101,7 @@ test("profiles center packages, contributions, evidence-linked badges, comments,
 });
 
 test("the route boundary moves structured learning to learn.hara-lang.org", async () => {
-  const page = await read("../site/src/pages/v2/world/discussion/index.astro");
+  const page = await read("../site/src/pages/world/discussion/index.astro");
 
   assert.match(page, /All learning materials live at learn\.hara-lang\.org\./);
   assert.match(page, /World discusses Hara\. Learn teaches it\./);
@@ -113,7 +113,7 @@ test("the route boundary moves structured learning to learn.hara-lang.org", asyn
 });
 
 test("the review prototype includes voting, comment collapse, presence filtering, clipping preview, and snippet feedback", async () => {
-  const page = await read("../site/src/pages/v2/world/discussion/index.astro");
+  const page = await read("../site/src/pages/world/discussion/index.astro");
 
   assert.match(page, /initWorldDiscussionPrototype/);
   assert.match(page, /data-comment-toggle/);

@@ -8,7 +8,7 @@ import {
 } from "../site/src/lib/v2-catalogue.mjs";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
-const pagePath = "../site/src/pages/v2/foundations/index.astro";
+const pagePath = "../site/src/pages/foundations/index.astro";
 
 const requiredSections = [
   "identity",
@@ -76,7 +76,7 @@ test("the foundations route is current, internal, and discoverable from the cata
   assert.ok(foundations);
   assert.equal(foundations.status, "active");
   assert.equal(foundations.issue, 34);
-  assert.equal(catalogueHref(foundations, "/visual-language/"), "/visual-language/v2/foundations/");
+  assert.equal(catalogueHref(foundations, "/visual-language/"), "/visual-language/foundations/");
   assert.equal(catalogueLinkIsExternal(foundations), false);
 });
 

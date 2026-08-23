@@ -35,7 +35,7 @@ import {
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFile(resolve(root, path), "utf8");
-const pagePath = "site/src/pages/v2/guide/index.astro";
+const pagePath = "site/src/pages/guide/index.astro";
 const componentPaths = [
   "site/src/components/v2-guide/GuideRouteMatrix.astro",
   "site/src/components/v2-guide/GuideReviewDeck.astro",
@@ -53,20 +53,20 @@ test("guide fixture is explicit and the closeout route inventory is exact", () =
   assert.equal(guideFixtureNotice.productionAudit, false);
   assert.match(guideFixtureNotice.summary, /not an external accessibility certification/i);
   assert.deepEqual(requiredReviewRoutes.map(({ path }) => path), [
-    "/v2/",
-    "/v2/foundations/",
-    "/v2/components/",
-    "/v2/ui/",
-    "/v2/frontmatter/",
-    "/v2/tool/",
-    "/v2/www/",
-    "/v2/www/docs/",
-    "/v2/www/benchmarks/",
-    "/v2/playground/",
-    "/v2/specs/",
-    "/v2/packages/",
-    "/v2/world/",
-    "/v2/learn/"
+    "/",
+    "/foundations/",
+    "/components/",
+    "/ui/",
+    "/frontmatter/",
+    "/tool/",
+    "/www/",
+    "/www/docs/",
+    "/www/benchmarks/",
+    "/playground/",
+    "/specs/",
+    "/packages/",
+    "/world/",
+    "/learn/"
   ]);
   assert.equal(new Set(requiredReviewRoutes.map(({ id }) => id)).size, requiredReviewRoutes.length);
   assert.equal(new Set(requiredReviewRoutes.map(({ path }) => path)).size, requiredReviewRoutes.length);
@@ -87,12 +87,12 @@ test("every non-root required review route resolves to a current manifest item",
 test("the guide is an active internal Foundations route", () => {
   const guide = catalogueItemById("catalogue-guide");
   assert.ok(guide);
-  assert.equal(guide.path, "/v2/guide/");
-  assert.equal(guide.href, "/v2/guide/");
+  assert.equal(guide.path, "/guide/");
+  assert.equal(guide.href, "/guide/");
   assert.equal(guide.status, "active");
   assert.equal(guide.issue, 90);
-  assert.equal(catalogueHref(guide, "/visual-language/"), "/visual-language/v2/guide/");
-  assert.equal(catalogueItemIsCurrent(guide, "/v2/guide/"), true);
+  assert.equal(catalogueHref(guide, "/visual-language/"), "/visual-language/guide/");
+  assert.equal(catalogueItemIsCurrent(guide, "/guide/"), true);
 });
 
 test("review matrix has two themes, five exact viewports and deterministic cells", () => {
@@ -130,15 +130,15 @@ test("route search is deterministic across labels, states, groups and downstream
   assert.deepEqual(filterReviewRoutes("backend-unavailable").map(({ id }) => id), ["playground"]);
   assert.deepEqual(filterReviewRoutes("hara-specs").map(({ id }) => id), ["specs"]);
   assert.deepEqual(filterReviewRoutes("", "Library").map(({ id }) => id), ["components", "ui-patterns", "tool-workbenches"]);
-  assert.equal(reviewRouteById("packages")?.path, "/v2/packages/");
-  assert.equal(reviewRouteByPath("https://example.test/v2/learn/?x=1")?.id, "learn");
+  assert.equal(reviewRouteById("packages")?.path, "/packages/");
+  assert.equal(reviewRouteByPath("https://example.test/learn/?x=1")?.id, "learn");
 });
 
 test("current extensions and historical studies remain visibly separate", () => {
   assert.ok(supplementaryReviewRoutes.some(({ id }) => id === "graphics"));
   assert.ok(supplementaryReviewRoutes.some(({ id }) => id === "hara-chrome"));
   assert.deepEqual(historicalReviewRoutes.map(({ id }) => id), ["learn-community-study", "learn-onboarding-study", "world-feed-study"]);
-  assert.ok(historicalReviewRoutes.every(({ canonicalPath }) => canonicalPath.startsWith("/v2/learn/")));
+  assert.ok(historicalReviewRoutes.every(({ canonicalPath }) => canonicalPath.startsWith("/learn/")));
   assert.ok(historicalReviewRoutes.every(({ summary }) => /retained/i.test(summary)));
 });
 
@@ -157,7 +157,7 @@ test("the review procedure, checks and adoption map cover the complete closeout 
   assert.equal(screenshotProcedure.length, 8);
   assert.match(screenshotProcedure.join(" "), /1440.*1024.*680.*390.*320/);
   assert.deepEqual(adoptionTargets.map(({ id }) => id), ["www", "docs", "benchmarks", "playground", "specs", "packages", "world", "learn"]);
-  assert.ok(adoptionTargets.every(({ route }) => route.startsWith("/v2/")));
+  assert.ok(adoptionTargets.every(({ route }) => route.startsWith("/")));
 });
 
 test("the page composes the complete route, review, architecture and adoption guide", async () => {

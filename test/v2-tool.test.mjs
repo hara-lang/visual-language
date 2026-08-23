@@ -138,8 +138,8 @@ test("workbench CSS preserves the viewport while secondary regions collapse", as
 
 test("the tool reference covers 3D, node/material, and animation workbenches", async () => {
   const [page, documentLab, specimens] = await Promise.all([
-    read("../site/src/pages/v2/tool/index.astro"),
-    read("../site/src/pages/v2/index.astro"),
+    read("../site/src/pages/tool/index.astro"),
+    read("../site/src/pages/index.astro"),
     Promise.all([
       "ThreeDWorkbenchSpecimen", "NodeWorkbenchSpecimen", "AnimationWorkbenchSpecimen"
     ].map((name) => read(`../site/src/components/v2-tool/${name}.astro`))).then((parts) => parts.join("\n"))

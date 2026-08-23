@@ -56,7 +56,7 @@ test("the components route registers both merged extension inventories before mo
   assert.match(source, /RenderedComponentGallery/);
   assert.match(source, /ensureFoundationComponentInventory/);
   assert.match(source, /ensureSymbolComponentInventory/);
-  assert.match(source, /resolvedActivePath.*v2\/components/s);
+  assert.match(source, /resolvedActivePath.*\/components/s);
   assert.match(source, /data-components-showcase-mount/);
   assert.match(source, /hero\.after\(showcase\)/);
   assert.match(source, /setAttribute\(["']href["'],\s*["']#rendered-components["']\)/);

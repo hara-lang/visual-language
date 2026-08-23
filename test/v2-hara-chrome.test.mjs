@@ -16,8 +16,8 @@ const readSpecimens = async () => (await Promise.all(
 
 test("Hara Chrome has a dedicated v2 tool reference route", async () => {
   const [page, toolPage] = await Promise.all([
-    read("../site/src/pages/v2/tool/hara-chrome/index.astro"),
-    read("../site/src/pages/v2/tool/index.astro")
+    read("../site/src/pages/tool/hara-chrome/index.astro"),
+    read("../site/src/pages/tool/index.astro")
   ]);
 
   for (const name of specimenNames) assert.match(page, new RegExp(`<${name}\\s*/>`));
@@ -126,7 +126,7 @@ test("the reference CSS covers popup, app, state, and responsive review widths",
 
 test("the screen reference does not implement runtime behaviour", async () => {
   const [page, specimens] = await Promise.all([
-    read("../site/src/pages/v2/tool/hara-chrome/index.astro"),
+    read("../site/src/pages/tool/hara-chrome/index.astro"),
     readSpecimens()
   ]);
   assert.doesNotMatch(specimens, /<script\b/i);
