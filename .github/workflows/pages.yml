@@ -19,7 +19,11 @@ jobs:
         with:
           repository: hara-lang/hara-ui
           ref: main
-          path: ../../technology/hara-ui
+          path: hara-ui
+      - name: Link Hara UI workspace path
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/../../technology"
+          ln -sfn "$GITHUB_WORKSPACE/hara-ui" "$GITHUB_WORKSPACE/../../technology/hara-ui"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
