@@ -13,7 +13,7 @@ const backgrounds = [
 
 test("material field system is exported from the package", async () => {
   const pkg = JSON.parse(await readFile(new URL("package.json", root), "utf8"));
-  assert.equal(pkg.homepage, "https://hara-lang.github.io/visual-language/");
+  assert.equal(pkg.homepage, "https://ui.hara-lang.org/");
   assert.equal(pkg.exports["./effects.css"], "./src/effects.css");
   assert.equal(
     pkg.exports["./astro/Backdrop.astro"],
@@ -72,5 +72,5 @@ test("material direction preserves the benchmark reference", async () => {
 
 test("README links to the published Pages site", async () => {
   const readme = await readFile(new URL("README.md", root), "utf8");
-  assert.match(readme, /https:\/\/hara-lang\.github\.io\/visual-language\//);
+  assert.match(readme, /https:\/\/ui\.hara-lang\.org\//);
 });

@@ -1,2 +1,13 @@
 import { defineConfig } from "astro/config";
-export default defineConfig({ site: "https://hara-lang.github.io", base: "/visual-language", output: "static", outDir: "../dist", publicDir: "../assets" });
+export default defineConfig({
+  site: "https://ui.hara-lang.org",
+  base: "/",
+  output: "static",
+  outDir: "../dist",
+  publicDir: "../assets",
+  vite: {
+    resolve: {
+      preserveSymlinks: true
+    }
+  }
+});

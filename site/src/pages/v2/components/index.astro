@@ -1,7 +1,7 @@
 ---
 import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
-import HaraMark from "../../../../../src/astro/HaraMark.astro";
-import FleetField from "../../../../../src/astro/v2/FleetField.astro";
+import HaraMark from "@hara-lang/ui-astro/astro/HaraMark.astro";
+import FleetField from "@hara-lang/ui-astro/astro/v2/FleetField.astro";
 import {
   componentGroups,
   publicComponentInventory,
@@ -9,8 +9,8 @@ import {
   toolComponentInventory,
   v2ComponentInventory
 } from "../../../lib/v2-component-inventory.mjs";
-import "../../../../../src/v2-tool.css";
-import "../../../../../src/theme.js";
+import "@hara-lang/ui-tool/v2-tool.css";
+import "@hara-lang/ui/theme.js";
 import "../../../styles/v2-components-catalogue.css";
 
 const base = import.meta.env.BASE_URL;
