@@ -114,6 +114,7 @@ test("the shared shell keeps the global catalogue inside one app launcher", asyn
   assert.match(masthead, /menuControls="v2-catalogue-launcher"/);
   assert.match(masthead, /setHaraHeaderMenuState/);
   assert.match(masthead, /hara:header-menu-request/);
+  assert.doesNotMatch(masthead, /sourceHref|v2-catalogue-source-link/);
   assert.doesNotMatch(masthead, /data-catalogue-launcher-trigger/);
   assert.match(masthead, /CatalogueLauncher/);
   assert.match(masthead, /CatalogueFallback/);
@@ -122,6 +123,8 @@ test("the shared shell keeps the global catalogue inside one app launcher", asyn
 
   assert.match(launcher, /catalogueGroups\.map/);
   assert.match(launcher, /v2-catalogue-launcher-grid/);
+  assert.match(launcher, /role="dialog"/);
+  assert.match(launcher, /aria-modal="true"/);
   assert.match(launcher, /catalogueStatusLabels\[item\.status\]/);
   assert.match(launcher, /item\.children\.map/);
   assert.match(launcher, /aria-current=\{item\.current/);
@@ -185,5 +188,6 @@ test("catalogue styling includes the launcher, compact layers and responsive con
   assert.match(combined, /@media \(max-width: 820px\)/);
   assert.match(combined, /@media \(max-width: 560px\)/);
   assert.match(combined, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(combined, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(combined, /--hara-[A-Za-z0-9_-]+\s*:/);
 });

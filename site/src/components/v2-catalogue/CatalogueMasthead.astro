@@ -12,8 +12,7 @@ import "../../styles/v2-navigation-tighten.css";
 const {
   basePath,
   activePath = "/",
-  label = "Hara visual language catalogue",
-  sourceHref = "https://github.com/hara-lang/visual-language"
+  label = "Hara visual language catalogue"
 } = Astro.props;
 
 const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
@@ -39,7 +38,6 @@ const catalogueNav = [
     menuLabel="Open catalogue"
     menuCloseLabel="Close catalogue"
   >
-    <a class="v2-catalogue-source-link" href={sourceHref}>Source</a>
     <ThemeToggle />
   </Header>
 

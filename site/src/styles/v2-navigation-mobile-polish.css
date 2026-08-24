@@ -176,3 +176,49 @@
 @media (prefers-reduced-motion: reduce) {
   .v2-catalogue-section-trigger-chevron { transition: none; }
 }
+
+/* Keep the catalogue launcher aligned with the quieter one-line shell. */
+.v2-catalogue-launcher {
+  width: min(780px, calc(100vw - 2 * var(--hara-v2-page)));
+  border-color: var(--hara-v2-line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--hara-v2-panel-raised) 98%, transparent);
+  box-shadow: 0 24px 70px color-mix(in srgb, var(--hara-v2-canvas) 38%, transparent);
+}
+
+.v2-catalogue-launcher-header {
+  padding: 1.1rem 1.15rem .95rem;
+  border-bottom-color: var(--hara-v2-line);
+}
+
+.v2-catalogue-launcher-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+  padding: 1.15rem;
+  background: transparent;
+}
+
+.v2-catalogue-launcher-group {
+  padding: .1rem 0 0;
+  border-top: 2px solid var(--hara-v2-line);
+  background: transparent;
+}
+
+.v2-catalogue-launcher-group[data-current="true"] { border-top-color: var(--hara-v2-signal); }
+.v2-catalogue-launcher-group > header p { min-height: 0; margin-bottom: .8rem; }
+.v2-catalogue-launcher-group > nav { gap: 0; }
+
+.v2-catalogue-launcher-family {
+  border-width: 0 0 1px;
+  border-radius: 0;
+  background: transparent;
+}
+
+.v2-catalogue-launcher-family[data-current="true"] { border-color: var(--hara-v2-line); }
+.v2-catalogue-launcher-item { min-height: 52px; padding-inline: .15rem; }
+.v2-catalogue-launcher-children { border-top: 0; }
+.v2-catalogue-launcher-children a { padding-left: 2.1rem; }
+
+@media (max-width: 840px) {
+  .v2-catalogue-launcher-grid { grid-template-columns: 1fr; }
+}

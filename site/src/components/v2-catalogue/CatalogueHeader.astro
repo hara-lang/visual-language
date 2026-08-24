@@ -20,7 +20,6 @@ const {
   basePath,
   activePath,
   label = "Hara visual language catalogue",
-  sourceHref = "https://github.com/hara-lang/visual-language",
   autoSections = true,
   pageFooter = true
 } = Astro.props;
@@ -40,7 +39,6 @@ const RenderedComponentGallery = componentCatalogue
   basePath={basePath}
   activePath={resolvedActivePath}
   label={label}
-  sourceHref={sourceHref}
 />
 
 {deepRoute && (
