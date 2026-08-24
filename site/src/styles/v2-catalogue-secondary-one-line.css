@@ -2,14 +2,14 @@
  * Catalogue secondary navigation.
  *
  * The compact route/location/section composition is canonical at every
- * viewport. The shared Hara header owns the product hamburger; this sticky row
- * owns only local location plus mutually exclusive route and section popouts.
+ * viewport. The shared Hara header owns the product hamburger and remains the
+ * only sticky navigation layer. This local row stays in document flow while
+ * anchoring mutually exclusive route and section popouts.
  */
 
 .v2-catalogue-secondary-shell {
-  position: sticky;
-  z-index: 105;
-  top: var(--v2-catalogue-masthead-height, 60px);
+  position: relative;
+  z-index: 40;
   display: flex;
   align-items: stretch;
   width: 100%;
@@ -20,9 +20,8 @@
   overflow: visible;
   color: var(--hara-v2-ink);
   border-bottom: 1px solid var(--hara-v2-line-strong);
-  background: color-mix(in srgb, var(--hara-v2-panel-raised) 98%, transparent);
-  box-shadow: 0 1px 0 var(--hara-v2-sketch);
-  backdrop-filter: blur(14px) saturate(106%);
+  background: var(--hara-v2-panel-raised);
+  isolation: isolate;
   white-space: nowrap;
 }
 
