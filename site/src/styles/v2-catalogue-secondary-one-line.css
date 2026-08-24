@@ -1,288 +1,335 @@
 /*
- * Mobile catalogue secondary navigation.
+ * Catalogue secondary navigation.
  *
- * The 60px shared header owns the product hamburger. This layer keeps the
- * route location, current sibling and current page section on one physical
- * line, with sibling and section destinations in mutually exclusive panels.
+ * The compact route/location/section composition is canonical at every
+ * viewport. The shared Hara header owns the product hamburger; this sticky row
+ * owns only local location plus mutually exclusive route and section popouts.
  */
 
-.v2-catalogue-secondary-shell { display: contents; }
-.v2-catalogue-family-trigger { display: none; }
+.v2-catalogue-secondary-shell {
+  position: sticky;
+  z-index: 105;
+  top: var(--v2-catalogue-masthead-height, 60px);
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  max-height: 48px;
+  padding-inline: clamp(12px, 2vw, 28px);
+  overflow: visible;
+  color: var(--hara-v2-ink);
+  border-bottom: 1px solid var(--hara-v2-line-strong);
+  background: color-mix(in srgb, var(--hara-v2-panel-raised) 98%, transparent);
+  box-shadow: 0 1px 0 var(--hara-v2-sketch);
+  backdrop-filter: blur(14px) saturate(106%);
+  white-space: nowrap;
+}
+
+.v2-catalogue-secondary-shell > .v2-catalogue-route-bar {
+  position: static !important;
+  z-index: auto;
+  display: flex !important;
+  flex: 0 1 auto;
+  align-items: stretch;
+  gap: 0 !important;
+  min-width: 0;
+  min-height: 48px !important;
+  max-height: 48px;
+  padding: 0 !important;
+  overflow: visible;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.v2-catalogue-route-identity {
+  display: flex !important;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.v2-catalogue-route-bar .v2-catalogue-breadcrumbs,
+.v2-catalogue-route-tools {
+  display: none !important;
+}
+
+.v2-catalogue-route-bar .v2-catalogue-parent-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-width: 0;
+  min-height: 48px !important;
+  max-width: 168px;
+  padding: 0 .75rem !important;
+  overflow: hidden;
+  border: 0 !important;
+  border-right: 1px solid var(--hara-v2-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  text-decoration: none;
+}
+
+.v2-catalogue-parent-link span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v2-catalogue-family-trigger {
+  display: flex !important;
+  flex: 0 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: .55rem;
+  width: clamp(180px, 24vw, 280px);
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 .75rem;
+  color: var(--hara-v2-ink);
+  border: 0;
+  border-right: 1px solid var(--hara-v2-line);
+  background: transparent;
+  font: 680 .7rem var(--hara-v2-font-body);
+  cursor: pointer;
+}
+
+.v2-catalogue-family-trigger > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v2-catalogue-family-trigger i,
+.v2-catalogue-section-trigger-chevron {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform var(--hara-v2-motion) ease;
+}
+
+.v2-catalogue-route-bar[data-family-open="true"] .v2-catalogue-family-trigger i,
+.v2-catalogue-section-nav[data-open="true"] .v2-catalogue-section-trigger-chevron {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+
+.v2-catalogue-route-bar .v2-catalogue-family-tabs {
+  position: absolute !important;
+  z-index: 108;
+  top: 100%;
+  right: auto !important;
+  left: clamp(12px, 2vw, 28px) !important;
+  display: none !important;
+  grid-template-columns: 1fr;
+  gap: 1px !important;
+  width: min(360px, calc(100vw - 56px)) !important;
+  max-height: min(62svh, 440px);
+  padding: 8px 8px 12px;
+  overflow: auto !important;
+  border: 1px solid var(--hara-v2-line-strong);
+  border-top: 0;
+  background: var(--hara-v2-panel);
+  box-shadow: var(--hara-v2-shadow);
+  scrollbar-width: thin;
+}
+
+.v2-catalogue-route-bar[data-family-open="true"] .v2-catalogue-family-tabs {
+  display: grid !important;
+}
+
+.v2-catalogue-route-bar .v2-catalogue-family-tabs a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  min-width: 0;
+  min-height: 44px !important;
+  max-width: none;
+  padding: .58rem .72rem !important;
+  color: var(--hara-v2-muted);
+  border: 1px solid var(--hara-v2-line);
+  border-radius: 0 !important;
+  background: var(--hara-v2-panel-raised);
+  text-decoration: none;
+}
+
+.v2-catalogue-route-bar .v2-catalogue-family-tabs a > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v2-catalogue-route-bar .v2-catalogue-family-tabs a small {
+  flex: 0 0 auto;
+  color: var(--hara-v2-faint);
+  font: 650 .48rem var(--hara-v2-font-code);
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+
+.v2-catalogue-route-bar .v2-catalogue-family-tabs a[aria-current="page"] {
+  color: var(--hara-v2-signal);
+  border-color: var(--hara-v2-signal);
+  box-shadow: inset 3px 0 var(--hara-v2-signal);
+}
+
+.v2-catalogue-secondary-shell > .v2-catalogue-section-nav {
+  position: static !important;
+  z-index: auto;
+  display: flex !important;
+  flex: 0 1 auto;
+  align-items: stretch;
+  width: clamp(180px, 24vw, 280px);
+  min-width: 0;
+  min-height: 48px !important;
+  max-height: 48px;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.v2-catalogue-secondary-shell > .v2-catalogue-section-nav[hidden] {
+  display: none !important;
+}
+
+.v2-catalogue-section-trigger {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: .55rem;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px !important;
+  padding: 0 .75rem !important;
+  color: var(--hara-v2-ink);
+  border: 0 !important;
+  border-right: 1px solid var(--hara-v2-line) !important;
+  background: transparent !important;
+  font: 680 .7rem var(--hara-v2-font-body);
+  cursor: pointer;
+}
+
+.v2-catalogue-section-trigger-label { display: none !important; }
+
+.v2-catalogue-section-trigger-current {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v2-catalogue-section-links {
+  position: absolute !important;
+  z-index: 108;
+  top: 100%;
+  right: auto !important;
+  left: clamp(12px, 2vw, 28px) !important;
+  display: none !important;
+  grid-template-columns: 1fr;
+  gap: 1px !important;
+  width: min(360px, calc(100vw - 56px)) !important;
+  max-height: min(62svh, 440px);
+  padding: 8px 8px 12px !important;
+  overflow: auto !important;
+  border: 1px solid var(--hara-v2-line-strong);
+  border-top: 0;
+  background: var(--hara-v2-panel);
+  box-shadow: var(--hara-v2-shadow);
+  scrollbar-width: thin;
+}
+
+.v2-catalogue-section-nav[data-open="true"] .v2-catalogue-section-links {
+  display: grid !important;
+}
+
+.v2-catalogue-section-links::before { display: none !important; }
+
+.v2-catalogue-section-links a {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 44px !important;
+  max-width: none !important;
+  padding: .58rem .72rem !important;
+  color: var(--hara-v2-muted);
+  border: 1px solid var(--hara-v2-line);
+  border-radius: 0 !important;
+  background: var(--hara-v2-panel-raised);
+  text-decoration: none;
+}
+
+.v2-catalogue-section-links a[aria-current="location"] {
+  color: var(--hara-v2-signal);
+  border-color: var(--hara-v2-signal);
+  box-shadow: inset 3px 0 var(--hara-v2-signal);
+}
+
+.v2-catalogue-family-trigger:focus-visible,
+.v2-catalogue-section-trigger:focus-visible,
+.v2-catalogue-parent-link:focus-visible,
+.v2-catalogue-family-tabs a:focus-visible,
+.v2-catalogue-section-links a:focus-visible {
+  position: relative;
+  z-index: 2;
+  outline: 2px solid var(--hara-v2-signal);
+  outline-offset: -3px;
+}
+
+body[data-catalogue-section-ready="true"] :is(
+  .foundations-section-nav,
+  .components-section-nav,
+  .ui-section-nav,
+  .playground-local-nav,
+  .start-journey
+) {
+  display: none !important;
+}
 
 @media (max-width: 840px) {
   .v2-catalogue-secondary-shell {
-    position: sticky;
-    z-index: 105;
-    top: var(--v2-catalogue-masthead-height, 60px);
-    display: flex;
-    align-items: stretch;
-    width: 100%;
-    min-width: 0;
-    min-height: 48px;
-    max-height: 48px;
     padding-inline: 12px;
-    overflow: visible;
-    color: var(--hara-v2-ink);
-    border-bottom: 1px solid var(--hara-v2-line-strong);
-    background: color-mix(in srgb, var(--hara-v2-panel-raised) 98%, transparent);
-    box-shadow: 0 1px 0 var(--hara-v2-sketch);
-    backdrop-filter: blur(14px) saturate(106%);
-    white-space: nowrap;
   }
 
   .v2-catalogue-secondary-shell > .v2-catalogue-route-bar {
-    position: static !important;
-    z-index: auto;
-    display: flex !important;
     flex: 1 1 62%;
-    align-items: stretch;
-    gap: 0 !important;
-    min-width: 0;
-    min-height: 48px !important;
-    max-height: 48px;
-    padding: 0 !important;
-    overflow: visible;
-    border: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-  }
-
-  .v2-catalogue-route-identity {
-    display: flex !important;
-    flex: 0 0 auto;
-    min-width: 0;
-  }
-
-  .v2-catalogue-route-bar .v2-catalogue-breadcrumbs,
-  .v2-catalogue-route-tools {
-    display: none !important;
   }
 
   .v2-catalogue-route-bar .v2-catalogue-parent-link {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    min-width: 0;
-    min-height: 48px !important;
     max-width: 112px;
-    padding: 0 .65rem !important;
-    overflow: hidden;
-    border: 0 !important;
-    border-right: 1px solid var(--hara-v2-line) !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    text-decoration: none;
-  }
-
-  .v2-catalogue-parent-link span:last-child {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    padding-inline: .65rem !important;
   }
 
   .v2-catalogue-family-trigger {
-    display: flex;
     flex: 1 1 auto;
-    align-items: center;
-    justify-content: space-between;
-    gap: .45rem;
-    min-width: 0;
-    min-height: 48px;
-    padding: 0 .65rem;
-    color: var(--hara-v2-ink);
-    border: 0;
-    border-right: 1px solid var(--hara-v2-line);
-    background: transparent;
-    font: 680 .7rem var(--hara-v2-font-body);
-    cursor: pointer;
-  }
-
-  .v2-catalogue-family-trigger > span {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .v2-catalogue-family-trigger small {
-    flex: 0 0 auto;
-    color: var(--hara-v2-faint);
-    font: 650 .45rem var(--hara-v2-font-code);
-    letter-spacing: .045em;
-    text-transform: uppercase;
-  }
-
-  .v2-catalogue-family-trigger i,
-  .v2-catalogue-section-trigger-chevron {
-    width: 7px;
-    height: 7px;
-    flex: 0 0 7px;
-    border-right: 1px solid currentColor;
-    border-bottom: 1px solid currentColor;
-    transform: rotate(45deg) translateY(-2px);
-    transition: transform var(--hara-v2-motion) ease;
-  }
-
-  .v2-catalogue-route-bar[data-family-open="true"] .v2-catalogue-family-trigger i,
-  .v2-catalogue-section-nav[data-open="true"] .v2-catalogue-section-trigger-chevron {
-    transform: rotate(225deg) translate(-1px, -1px);
-  }
-
-  .v2-catalogue-route-bar .v2-catalogue-family-tabs {
-    position: absolute !important;
-    z-index: 108;
-    top: 100%;
-    right: 0;
-    left: 0;
-    display: none !important;
-    grid-template-columns: 1fr;
-    gap: 1px !important;
-    width: 100%;
-    max-height: min(62svh, 440px);
-    padding: 8px 12px 14px;
-    overflow: auto !important;
-    border-bottom: 1px solid var(--hara-v2-line-strong);
-    background: var(--hara-v2-panel);
-    box-shadow: var(--hara-v2-shadow);
-    scrollbar-width: thin;
-  }
-
-  .v2-catalogue-route-bar[data-family-open="true"] .v2-catalogue-family-tabs {
-    display: grid !important;
-  }
-
-  .v2-catalogue-route-bar .v2-catalogue-family-tabs a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: .75rem;
-    min-width: 0;
-    min-height: 44px !important;
-    max-width: none;
-    padding: .58rem .72rem !important;
-    color: var(--hara-v2-muted);
-    border: 1px solid var(--hara-v2-line);
-    border-radius: 0 !important;
-    background: var(--hara-v2-panel-raised);
-    text-decoration: none;
-  }
-
-  .v2-catalogue-route-bar .v2-catalogue-family-tabs a[aria-current="page"] {
-    color: var(--hara-v2-signal);
-    border-color: var(--hara-v2-signal);
-    box-shadow: inset 3px 0 var(--hara-v2-signal);
+    width: auto;
+    padding-inline: .65rem;
   }
 
   .v2-catalogue-secondary-shell > .v2-catalogue-section-nav {
-    position: static !important;
-    z-index: auto;
-    display: flex !important;
     flex: 0 1 38%;
-    align-items: stretch;
-    min-width: 0;
-    min-height: 48px !important;
-    max-height: 48px;
-    padding: 0 !important;
-    overflow: visible !important;
-    border: 0 !important;
-    background: transparent !important;
-  }
-
-  .v2-catalogue-secondary-shell > .v2-catalogue-section-nav[hidden] {
-    display: none !important;
+    width: auto;
   }
 
   .v2-catalogue-section-trigger {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    gap: .45rem;
-    width: 100%;
-    min-width: 0;
-    min-height: 48px !important;
-    padding: 0 .65rem !important;
-    color: var(--hara-v2-ink);
-    border: 0 !important;
-    background: transparent !important;
-    font: 680 .7rem var(--hara-v2-font-body);
-    cursor: pointer;
+    padding-inline: .65rem !important;
   }
 
-  .v2-catalogue-section-trigger-label { display: none !important; }
-
-  .v2-catalogue-section-trigger-current {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
+  .v2-catalogue-route-bar .v2-catalogue-family-tabs,
   .v2-catalogue-section-links {
-    position: absolute !important;
-    z-index: 108;
-    top: 100%;
-    right: 0;
-    left: 0;
-    display: none !important;
-    grid-template-columns: 1fr;
-    gap: 1px !important;
+    right: 0 !important;
+    left: 0 !important;
     width: 100% !important;
-    max-height: min(62svh, 440px);
     padding: 8px 12px 14px !important;
-    overflow: auto !important;
-    border-bottom: 1px solid var(--hara-v2-line-strong);
-    background: var(--hara-v2-panel);
-    box-shadow: var(--hara-v2-shadow);
-    scrollbar-width: thin;
-  }
-
-  .v2-catalogue-section-nav[data-open="true"] .v2-catalogue-section-links {
-    display: grid !important;
-  }
-
-  .v2-catalogue-section-links::before { display: none !important; }
-
-  .v2-catalogue-section-links a {
-    display: flex;
-    align-items: center;
-    min-width: 0;
-    min-height: 44px !important;
-    max-width: none !important;
-    padding: .58rem .72rem !important;
-    color: var(--hara-v2-muted);
-    border: 1px solid var(--hara-v2-line);
-    border-radius: 0 !important;
-    background: var(--hara-v2-panel-raised);
-    text-decoration: none;
-  }
-
-  .v2-catalogue-section-links a[aria-current="location"] {
-    color: var(--hara-v2-signal);
-    border-color: var(--hara-v2-signal);
-    box-shadow: inset 3px 0 var(--hara-v2-signal);
-  }
-
-  .v2-catalogue-family-trigger:focus-visible,
-  .v2-catalogue-section-trigger:focus-visible,
-  .v2-catalogue-parent-link:focus-visible,
-  .v2-catalogue-family-tabs a:focus-visible,
-  .v2-catalogue-section-links a:focus-visible {
-    position: relative;
-    z-index: 2;
-    outline: 2px solid var(--hara-v2-signal);
-    outline-offset: -3px;
-  }
-
-  body[data-catalogue-section-ready="true"] :is(
-    .foundations-section-nav,
-    .components-section-nav,
-    .ui-section-nav,
-    .playground-local-nav,
-    .start-journey
-  ) {
-    display: none !important;
+    border-right: 0;
+    border-left: 0;
   }
 }
 
@@ -298,8 +345,6 @@
   .v2-catalogue-section-trigger {
     padding-inline: .5rem !important;
   }
-
-  .v2-catalogue-family-trigger small { display: none; }
 }
 
 @media (max-width: 420px) {

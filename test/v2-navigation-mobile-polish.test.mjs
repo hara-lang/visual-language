@@ -4,7 +4,7 @@ import test from "node:test";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
-test("mobile on-page navigation names its purpose and exposes a compact current-section control", async () => {
+test("on-page navigation names its purpose and exposes the compact current-section control at every width", async () => {
   const sectionNav = await read("../site/src/components/v2-catalogue/CatalogueSectionNav.astro");
 
   assert.match(sectionNav, /label = "On this page"/);
@@ -13,7 +13,8 @@ test("mobile on-page navigation names its purpose and exposes a compact current-
   assert.match(sectionNav, /v2-catalogue-section-trigger-chevron/);
   assert.match(sectionNav, /data-catalogue-section-label/);
   assert.match(sectionNav, /Show \$\{label\.toLowerCase\(\)\} navigation/);
-  assert.match(sectionNav, /window\.matchMedia\("\(min-width: 841px\)"\)/);
+  assert.match(sectionNav, /const open = Boolean\(requestedOpen\)/);
+  assert.doesNotMatch(sectionNav, /window\.matchMedia\("\(min-width: 841px\)"\)/);
   assert.doesNotMatch(sectionNav, /label = "Sections"/);
 });
 

@@ -2,7 +2,8 @@
 import {
   catalogueHref,
   catalogueLinkIsExternal,
-  catalogueRouteContext
+  catalogueRouteContext,
+  catalogueStatusLabels
 } from "../../lib/v2-catalogue.mjs";
 
 const { basePath, activePath } = Astro.props;
@@ -64,7 +65,6 @@ const parentLabel = context?.parent ? context.parent.label : "Catalogue";
       data-catalogue-family-trigger
     >
       <span>{context.item.tabLabel ?? context.item.label}</span>
-      <small>{context.statusLabel}</small>
       <i aria-hidden="true"></i>
     </button>
 
@@ -76,6 +76,9 @@ const parentLabel = context?.parent ? context.parent.label : "Catalogue";
     >
       {context.siblings.map((item) => {
         const external = catalogueLinkIsExternal(item);
+        const stateLabel = item.kind === "historical"
+          ? "Historical"
+          : catalogueStatusLabels[item.status] ?? item.status;
         return (
           <a
             href={itemHref(item)}
@@ -86,8 +89,7 @@ const parentLabel = context?.parent ? context.parent.label : "Catalogue";
             rel={external ? "noreferrer" : undefined}
           >
             <span>{item.tabLabel ?? item.label}</span>
-            {item.kind === "historical" && <small>Historical</small>}
-            {item.status === "planned" && <small>Planned</small>}
+            <small>{stateLabel}</small>
           </a>
         );
       })}
@@ -113,15 +115,14 @@ const parentLabel = context?.parent ? context.parent.label : "Catalogue";
       if (!(trigger instanceof HTMLButtonElement) || !(routes instanceof HTMLElement)) return;
 
       bar.dataset.familyReady = "true";
-      const compact = window.matchMedia("(max-width: 840px)");
       const familyLabel = trigger.getAttribute("aria-label")?.replace(/^Show /, "") ?? "catalogue routes";
 
       const setOpen = (requestedOpen, restoreFocus = false) => {
-        const open = Boolean(requestedOpen && compact.matches);
+        const open = Boolean(requestedOpen);
         bar.dataset.familyOpen = String(open);
         trigger.setAttribute("aria-expanded", String(open));
         trigger.setAttribute("aria-label", `${open ? "Hide" : "Show"} ${familyLabel}`);
-        routes.setAttribute("aria-hidden", String(compact.matches && !open));
+        routes.setAttribute("aria-hidden", String(!open));
         if (open && shell instanceof HTMLElement) {
           shell.dispatchEvent(new CustomEvent("hara:catalogue-secondary-disclosure", {
             bubbles: false,
@@ -140,9 +141,6 @@ const parentLabel = context?.parent ? context.parent.label : "Catalogue";
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && bar.dataset.familyOpen === "true") setOpen(false, true);
       });
-      const onViewportChange = () => setOpen(false);
-      if (typeof compact.addEventListener === "function") compact.addEventListener("change", onViewportChange);
-      else if (typeof compact.addListener === "function") compact.addListener(onViewportChange);
       setOpen(false);
     });
   };

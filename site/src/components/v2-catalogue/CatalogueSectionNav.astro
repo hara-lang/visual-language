@@ -75,14 +75,13 @@ const linksId = `v2-catalogue-${idSeed}-links`;
       links.replaceChildren();
       const linkById = new Map();
       const navigationLabel = nav.dataset.catalogueSectionLabel || "On this page";
-      const compact = window.matchMedia("(max-width: 840px)");
 
       const setOpen = (requestedOpen, restoreFocus = false) => {
-        const open = Boolean(requestedOpen && compact.matches);
+        const open = Boolean(requestedOpen);
         nav.dataset.open = String(open);
         trigger.setAttribute("aria-expanded", String(open));
         trigger.setAttribute("aria-label", `${open ? "Hide" : "Show"} ${navigationLabel.toLowerCase()} navigation`);
-        links.setAttribute("aria-hidden", String(compact.matches && !open));
+        links.setAttribute("aria-hidden", String(!open));
         if (open && shell instanceof HTMLElement) {
           shell.dispatchEvent(new CustomEvent("hara:catalogue-secondary-disclosure", {
             bubbles: false,
@@ -115,9 +114,6 @@ const linksId = `v2-catalogue-${idSeed}-links`;
         const active = linkById.get(id);
         if (currentLabel instanceof HTMLElement && active instanceof HTMLAnchorElement) {
           currentLabel.textContent = active.textContent || "Overview";
-          if (window.matchMedia("(min-width: 841px)").matches) {
-            active.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
-          }
         }
       };
 
@@ -158,9 +154,6 @@ const linksId = `v2-catalogue-${idSeed}-links`;
         if (event.key !== "Escape" || nav.dataset.open !== "true") return;
         setOpen(false, true);
       });
-      const onViewportChange = () => setOpen(false);
-      if (typeof compact.addEventListener === "function") compact.addEventListener("change", onViewportChange);
-      else if (typeof compact.addListener === "function") compact.addListener(onViewportChange);
     });
   };
 
