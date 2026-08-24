@@ -16,6 +16,13 @@ const withBase = (path) => {
 const itemHref = (item) => item.href || item.issue
   ? catalogueHref(item, basePath)
   : withBase(item.path);
+const idPart = (value) => String(value ?? "routes")
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-|-$/g, "") || "routes";
+const familyMenuId = context
+  ? `v2-catalogue-${idPart(context.family.id)}-${idPart(context.item.id)}-routes`
+  : "v2-catalogue-routes";
 ---
 {context && (
   <section
@@ -23,6 +30,7 @@ const itemHref = (item) => item.href || item.issue
     aria-label="Current catalogue location"
     data-catalogue-route-bar
     data-family={context.family.id}
+    data-family-open="false"
   >
     <div class="v2-catalogue-route-identity">
       <a class="v2-catalogue-parent-link" href={itemHref(context.parentTarget)}>
@@ -42,7 +50,25 @@ const itemHref = (item) => item.href || item.issue
       </nav>
     </div>
 
-    <nav class="v2-catalogue-family-tabs" aria-label={`${context.family.label} routes`}>
+    <button
+      class="v2-catalogue-family-trigger"
+      type="button"
+      aria-expanded="false"
+      aria-controls={familyMenuId}
+      aria-label={`Show ${context.family.label} routes`}
+      data-catalogue-family-trigger
+    >
+      <span>{context.item.tabLabel ?? context.item.label}</span>
+      <small>{context.statusLabel}</small>
+      <i aria-hidden="true"></i>
+    </button>
+
+    <nav
+      class="v2-catalogue-family-tabs"
+      id={familyMenuId}
+      aria-label={`${context.family.label} routes`}
+      data-catalogue-family-tabs
+    >
       {context.siblings.map((item) => {
         const external = catalogueLinkIsExternal(item);
         return (
@@ -71,3 +97,51 @@ const itemHref = (item) => item.href || item.issue
     </div>
   </section>
 )}
+
+<script>
+  const initialiseCatalogueFamilyMenus = () => {
+    document.querySelectorAll("[data-catalogue-route-bar]").forEach((bar) => {
+      if (!(bar instanceof HTMLElement) || bar.dataset.familyReady === "true") return;
+      const trigger = bar.querySelector("[data-catalogue-family-trigger]");
+      const routes = bar.querySelector("[data-catalogue-family-tabs]");
+      const shell = bar.closest("[data-catalogue-secondary-shell]");
+      if (!(trigger instanceof HTMLButtonElement) || !(routes instanceof HTMLElement)) return;
+
+      bar.dataset.familyReady = "true";
+      const compact = window.matchMedia("(max-width: 840px)");
+      const familyLabel = trigger.getAttribute("aria-label")?.replace(/^Show /, "") ?? "catalogue routes";
+
+      const setOpen = (requestedOpen, restoreFocus = false) => {
+        const open = Boolean(requestedOpen && compact.matches);
+        bar.dataset.familyOpen = String(open);
+        trigger.setAttribute("aria-expanded", String(open));
+        trigger.setAttribute("aria-label", `${open ? "Hide" : "Show"} ${familyLabel}`);
+        routes.setAttribute("aria-hidden", String(compact.matches && !open));
+        if (open && shell instanceof HTMLElement) {
+          shell.dispatchEvent(new CustomEvent("hara:catalogue-secondary-disclosure", {
+            bubbles: false,
+            detail: { kind: "family", open: true }
+          }));
+        }
+        if (!open && restoreFocus) trigger.focus();
+      };
+
+      trigger.addEventListener("click", () => setOpen(bar.dataset.familyOpen !== "true"));
+      routes.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
+      shell?.addEventListener("hara:catalogue-secondary-disclosure", (event) => {
+        if (!(event instanceof CustomEvent) || event.detail?.kind === "family" || !event.detail?.open) return;
+        setOpen(false);
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && bar.dataset.familyOpen === "true") setOpen(false, true);
+      });
+      const onViewportChange = () => setOpen(false);
+      if (typeof compact.addEventListener === "function") compact.addEventListener("change", onViewportChange);
+      else if (typeof compact.addListener === "function") compact.addListener(onViewportChange);
+      setOpen(false);
+    });
+  };
+
+  initialiseCatalogueFamilyMenus();
+  document.addEventListener("astro:page-load", initialiseCatalogueFamilyMenus);
+</script>

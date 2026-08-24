@@ -10,6 +10,7 @@ import "../../../../src/v2/catalogue-navigation.css";
 import "../../styles/v2-navigation-tighten.css";
 import "../../styles/v2-navigation-mobile-polish.css";
 import "../../styles/v2-matrix-regression-fixes.css";
+import "../../styles/v2-catalogue-secondary-one-line.css";
 
 ensureFoundationComponentInventory();
 ensureSymbolComponentInventory();
@@ -42,11 +43,15 @@ const RenderedComponentGallery = componentCatalogue
   sourceHref={sourceHref}
 />
 
-<CatalogueRouteBar basePath={basePath} activePath={resolvedActivePath}>
-  <Fragment slot="actions"><slot name="route-actions" /></Fragment>
-</CatalogueRouteBar>
+{deepRoute && (
+  <div class="v2-catalogue-secondary-shell" data-catalogue-secondary-shell>
+    <CatalogueRouteBar basePath={basePath} activePath={resolvedActivePath}>
+      <Fragment slot="actions"><slot name="route-actions" /></Fragment>
+    </CatalogueRouteBar>
 
-<CatalogueSectionNav enabled={deepRoute && autoSections} />
+    <CatalogueSectionNav enabled={autoSections} />
+  </div>
+)}
 {RenderedComponentGallery && (
   <section
     id="rendered-components"

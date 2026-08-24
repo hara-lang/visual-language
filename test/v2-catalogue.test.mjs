@@ -107,10 +107,14 @@ test("the shared shell keeps the global catalogue inside one app launcher", asyn
   assert.match(header, /CatalogueSectionNav/);
   assert.match(header, /CataloguePageFooter/);
   assert.match(header, /slot name="route-actions"/);
+  assert.match(header, /v2-catalogue-secondary-shell/);
   assert.doesNotMatch(header, /CatalogueGroup/);
 
-  assert.match(masthead, /data-catalogue-launcher-trigger/);
-  assert.match(masthead, /aria-controls="v2-catalogue-launcher"/);
+  assert.match(masthead, /menuMode="product"/);
+  assert.match(masthead, /menuControls="v2-catalogue-launcher"/);
+  assert.match(masthead, /setHaraHeaderMenuState/);
+  assert.match(masthead, /hara:header-menu-request/);
+  assert.doesNotMatch(masthead, /data-catalogue-launcher-trigger/);
   assert.match(masthead, /CatalogueLauncher/);
   assert.match(masthead, /CatalogueFallback/);
   assert.match(masthead, /event\.key === "Escape"/);
@@ -155,17 +159,18 @@ test("the catalogue home preserves four references and Learn owns the guided Wor
 });
 
 test("catalogue styling includes the launcher, compact layers and responsive contracts", async () => {
-  const [css, disclosure, mobile, tighten] = await Promise.all([
+  const [css, disclosure, mobile, tighten, oneLine] = await Promise.all([
     read("../site/src/styles/v2-catalogue.css"),
     read("../site/src/styles/v2-catalogue-disclosure.css"),
     read("../site/src/styles/v2-mobile-polish.css"),
-    read("../site/src/styles/v2-navigation-tighten.css")
+    read("../site/src/styles/v2-navigation-tighten.css"),
+    read("../site/src/styles/v2-catalogue-secondary-one-line.css")
   ]);
-  const combined = `${css}\n${disclosure}\n${mobile}\n${tighten}`;
+  const combined = `${css}\n${disclosure}\n${mobile}\n${tighten}\n${oneLine}`;
 
   for (const selector of [
     ".v2-catalogue-shell",
-    ".v2-catalogue-launcher-trigger",
+    ".v2-catalogue-secondary-shell",
     ".v2-catalogue-launcher",
     ".v2-catalogue-launcher-grid",
     ".v2-catalogue-route-bar",
