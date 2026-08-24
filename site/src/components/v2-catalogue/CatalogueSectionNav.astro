@@ -3,6 +3,11 @@ const {
   label = "On this page",
   enabled = true
 } = Astro.props;
+const idSeed = String(label)
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-|-$/g, "") || "sections";
+const linksId = `v2-catalogue-${idSeed}-links`;
 ---
 {enabled && (
   <nav
@@ -11,12 +16,13 @@ const {
     hidden
     data-catalogue-section-nav
     data-catalogue-section-label={label}
+    data-open="false"
   >
     <button
       class="v2-catalogue-section-trigger"
       type="button"
       aria-expanded="false"
-      aria-controls="v2-catalogue-section-links"
+      aria-controls={linksId}
       aria-label={`Show ${label.toLowerCase()} navigation`}
       data-catalogue-section-trigger
     >
@@ -24,7 +30,7 @@ const {
       <span class="v2-catalogue-section-trigger-current" data-catalogue-section-current>Overview</span>
       <span class="v2-catalogue-section-trigger-chevron" aria-hidden="true"></span>
     </button>
-    <div class="v2-catalogue-section-links" id="v2-catalogue-section-links" data-catalogue-section-links></div>
+    <div class="v2-catalogue-section-links" id={linksId} data-catalogue-section-links></div>
   </nav>
 )}
 
@@ -36,6 +42,7 @@ const {
       const links = nav.querySelector("[data-catalogue-section-links]");
       const trigger = nav.querySelector("[data-catalogue-section-trigger]");
       const currentLabel = nav.querySelector("[data-catalogue-section-current]");
+      const shell = nav.closest("[data-catalogue-secondary-shell]");
       if (!(main instanceof HTMLElement) || !(links instanceof HTMLElement) || !(trigger instanceof HTMLButtonElement)) return;
 
       const directSections = [...main.querySelectorAll(":scope > section[id], :scope > article[id]")];
@@ -68,12 +75,21 @@ const {
       links.replaceChildren();
       const linkById = new Map();
       const navigationLabel = nav.dataset.catalogueSectionLabel || "On this page";
+      const compact = window.matchMedia("(max-width: 840px)");
 
-      const setOpen = (open, restoreFocus = false) => {
+      const setOpen = (requestedOpen, restoreFocus = false) => {
+        const open = Boolean(requestedOpen && compact.matches);
         nav.dataset.open = String(open);
         trigger.setAttribute("aria-expanded", String(open));
         trigger.setAttribute("aria-label", `${open ? "Hide" : "Show"} ${navigationLabel.toLowerCase()} navigation`);
-        if (restoreFocus) trigger.focus();
+        links.setAttribute("aria-hidden", String(compact.matches && !open));
+        if (open && shell instanceof HTMLElement) {
+          shell.dispatchEvent(new CustomEvent("hara:catalogue-secondary-disclosure", {
+            bubbles: false,
+            detail: { kind: "section", open: true }
+          }));
+        }
+        if (!open && restoreFocus) trigger.focus();
       };
 
       const titleCaseId = (id) => id
@@ -123,6 +139,10 @@ const {
       document.body.dataset.catalogueSectionReady = "true";
 
       trigger.addEventListener("click", () => setOpen(nav.dataset.open !== "true"));
+      shell?.addEventListener("hara:catalogue-secondary-disclosure", (event) => {
+        if (!(event instanceof CustomEvent) || event.detail?.kind === "section" || !event.detail?.open) return;
+        setOpen(false);
+      });
 
       const observer = "IntersectionObserver" in window
         ? new IntersectionObserver((entries) => {
@@ -138,6 +158,9 @@ const {
         if (event.key !== "Escape" || nav.dataset.open !== "true") return;
         setOpen(false, true);
       });
+      const onViewportChange = () => setOpen(false);
+      if (typeof compact.addEventListener === "function") compact.addEventListener("change", onViewportChange);
+      else if (typeof compact.addListener === "function") compact.addListener(onViewportChange);
     });
   };
 

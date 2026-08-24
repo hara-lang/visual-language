@@ -18,8 +18,6 @@ const {
 
 const normalizedBasePath = basePath.endsWith("/") ? basePath : `${basePath}/`;
 const catalogueHome = `${normalizedBasePath}`;
-const context = catalogueRouteContext(activePath);
-const launcherContext = context?.group.label ?? "Catalogue";
 const catalogueNav = [
   { href: `${normalizedBasePath}www/docs/`, label: "Docs", current: activePath.startsWith("/www/docs") },
   { href: `${normalizedBasePath}components/`, label: "Components", current: activePath.startsWith("/components") },
@@ -36,20 +34,11 @@ const catalogueNav = [
     label={label}
     account="logged-out"
     accountHref="#account"
+    menuMode="product"
+    menuControls="v2-catalogue-launcher"
+    menuLabel="Open catalogue"
+    menuCloseLabel="Close catalogue"
   >
-    <button
-      class="v2-catalogue-launcher-trigger"
-      type="button"
-      aria-expanded="false"
-      aria-controls="v2-catalogue-launcher"
-      data-catalogue-launcher-trigger
-    >
-      <span class="v2-catalogue-launcher-icon" aria-hidden="true">
-        {Array.from({ length: 9 }, () => <i></i>)}
-      </span>
-      <span>Browse</span>
-      <small>{launcherContext}</small>
-    </button>
     <a class="v2-catalogue-source-link" href={sourceHref}>Source</a>
     <ThemeToggle />
   </Header>
@@ -59,38 +48,49 @@ const catalogueNav = [
 </div>
 
 <script>
-  const initialiseCatalogueMastheads = () => {
-    document.querySelectorAll("[data-catalogue-masthead]").forEach((header) => {
-      if (!(header instanceof HTMLElement) || header.dataset.ready === "true") return;
-      header.dataset.ready = "true";
+  import { setHaraHeaderMenuState } from "@hara-lang/ui/v2/header.js";
 
-      const trigger = header.querySelector("[data-catalogue-launcher-trigger]");
-      const launcher = header.querySelector("[data-catalogue-launcher]");
-      const backdrop = header.querySelector("[data-catalogue-launcher-backdrop]");
-      const close = header.querySelector("[data-catalogue-launcher-close]");
-      if (!(trigger instanceof HTMLButtonElement) || !(launcher instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) return;
+  const initialiseCatalogueMastheads = () => {
+    document.querySelectorAll("[data-catalogue-masthead]").forEach((masthead) => {
+      if (!(masthead instanceof HTMLElement) || masthead.dataset.ready === "true") return;
+      masthead.dataset.ready = "true";
+
+      const sharedHeader = masthead.querySelector("[data-hara-shell-header]");
+      const launcher = masthead.querySelector("[data-catalogue-launcher]");
+      const backdrop = masthead.querySelector("[data-catalogue-launcher-backdrop]");
+      const close = masthead.querySelector("[data-catalogue-launcher-close]");
+      if (!(sharedHeader instanceof HTMLElement) || !(launcher instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) return;
 
       const setOpen = (open, restoreFocus = false) => {
-        header.dataset.launcherOpen = String(open);
-        trigger.setAttribute("aria-expanded", String(open));
+        masthead.dataset.launcherOpen = String(open);
         launcher.hidden = !open;
         backdrop.hidden = !open;
         document.documentElement.dataset.catalogueLauncherOpen = String(open);
+        setHaraHeaderMenuState(sharedHeader, open, {
+          compact: window.matchMedia("(max-width: 840px)").matches,
+          restoreFocus,
+          syncNavigation: false
+        });
 
         if (open) {
           const firstLink = launcher.querySelector("a[aria-current], a");
           if (firstLink instanceof HTMLAnchorElement) requestAnimationFrame(() => firstLink.focus());
-        } else if (restoreFocus) trigger.focus();
+        }
       };
 
-      trigger.addEventListener("click", () => setOpen(header.dataset.launcherOpen !== "true"));
+      sharedHeader.addEventListener("hara:header-menu-request", (event) => {
+        if (!(event instanceof CustomEvent)) return;
+        event.preventDefault();
+        setOpen(Boolean(event.detail?.open), Boolean(event.detail?.restoreFocus));
+      });
       backdrop.addEventListener("click", () => setOpen(false, true));
       if (close instanceof HTMLButtonElement) close.addEventListener("click", () => setOpen(false, true));
       launcher.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
 
       document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && header.dataset.launcherOpen === "true") setOpen(false, true);
+        if (event.key === "Escape" && masthead.dataset.launcherOpen === "true") setOpen(false, true);
       });
+      setOpen(false);
     });
   };
 

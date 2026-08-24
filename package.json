@@ -14,7 +14,7 @@
     "assets:build": "node scripts/build-motifs.mjs",
     "assets:og": "node scripts/build-og.mjs",
     "assets:raster": "node scripts/build-raster-graphics.mjs",
-    "test": "npm run assets:raster && node --test test/ui-package-boundary.test.mjs test/v2-catalogue.test.mjs test/v2-components-showcase.test.mjs test/v2-navigation-mobile-polish.test.mjs test/v2-responsive-layout.test.mjs",
+    "test": "npm run assets:raster && node --test test/ui-package-boundary.test.mjs test/v2-catalogue.test.mjs test/v2-components-showcase.test.mjs test/v2-navigation-mobile-polish.test.mjs test/v2-catalogue-secondary-one-line.test.mjs test/v2-responsive-layout.test.mjs",
     "site:dev": "npm run assets:raster && ASTRO_TELEMETRY_DISABLED=1 astro dev --root site",
     "site:build": "npm run assets:raster && ASTRO_TELEMETRY_DISABLED=1 astro build --root site",
     "prepack": "npm run assets:raster"
