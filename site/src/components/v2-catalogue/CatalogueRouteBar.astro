@@ -23,6 +23,7 @@ const idPart = (value) => String(value ?? "routes")
 const familyMenuId = context
   ? `v2-catalogue-${idPart(context.family.id)}-${idPart(context.item.id)}-routes`
   : "v2-catalogue-routes";
+const parentLabel = context?.parent ? context.parent.label : "Catalogue";
 ---
 {context && (
   <section
@@ -33,9 +34,13 @@ const familyMenuId = context
     data-family-open="false"
   >
     <div class="v2-catalogue-route-identity">
-      <a class="v2-catalogue-parent-link" href={itemHref(context.parentTarget)}>
+      <a
+        class="v2-catalogue-parent-link"
+        href={itemHref(context.parentTarget)}
+        aria-label={`Back to ${parentLabel}`}
+      >
         <span aria-hidden="true">←</span>
-        <span>{context.parent ? context.parent.label : "Catalogue"}</span>
+        <span>{parentLabel}</span>
       </a>
 
       <nav class="v2-catalogue-breadcrumbs" aria-label="Breadcrumb">
