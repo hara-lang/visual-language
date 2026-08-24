@@ -304,6 +304,16 @@
 
 @media (max-width: 420px) {
   .v2-catalogue-route-bar .v2-catalogue-parent-link {
+    max-width: 88px;
+    padding-inline: .42rem !important;
+  }
+
+  .v2-catalogue-secondary-shell > .v2-catalogue-section-nav { flex-basis: 42%; }
+  .v2-catalogue-secondary-shell > .v2-catalogue-route-bar { flex-basis: 58%; }
+}
+
+@media (max-width: 340px) {
+  .v2-catalogue-route-bar .v2-catalogue-parent-link {
     width: 44px;
     min-width: 44px;
     max-width: 44px;
@@ -312,8 +322,6 @@
   }
 
   .v2-catalogue-parent-link span:last-child { display: none; }
-  .v2-catalogue-secondary-shell > .v2-catalogue-section-nav { flex-basis: 42%; }
-  .v2-catalogue-secondary-shell > .v2-catalogue-route-bar { flex-basis: 58%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
