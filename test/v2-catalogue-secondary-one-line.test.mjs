@@ -31,6 +31,7 @@ test("route and on-page navigation share one compact secondary shell", async () 
   assert.match(route, /data-catalogue-family-trigger/);
   assert.match(route, /data-catalogue-family-tabs/);
   assert.match(route, /data-family-open="false"/);
+  assert.match(route, /aria-label=\{`Back to \$\{parentLabel\}`\}/);
   assert.match(section, /data-catalogue-section-trigger/);
   assert.match(section, /data-catalogue-section-links/);
   assert.match(`${route}\n${section}`, /hara:catalogue-secondary-disclosure/);
@@ -48,7 +49,9 @@ test("route and on-page navigation share one compact secondary shell", async () 
   assert.match(css, /\.v2-catalogue-section-nav\[data-open="true"\][\s\S]*?display: grid !important/);
   assert.match(css, /min-height: 44px/);
   assert.match(css, /@media \(max-width: 420px\)/);
-  assert.match(css, /\.v2-catalogue-parent-link span:last-child \{ display: none; \}/);
+  assert.match(css, /@media \(max-width: 340px\)/);
+  assert.match(css, /@media \(max-width: 340px\)[\s\S]*\.v2-catalogue-parent-link span:last-child \{ display: none; \}/);
+  assert.doesNotMatch(css, /@media \(max-width: 420px\)[\s\S]*?\.v2-catalogue-parent-link span:last-child \{ display: none; \}/);
   assert.doesNotMatch(css, /--hara-v2-[A-Za-z0-9_-]+\s*:/, "the product stylesheet may consume but not redefine protected v2 tokens");
 });
 
