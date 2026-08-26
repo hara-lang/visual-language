@@ -1,6 +1,5 @@
 ---
-import ThemeToggle from "@hara-lang/ui-astro/astro/ThemeToggle.astro";
-import HaraMark from "@hara-lang/ui-astro/astro/HaraMark.astro";
+import CatalogueHeader from "../../../components/v2-catalogue/CatalogueHeader.astro";
 import HaraChromePopupSpecimen from "../../../components/v2-tool/HaraChromePopupSpecimen.astro";
 import HaraChromeRuntimeSpecimen from "../../../components/v2-tool/HaraChromeRuntimeSpecimen.astro";
 import HaraChromeChatGPTSpecimen from "../../../components/v2-tool/HaraChromeChatGPTSpecimen.astro";
@@ -19,13 +18,6 @@ const pageUrl = new URL(`${basePath}tool/hara-chrome/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
 const toolLab = `${basePath}tool/`;
 const documentLab = `${basePath}`;
-const sections = [
-  { href: "#toolbar-popup", label: "Toolbar" },
-  { href: "#runtime-app", label: "Runtime" },
-  { href: "#chatgpt-app", label: "ChatGPT" },
-  { href: "#tripo-app", label: "Tripo" },
-  { href: "#diagnostics-app", label: "Diagnostics" }
-];
 ---
 <!doctype html>
 <html lang="en">
@@ -48,17 +40,7 @@ const sections = [
     <title>Hara Chrome v2 runtime screens</title>
   </head>
   <body class="hara-v2 hara-v2-tool">
-    <header class="v2-lab-header">
-      <a class="v2-lab-brand" href={toolLab}>
-        <HaraMark size={28} />
-        <b>Hara visual language</b>
-        <small>V2 browser runtime</small>
-      </a>
-      <nav aria-label="Hara Chrome screen specimens">
-        {sections.map((item) => <a href={item.href}>{item.label}</a>)}
-      </nav>
-      <ThemeToggle />
-    </header>
+    <CatalogueHeader basePath={basePath} activePath="/tool/hara-chrome/" pageFooter={false} />
 
     <main class="v2-lab-main">
       <section class="hara-chrome-runtime-hero">

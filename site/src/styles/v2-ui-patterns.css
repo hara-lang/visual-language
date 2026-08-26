@@ -1,13 +1,13 @@
 .ui-pattern-page {
   min-height: 100vh;
-  background: var(--hara-v2-canvas);
+  background: color-mix(in srgb, var(--hara-v2-panel) 92%, var(--hara-v2-canvas));
   color: var(--hara-v2-ink);
 }
 
 .ui-main {
-  width: min(100% - 32px, var(--hara-v2-page));
+  width: min(1600px, calc(100% - 2 * var(--hara-v2-page)));
   margin: 0 auto;
-  padding: 44px 0 88px;
+  padding: 0 0 96px;
 }
 
 .ui-hero {

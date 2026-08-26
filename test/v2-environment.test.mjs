@@ -35,6 +35,8 @@ test("section navigation connects tabs to stable environment panels", async () =
   for (const id of ["nav", "frontmatter", "graphics", "code"])
     assert.match(navigator, new RegExp(`id: "${id}"`), `missing ${id} section`);
   assert.match(navigator, /variant="sections"/);
+  assert.match(navigator, /mode === "dropdown"/);
+  assert.match(navigator, /data-environment-section-select/);
   assert.match(panel, /role="tabpanel"/);
   assert.match(panel, /aria-labelledby=\{tabId\}/);
   assert.match(panel, /hidden=\{!active\}/);
@@ -79,6 +81,8 @@ test("environment workbench composes the requested content and capability series
     "files", "canvas", "threeD", "bottom", "overlay", "status"
   ]) assert.match(workbench, new RegExp(`Astro\\.slots\\.has\\("${slot}"\\)`), `missing ${slot} slot state`);
   assert.match(workbench, /<SectionNavigator/);
+  assert.match(workbench, /sectionNavigation\?: "tabs" \| "dropdown"/);
+  assert.match(workbench, /mode=\{sectionNavigation\}/);
   assert.match(workbench, /<CapabilityPane/);
   assert.match(workbench, /data-control-pane=/);
   assert.match(workbench, /hasNamedCode \? <slot name="code" \/> : <slot \/>/);

@@ -78,6 +78,44 @@ const sectionLinks = [
   ["states-accessibility", "States & accessibility"],
   ["ownership", "Ownership"]
 ];
+
+const shellRecipes = [
+  {
+    site: "WWW",
+    variant: "product",
+    frame: "Full-width public page",
+    composition: "Shared Shell + product-owned WwwHeader",
+    tokens: "Wide page inset · no rails"
+  },
+  {
+    site: "Docs",
+    variant: "document",
+    frame: "Starlight reading frame",
+    composition: "Shared Header + ContextNav + Starlight sidebar",
+    tokens: "Comfortable density · 256px rail"
+  },
+  {
+    site: "Learn / Build",
+    variant: "product",
+    frame: "Route and workflow product",
+    composition: "Shared Shell + Header + ContextNav",
+    tokens: "Product-owned context actions"
+  },
+  {
+    site: "Studio / Tools",
+    variant: "workbench",
+    frame: "Embedded workspace",
+    composition: "Shared Shell + product menu + rails",
+    tokens: "Compact density · inspector"
+  },
+  {
+    site: "Benchmarks",
+    variant: "migration",
+    frame: "Standalone evidence board",
+    composition: "Legacy static header and route surface",
+    tokens: "Next migration target"
+  }
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -121,7 +159,7 @@ const sectionLinks = [
           </div>
         </div>
         <div class="components-hero-art">
-          <FleetField title="Hara component relationship field" />
+          <FleetField title="Hara component relationship architectural surface" image={`${basePath}cinematic/raster/backgrounds/nocturne-lattice.webp`} material="NOCTURNE LATTICE" />
           <div class="components-hero-node components-hero-node--root"><HaraMark size={38} /><b>Shared contract</b></div>
           <div class="components-hero-node components-hero-node--one"><span>Shell</span><small>navigation</small></div>
           <div class="components-hero-node components-hero-node--two"><span>Content</span><small>data + prose</small></div>
@@ -183,7 +221,7 @@ const sectionLinks = [
               <main class="hara-v2-main">
                 <section class="hara-v2-page-header" data-illustrated="true">
                   <div class="hara-v2-page-copy"><p class="hara-v2-kicker">Package · std.work</p><h1>Replayable work, explicit effects.</h1><p>A package record foregrounds purpose, compatibility, stewardship, and exact publication provenance.</p><div class="hara-v2-page-actions"><button class="hara-v2-button" data-variant="primary" type="button">Install</button><button class="hara-v2-button" type="button">Open examples</button></div><div class="hara-v2-page-meta"><span>v0.8.4</span><span>verified</span><span>6 runtimes</span></div></div>
-                  <div class="hara-v2-page-illustration"><FleetField title="Package shell illustration" /></div>
+                  <div class="hara-v2-page-illustration"><FleetField title="Package shell architectural surface" image={`${basePath}cinematic/raster/backgrounds/ink-conduit.webp`} material="INK CONDUIT" /></div>
                 </section>
               </main>
             </div>
@@ -195,6 +233,26 @@ const sectionLinks = [
           <article data-guidance="do"><span>Do</span><strong>Keep route layers distinct.</strong><p>Catalogue navigation, route navigation, page tabs, and section outlines each have one scope.</p></article>
           <article data-guidance="avoid"><span>Avoid</span><strong>Put every destination in one top row.</strong><p>A flat global menu becomes crowded and removes the distinction between ecosystem, product, and document context.</p></article>
         </div>
+
+        <article class="components-specimen components-shell-recipes">
+          <header class="components-specimen-head">
+            <div><span>Current site compositions</span><code>variant · class · style · slots</code></div>
+            <span class="hara-v2-badge" data-tone="success">inspectable</span>
+          </header>
+          <div class="hara-v2-card-grid">
+            {shellRecipes.map((recipe) => (
+              <article class="hara-v2-card">
+                <div class="components-inventory-card-title"><h3>{recipe.site}</h3><span>{recipe.variant}</span></div>
+                <p>{recipe.frame}</p>
+                <dl>
+                  <div><dt>Composition</dt><dd>{recipe.composition}</dd></div>
+                  <div><dt>Customization</dt><dd>{recipe.tokens}</dd></div>
+                </dl>
+              </article>
+            ))}
+          </div>
+          <footer class="components-specimen-notes"><span><b>Shared</b> geometry, landmarks, focus, responsive states</span><span><b>Owned</b> routes, account, content, drawers, product controls</span><span><b>Override</b> named variant, class hook, and local token values</span></footer>
+        </article>
       </section>
 
       <section class="components-section" id="controls">

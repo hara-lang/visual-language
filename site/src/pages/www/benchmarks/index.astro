@@ -61,12 +61,13 @@ const resultStateLabel = (state) => ({
     <title>Hara benchmark results and methods</title>
   </head>
   <body class="hara-v2 www-family-page www-benchmarks-page">
-    <WwwFamilyHeader basePath={basePath} activeRoute="benchmarks" searchLabel="Search benchmark records" />
-    <WwwSubnav label="Benchmarks" items={benchmarkSectionNavigation} activeId="insights">
+    <WwwFamilyHeader basePath={basePath} activeRoute="benchmarks" searchLabel="Search benchmark records">
+      <WwwSubnav slot="secondary-nav" label="Benchmarks" items={benchmarkSectionNavigation} activeId="insights">
       <span slot="identity">{benchmarkReport.schema} · {benchmarkReport.schemaVersion}</span>
       <a class="hara-v2-button" href="#selected-result">Selected result</a>
       <button class="hara-v2-button" data-copy-benchmark-view data-share-href={shareHref} type="button">Copy view link</button>
-    </WwwSubnav>
+      </WwwSubnav>
+    </WwwFamilyHeader>
 
     <main class="www-main">
       <aside class="www-fixture-banner" role="note">

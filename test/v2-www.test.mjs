@@ -96,6 +96,7 @@ test("the WWW family puts search and account actions into the shared secondary h
   assert.match(header, /activeRoute/);
   assert.match(header, /activeFamilyRoute\.path/);
   assert.match(header, /slot="route-actions"/);
+  assert.match(header, /slot="secondary-nav"/);
   assert.match(header, /Search Home, Docs, and Benchmarks/);
   assert.match(header, /accountLabel/);
   assert.match(header, /data-www-search-trigger/);
@@ -177,6 +178,14 @@ test("Docs includes a task map, persistent reading shell, reference, filtered se
   assert.match(page, /Stale version specimen/);
   assert.match(page, /Narrow and mobile reading behaviour/);
   assert.match(page, /wwwContracts\.docs/);
+  assert.match(page, /sectionNav \/>/);
+  assert.match(page, /www-docs-page-controls/);
+  assert.match(page, /data-section-label="Start map"/);
+  assert.doesNotMatch(page, /WwwSubnav/);
+  const docsStyles = await read("../site/src/styles/v2-www/docs.css");
+  assert.match(docsStyles, /body\.www-docs-page \.www-section/);
+  assert.doesNotMatch(docsStyles, /grid-template-rows: 48px 48px/);
+  assert.match(docsStyles, /\.www-docs-page-controls/);
   assert.doesNotMatch(page, /CatalogueHeader/);
   assert.doesNotMatch(page, /<style(?:\s|>)/i);
 

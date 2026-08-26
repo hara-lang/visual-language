@@ -61,7 +61,7 @@ test("the reference covers every required interaction family using shared v2 fra
   const page = await read(pagePath);
 
   assert.match(page, /import CatalogueHeader/);
-  assert.match(page, /activePath="\/v2\/ui\/"/);
+  assert.match(page, /activePath="\/ui\/"/);
   assert.match(page, /import HaraMark/);
   assert.match(page, /import FleetField/);
   assert.match(page, /src\/v2\.css/);
@@ -92,6 +92,13 @@ test("navigation and discovery expose search, filters, selection, tabs, breadcru
   assert.match(page, /Search pagination/);
   assert.match(page, /Focus return:/);
   assert.match(page, /Keyboard users can traverse the same hierarchy without hover-only controls/);
+});
+
+test("the pattern page uses the component catalogue page measure and baseline", async () => {
+  const css = await read(cssPath);
+
+  assert.match(css, /\.ui-pattern-page\s*\{[\s\S]*?background:\s*color-mix\(in srgb, var\(--hara-v2-panel\) 92%, var\(--hara-v2-canvas\)\)/);
+  assert.match(css, /\.ui-main\s*\{[\s\S]*?width:\s*min\(1600px, calc\(100% - 2 \* var\(--hara-v2-page\)\)\)[\s\S]*?padding:\s*0 0 96px/);
 });
 
 test("mutation patterns preserve drafts and make validation, rollback, destructive scope, and receipts explicit", async () => {

@@ -3,6 +3,7 @@ import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 import {
   catalogueGroups,
+  cataloguePrimaryGroups,
   catalogueHref,
   catalogueItemById,
   catalogueItemIsCurrent,
@@ -33,6 +34,19 @@ test("the catalogue has three scalable groups and the complete language and comm
   const learn = catalogueItemById("learn");
   assert.deepEqual(learn?.children?.map(({ label }) => label), [
     "Start here", "Repository-guided start", "World interface examples", "Community reader study", "Programmer onboarding study"
+  ]);
+});
+
+test("the user-facing catalogue mirrors the three masthead destinations", () => {
+  assert.deepEqual(cataloguePrimaryGroups.map(({ id, label }) => ({ id, label })), [
+    { id: "docs", label: "Docs" },
+    { id: "components", label: "Components" },
+    { id: "patterns", label: "Patterns" }
+  ]);
+  assert.deepEqual(cataloguePrimaryGroups.map(({ items }) => items.map(({ id }) => id)), [
+    ["www", "playground", "specs", "packages", "world", "learn"],
+    ["components", "design-system", "graphics", "frontmatter", "catalogue-guide", "data-visualisation", "diagrams", "icons"],
+    ["ui-patterns", "tool-workbenches"]
   ]);
 });
 
@@ -95,11 +109,12 @@ test("every implemented reference advertised by the manifest exists", async () =
 });
 
 test("the shared shell keeps the global catalogue inside one app launcher", async () => {
-  const [header, masthead, launcher, fallback] = await Promise.all([
+  const [header, masthead, launcher, fallback, routeBar] = await Promise.all([
     read("../site/src/components/v2-catalogue/CatalogueHeader.astro"),
     read("../site/src/components/v2-catalogue/CatalogueMasthead.astro"),
     read("../site/src/components/v2-catalogue/CatalogueLauncher.astro"),
-    read("../site/src/components/v2-catalogue/CatalogueFallback.astro")
+    read("../site/src/components/v2-catalogue/CatalogueFallback.astro"),
+    read("../site/src/components/v2-catalogue/CatalogueRouteBar.astro")
   ]);
 
   assert.match(header, /import CatalogueMasthead/);
@@ -114,6 +129,8 @@ test("the shared shell keeps the global catalogue inside one app launcher", asyn
   assert.match(masthead, /menuControls="v2-catalogue-launcher"/);
   assert.match(masthead, /setHaraHeaderMenuState/);
   assert.match(masthead, /hara:header-menu-request/);
+  assert.match(masthead, /data-hara-header-menu/);
+  assert.match(masthead, /stopImmediatePropagation/);
   assert.doesNotMatch(masthead, /sourceHref|v2-catalogue-source-link/);
   assert.doesNotMatch(masthead, /data-catalogue-launcher-trigger/);
   assert.match(masthead, /CatalogueLauncher/);
@@ -121,13 +138,18 @@ test("the shared shell keeps the global catalogue inside one app launcher", asyn
   assert.match(masthead, /event\.key === "Escape"/);
   assert.match(masthead, /document\.addEventListener\("astro:page-load"/);
 
-  assert.match(launcher, /catalogueGroups\.map/);
+  assert.match(launcher, /cataloguePrimaryGroups\.map/);
   assert.match(launcher, /v2-catalogue-launcher-grid/);
   assert.match(launcher, /role="dialog"/);
   assert.match(launcher, /aria-modal="true"/);
+  assert.match(launcher, /data-catalogue-launcher-close/);
+  assert.match(launcher, />Close<\/span>/);
+  assert.doesNotMatch(launcher, /<kbd>Esc<\/kbd>/);
   assert.match(launcher, /catalogueStatusLabels\[item\.status\]/);
   assert.match(launcher, /item\.children\.map/);
   assert.match(launcher, /aria-current=\{item\.current/);
+  assert.match(routeBar, /v2-catalogue-parent-icon/);
+  assert.match(routeBar, /data-tooltip=\{`Back to \$\{parentLabel\}`\}/);
 
   assert.match(fallback, /fallbackMarkup = `<noscript>/);
   assert.match(fallback, /catalogueHref\(item, basePath\)/);
@@ -141,7 +163,7 @@ test("the catalogue home preserves four references and Learn owns the guided Wor
   ]);
 
   assert.match(page, /import CatalogueHeader/);
-  assert.match(page, /catalogueGroups\.map/);
+  assert.match(page, /cataloguePrimaryGroups\.map/);
   assert.match(page, /Shared rules and route-specific examples\./);
   assert.match(page, /A planned route links to its implementation issue/);
   assert.doesNotMatch(page, /const ecosystem = \[/);
@@ -184,6 +206,9 @@ test("catalogue styling includes the launcher, compact layers and responsive con
 
   assert.match(combined, /:focus-visible/);
   assert.match(combined, /data-catalogue-launcher-open/);
+  assert.match(combined, /\.v2-catalogue-shell\s*\{\s*display:\s*contents;/);
+  assert.match(combined, /\.v2-catalogue-launcher \{[\s\S]*?left: var\(--hara-v2-page\);[\s\S]*?right: auto;/);
+  assert.match(combined, /@media \(max-width: 840px\)[\s\S]*?\.v2-catalogue-launcher \{[\s\S]*?left: 14px;[\s\S]*?right: 14px;/);
   assert.match(combined, /@media \(max-width: 840px\)/);
   assert.match(combined, /@media \(max-width: 820px\)/);
   assert.match(combined, /@media \(max-width: 560px\)/);

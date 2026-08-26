@@ -408,6 +408,17 @@
 .components-do-dont strong { display: block; margin: .8rem 0 .45rem; font-size: 1rem; }
 .components-do-dont p { margin: 0; color: var(--hara-v2-muted); font-size: .68rem; line-height: 1.55; }
 
+.components-shell-recipes { margin-top: 1rem; }
+.components-shell-recipes .hara-v2-card-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; }
+.components-shell-recipes .hara-v2-card { min-height: 196px; padding: 1rem; }
+.components-shell-recipes .hara-v2-card h3 { margin: 0; font-size: .95rem; }
+.components-shell-recipes .hara-v2-card p { min-height: 3.1em; margin: .65rem 0 0; }
+.components-shell-recipes .components-inventory-card-title > span { color: var(--hara-v2-signal); }
+.components-shell-recipes dl { display: grid; gap: .45rem; margin: .75rem 0 0; padding-top: .65rem; border-top: 1px solid var(--hara-v2-line); }
+.components-shell-recipes dl > div { display: grid; gap: .2rem; }
+.components-shell-recipes dt { color: var(--hara-v2-faint); font: 650 .5rem var(--hara-v2-font-code); text-transform: uppercase; }
+.components-shell-recipes dd { margin: 0; color: var(--hara-v2-muted); font-size: .58rem; line-height: 1.45; }
+
 .components-controls-grid,
 .components-content-grid {
   display: grid;
@@ -825,6 +836,7 @@
   .components-reading-layout .hara-v2-outline { padding: 1rem 0 0; border-left: 0; border-top: 1px solid var(--hara-v2-line); }
   .components-demo-shell-body { grid-template-columns: 1fr; }
   .components-demo-shell .hara-v2-sidebar { display: none; }
+  .components-shell-recipes .hara-v2-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .components-pattern { min-height: 400px; }
   .components-closeout { grid-template-columns: 1fr; }
   .components-closeout > div:last-child { justify-content: flex-start; }
@@ -846,6 +858,7 @@
   .components-inventory-group > header { grid-template-columns: 1fr; gap: .6rem; }
   .components-inventory-grid { grid-template-columns: 1fr; }
   .components-inventory-card { min-height: 340px; }
+  .components-shell-recipes .hara-v2-card-grid { grid-template-columns: 1fr; }
   .components-specimen-notes { grid-template-columns: 1fr; }
   .components-do-dont { grid-template-columns: 1fr; }
   .components-demo-shell .hara-v2-primary-nav { display: none; }

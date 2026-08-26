@@ -20,7 +20,7 @@ const {
   basePath,
   activePath,
   label = "Hara visual language catalogue",
-  autoSections = true,
+  sectionNav = true,
   pageFooter = true
 } = Astro.props;
 
@@ -46,8 +46,8 @@ const RenderedComponentGallery = componentCatalogue
     <CatalogueRouteBar basePath={basePath} activePath={resolvedActivePath}>
       <Fragment slot="actions"><slot name="route-actions" /></Fragment>
     </CatalogueRouteBar>
-
-    <CatalogueSectionNav enabled={autoSections} />
+    {sectionNav && <CatalogueSectionNav label="Sections" />}
+    <slot name="secondary-nav" />
   </div>
 )}
 {RenderedComponentGallery && (

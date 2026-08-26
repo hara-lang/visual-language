@@ -6,6 +6,11 @@
 .v2-component-showcase {
   display: grid;
   gap: clamp(1.25rem, 3vw, 2.5rem);
+  font-family: var(--hara-v2-font-body);
+}
+
+.v2-component-showcase :where(button, select, input, textarea) {
+  font-family: var(--hara-v2-font-body);
 }
 
 .v2-component-showcase__intro,
@@ -48,9 +53,9 @@
 .v2-component-specimen__header p { margin: 0 0 .25rem; color: var(--hara-signal); font: 700 .68rem var(--hara-font-mono); text-transform: uppercase; letter-spacing: .12em; }
 .v2-component-specimen__header h3 { margin: 0; font-size: clamp(1.35rem, 2.4vw, 2.15rem); letter-spacing: -.035em; }
 .v2-component-specimen__header span { display: block; margin-top: .4rem; color: var(--hara-text-soft); font-size: .88rem; }
-.v2-component-specimen__exports { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .35rem; max-width: 620px; }
-.v2-component-specimen__exports a { padding: .28rem .42rem; color: var(--hara-text); border: 1px solid var(--hara-line); background: var(--hara-surface); text-decoration: none; }
-.v2-component-specimen__exports a:hover { border-color: var(--hara-signal); color: var(--hara-signal); }
+.v2-component-specimen__exports { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .2rem .75rem; max-width: 620px; }
+.v2-component-specimen__exports a { padding: .22rem 0; color: var(--hara-text-soft); border-bottom: 1px solid var(--hara-line); background: transparent; text-decoration: none; }
+.v2-component-specimen__exports a:hover { color: var(--hara-signal); border-bottom-color: var(--hara-signal); }
 .v2-component-specimen__exports a:focus-visible { outline: 2px solid var(--hara-signal); outline-offset: 2px; }
 .v2-component-specimen__exports code { font-size: .68rem; }
 
@@ -116,16 +121,17 @@
 
 .v2-component-specimen__canvas--runtime { display: grid; gap: .8rem; }
 .v2-component-showcase__runtime-states { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; padding: .7rem; border: 1px solid var(--hara-line); background: var(--hara-surface); }
-.v2-component-showcase__runtime-switch { display: inline-flex; align-items: center; gap: .55rem; margin-left: auto; font-size: .72rem; }
+.v2-component-showcase__runtime-switch { display: inline-flex; align-items: center; gap: .55rem; margin-left: auto; font: 600 .7rem/1 var(--hara-v2-font-body); }
 .v2-component-showcase__runtime-grid { display: grid; grid-template-columns: minmax(300px, .78fr) minmax(460px, 1.22fr); gap: .8rem; align-items: start; }
 .v2-component-showcase__runtime-nav { display: flex; gap: .35rem; }
-.v2-component-showcase__runtime-nav button { padding: .45rem .65rem; color: var(--hara-text-soft); border: 0; border-bottom: 2px solid transparent; background: transparent; font: 650 .72rem var(--hara-font-sans); }
+.v2-component-showcase__runtime-nav button { padding: .45rem .65rem; color: var(--hara-text-soft); border: 0; border-bottom: 2px solid transparent; background: transparent; font: 620 .72rem/1 var(--hara-v2-font-body); cursor: pointer; }
 .v2-component-showcase__runtime-nav button[aria-current="page"] { color: var(--hara-text); border-color: var(--hara-signal); }
+.v2-component-showcase__runtime-nav button:hover { color: var(--hara-text); }
 .v2-component-showcase__runtime-main { display: grid; gap: .45rem; min-height: 230px; align-content: center; justify-items: start; padding: 1.1rem; }
 .v2-component-showcase__runtime-main small { color: var(--hara-signal); font: 700 .65rem var(--hara-font-mono); letter-spacing: .1em; }
 .v2-component-showcase__runtime-main strong { font-size: 1.35rem; }
 .v2-component-showcase__runtime-main p { max-width: 46ch; color: var(--hara-text-soft); font-size: .8rem; }
-.v2-component-showcase__runtime-log { display: grid; grid-template-columns: auto 1fr; gap: .3rem .7rem; padding: .7rem; font-size: .7rem; }
+.v2-component-showcase__runtime-log { display: grid; grid-template-columns: auto 1fr; gap: .3rem .7rem; padding: .7rem; font: 500 .7rem/1.35 var(--hara-v2-font-body); }
 
 @media (max-width: 980px) {
   .v2-component-showcase__intro,

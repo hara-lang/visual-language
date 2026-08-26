@@ -49,4 +49,22 @@ function initialisePractice(root) {
 
 function initialiseProjects(root) { const buttons = [...root.querySelectorAll("[data-project-choice]")]; for (const button of buttons) button.addEventListener("click", () => setPressed(buttons, button)); }
 
-export function initialiseLearn(root = document) { if (!root?.querySelector) return; initialiseCopyButtons(root); initialiseFirstRun(root); initialiseEntrances(root); initialiseTrackFilter(root); initialiseCourse(root); initialiseLesson(root); initialisePractice(root); initialiseProjects(root); }
+function initialiseEnvironmentDropdowns(root) {
+  for (const select of root.querySelectorAll("[data-environment-section-select]")) {
+    const environment = select.closest(".hara-tool-environment"); const stage = environment?.querySelector(".hara-tool-environment-stage"); if (!environment || !stage) continue;
+    const render = (value) => {
+      environment.dataset.activeSection = value;
+      stage.dataset.activeSection = value;
+      for (const panel of stage.querySelectorAll('[role="tabpanel"]')) {
+        const active = panel.dataset.section === value;
+        panel.hidden = !active;
+        panel.dataset.active = active ? "true" : "false";
+        panel.tabIndex = active ? 0 : -1;
+      }
+    };
+    select.addEventListener("change", () => render(select.value));
+    render(select.value);
+  }
+}
+
+export function initialiseLearn(root = document) { if (!root?.querySelector) return; initialiseCopyButtons(root); initialiseFirstRun(root); initialiseEntrances(root); initialiseTrackFilter(root); initialiseCourse(root); initialiseLesson(root); initialisePractice(root); initialiseProjects(root); initialiseEnvironmentDropdowns(root); }

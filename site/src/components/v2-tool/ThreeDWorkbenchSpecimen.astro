@@ -12,6 +12,7 @@ import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.ast
 import PanelHeader from "../../../../src/astro/v2/tool/PanelHeader.astro";
 import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
 import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import ThreeDViewportIsland from "./ThreeDViewportIsland.tsx";
 
 const modes = [
   { value: "solid", label: "Solid" },
@@ -27,7 +28,7 @@ const scene = [
   { name: "Key light", type: "light" }
 ];
 ---
-<section class="tool-lab-section" id="three-d" data-tool-layout="3d">
+<section class="tool-lab-section" id="three-d" data-section-label="3D" data-tool-layout="3d">
   <header class="tool-lab-section-head">
     <div>
       <p class="hara-v2-kicker">Workbench specimen 01 · Spatial tooling</p>
@@ -90,15 +91,7 @@ const scene = [
     </div>
 
     <div slot="viewport" class="tool-lab-viewport tool-lab-viewport--3d" aria-label="Perspective viewport mockup">
-      <div class="tool-lab-horizon"></div>
-      <div class="tool-lab-grid-plane"></div>
-      <div class="tool-lab-object" aria-hidden="true">
-        <div class="tool-lab-object-core"></div>
-        <div class="tool-lab-object-ring tool-lab-object-ring--one"></div>
-        <div class="tool-lab-object-ring tool-lab-object-ring--two"></div>
-        <div class="tool-lab-object-selection"></div>
-      </div>
-      <div class="tool-lab-axis" aria-hidden="true"><i data-axis="x">X</i><i data-axis="y">Y</i><i data-axis="z">Z</i></div>
+      <ThreeDViewportIsland client:load />
     </div>
 
     <DockPanel slot="right" label="Object inspector" position="right" size="regular">

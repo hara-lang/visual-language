@@ -6,7 +6,7 @@ import DocsSpecimen from "../components/v2/DocsSpecimen.astro";
 import SpecsSpecimen from "../components/v2/SpecsSpecimen.astro";
 import BenchmarksSpecimen from "../components/v2/BenchmarksSpecimen.astro";
 import {
-  catalogueGroups,
+  cataloguePrimaryGroups,
   catalogueHref,
   catalogueItems,
   catalogueLinkIsExternal,
@@ -26,7 +26,7 @@ const toolLab = `${basePath}tool/`;
 const learnLab = `${basePath}learn/`;
 const worldDiscussionLab = `${basePath}world/discussion/`;
 const worldAroundLab = `${basePath}world/around/`;
-const topLevelItems = catalogueGroups.flatMap((group) => group.items);
+const topLevelItems = cataloguePrimaryGroups.flatMap((group) => group.items);
 const plannedCount = catalogueItems.filter((item) => item.status === "planned").length;
 const implementedCount = catalogueItems.filter((item) => item.href).length;
 ---
@@ -72,7 +72,7 @@ const implementedCount = catalogueItems.filter((item) => item.href).length;
             <a href={toolLab}><span>Tools</span><strong>Inspect workbench components →</strong></a>
           </nav>
         </div>
-        <div class="v2-lab-hero-art"><FleetField title="Hara interface reference field" /></div>
+        <div class="v2-lab-hero-art"><FleetField title="Hara interface reference architectural surface" image={`${basePath}cinematic/raster/backgrounds/monolith-gate.webp`} /></div>
       </section>
 
       <section class="v2-catalogue-home-intro">
@@ -80,17 +80,17 @@ const implementedCount = catalogueItems.filter((item) => item.href).length;
           <p class="hara-v2-kicker">Reference structure</p>
           <h2>Shared rules and route-specific examples.</h2>
         </div>
-        <p>Foundations and Library describe reusable contracts. Language and community routes show how those contracts are applied to Hara's public overview, documentation, learning, packages, specifications, executable examples, and discussion. A planned route links to its implementation issue rather than presenting an empty page.</p>
+        <p>Docs, Components, and Patterns are the three public areas of the catalogue. Docs covers Hara's language, documentation, learning, packages, specifications, executable examples, and community. Components records the shared foundations and reusable exports; Patterns records interaction behaviour and workbench structures. A planned route links to its implementation issue rather than presenting an empty page.</p>
       </section>
 
       <div class="v2-catalogue-summary" aria-label="Reference status summary">
-        <article><strong>{catalogueGroups.length}</strong><span>reference groups</span></article>
+        <article><strong>{cataloguePrimaryGroups.length}</strong><span>primary areas</span></article>
         <article><strong>{topLevelItems.length}</strong><span>top-level references</span></article>
         <article><strong>{plannedCount}</strong><span>planned routes and subroutes</span></article>
         <article><strong>{implementedCount}</strong><span>implemented routes</span></article>
       </div>
 
-      {catalogueGroups.map((group) => (
+      {cataloguePrimaryGroups.map((group) => (
         <section class="v2-catalogue-family" id={`catalogue-${group.id}`}>
           <header class="v2-catalogue-family-head">
             <div><p class="hara-v2-kicker">Reference group</p><h2>{group.label}</h2></div>

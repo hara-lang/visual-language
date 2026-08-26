@@ -31,25 +31,62 @@ const linksId = `v2-catalogue-${idSeed}-links`;
       <span class="v2-catalogue-section-trigger-chevron" aria-hidden="true"></span>
     </button>
     <div class="v2-catalogue-section-links" id={linksId} data-catalogue-section-links></div>
+    <div class="v2-catalogue-section-progress" aria-hidden="true" data-catalogue-section-progress></div>
   </nav>
 )}
 
 <script>
+  const ensureScrollProgress = () => {
+    let progress = document.querySelector("[data-v2-scroll-progress]");
+    if (!(progress instanceof HTMLElement)) {
+      progress = document.createElement("div");
+      progress.className = "v2-scroll-progress";
+      progress.dataset.v2ScrollProgress = "true";
+      progress.setAttribute("role", "progressbar");
+      progress.setAttribute("aria-label", "Page scroll progress");
+      progress.setAttribute("aria-valuemin", "0");
+      progress.setAttribute("aria-valuemax", "100");
+      progress.setAttribute("aria-valuenow", "0");
+      const fill = document.createElement("span");
+      fill.setAttribute("aria-hidden", "true");
+      progress.append(fill);
+      document.body.append(progress);
+    }
+
+    const update = () => {
+      const maximum = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const value = maximum === 0 ? 1 : Math.min(1, Math.max(0, window.scrollY / maximum));
+      const percentage = Math.round(value * 100);
+      progress.style.setProperty("--v2-scroll-progress", String(value));
+      progress.setAttribute("aria-valuenow", String(percentage));
+      progress.setAttribute("aria-valuetext", `${percentage}%`);
+    };
+
+    if (progress.dataset.listener !== "true") {
+      progress.dataset.listener = "true";
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update, { passive: true });
+      document.addEventListener("astro:page-load", update);
+    }
+    update();
+  };
+
   const initialiseCatalogueSections = () => {
     document.querySelectorAll("[data-catalogue-section-nav]").forEach((nav) => {
       if (!(nav instanceof HTMLElement) || nav.dataset.ready === "true") return;
       const main = document.querySelector("main");
       const links = nav.querySelector("[data-catalogue-section-links]");
+      const sectionProgress = nav.querySelector("[data-catalogue-section-progress]");
       const trigger = nav.querySelector("[data-catalogue-section-trigger]");
       const currentLabel = nav.querySelector("[data-catalogue-section-current]");
       const shell = nav.closest("[data-catalogue-secondary-shell]");
-      if (!(main instanceof HTMLElement) || !(links instanceof HTMLElement) || !(trigger instanceof HTMLButtonElement)) return;
+      if (!(main instanceof HTMLElement) || !(links instanceof HTMLElement) || !(sectionProgress instanceof HTMLElement) || !(trigger instanceof HTMLButtonElement)) return;
 
-      const directSections = [...main.querySelectorAll(":scope > section[id], :scope > article[id]")];
+      const directSections = [...main.querySelectorAll(":scope > section[id]:not([data-catalogue-section-ignore]), :scope > article[id]:not([data-catalogue-section-ignore])")];
       const candidates = directSections.length > 1
         ? directSections
         : [...main.querySelectorAll("section[id], article[id]")]
-          .filter((section) => !section.closest("[data-prototype-frame]"))
+          .filter((section) => !section.closest("[data-prototype-frame]") && !section.hasAttribute("data-catalogue-section-ignore"))
           .slice(0, 14);
       const sections = candidates.filter((section) => section instanceof HTMLElement && section.id);
       if (sections.length < 2) return;
@@ -73,7 +110,9 @@ const linksId = `v2-catalogue-${idSeed}-links`;
 
       nav.dataset.ready = "true";
       links.replaceChildren();
+      sectionProgress.replaceChildren();
       const linkById = new Map();
+      const progressById = new Map();
       const navigationLabel = nav.dataset.catalogueSectionLabel || "On this page";
 
       const setOpen = (requestedOpen, restoreFocus = false) => {
@@ -111,6 +150,11 @@ const linksId = `v2-catalogue-${idSeed}-links`;
           if (candidateId === id) link.setAttribute("aria-current", "location");
           else link.removeAttribute("aria-current");
         });
+        const currentIndex = sections.findIndex((section) => section.id === id);
+        progressById.forEach((segment, candidateId) => {
+          const segmentIndex = sections.findIndex((section) => section.id === candidateId);
+          segment.dataset.state = segmentIndex < currentIndex ? "complete" : segmentIndex === currentIndex ? "current" : "upcoming";
+        });
         const active = linkById.get(id);
         if (currentLabel instanceof HTMLElement && active instanceof HTMLAnchorElement) {
           currentLabel.textContent = active.textContent || "Overview";
@@ -127,12 +171,18 @@ const linksId = `v2-catalogue-${idSeed}-links`;
         });
         links.append(anchor);
         linkById.set(section.id, anchor);
+        const segment = document.createElement("span");
+        segment.setAttribute("data-section-progress", section.id);
+        segment.dataset.state = "upcoming";
+        sectionProgress.append(segment);
+        progressById.set(section.id, segment);
         if (index === 0) setCurrent(section.id);
       });
 
       nav.hidden = false;
       setOpen(false);
       document.body.dataset.catalogueSectionReady = "true";
+      ensureScrollProgress();
 
       trigger.addEventListener("click", () => setOpen(nav.dataset.open !== "true"));
       shell?.addEventListener("hara:catalogue-secondary-disclosure", (event) => {

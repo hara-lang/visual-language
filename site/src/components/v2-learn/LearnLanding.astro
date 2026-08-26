@@ -5,6 +5,8 @@ import {
   learnSummary,
   outcomeTracks
 } from "../../lib/v2-learn.mjs";
+import HaraGlyph from "../../../../src/astro/HaraGlyph.astro";
+import HaraIcon from "../../../../src/astro/HaraIcon.astro";
 
 const { playgroundUrl = "#lesson" } = Astro.props;
 const initialEntrance = experienceEntrances[0];
@@ -30,7 +32,7 @@ const initialEntrance = experienceEntrances[0];
   <div class="learn-first-run" aria-label="First lesson source and result">
     <header>
       <div><span>First lesson</span><strong>lesson-01.hara</strong></div>
-      <span class="learn-state" data-tone="success">Local Wasm · ready</span>
+      <span class="learn-state learn-state--icon" data-tone="success"><HaraGlyph name="wasm" size={14} decorative={true} /><span>Local Wasm · ready</span></span>
     </header>
     <pre><code><b>(defn</b> greet [name]
   &#123;<i>:message</i> (str "Hello, " name)
@@ -38,12 +40,14 @@ const initialEntrance = experienceEntrances[0];
 
 (greet "Hara")</code></pre>
     <div class="learn-first-run-output" data-first-run-output>
-      <i></i><strong>Ready to run</strong><span>No account · editor remains unfocused</span><code>⌘ ↵</code>
+      <HaraIcon name="success" size={16} decorative={true} />
+      <div class="learn-first-run-output-copy"><strong>Ready to run</strong><span>No account · editor remains unfocused</span></div>
+      <kbd aria-label="Run form shortcut">⌘ Enter</kbd>
     </div>
     <footer>
-      <button type="button" data-first-run>Run form</button>
-      <button type="button" data-first-edit>Edit source</button>
-      <a href={playgroundUrl}>Open this revision in Playground →</a>
+      <button type="button" data-first-run><HaraIcon name="run" size={16} decorative={true} /><span>Run form</span></button>
+      <button type="button" data-first-edit><HaraIcon name="edit" size={16} decorative={true} /><span>Edit source</span></button>
+      <a href={playgroundUrl}><HaraIcon name="external" size={16} decorative={true} /><span>Open this revision in Playground</span></a>
     </footer>
   </div>
 </section>

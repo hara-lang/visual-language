@@ -1,5 +1,6 @@
 ---
 import EnvironmentWorkbench from "../../../../src/astro/v2/tool/EnvironmentWorkbench.astro";
+import HaraIcon from "../../../../src/astro/HaraIcon.astro";
 import { projectFixture } from "../../lib/v2-learn.mjs";
 const { playgroundUrl = "#", worldUrl = "#world-examples" } = Astro.props;
 const projectOutcomes = [
@@ -14,8 +15,14 @@ const projectOutcomes = [
   <header class="learn-section-heading"><div><p class="hara-v2-kicker">Project-based learning</p><h2 id="learn-project-title">Grow one visible result into a complete project.</h2></div><p>Projects own milestones, reflection, and curriculum evidence. The embedded environment reuses the shared Playground workbench rather than inventing a Learn-only editor.</p></header>
   <div class="learn-project-gallery" role="list">{projectOutcomes.map((project) => <button type="button" role="listitem" data-project-choice={project.id} aria-pressed={project.current ? "true" : "false"}><span>{project.label}</span><strong>{project.title}</strong><div>{project.capabilities.map((capability) => <code>{capability}</code>)}</div></button>)}</div>
   <article class="learn-project-summary"><div><span>{projectFixture.contentType}@{projectFixture.schemaVersion}</span><h3>{projectFixture.title}</h3><p>{projectFixture.outcome}</p></div><dl><div><dt>Project revision</dt><dd class="learn-mono">{projectFixture.exactRevision}</dd></div><div><dt>Source revision</dt><dd class="learn-mono">{projectFixture.sourceRevision}</dd></div><div><dt>Backend</dt><dd>{projectFixture.runtime.backend}</dd></div></dl></article>
-  <EnvironmentWorkbench label="Learn project environment" activeSection="code" activeControlGroup="files" idPrefix="learn-project" minHeight="680px" sectionLabels={{ nav: "Project", frontmatter: "Contract", graphics: "Canvas", code: "Code" }} sectionBadges={{ nav: projectFixture.files.length, frontmatter: "2.0", graphics: "live", code: "main" }} capabilityBadges={{ sessions: 1, files: projectFixture.files.length, canvas: 1 }} class="learn-project-workbench">
-    <div slot="commands" class="learn-project-commands"><button type="button">Run</button><button type="button">Cancel</button><button type="button">Restart</button><a href={playgroundUrl}>Open in Playground</a></div>
+  <EnvironmentWorkbench label="Learn project environment" activeSection="code" activeControlGroup="files" sectionNavigation="dropdown" idPrefix="learn-project" minHeight="680px" sectionLabels={{ nav: "Project", frontmatter: "Contract", graphics: "Canvas", code: "Code" }} sectionBadges={{ nav: projectFixture.files.length, frontmatter: "2.0", graphics: "live", code: "main" }} capabilityBadges={{ sessions: 1, files: projectFixture.files.length, canvas: 1 }} class="learn-project-workbench">
+    <div slot="commands" class="learn-project-commands">
+      <span class="learn-project-command-context"><span>Live studio</span><strong>Signal field</strong><small>browser-wasm</small></span>
+      <button type="button" class="learn-project-command--primary"><HaraIcon name="run" size={14} decorative={true} /><span>Run</span></button>
+      <button type="button"><HaraIcon name="stop" size={14} decorative={true} /><span>Cancel</span></button>
+      <button type="button"><HaraIcon name="retry" size={14} decorative={true} /><span>Restart</span></button>
+      <a href={playgroundUrl}><HaraIcon name="external" size={14} decorative={true} /><span>Open in Playground</span></a>
+    </div>
     <div slot="nav" class="learn-project-nav"><header><span>Starter project</span><strong>{projectFixture.files.length} files</strong></header><ul>{projectFixture.files.map((file) => <li data-state={file.state}><span>{file.path}</span><small>{file.state}</small></li>)}</ul></div>
     <div slot="frontmatter" class="learn-project-contract"><pre><code>{`{:schema hara.learn/project
  :schema-version "2.0.0"

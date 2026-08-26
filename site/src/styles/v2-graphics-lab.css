@@ -6,7 +6,7 @@
 .graphics-lab-stage { min-width:0; }
 .graphics-lab-stage-field { min-height:clamp(480px,48vw,690px); box-shadow:0 36px 90px color-mix(in srgb,black 24%,transparent); }
 .graphics-lab-stage-controls { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:1px; margin-top:1px; padding:1px; background:var(--hara-v2-line); }
-.graphics-lab-stage-controls button { display:grid; gap:.28rem; min-height:58px; padding:.65rem; color:var(--hara-v2-muted); border:0; background:var(--hara-v2-panel); font:700 .57rem/1.15 var(--hara-v2-font-code); text-align:left; cursor:pointer; }
+.graphics-lab-stage-controls button { display:grid; gap:.28rem; min-height:58px; padding:.65rem; color:var(--hara-v2-muted); border:0; background:var(--hara-v2-panel); font:500 .68rem/1.15 var(--hara-v2-font-body); text-align:left; cursor:pointer; }
 .graphics-lab-stage-controls button span { color:var(--hara-v2-faint); font-size:.5rem; }
 .graphics-lab-stage-controls button:hover { color:var(--hara-v2-ink); background:var(--hara-v2-hover); }
 .graphics-lab-stage-controls button[aria-pressed="true"] { color:var(--hara-v2-ink); box-shadow:inset 0 -2px var(--hara-v2-signal); background:var(--hara-v2-panel-raised); }

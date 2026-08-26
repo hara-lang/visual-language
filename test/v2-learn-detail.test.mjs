@@ -142,6 +142,39 @@ test("the detailed page composes landing, course, lesson, practice, project, pro
   assert.match(page, /<WorldSpecimen\s*\/>/);
 });
 
+test("the first-run surface uses shared icons for runtime status and actions", async () => {
+  const [landing, styles] = await Promise.all([
+    read("site/src/components/v2-learn/LearnLanding.astro"),
+    read("site/src/styles/v2-learn-base.css")
+  ]);
+  for (const icon of ["wasm", "success", "run", "edit", "external"])
+    assert.match(landing, new RegExp(`name=\\"${icon}\\"`), `missing ${icon} icon`);
+  assert.match(landing, /import HaraGlyph from/);
+  assert.match(landing, /class="learn-first-run-output-copy"/);
+  assert.match(landing, /<kbd aria-label="Run form shortcut">/);
+  assert.doesNotMatch(landing, /<i><\/i>|⌘ ↵|Playground →/);
+  assert.match(styles, /\.learn-state--icon/);
+  assert.match(styles, /\.learn-first-run-output-copy/);
+  assert.match(styles, /\.learn-first-run-output kbd/);
+  assert.match(styles, /\.learn-first-run > footer :is\(button, a\) \.hara-icon/);
+});
+
+test("the project studio uses a dropdown section control and icon-led command buttons", async () => {
+  const [project, runtime, script] = await Promise.all([
+    read("site/src/components/v2-learn/LearnProject.astro"),
+    read("site/src/styles/v2-learn-runtime.css"),
+    read("site/src/scripts/v2-learn.js")
+  ]);
+  assert.match(project, /sectionNavigation="dropdown"/);
+  for (const icon of ["run", "stop", "retry", "external"]) assert.match(project, new RegExp(`name="${icon}"`));
+  assert.match(project, /<button[^>]*><HaraIcon name="run"/);
+  assert.match(project, /<a href=\{playgroundUrl\}><HaraIcon name="external"/);
+  assert.match(runtime, /\.learn-project-command-context/);
+  assert.match(runtime, /\.learn-project-workbench \.hara-tool-section-select/);
+  assert.match(script, /data-environment-section-select/);
+  assert.match(script, /function initialiseEnvironmentDropdowns/);
+});
+
 test("components reuse shared shells and the Playground environment contract without embedded style blocks", async () => {
   const sources = await Promise.all(componentPaths.map(read));
   assert.match(sources[1], /import Shell from/);

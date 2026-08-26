@@ -64,12 +64,13 @@ const expectedOutput = `{:language :hara
     <title>Hara programming language overview</title>
   </head>
   <body class="hara-v2 www-family-page www-home-page">
-    <WwwFamilyHeader basePath={basePath} activeRoute="home" />
-    <WwwSubnav label="Overview" items={homeSectionNavigation} activeId="first-example">
+    <WwwFamilyHeader basePath={basePath} activeRoute="home">
+      <WwwSubnav slot="secondary-nav" label="Overview" items={homeSectionNavigation} activeId="first-example">
       <span slot="identity">{homeNarrative.schema} · {homeNarrative.schemaVersion}</span>
       <a class="hara-v2-button" href={docsHref}>Read documentation</a>
       <a class="hara-v2-button" data-variant="primary" href="#first-example">Run the first form</a>
-    </WwwSubnav>
+      </WwwSubnav>
+    </WwwFamilyHeader>
 
     <main class="www-main">
       <section class="www-hero" aria-labelledby="www-home-title">

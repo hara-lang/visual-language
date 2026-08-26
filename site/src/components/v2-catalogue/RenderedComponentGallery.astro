@@ -142,7 +142,7 @@ const haraSource = `(defn ready? [session]
           <div class="v2-component-showcase__graphic-pair">
             <div class="v2-component-showcase__graphic-frame">
               <FleetField title="FleetField rendered component" />
-              <span>FleetField · SVG field</span>
+              <span>FleetField · rendered architectural surface</span>
             </div>
             <ShaderField mode="monolith" atmosphere="nocturne" interactive label="ShaderField rendered component" plate="shader field" class="v2-component-showcase__shader">
               <span class="v2-component-showcase__graphic-label">ShaderField · WebGL with fallback</span>
@@ -238,8 +238,8 @@ const haraSource = `(defn ready? [session]
       <WorkbenchShell label="Component workbench specimen" minHeight="390px" class="v2-component-showcase__workbench">
         <Toolbar slot="top" label="Workbench commands" density="dense">
           <ToolGroup label="Viewport">
-            <ToolButton label="Frame" density="dense" active><span slot="icon" aria-hidden="true">□</span></ToolButton>
-            <ToolButton label="Orbit" density="dense"><span slot="icon" aria-hidden="true">◎</span></ToolButton>
+            <ToolButton label="Frame" iconOnly density="dense" active><span slot="icon" aria-hidden="true">□</span></ToolButton>
+            <ToolButton label="Orbit" iconOnly density="dense"><span slot="icon" aria-hidden="true">◎</span></ToolButton>
           </ToolGroup>
         </Toolbar>
         <DockPanel slot="left" label="Scene outline" position="left" size="narrow" selected>
@@ -261,8 +261,8 @@ const haraSource = `(defn ready? [session]
         <div slot="overlay">
           <ViewportOverlay label="Viewport metrics" placement="top-left"><strong>60 fps</strong><span> · 8.2 ms</span></ViewportOverlay>
           <FloatingPalette label="Quick tools" placement="bottom-right">
-            <ToolButton label="Capture" density="dense"><span slot="icon" aria-hidden="true">◉</span></ToolButton>
-            <ToolButton label="Reset" density="dense"><span slot="icon" aria-hidden="true">↺</span></ToolButton>
+            <ToolButton label="Capture" iconOnly density="dense"><span slot="icon" aria-hidden="true">◉</span></ToolButton>
+            <ToolButton label="Reset" iconOnly density="dense"><span slot="icon" aria-hidden="true">↺</span></ToolButton>
           </FloatingPalette>
         </div>
         <div slot="bottom" class="v2-component-showcase__timeline"><span>0</span><i></i><span>240</span></div>
@@ -304,7 +304,7 @@ const haraSource = `(defn ready? [session]
         <FrontmatterGrid slot="frontmatter" entries={frontmatterEntries} label="Environment frontmatter" columns={2} />
         <div slot="graphics" class="v2-component-showcase__environment-graphic"><span>GRAPHICS FIELD</span><strong>lattice / signal</strong></div>
         <pre slot="code" class="v2-component-showcase__code"><code>{haraSource}</code></pre>
-        <Toolbar slot="commands" label="Environment commands" density="dense"><ToolButton label="Evaluate" command="Meta+Enter" density="dense" active><span slot="icon" aria-hidden="true">▶</span></ToolButton></Toolbar>
+        <Toolbar slot="commands" label="Environment commands" density="dense"><ToolButton label="Evaluate" title="Evaluate · Meta+Enter" command="Meta+Enter" iconOnly density="dense" active><span slot="icon" aria-hidden="true">▶</span></ToolButton></Toolbar>
         <ResourceList slot="sessions" items={resources.slice(0, 2)} label="Environment sessions" density="dense" />
         <ResourceList slot="files" items={[{ id: "environment-file", label: "main.hal", detail: "workspace", meta: "clean", status: "ready", marker: "ƒ", action: true }]} label="Environment files" density="dense" />
         <ViewportOverlay slot="overlay" label="Environment evaluation status" placement="bottom-left"><strong>EVAL 018</strong><span> · 12 ms</span></ViewportOverlay>
@@ -335,12 +335,12 @@ const haraSource = `(defn ready? [session]
             {runtimeConnections.map((connection) => <ConnectionRow {...connection} />)}
           </div>
           <div slot="status"><StatusLamp label="Evaluator ready" state="ready" detail="12 ms" /><StatusLamp label="Filesystem attached" state="connected" detail="3 mounts" /></div>
-          <div slot="actions"><ToolButton label="Restart" density="dense"><span slot="icon" aria-hidden="true">↺</span></ToolButton><ToolButton label="Open logs" density="dense"><span slot="icon" aria-hidden="true">≡</span></ToolButton></div>
+          <div slot="actions"><ToolButton label="Restart" iconOnly density="dense"><span slot="icon" aria-hidden="true">↺</span></ToolButton><ToolButton label="Open logs" iconOnly density="dense"><span slot="icon" aria-hidden="true">≡</span></ToolButton></div>
         </CompactRuntimeShell>
         <RuntimeAppShell idPrefix="catalogue-runtime-app" label="Runtime application shell" title="Session inspector" activeApp="sessions" state="ready" inspector bottom>
           <div slot="header-actions"><StatusLamp label="Ready" state="ready" live /></div>
           <div slot="navigation" class="v2-component-showcase__runtime-nav"><button type="button" aria-current="page">Sessions</button><button type="button">Files</button><button type="button">Trace</button></div>
-          <Toolbar slot="toolbar" label="Runtime application controls" density="dense"><ToolButton label="Attach" density="dense" active><span slot="icon" aria-hidden="true">＋</span></ToolButton><ToolToggle label="Live trace" pressed density="dense"><span slot="icon" aria-hidden="true">⌁</span></ToolToggle></Toolbar>
+          <Toolbar slot="toolbar" label="Runtime application controls" density="dense"><ToolButton label="Attach" iconOnly density="dense" active><span slot="icon" aria-hidden="true">＋</span></ToolButton><ToolToggle label="Live trace" iconOnly pressed density="dense"><span slot="icon" aria-hidden="true">⌁</span></ToolToggle></Toolbar>
           <div class="v2-component-showcase__runtime-main"><small>ACTIVE SESSION</small><strong>main / wasm32</strong><code>session-01J9…F6A</code><p>Tree, fiber, bytecode, native, and Wasm consume the same runtime value boundary.</p></div>
           <InspectorSection slot="inspector" title="Session" open><p>Status <strong>ready</strong></p><p>Namespace <code>hara.user</code></p><p>Revision <code>af6273c</code></p></InspectorSection>
           <div slot="bottom" class="v2-component-showcase__runtime-log"><code>08:41:12</code><span>filesystem attached</span><code>08:41:13</code><span>evaluation complete</span></div>

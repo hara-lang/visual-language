@@ -1,5 +1,5 @@
 .hara-chrome-lab-section {
-  scroll-margin-top: 84px;
+  scroll-margin-top: calc(var(--v2-catalogue-masthead-height) + var(--v2-catalogue-route-height) + 12px);
 }
 
 .hara-chrome-runtime-hero {
@@ -321,4 +321,3 @@
 .hara-chrome-event-log [data-state="warning"] {
   color: var(--hara-tool-warning);
 }
-

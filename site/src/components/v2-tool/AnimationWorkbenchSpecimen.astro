@@ -12,6 +12,8 @@ import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.ast
 import PanelHeader from "../../../../src/astro/v2/tool/PanelHeader.astro";
 import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
 import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import ThreeDViewportIsland from "./ThreeDViewportIsland.tsx";
+import EditorTreeIsland from "./EditorTreeIsland.tsx";
 
 const tracks = [
   { name: "Root", keys: [4, 18, 36, 58, 82] },
@@ -21,7 +23,7 @@ const tracks = [
   { name: "Signal", keys: [20, 44, 65, 92] }
 ];
 ---
-<section class="tool-lab-section" id="animation" data-tool-layout="animation">
+<section class="tool-lab-section" id="animation" data-section-label="Animation" data-tool-layout="animation">
   <header class="tool-lab-section-head">
     <div>
       <p class="hara-v2-kicker">Workbench specimen 03 · Temporal tooling</p>
@@ -53,23 +55,12 @@ const tracks = [
       </IconRail>
       <DockPanel label="Rig outliner" position="left" size="narrow">
         <PanelHeader title="Rig / Sentinel" eyebrow="Armature" compact><span slot="metadata">18 bones</span></PanelHeader>
-        <ol class="tool-lab-tree tool-lab-tree--rig">
-          {[
-            ["Root", 0], ["Pelvis", 1], ["Spine / 01", 2], ["Spine / 02", 3], ["Neck", 4], ["Head", 5], ["Arm.L", 3], ["Arm.R", 3]
-          ].map(([name, depth], index) => (
-            <li data-active={index === 3 ? "true" : "false"} style={`--depth:${depth}`}><span class="tool-lab-tree-disclosure">›</span><span class="tool-lab-tree-kind">B</span><span>{name}</span></li>
-          ))}
-        </ol>
+        <EditorTreeIsland client:load variant="animation" />
       </DockPanel>
     </div>
 
-    <div slot="viewport" class="tool-lab-viewport tool-lab-viewport--animation" aria-label="Character animation viewport mockup">
-      <div class="tool-lab-stage-ring"></div>
-      <div class="tool-lab-rig" aria-hidden="true">
-        <i data-bone="head"></i><i data-bone="spine-a"></i><i data-bone="spine-b"></i><i data-bone="arm-left"></i><i data-bone="arm-right"></i><i data-bone="leg-left"></i><i data-bone="leg-right"></i>
-        <span data-joint="head"></span><span data-joint="chest"></span><span data-joint="pelvis"></span><span data-joint="left-hand"></span><span data-joint="right-hand"></span><span data-joint="left-foot"></span><span data-joint="right-foot"></span>
-      </div>
-      <div class="tool-lab-motion-arc tool-lab-motion-arc--left"></div><div class="tool-lab-motion-arc tool-lab-motion-arc--right"></div>
+    <div slot="viewport" class="tool-lab-viewport tool-lab-viewport--animation" aria-label="Character animation viewport">
+      <ThreeDViewportIsland client:load variant="animation" />
     </div>
 
     <DockPanel slot="right" label="Animation inspector" position="right" size="regular">

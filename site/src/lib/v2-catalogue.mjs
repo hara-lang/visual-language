@@ -310,6 +310,40 @@ export const catalogueGroups = [
   }
 ];
 
+const catalogueGroupItems = (id) => catalogueGroups.find((group) => group.id === id)?.items ?? [];
+const foundationsItems = catalogueGroupItems("foundations");
+const libraryItems = catalogueGroupItems("library");
+const applicationItems = catalogueGroupItems("applications");
+
+/**
+ * The manifest keeps its ownership taxonomy for route relationships. This
+ * projection is the user-facing catalogue taxonomy and mirrors the three
+ * persistent destinations in the masthead.
+ */
+export const cataloguePrimaryGroups = [
+  {
+    id: "docs",
+    label: "Docs",
+    summary: "Language, documentation, learning, package, specification, playground, and community routes.",
+    items: applicationItems
+  },
+  {
+    id: "components",
+    label: "Components",
+    summary: "Shared foundations and reusable interface components, from visual rules to exported specimens.",
+    items: [
+      ...libraryItems.filter(({ id }) => id === "components"),
+      ...foundationsItems
+    ]
+  },
+  {
+    id: "patterns",
+    label: "Patterns",
+    summary: "Interaction behaviour, UI states, and tool workbench structures.",
+    items: libraryItems.filter(({ id }) => ["ui-patterns", "tool-workbenches"].includes(id))
+  }
+];
+
 export const catalogueStatusLabels = {
   planned: "Planned",
   active: "Implemented",

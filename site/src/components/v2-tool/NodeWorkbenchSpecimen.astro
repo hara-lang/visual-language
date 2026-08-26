@@ -9,11 +9,11 @@ import ToolNumberField from "../../../../src/astro/v2/tool/ToolNumberField.astro
 import TabStrip from "../../../../src/astro/v2/tool/TabStrip.astro";
 import IconRail from "../../../../src/astro/v2/tool/IconRail.astro";
 import DockPanel from "../../../../src/astro/v2/tool/DockPanel.astro";
-import FloatingPalette from "../../../../src/astro/v2/tool/FloatingPalette.astro";
-import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
 import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
 import PanelHeader from "../../../../src/astro/v2/tool/PanelHeader.astro";
 import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
+import ThreeDViewportIsland from "./ThreeDViewportIsland.tsx";
+import EditorTreeIsland from "./EditorTreeIsland.tsx";
 
 const tabs = [
   { id: "material", label: "Command steel", active: true, command: "1" },
@@ -21,7 +21,7 @@ const tabs = [
   { id: "rack", label: "Rack field", command: "3" }
 ];
 ---
-<section class="tool-lab-section" id="node" data-tool-layout="node">
+<section class="tool-lab-section" id="node" data-section-label="Node" data-tool-layout="node">
   <header class="tool-lab-section-head">
     <div>
       <p class="hara-v2-kicker">Workbench specimen 02 · Graph tooling</p>
@@ -30,22 +30,22 @@ const tabs = [
     <p>A graph-centred surface with compact command tabs, a searchable node catalogue, shared property inspection, asset context, and a floating palette that uses the same material language as docked panels.</p>
   </header>
 
-  <WorkbenchShell label="Hara node and material editor specimen" minHeight="690px">
+  <WorkbenchShell label="Hara node and material editor specimen" minHeight="690px" class="tool-lab-node-editor">
     <div slot="top">
-      <Toolbar label="Node editor commands" density="dense">
-        <ToolGroup label="Graph commands">
-          <ToolButton label="Add node" command="Shift+A" active />
-          <ToolButton label="Connect" command="C" />
-          <ToolButton label="Frame" command="Home" />
+      <Toolbar label="Node editor commands" density="dense" class="tool-lab-node-toolbar">
+        <ToolGroup label="Graph commands" class="tool-lab-node-toolbar__primary">
+          <ToolButton label="Add node" title="Add node · Shift+A" command="Shift+A" iconOnly active><span slot="icon">＋</span></ToolButton>
+          <ToolButton label="Connect" title="Connect · C" command="C" iconOnly><span slot="icon">⌁</span></ToolButton>
+          <ToolButton label="Frame all" title="Frame all · Home" command="Home" iconOnly><span slot="icon">⌗</span></ToolButton>
         </ToolGroup>
-        <ToolGroup label="Graph view">
-          <ToolToggle label="Snap" pressed />
-          <ToolToggle label="Minimap" pressed />
-          <ToolSelect label="Domain" value="surface" options={[{ value: "surface", label: "Surface" }, { value: "volume", label: "Volume" }]} inline />
+        <ToolGroup label="Graph view" class="tool-lab-node-toolbar__view">
+          <ToolToggle label="Snap" pressed iconOnly><span slot="icon">⊙</span></ToolToggle>
+          <ToolToggle label="Minimap" pressed iconOnly><span slot="icon">⊞</span></ToolToggle>
+          <ToolSelect label="Graph" value="surface" options={[{ value: "surface", label: "Surface" }, { value: "volume", label: "Volume" }]} inline />
         </ToolGroup>
-        <ToolGroup label="Compile material"><ToolButton label="Compile" command="Ctrl+Enter" /></ToolGroup>
+        <ToolGroup label="Compile material" class="tool-lab-node-toolbar__compile"><ToolButton label="Compile" title="Compile material · Ctrl+Enter" command="Ctrl+Enter" iconOnly><span slot="icon">✓</span></ToolButton></ToolGroup>
       </Toolbar>
-      <TabStrip tabs={tabs} density="dense" label="Open material graphs" />
+      <TabStrip tabs={tabs} density="dense" variant="groups" label="Open material graphs" class="tool-lab-node-graph-tabs" />
     </div>
 
     <div slot="left" class="tool-lab-left-stack">
@@ -58,37 +58,15 @@ const tabs = [
       <DockPanel label="Node catalogue" position="left" size="narrow">
         <PanelHeader title="Nodes" eyebrow="Catalogue" compact><span slot="metadata">28</span></PanelHeader>
         <label class="tool-lab-search"><span>Find node</span><input type="search" value="surface" aria-label="Find node" /></label>
-        <div class="tool-lab-node-categories">
-          <details open><summary>Input</summary><button type="button">Geometry</button><button type="button">Object info</button><button type="button">Signal time</button></details>
-          <details open><summary>Surface</summary><button type="button" data-active="true">Machined metal</button><button type="button">Emission</button><button type="button">Thin glass</button></details>
-          <details><summary>Transform</summary></details>
-          <details><summary>Utility</summary></details>
-        </div>
+        <EditorTreeIsland client:load variant="node" />
       </DockPanel>
     </div>
 
-    <div slot="viewport" class="tool-lab-viewport tool-lab-viewport--node" aria-label="Material node graph mockup">
-      <svg class="tool-lab-node-links" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M225 156 C340 156 340 244 455 244" />
-        <path d="M225 220 C340 220 340 286 455 286" />
-        <path d="M630 260 C745 260 740 186 850 186" />
-        <path d="M630 304 C750 304 750 235 850 235" />
-      </svg>
-      <article class="tool-lab-node" data-node="input" style="--x: 8%; --y: 18%;">
-        <header><span>01</span><b>Geometry input</b></header>
-        <div><label>Normal <i data-socket="vector"></i></label><label>Position <i data-socket="vector"></i></label><label>Facing <i data-socket="value"></i></label></div>
-      </article>
-      <article class="tool-lab-node" data-node="surface" data-active="true" style="--x: 40%; --y: 34%;">
-        <header><span>07</span><b>Machined metal</b></header>
-        <div><label><i data-socket="vector"></i> Normal</label><label><i data-socket="value"></i> Roughness <em>.72</em></label><label><i data-socket="signal"></i> Signal <em>.08</em></label></div>
-      </article>
-      <article class="tool-lab-node" data-node="output" style="--x: 76%; --y: 24%;">
-        <header><span>12</span><b>Material output</b></header>
-        <div><label><i data-socket="surface"></i> Surface</label><label><i data-socket="value"></i> Alpha</label><label><i data-socket="vector"></i> Displacement</label></div>
-      </article>
+    <div slot="viewport" class="tool-lab-viewport tool-lab-viewport--node" aria-label="Material node graph viewport">
+      <ThreeDViewportIsland client:load variant="node" />
     </div>
 
-    <DockPanel slot="right" label="Node properties" position="right" size="regular">
+    <DockPanel slot="right" label="Node properties" position="right" size="regular" class="tool-lab-node-inspector">
       <PanelHeader title="Machined metal" eyebrow="Node / Surface" compact><span slot="metadata">07</span></PanelHeader>
       <InspectorSection title="Material" open>
         <ToolSelect label="Base layer" value="steel" options={[{ value: "steel", label: "Pale steel" }, { value: "graphite", label: "Graphite" }]} />
@@ -105,7 +83,7 @@ const tabs = [
       </InspectorSection>
     </DockPanel>
 
-    <DockPanel slot="bottom" label="Material assets" position="bottom">
+    <DockPanel slot="bottom" label="Material assets" position="bottom" class="tool-lab-node-assets">
       <PanelHeader title="Material assets" eyebrow="Project / Surfaces" compact><span slot="metadata">06</span></PanelHeader>
       <div class="tool-lab-material-strip">
         {[
@@ -121,14 +99,6 @@ const tabs = [
         ))}
       </div>
     </DockPanel>
-
-    <div slot="overlay">
-      <ViewportOverlay placement="top-left"><b>Material graph</b><span>3 nodes · 4 links</span></ViewportOverlay>
-      <FloatingPalette label="Add node palette" placement="bottom-right">
-        <PanelHeader title="Add node" eyebrow="Shift+A" compact><span slot="metadata">surface</span></PanelHeader>
-        <div class="tool-lab-command-list"><button type="button" data-active="true"><span>Surface</span><b>Machined metal</b><kbd>↵</kbd></button><button type="button"><span>Surface</span><b>Thin glass</b><kbd>2</kbd></button><button type="button"><span>Utility</span><b>State switch</b><kbd>3</kbd></button></div>
-      </FloatingPalette>
-    </div>
 
     <StatusBar slot="status"><span>Graph compiled</span><span>0 warnings</span><span slot="secondary">WebGPU · 1.8 ms</span></StatusBar>
   </WorkbenchShell>

@@ -6,6 +6,10 @@
   --v2-catalogue-section-height: 38px;
 }
 
+/* Let the shared primary header stick against the page, not the short
+   masthead wrapper that only contains the header and launcher. */
+.v2-catalogue-shell { display: contents; }
+
 html[data-catalogue-launcher-open="true"] { overflow: hidden; }
 body.hara-v2 { overflow-x: clip; }
 body.hara-v2 main { min-width: 0; }
@@ -67,7 +71,8 @@ body.hara-v2 main { min-width: 0; }
   position: fixed;
   z-index: 122;
   top: calc(var(--v2-catalogue-masthead-height) + 8px);
-  right: var(--hara-v2-page);
+  left: var(--hara-v2-page);
+  right: auto;
   display: grid;
   width: min(980px, calc(100vw - 2 * var(--hara-v2-page)));
   max-height: calc(100svh - var(--v2-catalogue-masthead-height) - 24px);
@@ -101,11 +106,6 @@ body.hara-v2 main { min-width: 0; }
   font-size: .66rem;
   line-height: 1.5;
 }
-.v2-catalogue-launcher-close kbd {
-  color: var(--hara-v2-faint);
-  font: 620 .5rem var(--hara-v2-font-code);
-}
-
 .v2-catalogue-launcher-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -348,6 +348,46 @@ body.hara-v2 main { min-width: 0; }
   white-space: nowrap;
 }
 
+.v2-catalogue-section-progress {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  display: flex;
+  gap: 2px;
+  height: 2px;
+  pointer-events: none;
+}
+.v2-catalogue-section-progress span {
+  flex: 1 1 0;
+  min-width: 2px;
+  background: var(--hara-v2-line-strong);
+  transition: background-color var(--hara-v2-motion) var(--hara-v2-ease), opacity var(--hara-v2-motion) var(--hara-v2-ease);
+}
+.v2-catalogue-section-progress span[data-state="complete"] { background: var(--hara-v2-signal); opacity: .42; }
+.v2-catalogue-section-progress span[data-state="current"] { background: var(--hara-v2-signal); opacity: 1; }
+
+.v2-scroll-progress {
+  position: fixed;
+  z-index: 200;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--hara-v2-line-strong) 72%, transparent);
+  pointer-events: none;
+}
+.v2-scroll-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--hara-v2-signal);
+  transform: scaleX(var(--v2-scroll-progress, 0));
+  transform-origin: left center;
+}
+
 body[data-catalogue-section-ready="true"] :is(
   .foundations-section-nav,
   .components-section-nav,
@@ -390,6 +430,16 @@ body.www-family-page .www-subnav {
   min-height: var(--v2-catalogue-section-height);
   padding-inline: var(--hara-v2-page);
 }
+body.www-family-page .v2-catalogue-secondary-shell > .www-subnav {
+  position: static !important;
+  top: auto !important;
+  min-height: 48px !important;
+  max-height: 48px;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
 body.www-family-page .www-subnav__identity {
   gap: .45rem;
   padding-right: .7rem;
@@ -420,10 +470,18 @@ body.www-family-page .www-section { scroll-margin-top: 150px; }
   .v2-catalogue-route-bar .v2-catalogue-breadcrumbs { max-width: 420px; }
   .v2-catalogue-section-nav { position: relative; top: auto; }
   body.www-family-page .www-subnav { position: relative; top: auto; }
+  body.www-family-page .v2-catalogue-secondary-shell > .www-subnav {
+    position: static !important;
+    top: auto !important;
+  }
 }
 
 @media (max-width: 840px) {
-  .v2-catalogue-launcher { right: 14px; width: calc(100vw - 28px); }
+  .v2-catalogue-launcher {
+    left: 14px;
+    right: 14px;
+    width: calc(100vw - 28px);
+  }
   .v2-catalogue-launcher-grid { grid-template-columns: 1fr; }
   .v2-catalogue-launcher-group > header p { min-height: 0; }
 

@@ -2,13 +2,13 @@
 import EnvironmentWorkbench from "../../../../src/astro/v2/tool/EnvironmentWorkbench.astro";
 import FrontmatterGrid from "../../../../src/astro/v2/tool/FrontmatterGrid.astro";
 import InspectorSection from "../../../../src/astro/v2/tool/InspectorSection.astro";
+import LiveviewWorkspaceIsland from "./LiveviewWorkspaceIsland";
 import ResourceList from "../../../../src/astro/v2/tool/ResourceList.astro";
 import StatusBar from "../../../../src/astro/v2/tool/StatusBar.astro";
 import ToolButton from "../../../../src/astro/v2/tool/ToolButton.astro";
 import ToolNumberField from "../../../../src/astro/v2/tool/ToolNumberField.astro";
 import ToolSelect from "../../../../src/astro/v2/tool/ToolSelect.astro";
 import ToolToggle from "../../../../src/astro/v2/tool/ToolToggle.astro";
-import ViewportOverlay from "../../../../src/astro/v2/tool/ViewportOverlay.astro";
 
 const frontmatter = [
   { label: "Scope", value: "isolated", detail: "This workbench only", status: "current" },
@@ -38,7 +38,7 @@ const codeSample = `(defn draw-frame [ctx state]
   (draw/receipt ctx {:generation 7
                      :revision 18}))`;
 ---
-<section class="tool-lab-section" id="environment" data-tool-layout="environment">
+<section class="tool-lab-section" id="environment" data-section-label="Environment" data-tool-layout="environment">
   <header class="tool-lab-section-head">
     <div>
       <p class="hara-v2-kicker">Workbench specimen 04 · Embedded environment</p>
@@ -65,12 +65,8 @@ const codeSample = `(defn draw-frame [ctx state]
 
     <FrontmatterGrid slot="frontmatter" entries={frontmatter} label="Live environment frontmatter" />
 
-    <div slot="graphics" class="environment-specimen-graphics" aria-label="Canvas output specimen">
-      <div class="environment-specimen-grid" aria-hidden="true"></div>
-      <div class="environment-specimen-orbit environment-specimen-orbit--outer" aria-hidden="true"></div>
-      <div class="environment-specimen-orbit environment-specimen-orbit--inner" aria-hidden="true"></div>
-      <div class="environment-specimen-node" aria-hidden="true"><i></i><b>draw / focus</b><small>frame 284</small></div>
-      <div class="environment-specimen-receipt"><span>generation 7</span><span>source revision 18</span><span>canvas / current</span></div>
+    <div slot="graphics" class="environment-specimen-graphics" aria-label="Customizable Liveview workspace">
+      <LiveviewWorkspaceIsland client:load />
     </div>
 
     <div slot="code" class="environment-specimen-code">
@@ -115,11 +111,6 @@ const codeSample = `(defn draw-frame [ctx state]
       <InspectorSection title="Scene provider" open>
         <p class="environment-specimen-note">The 3D group appears only when the host attaches a 3D capability.</p>
       </InspectorSection>
-    </div>
-
-    <div slot="overlay">
-      <ViewportOverlay placement="top-left">Isolated · canvas/2d</ViewportOverlay>
-      <ViewportOverlay placement="top-right">60 fps · 1.0×</ViewportOverlay>
     </div>
 
     <StatusBar slot="status" label="Live environment status">

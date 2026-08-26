@@ -50,7 +50,7 @@ test("Learn owns Start and historical teaching studies even while compatibility 
   assert.equal(normalizeCataloguePath("https://example.test/world/around/?view=wide#relay"), "/world/around/");
 });
 
-test("the global shell composes a compact masthead, secondary route header, sections and footer", async () => {
+test("the global shell composes a compact masthead, secondary route header and footer", async () => {
   const [header, masthead, routeBar, sectionNav, footer, prototype, wwwHeader, tighten] = await Promise.all([
     read("../site/src/components/v2-catalogue/CatalogueHeader.astro"),
     read("../site/src/components/v2-catalogue/CatalogueMasthead.astro"),
@@ -98,6 +98,7 @@ test("the global shell composes a compact masthead, secondary route header, sect
   assert.match(wwwHeader, /CatalogueHeader/);
   assert.match(wwwHeader, /activeFamilyRoute\.path/);
   assert.match(wwwHeader, /slot="route-actions"/);
+  assert.match(wwwHeader, /slot="secondary-nav"/);
   assert.doesNotMatch(wwwHeader, /ThemeToggle|HaraMark|familyRoutes\.map/);
 
   assert.match(tighten, /--v2-catalogue-masthead-height: var\(--hara-v2-header-height\)/);
@@ -122,6 +123,11 @@ test("the v2 catalogue is the root site and v1 is archived under an explicit com
   assert.doesNotMatch(manifest, /["'`]\/v2\//);
   assert.doesNotMatch(root, /\$\{basePath\}v2\//);
   assert.doesNotMatch(masthead, /v2-catalogue-masthead/);
+});
+
+test("Patterns use the Components document background", async () => {
+  const patterns = await read("../site/src/styles/v2-ui-patterns.css");
+  assert.match(patterns, /\.ui-pattern-page\s*\{[\s\S]*?background:\s*color-mix\(in srgb, var\(--hara-v2-panel\) 92%, var\(--hara-v2-canvas\)\)/);
 });
 
 test("legacy studies expose the same launcher, secondary header and local section layer", async () => {

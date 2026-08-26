@@ -3,16 +3,19 @@
 .playground-workspace-shell { position: relative; }
 .playground-workspace-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; margin-block-end: 14px; }
 .playground-runtime-summary { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px; }
-.playground-runtime-summary > :where(span, code) { min-height: 30px; align-content: center; padding-inline: 8px; border: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel); font: 560 9px/1 var(--hara-v2-font-code); }
+.playground-runtime-summary > :where(span, code) { min-height: 30px; align-content: center; padding-inline: 8px; border: 1px solid var(--hara-v2-line); background: var(--hara-v2-panel); font: 500 .66rem/1 var(--hara-v2-font-body); }
 .playground-studio-modebar { display: flex; gap: 3px; padding: 4px; overflow-x: auto; border: 1px solid var(--hara-v2-line-strong); border-block-end: 0; background: var(--hara-v2-panel-recess); scrollbar-width: none; }
-.playground-studio-modebar button { flex: 0 0 auto; min-height: 36px; padding-inline: 11px; border: 1px solid transparent; color: var(--hara-v2-muted); background: transparent; }
+.playground-studio-modebar button { flex: 0 0 auto; min-height: 34px; padding-inline: 11px; border: 1px solid transparent; color: var(--hara-v2-muted); background: transparent; font: 500 .72rem/1 var(--hara-v2-font-body); }
 .playground-studio-modebar button[aria-pressed="true"] { border-color: var(--hara-v2-line); color: var(--hara-v2-ink); background: var(--hara-v2-panel-raised); }
 .playground-environment-workbench .hara-tool-workbench { border-color: var(--hara-v2-line-strong); }
-.playground-command-rail .hara-tool-toolbar { border: 0; box-shadow: none; }
+.playground-command-rail { width: 100%; min-width: 0; }
+.playground-command-rail .hara-tool-toolbar { width: 100%; min-width: 0; border: 0; box-shadow: none; }
+.playground-command-rail .hara-tool-toolbar > .hara-tool-group:not([data-orientation="vertical"]) { min-width: max-content; max-width: none; flex: 0 0 auto; flex-wrap: nowrap; padding-block: 0; border-block-end: 0; }
+.playground-command-rail .hara-tool-group { border-inline-end-color: var(--hara-v2-line); }
 .playground-backend-group { display: flex; align-items: center; gap: 6px; padding-inline: 7px; }
 .playground-backend-group label,
-.playground-backend-group span { color: var(--hara-v2-muted); font-size: 9px; }
-.playground-backend-group select { min-height: 30px; border: 1px solid var(--hara-v2-line); color: var(--hara-v2-ink); background: var(--hara-v2-panel-raised); }
+.playground-backend-group span { color: var(--hara-v2-muted); font: 500 .66rem/1 var(--hara-v2-font-body); }
+.playground-backend-group select { min-height: 30px; border: 1px solid var(--hara-v2-line); color: var(--hara-v2-ink); background: var(--hara-v2-panel-raised); font: 500 .68rem/1 var(--hara-v2-font-body); }
 .playground-project-mode,
 .playground-frontmatter-mode,
 .playground-graphics-mode,
@@ -115,4 +118,3 @@
 .playground-density-contract { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-block-start: 10px; }
 .playground-density-contract button[aria-pressed="true"] { border-color: var(--hara-v2-signal); background: var(--playground-signal-wash); }
 .playground-density-contract p { flex: 1 1 360px; margin: 0 0 0 6px; color: var(--hara-v2-muted); font-size: 10px; }
-

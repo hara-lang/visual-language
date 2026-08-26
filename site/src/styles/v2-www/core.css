@@ -20,6 +20,13 @@
 .www-family-page button,
 .www-family-page input,
 .www-family-page select { font: inherit; }
+
+/* Keep the shared account control at the same quiet scale as the primary
+ * Docs / Components / Patterns navigation. */
+.www-family-page .hara-v2-account-link {
+  font-size: .77rem;
+  font-weight: 400;
+}
 .www-family-page h1,
 .www-family-page h2,
 .www-family-page h3,

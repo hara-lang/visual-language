@@ -3,13 +3,11 @@ import LiveHaraExample from "../../../components/v2-www/LiveHaraExample.astro";
 import StateSpecimen from "../../../components/v2-www/StateSpecimen.astro";
 import ViewportSpecimen from "../../../components/v2-www/ViewportSpecimen.astro";
 import WwwFamilyHeader from "../../../components/v2-www/WwwFamilyHeader.astro";
-import WwwSubnav from "../../../components/v2-www/WwwSubnav.astro";
 import {
   apiReferences,
   docsArticle,
   docsOutline,
   docsSearchResults,
-  docsSectionNavigation,
   docsSidebarGroups,
   docsTaskMap,
   runtimeStateSpecimens,
@@ -61,14 +59,15 @@ const expectedOutput = `{:work/id :durable-import
     <title>Hara documentation</title>
   </head>
   <body class="hara-v2 www-family-page www-docs-page">
-    <WwwFamilyHeader basePath={basePath} activeRoute="docs" searchLabel="Search Docs" />
-    <WwwSubnav label="Docs" items={docsSectionNavigation} activeId="start-map">
-      <span slot="identity">{docsArticle.schema} · {docsArticle.schemaVersion}</span>
-      <label class="www-selector"><span>Version</span><select class="hara-v2-select" aria-label="Documentation version"><option>Hara 1.8 · current</option><option>Hara 1.7</option><option>1.9-next</option></select></label>
-      <label class="www-selector"><span>Runtime</span><select class="hara-v2-select" aria-label="Documentation runtime"><option>All runtimes</option><option>Wasm</option><option>JVM</option><option>Rust native</option></select></label>
-    </WwwSubnav>
+    <WwwFamilyHeader basePath={basePath} activeRoute="docs" searchLabel="Search Docs" sectionNav />
 
     <main class="www-main">
+      <div class="www-docs-page-controls" aria-label="Documentation reading controls">
+        <div class="www-docs-page-controls__selectors">
+          <label class="www-selector"><span>Version</span><select class="hara-v2-select" aria-label="Documentation version"><option>Hara 1.8 · current</option><option>Hara 1.7</option><option>1.9-next</option></select></label>
+          <label class="www-selector"><span>Runtime</span><select class="hara-v2-select" aria-label="Documentation runtime"><option>All runtimes</option><option>Wasm</option><option>JVM</option><option>Rust native</option></select></label>
+        </div>
+      </div>
       <section class="www-docs-hero" aria-labelledby="docs-title">
         <div>
           <p class="hara-v2-kicker">Guides · Reference · Examples</p>
@@ -88,7 +87,7 @@ const expectedOutput = `{:work/id :durable-import
         </dl>
       </section>
 
-      <section class="www-section" id="start-map">
+      <section class="www-section" id="start-map" data-section-label="Start map">
         <header class="www-section-head">
           <div><p class="hara-v2-kicker">01 · Task index</p><h2>Start with the task or question you need to resolve.</h2></div>
           <p>Each path names its expected reading time, assumed background, version range, and likely runtime. The language and API hierarchy remains available in the reference.</p>
@@ -105,7 +104,7 @@ const expectedOutput = `{:work/id :durable-import
         </div>
       </section>
 
-      <section class="www-section" id="guide">
+      <section class="www-section" id="guide" data-section-label="Guide">
         <header class="www-section-head">
           <div><p class="hara-v2-kicker">02 · Guide document</p><h2>Navigation records location; prose explains the task.</h2></div>
           <p>The document uses a quiet guide rail, stable outline, version and runtime selectors, and one optional executable example. The article remains readable without the runtime.</p>
@@ -203,7 +202,7 @@ const expectedOutput = `{:work/id :durable-import
         </div>
       </section>
 
-      <section class="www-section" id="reference">
+      <section class="www-section" id="reference" data-section-label="Reference">
         <header class="www-section-head">
           <div><p class="hara-v2-kicker">03 · API and namespace reference</p><h2>Each symbol record names its namespace, signature, version, and definition.</h2></div>
           <p>Reference rows are canonical records rather than headings copied into prose. A production implementation resolves them from the symbol registry.</p>
@@ -228,7 +227,7 @@ const expectedOutput = `{:work/id :durable-import
         </div>
       </section>
 
-      <section class="www-section" id="search" data-doc-search>
+      <section class="www-section" id="search" data-section-label="Search" data-doc-search>
         <header class="www-section-head">
           <div><p class="hara-v2-kicker">04 · Search results and filters</p><h2>Search distinguishes guides, reference, version notes, and executable examples.</h2></div>
           <p>Type, category, version, and runtime are visible filters. A result does not imply that a static guide is executable or that a live example applies to every runtime.</p>
@@ -261,7 +260,7 @@ const expectedOutput = `{:work/id :durable-import
         </div>
       </section>
 
-      <section class="www-section" id="runtime-states">
+      <section class="www-section" id="runtime-states" data-section-label="Runtime states">
         <header class="www-section-head">
           <div><p class="hara-v2-kicker">05 · Runtime, compile, and version states</p><h2>An unavailable executable example does not erase its documentation.</h2></div>
           <p>Each state names what remains readable, which action is disabled, and which immutable source and runtime context can still be inspected.</p>
@@ -288,7 +287,7 @@ const expectedOutput = `{:work/id :durable-import
         </div>
       </section>
 
-      <section class="www-section" id="responsive">
+      <section class="www-section" id="responsive" data-section-label="Responsive">
         <header class="www-section-head">
           <div><p class="hara-v2-kicker">06 · Narrow and mobile reading behaviour</p><h2>The article remains a document at every viewport.</h2></div>
           <p>The outline folds first, the guide rail becomes a labelled drawer, selectors remain available, and the optional control pane moves below source rather than squeezing prose.</p>
@@ -306,7 +305,7 @@ const expectedOutput = `{:work/id :durable-import
         </div>
       </section>
 
-      <section class="www-section www-contract-section" id="docs-contract">
+      <section class="www-section www-contract-section" id="docs-contract" data-catalogue-section-ignore>
         <header class="www-section-head">
           <div><p class="hara-v2-kicker">07 · Shared content contract</p><h2>Docs consumes <code>hara.docs</code>; it does not define a local front-matter dialect.</h2></div>
           <p>{wwwContracts.docs.summary}</p>

@@ -6,7 +6,8 @@ const {
   basePath,
   activeRoute = "home",
   searchLabel = "Search",
-  accountLabel = "Sign in"
+  accountLabel = "Sign in",
+  sectionNav = false
 } = Astro.props;
 
 const activeFamilyRoute = familyRoutes.find(({ id }) => id === activeRoute) ?? familyRoutes[0];
@@ -15,9 +16,10 @@ const activeFamilyRoute = familyRoutes.find(({ id }) => id === activeRoute) ?? f
   basePath={basePath}
   activePath={activeFamilyRoute.path}
   label="Hara public language family"
-  autoSections={false}
+  sectionNav={sectionNav}
   pageFooter={false}
 >
+  <Fragment slot="secondary-nav"><slot name="secondary-nav" /></Fragment>
   <Fragment slot="route-actions">
     <button
       class="www-family-search-trigger"

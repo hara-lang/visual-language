@@ -1,6 +1,5 @@
 ---
-import ThemeToggle from "@hara-lang/ui-astro/astro/ThemeToggle.astro";
-import HaraMark from "@hara-lang/ui-astro/astro/HaraMark.astro";
+import CatalogueHeader from "../../components/v2-catalogue/CatalogueHeader.astro";
 import EnvironmentWorkbenchSpecimen from "../../components/v2-tool/EnvironmentWorkbenchSpecimen.astro";
 import ThreeDWorkbenchSpecimen from "../../components/v2-tool/ThreeDWorkbenchSpecimen.astro";
 import NodeWorkbenchSpecimen from "../../components/v2-tool/NodeWorkbenchSpecimen.astro";
@@ -17,13 +16,6 @@ const pageUrl = new URL(`${basePath}tool/`, Astro.site);
 const socialImage = new URL(`${basePath}og/cards/visual-language.jpg`, Astro.site);
 const documentLab = `${basePath}`;
 const haraChromeLab = `${basePath}tool/hara-chrome/`;
-const sections = [
-  { href: haraChromeLab, label: "Hara Chrome" },
-  { href: "#environment", label: "Environment" },
-  { href: "#three-d", label: "3D" },
-  { href: "#node", label: "Node" },
-  { href: "#animation", label: "Animation" }
-];
 ---
 <!doctype html>
 <html lang="en">
@@ -46,17 +38,7 @@ const sections = [
     <title>Hara v2 tool workbench reference</title>
   </head>
   <body class="hara-v2 hara-v2-tool">
-    <header class="v2-lab-header">
-      <a class="v2-lab-brand" href={documentLab}>
-        <HaraMark size={28} />
-        <b>Hara visual language</b>
-        <small>V2 workbench reference</small>
-      </a>
-      <nav aria-label="Workbench specimens">
-        {sections.map((item) => <a href={item.href}>{item.label}</a>)}
-      </nav>
-      <ThemeToggle />
-    </header>
+    <CatalogueHeader basePath={basePath} activePath="/tool/" pageFooter={false} />
 
     <main class="v2-lab-main">
       <section class="tool-lab-hero">

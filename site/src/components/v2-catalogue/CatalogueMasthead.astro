@@ -32,7 +32,7 @@ const catalogueNav = [
     activePath={activePath}
     label={label}
     account="logged-out"
-    accountHref="#account"
+    accountHref="https://id.hara-lang.org/"
     menuMode="product"
     menuControls="v2-catalogue-launcher"
     menuLabel="Open catalogue"
@@ -51,13 +51,13 @@ const catalogueNav = [
   const initialiseCatalogueMastheads = () => {
     document.querySelectorAll("[data-catalogue-masthead]").forEach((masthead) => {
       if (!(masthead instanceof HTMLElement) || masthead.dataset.ready === "true") return;
-      masthead.dataset.ready = "true";
 
       const sharedHeader = masthead.querySelector("[data-hara-shell-header]");
       const launcher = masthead.querySelector("[data-catalogue-launcher]");
       const backdrop = masthead.querySelector("[data-catalogue-launcher-backdrop]");
       const close = masthead.querySelector("[data-catalogue-launcher-close]");
       if (!(sharedHeader instanceof HTMLElement) || !(launcher instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) return;
+      masthead.dataset.ready = "true";
 
       const setOpen = (open, restoreFocus = false) => {
         masthead.dataset.launcherOpen = String(open);
@@ -75,6 +75,15 @@ const catalogueNav = [
           if (firstLink instanceof HTMLAnchorElement) requestAnimationFrame(() => firstLink.focus());
         }
       };
+
+      const menu = sharedHeader.querySelector("[data-hara-header-menu]");
+      if (menu instanceof HTMLButtonElement) {
+        menu.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          setOpen(sharedHeader.dataset.navigationOpen !== "true");
+        }, { capture: true });
+      }
 
       sharedHeader.addEventListener("hara:header-menu-request", (event) => {
         if (!(event instanceof CustomEvent)) return;

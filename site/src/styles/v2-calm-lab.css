@@ -237,6 +237,10 @@
   opacity: .32;
 }
 
+.hara-v2-tool :where(.tool-lab-tree li, .tool-lab-asset-strip button, .tool-lab-material-strip button, .tool-lab-panel-note) {
+  font-family: var(--hara-v2-font-body);
+}
+
 @media (max-width: 820px) {
   .v2-lab-hero h1,
   .tool-lab-hero h1 {

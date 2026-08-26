@@ -2,14 +2,15 @@
  * Catalogue secondary navigation.
  *
  * The compact route/location/section composition is canonical at every
- * viewport. The shared Hara header owns the product hamburger and remains the
- * only sticky navigation layer. This local row stays in document flow while
- * anchoring mutually exclusive route and section popouts.
+ * viewport. The shared Hara header owns the product hamburger; this local row
+ * stays docked directly beneath it while anchoring mutually exclusive route
+ * and section popouts.
  */
 
 .v2-catalogue-secondary-shell {
-  position: relative;
-  z-index: 40;
+  position: sticky;
+  top: var(--v2-catalogue-masthead-height);
+  z-index: 110;
   display: flex;
   align-items: stretch;
   width: 100%;
@@ -21,8 +22,29 @@
   color: var(--hara-v2-ink);
   border-bottom: 1px solid var(--hara-v2-line-strong);
   background: var(--hara-v2-panel-raised);
+  font-family: var(--hara-v2-font-body);
   isolation: isolate;
   white-space: nowrap;
+}
+
+.v2-catalogue-secondary-shell :is(
+  .v2-catalogue-parent-link,
+  .v2-catalogue-family-trigger,
+  .v2-catalogue-section-trigger,
+  .v2-catalogue-family-tabs a,
+  .v2-catalogue-section-links a,
+  .www-subnav__links a
+) {
+  font-family: var(--hara-v2-font-body);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1;
+}
+
+/* Use the Components tool surface as the shared document ground. */
+body.hara-v2 {
+  background-color: color-mix(in srgb, var(--hara-v2-panel) 92%, var(--hara-v2-canvas));
+  background-image: none;
 }
 
 .v2-catalogue-secondary-shell > .v2-catalogue-route-bar {
@@ -55,13 +77,15 @@
 }
 
 .v2-catalogue-route-bar .v2-catalogue-parent-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: .4rem;
-  min-width: 0;
+  justify-content: center;
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
   min-height: 48px !important;
-  max-width: 168px;
-  padding: 0 .75rem !important;
+  padding: 0 !important;
   overflow: hidden;
   border: 0 !important;
   border-right: 1px solid var(--hara-v2-line) !important;
@@ -70,11 +94,46 @@
   text-decoration: none;
 }
 
-.v2-catalogue-parent-link span:last-child {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.v2-catalogue-parent-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.v2-catalogue-parent-label {
+  display: none;
+}
+
+.v2-catalogue-parent-link::after {
+  position: absolute;
+  z-index: 140;
+  top: calc(100% + 8px);
+  left: 0;
+  max-width: min(220px, calc(100vw - 24px));
+  padding: .4rem .55rem;
+  color: var(--hara-v2-ink);
+  border: 1px solid var(--hara-v2-line-strong);
+  border-radius: 6px;
+  background: var(--hara-v2-panel-raised);
+  box-shadow: var(--hara-v2-shadow);
+  content: attr(data-tooltip);
+  font: 650 11px/1.2 var(--hara-v2-font-body);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-3px);
+  transition: opacity var(--hara-v2-motion) var(--hara-v2-ease), transform var(--hara-v2-motion) var(--hara-v2-ease);
   white-space: nowrap;
+}
+
+.v2-catalogue-parent-link:hover::after,
+.v2-catalogue-parent-link:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .v2-catalogue-family-trigger {
@@ -180,7 +239,8 @@
 }
 
 .v2-catalogue-secondary-shell > .v2-catalogue-section-nav {
-  position: static !important;
+  position: relative !important;
+  top: auto !important;
   z-index: auto;
   display: flex !important;
   flex: 0 1 auto;
@@ -197,6 +257,80 @@
 
 .v2-catalogue-secondary-shell > .v2-catalogue-section-nav[hidden] {
   display: none !important;
+}
+
+/* WWW, Docs, and Benchmarks keep their local links in the same secondary
+ * row as the catalogue route. */
+.v2-catalogue-secondary-shell > .www-subnav {
+  position: static !important;
+  z-index: auto;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  flex: 1 1 auto;
+  align-items: stretch;
+  width: auto;
+  min-width: 0;
+  min-height: 48px !important;
+  max-height: 48px;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-subnav__identity {
+  display: none !important;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-subnav__links {
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-subnav__links::-webkit-scrollbar {
+  display: none;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-subnav__links a {
+  min-height: 48px;
+  padding: 0 .65rem;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-subnav__actions {
+  min-width: 0;
+  padding-left: .7rem;
+  gap: .7rem;
+  border-left: 1px solid var(--hara-v2-line);
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-selector {
+  gap: .42rem;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-selector > span {
+  font-size: .62rem;
+  letter-spacing: .01em;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-selector .hara-v2-select {
+  min-height: 34px;
+  padding: .45rem 2rem .45rem .75rem;
+  color: var(--hara-v2-ink);
+  font: 650 .76rem/1 var(--hara-v2-font-body);
+  letter-spacing: .01em;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-selector:first-child .hara-v2-select {
+  min-width: 164px;
+}
+
+.v2-catalogue-secondary-shell > .www-subnav .www-selector:last-child .hara-v2-select {
+  min-width: 132px;
 }
 
 .v2-catalogue-section-trigger {
@@ -282,12 +416,30 @@
   outline-offset: -3px;
 }
 
-body[data-catalogue-section-ready="true"] :is(
+/* Document pages keep their content anchors, but the local link strip is
+   composed into the secondary row rather than rendered as another row. */
+@media (min-width: 1120px) {
+  .v2-catalogue-launcher-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+body.hara-v2 :is(
   .foundations-section-nav,
   .components-section-nav,
   .ui-section-nav,
   .playground-local-nav,
-  .start-journey
+  .start-journey,
+  .icon-guide-local-nav,
+  .symbol-guide-local-nav,
+  .media-guide-local-nav,
+  .diagram-guide-local-nav,
+  .data-guide-local-nav,
+  .guide-local-nav,
+  .specs-local-nav,
+  .frontmatter-section-nav,
+  .packages-local-nav,
+  .learn-local-nav
 ) {
   display: none !important;
 }
@@ -302,8 +454,10 @@ body[data-catalogue-section-ready="true"] :is(
   }
 
   .v2-catalogue-route-bar .v2-catalogue-parent-link {
-    max-width: 112px;
-    padding-inline: .65rem !important;
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    padding-inline: 0 !important;
   }
 
   .v2-catalogue-family-trigger {
@@ -336,8 +490,10 @@ body[data-catalogue-section-ready="true"] :is(
   .v2-catalogue-secondary-shell { padding-inline: 8px; }
 
   .v2-catalogue-route-bar .v2-catalogue-parent-link {
-    max-width: 96px;
-    padding-inline: .5rem !important;
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    padding-inline: 0 !important;
   }
 
   .v2-catalogue-family-trigger,
@@ -364,8 +520,6 @@ body[data-catalogue-section-ready="true"] :is(
     justify-content: center;
     padding: 0 !important;
   }
-
-  .v2-catalogue-parent-link span:last-child { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
